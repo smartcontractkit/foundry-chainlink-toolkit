@@ -17,10 +17,11 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
   chainlink_node:
     image: smartcontract/chainlink:1.8.0-root
+    container_name: ${CHAINLINK_CONTAINER_NAME}
     ports:
       - 6688:6688
     volumes:
-      - chainlink-data:/chainlink
+      - ./settings:/chainlink
     depends_on:
       chainlink_postgres:
         condition: service_healthy
@@ -45,4 +46,3 @@ secrets:
     file: settings/chainlink_api_credentials
 volumes:
   db-data:
-  chainlink-data:

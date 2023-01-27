@@ -25,7 +25,7 @@ services:
     depends_on:
       chainlink_postgres:
         condition: service_healthy
-    command: local node -p /chainlink/chainlink_password -a /chainlink/chainlink_api_credentials
+    command: local node -p ${ROOT}/chainlink_password -a ${ROOT}/chainlink_api_credentials
     restart: on-failure
     environment:
       - ROOT=${ROOT}

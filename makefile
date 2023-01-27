@@ -42,11 +42,6 @@ get-info: login
 	$(call check_defined, CHAINLINK_CONTAINER_NAME) \
 	docker exec ${CHAINLINK_CONTAINER_NAME} chainlink keys eth list
 
-
-create-job: login
-	$(call check_defined, CHAINLINK_CONTAINER_NAME) \
-	docker exec ${CHAINLINK_CONTAINER_NAME} chainlink jobs create ${ROOT}/createJob.toml
-
 deploy-link-token:
 	$(call check_defined, PRIVATE_KEY) \
 	$(call check_defined, RPC_URL) \
@@ -63,20 +58,56 @@ deploy-oracle:
 	echo "Deploying Oracle contract. Please wait..."; \
 	forge script ./script/DeployOracle.s.sol --sig "deploy(address, address)" $$tokenAddress $$nodeAddress --rpc-url ${RPC_URL} --broadcast --silent
 
+create-job: login
+	$(call check_defined, CHAINLINK_CONTAINER_NAME) \
+	echo "Please enter the Oracle address..."; \
+	read oracleAddress; \
+	docker exec ${CHAINLINK_CONTAINER_NAME} bash -c "touch ${ROOT}/directRequestJob_tmp.toml \
+	&& sed -e 's/ORACLE_ADDRESS/$$oracleAddress/g' -e 's/TIMESTAMP_UID/$$oracleAddress/g' ${ROOT}/directRequestJob.toml > ${ROOT}/directRequestJob_tmp.toml"
+	docker exec ${CHAINLINK_CONTAINER_NAME} bash -c "chainlink jobs create ${ROOT}/directRequestJob_tmp.toml && rm ${ROOT}/directRequestJob_tmp.toml"
+
 transfer-link:
 	$(call check_defined, PRIVATE_KEY) \
 	$(call check_defined, RPC_URL) \
 	echo "Please enter the Link Token address..."; \
 	read tokenAddress; \
-	echo "Please enter the Chainlink Node address..."; \
-	read nodeAddress; \
-	echo "Transferring Link Tokens to the Chainlink Node. Please wait..."; \
-	forge script ./script/Transfer.s.sol --sig "transferLink(address, address, uint256)" $$nodeAddress $$tokenAddress 1000000000000000000 --rpc-url ${RPC_URL} --broadcast \
+	echo "Please enter the recipient address..."; \
+	read address; \
+	echo "Transferring Link Tokens to the recipient. Please wait..."; \
+	forge script ./script/Transfer.s.sol --sig "transferLink(address, address, uint256)" $$address $$tokenAddress 100000000000000000000 --rpc-url ${RPC_URL} --broadcast --silent \
 
 transfer-eth:
 	$(call check_defined, PRIVATE_KEY) \
 	$(call check_defined, RPC_URL) \
-	echo "Please enter the Chainlink Node address..."; \
-	read nodeAddress; \
-	echo "Transferring ETH to the Chainlink Node. Please wait..."; \
-	forge script ./script/Transfer.s.sol --sig "transferEth(address, uint256)" $$nodeAddress 1000000000000000000 --rpc-url ${RPC_URL} --broadcast
+	echo "Please enter a recipient address..."; \
+	read address; \
+	echo "Transferring ETH to the recipient. Please wait..."; \
+	forge script ./script/Transfer.s.sol --sig "transferEth(address, uint256)" $$address 1000000000000000000 --rpc-url ${RPC_URL} --broadcast --silent
+
+deploy-consumer:
+	$(call check_defined, PRIVATE_KEY) \
+	$(call check_defined, RPC_URL) \
+	echo "Please enter the Link Token address..."; \
+	read tokenAddress; \
+	echo "Deploying Chainlink Consumer. Please wait..."; \
+	forge script ./script/DeployChainlinkConsumer.s.sol --sig "deploy(address)" $$tokenAddress --rpc-url ${RPC_URL} --broadcast --silent
+
+request-eth-price-consumer:
+	$(call check_defined, PRIVATE_KEY) \
+	$(call check_defined, RPC_URL) \
+	echo "Please enter a Chainlink Consumer address..."; \
+	read consumerAddress; \
+	echo "Please enter a Chainlink Oracle address..."; \
+	read oracleAddress; \
+	echo "Please enter a Chainlink JobID (without dashes)..."; \
+	read jobID; \
+	echo "Requesting current ETH Price from Chainlink Oracle. Please wait..."; \
+	forge script ./script/DeployChainlinkConsumer.s.sol --sig "requestEthereumPrice(address, address, string)" $$consumerAddress $$oracleAddress $$jobID --rpc-url ${RPC_URL} --broadcast --silent
+
+get-eth-price-consumer:
+	$(call check_defined, PRIVATE_KEY) \
+	$(call check_defined, RPC_URL) \
+	echo "Please enter the Chainlink Consumer address..."; \
+	read consumerAddress; \
+	echo "Getting current ETH price. Please wait..."; \
+	forge script ./script/DeployChainlinkConsumer.s.sol --sig "getEthereumPrice(address)" $$consumerAddress --rpc-url ${RPC_URL} --broadcast --silent

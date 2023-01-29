@@ -46,7 +46,7 @@ deploy-link-token:
 	$(call check_defined, PRIVATE_KEY) \
 	$(call check_defined, RPC_URL) \
 	echo "Deploying Link Token contract. Please wait..."; \
-	forge script ./script/DeployLinkToken.s.sol --sig "deploy()" --rpc-url ${RPC_URL} --broadcast --silent
+	forge script ./script/LinkToken.s.sol --sig "deploy()" --rpc-url ${RPC_URL} --broadcast --silent
 
 deploy-oracle:
 	$(call check_defined, PRIVATE_KEY) \
@@ -56,15 +56,23 @@ deploy-oracle:
 	echo "Please enter the Chainlink Node address..."; \
     read nodeAddress; \
 	echo "Deploying Oracle contract. Please wait..."; \
-	forge script ./script/DeployOracle.s.sol --sig "deploy(address, address)" $$tokenAddress $$nodeAddress --rpc-url ${RPC_URL} --broadcast --silent
+	forge script ./script/Oracle.s.sol --sig "deploy(address, address)" $$tokenAddress $$nodeAddress --rpc-url ${RPC_URL} --broadcast --silent
 
-create-job: login
-	$(call check_defined, CHAINLINK_CONTAINER_NAME) \
-	echo "Please enter the Oracle address..."; \
-	read oracleAddress; \
-	docker exec ${CHAINLINK_CONTAINER_NAME} bash -c "touch ${ROOT}/directRequestJob_tmp.toml \
-	&& sed -e 's/ORACLE_ADDRESS/$$oracleAddress/g' -e 's/TIMESTAMP_UID/$$oracleAddress/g' ${ROOT}/directRequestJob.toml > ${ROOT}/directRequestJob_tmp.toml"
-	docker exec ${CHAINLINK_CONTAINER_NAME} bash -c "chainlink jobs create ${ROOT}/directRequestJob_tmp.toml && rm ${ROOT}/directRequestJob_tmp.toml"
+deploy-consumer:
+	$(call check_defined, PRIVATE_KEY) \
+	$(call check_defined, RPC_URL) \
+	echo "Please enter the Link Token address..."; \
+	read tokenAddress; \
+	echo "Deploying Chainlink Consumer. Please wait..."; \
+	forge script ./script/ChainlinkConsumer.s.sol --sig "deploy(address)" $$tokenAddress --rpc-url ${RPC_URL} --broadcast --silent
+
+transfer-eth:
+	$(call check_defined, PRIVATE_KEY) \
+	$(call check_defined, RPC_URL) \
+	echo "Please enter a recipient address..."; \
+	read address; \
+	echo "Transferring ETH to the recipient. Please wait..."; \
+	forge script ./script/Transfer.s.sol --sig "transferEth(address, uint256)" $$address 1000000000000000000 --rpc-url ${RPC_URL} --broadcast --silent
 
 transfer-link:
 	$(call check_defined, PRIVATE_KEY) \
@@ -76,21 +84,13 @@ transfer-link:
 	echo "Transferring Link Tokens to the recipient. Please wait..."; \
 	forge script ./script/Transfer.s.sol --sig "transferLink(address, address, uint256)" $$address $$tokenAddress 100000000000000000000 --rpc-url ${RPC_URL} --broadcast --silent \
 
-transfer-eth:
-	$(call check_defined, PRIVATE_KEY) \
-	$(call check_defined, RPC_URL) \
-	echo "Please enter a recipient address..."; \
-	read address; \
-	echo "Transferring ETH to the recipient. Please wait..."; \
-	forge script ./script/Transfer.s.sol --sig "transferEth(address, uint256)" $$address 1000000000000000000 --rpc-url ${RPC_URL} --broadcast --silent
-
-deploy-consumer:
-	$(call check_defined, PRIVATE_KEY) \
-	$(call check_defined, RPC_URL) \
-	echo "Please enter the Link Token address..."; \
-	read tokenAddress; \
-	echo "Deploying Chainlink Consumer. Please wait..."; \
-	forge script ./script/DeployChainlinkConsumer.s.sol --sig "deploy(address)" $$tokenAddress --rpc-url ${RPC_URL} --broadcast --silent
+create-job: login
+	$(call check_defined, CHAINLINK_CONTAINER_NAME) \
+	echo "Please enter the Oracle address..."; \
+	read oracleAddress; \
+	docker exec ${CHAINLINK_CONTAINER_NAME} bash -c "touch ${ROOT}/directRequestJob_tmp.toml \
+	&& sed -e 's/ORACLE_ADDRESS/$$oracleAddress/g' -e 's/TIMESTAMP_UID/$$oracleAddress/g' ${ROOT}/directRequestJob.toml > ${ROOT}/directRequestJob_tmp.toml"
+	docker exec ${CHAINLINK_CONTAINER_NAME} bash -c "chainlink jobs create ${ROOT}/directRequestJob_tmp.toml && rm ${ROOT}/directRequestJob_tmp.toml"
 
 request-eth-price-consumer:
 	$(call check_defined, PRIVATE_KEY) \
@@ -102,7 +102,7 @@ request-eth-price-consumer:
 	echo "Please enter a Chainlink JobID (without dashes)..."; \
 	read jobID; \
 	echo "Requesting current ETH Price from Chainlink Oracle. Please wait..."; \
-	forge script ./script/DeployChainlinkConsumer.s.sol --sig "requestEthereumPrice(address, address, string)" $$consumerAddress $$oracleAddress $$jobID --rpc-url ${RPC_URL} --broadcast --silent
+	forge script ./script/ChainlinkConsumer.s.sol --sig "requestEthereumPrice(address, address, string)" $$consumerAddress $$oracleAddress $$jobID --rpc-url ${RPC_URL} --broadcast --silent
 
 get-eth-price-consumer:
 	$(call check_defined, PRIVATE_KEY) \
@@ -110,4 +110,4 @@ get-eth-price-consumer:
 	echo "Please enter the Chainlink Consumer address..."; \
 	read consumerAddress; \
 	echo "Getting current ETH price. Please wait..."; \
-	forge script ./script/DeployChainlinkConsumer.s.sol --sig "getEthereumPrice(address)" $$consumerAddress --rpc-url ${RPC_URL} --broadcast --silent
+	forge script ./script/ChainlinkConsumer.s.sol --sig "getEthereumPrice(address)" $$consumerAddress --rpc-url ${RPC_URL} --broadcast --silent

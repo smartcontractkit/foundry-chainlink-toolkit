@@ -26,8 +26,6 @@ The purpose of this project is to simplify the immersion in the development and 
 1. Install Foundry toolchain. Instructions: https://book.getfoundry.sh/getting-started/installation.
 2. Install [GNU make](https://www.gnu.org/software/make/), as the functionality of the project is wrapped in the [makefile](makefile). Instructions: https://sp21.datastructur.es/materials/guides/make-install.html.
 3. Install and run Docker since for convenience a Chainlink node runs in a container. Instructions: https://docs.docker.com/get-docker/.
-   - [Chainlink](https://hub.docker.com/layers/smartcontract/chainlink/1.8.0-root/images/sha256-f206c530339097ee58bea10651d742d404201c4e467af3719e82b30d7e1cb22c?context=explore) and 
-   - [Postgres](https://registry.hub.docker.com/_/postgres
 
 ### Chain RPC node
 In order for a Chainlink node to be able to interact with the blockchain, and to interact with the blockchain using the [Forge](https://book.getfoundry.sh/forge/), you have to know an RPC node http endpoint and web socket for a chosen network compatible with Chainlink.

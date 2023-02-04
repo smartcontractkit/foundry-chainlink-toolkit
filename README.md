@@ -59,13 +59,14 @@ The purpose of this project is to simplify the immersion in the development and 
 In order for a Chainlink node to be able to interact with the blockchain, and to interact with the blockchain using the [Forge](https://book.getfoundry.sh/forge/), you have to know an RPC node http endpoint and web socket for a chosen network compatible with Chainlink.
 In addition to the networks listed in [this list](https://docs.chain.link/chainlink-automation/supported-networks/), Chainlink is compatible with any EVM-compatible networks.
 
-For local testing, we recommend using [Anvil](https://book.getfoundry.sh/anvil/), which is part of the Foundry toolchain.\
+For local testing, we recommend using [Anvil](https://book.getfoundry.sh/anvil/), which is a part of the Foundry toolchain.
 
-Run Anvil using the following command
+Run Anvil using the following command:
 ```
 anvil --block-time 10
 ```
-By default Anvil runs with the following options:
+
+By default, Anvil runs with the following options:
 - http endpoint: http://localhost:8545
 - web socket: [ws://localhost:8545](ws://localhost:8545)
 - chain ID: 31337
@@ -85,12 +86,11 @@ We use the [chainlink](chainlink) folder as shared folder with Chainlink node Do
 > You can change this configuration according to your requirements.
 
 ### Solidity Scripting
-Functionality related to deployment and interaction with smart contracts is implemented using [Foundry Solidity Scripting](https://book.getfoundry.sh/tutorials/solidity-scripting?highlight=script#solidity-scripting).\
-The [script](script) directory contains scripts for the Link Token, Oracle, Chainlink Consumer contracts, as well as the transfer of ETH and Link tokens.\
+Functionality related to deployment and interaction with smart contracts is implemented using [Foundry Solidity Scripting](https://book.getfoundry.sh/tutorials/solidity-scripting?highlight=script#solidity-scripting).  
+The [script](script) directory contains scripts for the Link Token, Oracle, Chainlink Consumer contracts, as well as the transfer of ETH and Link tokens.  
 Scripts are run with the command: `forge script path/to/script`. Logs and artifacts dedicated to each script run, including a transaction hash and an address of deployed smart contract, are stored in a corresponding subdirectory of the [broadcast](broadcast) folder (created automatically).
 
 All necessary scripts are also included in the [makefile](makefile). In order to run these scripts, you first need to install the necessary dependencies:
-
 ```
 make install
 ```
@@ -133,8 +133,8 @@ Below are comments on some environment variables:
   - Link token balance
   - ETH balance  
 
-    > **Note**  
-    >You also can find this information in the node Operator GUI under the Key Management configuration.
+   > **Note**  
+   > You also can find this information in the node Operator GUI under the Key Management configuration.
 
 #### Deploy Link Token contract
   ```
@@ -148,8 +148,8 @@ Below are comments on some environment variables:
   ```
   This command deploys an instance of [Oracle.sol](src%2FOracle.sol) contract on behalf of the account specified in [.env](.env) and whitelists Chainlink node address in the deployed contract.  
   During the execution of the command, you will need to enter:
-    - Link Token contract address
-    - Chainlink node address
+  - Link Token contract address
+  - Chainlink node address
 
 #### Deploy Chainlink Consumer contract
   ```
@@ -157,7 +157,7 @@ Below are comments on some environment variables:
   ```
   This command deploys an instance of [ChainlinkConsumer.sol](src%2FChainlinkConsumer.sol) contract on behalf of the account specified in [.env](.env).  
   During the execution of the command, you will need to enter:
-    - Link Token contract address
+  - Link Token contract address
 
 #### Transfer ETH
   ```
@@ -165,7 +165,7 @@ Below are comments on some environment variables:
   ```
   With this command, you can send ETH to any specified recipient on behalf of the account specified in [.env](.env).  
   During the execution of the command, you will need to enter:
-    - Recipient address
+  - Recipient address
 
 #### Transfer Link tokens
   ```
@@ -173,8 +173,8 @@ Below are comments on some environment variables:
   ```
   With this command, you can send Link tokens to any specified recipient on behalf of the account specified in [.env](.env).  
   During the execution of the command, you will need to enter:
-    - Link Token contract address
-    - Recipient address
+  - Link Token contract address
+  - Recipient address
 
 #### Create Chainlink job
   ```
@@ -182,10 +182,10 @@ Below are comments on some environment variables:
   ```
   This command creates a Chainlink job according to [directRequestJob.toml](chainlink%2FdirectRequestJob.toml).  
   During the execution of the command, you will need to enter:
-    - Oracle contract address
+  - Oracle contract address
 
    > **Note**  
-   >You can check list of created jobs with Chainlink Operator GUI http://127.0.0.1:6688/jobs
+   > You can check list of created jobs with Chainlink Operator GUI http://127.0.0.1:6688/jobs
 
 #### Request ETH price
   ```
@@ -193,12 +193,12 @@ Below are comments on some environment variables:
   ```
   This command calls `requestEthereumPrice` method of the Consumer contract, which asks the node to retrieve data specified in a Job configuration.  
   During the execution of the command, you will need to enter:
-    - Consumer contract address
-    - Oracle contract address
-    - Job ID **without dashes** - you can get one with Chainlink Operator GUI on the Jobs tab
+  - Consumer contract address
+  - Oracle contract address
+  - Job ID **without dashes** - you can get one with Chainlink Operator GUI on the Jobs tab
 
    > **Note**  
-   >You can check list of runs of jobs with Chainlink Operator GUI: http://127.0.0.1:6688/runs
+   > You can check list of runs of jobs with Chainlink Operator GUI: http://127.0.0.1:6688/runs
 
 #### Get ETH price
   ```
@@ -206,7 +206,7 @@ Below are comments on some environment variables:
   ```
   This command returns current value of `currentPrice` variable specified in the Consumer contract state.  
   During the execution of the command, you will need to enter:
-    - Consumer contract address
+  - Consumer contract address
 
 ### Testing
 Testing flow is based on the [Chainlink fulfilling requests](https://docs.chain.link/chainlink-nodes/v1/fulfilling-requests) tutorial. 

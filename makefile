@@ -89,7 +89,7 @@ create-job: login
 	echo "Please enter the Oracle address..."; \
 	read oracleAddress; \
 	docker exec ${CHAINLINK_CONTAINER_NAME} bash -c "touch ${ROOT}/directRequestJob_tmp.toml \
-	&& sed -e 's/ORACLE_ADDRESS/$$oracleAddress/g' -e 's/TIMESTAMP_UID/$$oracleAddress/g' ${ROOT}/directRequestJob.toml > ${ROOT}/directRequestJob_tmp.toml"
+	&& sed 's/ORACLE_ADDRESS/$$oracleAddress/g' ${ROOT}/directRequestJob.toml > ${ROOT}/directRequestJob_tmp.toml"
 	docker exec ${CHAINLINK_CONTAINER_NAME} bash -c "chainlink jobs create ${ROOT}/directRequestJob_tmp.toml && rm ${ROOT}/directRequestJob_tmp.toml"
 
 request-eth-price-consumer:

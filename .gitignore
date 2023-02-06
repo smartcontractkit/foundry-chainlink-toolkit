@@ -1,0 +1,11 @@
+# common
+.env
+# forge
+broadcast/
+cache/
+out/
+lib/
+# chainlink
+chainlink/cookie
+chainlink/secret
+chainlink/*.log

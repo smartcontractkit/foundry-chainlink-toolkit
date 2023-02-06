@@ -118,6 +118,11 @@ This command installs [Forge Standard Library](https://github.com/foundry-rs/for
   This command fetches images, creates/recreates and starts containers according to the [docker-compose.yaml](docker-compose.yaml).  
   Once the container is launched, the node Operator GUI will be available at http://127.0.0.1:6688. For authorization, you must use the credentials specified in the [chainlink_api_credentials](chainlink%2Fchainlink_api_credentials).
 
+   > **Note**  
+   > For **ARM64** users. When starting a docker container, there will be warnings:  
+   > ```The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested```  
+   > You can safely ignore these warnings, container will start normally.
+
 #### Restart Chainlink node
   ```
   make restart-node

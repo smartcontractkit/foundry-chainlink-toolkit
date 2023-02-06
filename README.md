@@ -31,7 +31,7 @@ The purpose of this project is to simplify the immersion in the development and 
       ```
       curl -L https://foundry.paradigm.xyz | bash
       ```
-      This will download foundryup. Then install Foundry by running:
+      This will download foundryup. Restart your terminal session, then install Foundry by running:
       ```
       foundryup
       ```
@@ -53,7 +53,7 @@ The purpose of this project is to simplify the immersion in the development and 
       yum install make
       ```
 
-3. Install and run Docker since for convenience, the Chainlink node runs in a container. Instructions: [docs.docker.com/get-docker](https://docs.docker.com/get-docker/).
+3. Install and run Docker; for convenience, the Chainlink node runs in a container. Instructions: [docs.docker.com/get-docker](https://docs.docker.com/get-docker/).
 
 ### Chain RPC node
 In order for a Chainlink node to be able to interact with the blockchain, and to interact with the blockchain using the [Forge](https://book.getfoundry.sh/forge/), you have to know an RPC node http endpoint and web socket for a chosen network compatible with Chainlink.
@@ -85,6 +85,16 @@ We use the [chainlink](chainlink) folder as shared folder with Chainlink node Do
 > More info about Chainlink v2 Jobs, their types and configuration can be found here: [docs.chain.link/chainlink-nodes/oracle-jobs/jobs/](https://docs.chain.link/chainlink-nodes/oracle-jobs/jobs/).
 > You can change this configuration according to your requirements.
 
+### Environment variables file
+Based on the [env.template](env.template) - create or update an `.env` file in the root directory of your project.
+
+Below are comments on some environment variables:
+- `ETH_URL` - RPC node web socket used by the Chainlink node
+- `RPC_URL` - RPC node http endpoint used by Forge
+- `PRIVATE_KEY` - private key of an account used for deployment and interaction with smart contracts. Once Anvil is started, a set of private keys for local usage is provided. Use one of these for local development.
+- `ROOT` - root directory of the Chainlink node
+- `CHAINLINK_CONTAINER_NAME` - preferred name for the container of the Chainlink node for the possibility of automating communication with it
+
 ### Solidity Scripting
 Functionality related to deployment and interaction with smart contracts is implemented using [Foundry Solidity Scripting](https://book.getfoundry.sh/tutorials/solidity-scripting?highlight=script#solidity-scripting).  
 The [script](script) directory contains scripts for the Link Token, Oracle, Chainlink Consumer contracts, as well as the transfer of ETH and Link tokens.  
@@ -96,16 +106,6 @@ make install
 ```
 
 This command installs [Forge Standard Library](https://github.com/foundry-rs/forge-std).
-
-### Environment variables
-Based on the [env.template](env.template) - create or update an `.env` file in the root directory of your project.
-
-Below are comments on some environment variables:
-- `ETH_URL` - RPC node web socket used by the Chainlink node
-- `RPC_URL` - RPC node http endpoint used by Forge
-- `PRIVATE_KEY` - private key of an account used for deployment and interaction with smart contracts
-- `ROOT` - root directory of the Chainlink node
-- `CHAINLINK_CONTAINER_NAME` - preferred name for the container of the Chainlink node for the possibility of automating communication with it
 
 ## Usage
 

@@ -1,5 +1,11 @@
 # Chainlink-Foundry Toolkit
 
+> **Warning**
+>
+> **This package is currently in BETA.**
+>
+> **Open issues to submit bugs.**
+
 **This is a toolkit that makes spinning up, managing and testing a local Chainlink node easier.**  
 
 This project uses [Foundry](https://book.getfoundry.sh) tools to deploy and test smart contracts.  

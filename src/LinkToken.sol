@@ -4,7 +4,7 @@
 
 // SPDX-License-Identifier: MIT
 
-pragma solidity >=0.6.0 <0.8.0;
+pragma solidity >=0.6.12 <0.8.0;
 
 /*
  * @dev Provides information about the current execution context, including the
@@ -30,8 +30,6 @@ abstract contract Context {
 
 // File vendor/OpenZeppelin/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol
 
-
-pragma solidity >=0.6.0 <0.8.0;
 
 /**
  * @dev Interface of the ERC20 standard as defined in the EIP.
@@ -110,8 +108,6 @@ interface IERC20 {
 
 // File vendor/OpenZeppelin/openzeppelin-contracts/contracts/math/SafeMath.sol
 
-
-pragma solidity >=0.6.0 <0.8.0;
 
 /**
  * @dev Wrappers over Solidity's arithmetic operations with added overflow
@@ -327,8 +323,6 @@ library SafeMath {
 
 // File vendor/OpenZeppelin/openzeppelin-contracts/contracts/token/ERC20/ERC20.sol
 
-
-pragma solidity >=0.6.0 <0.8.0;
 
 
 
@@ -634,8 +628,6 @@ contract ERC20 is Context, IERC20 {
 
 // File contracts/v0.6/token/LinkERC20.sol
 
-pragma solidity >0.6.0 <0.8.0;
-
 abstract contract LinkERC20 is ERC20 {
   /**
    * @dev Atomically increases the allowance granted to `spender` by the caller.
@@ -689,8 +681,6 @@ abstract contract LinkERC20 is ERC20 {
 
 // File contracts/v0.6/token/IERC677.sol
 
-pragma solidity >0.6.0 <0.8.0;
-
 interface IERC677 is IERC20 {
   function transferAndCall(
     address to,
@@ -711,8 +701,6 @@ interface IERC677 is IERC20 {
 
 // File contracts/v0.6/token/IERC677Receiver.sol
 
-pragma solidity >0.6.0 <0.8.0;
-
 interface IERC677Receiver {
   function onTokenTransfer(
     address sender,
@@ -724,8 +712,6 @@ interface IERC677Receiver {
 
 
 // File contracts/v0.6/ERC677.sol
-
-pragma solidity >0.6.0 <0.8.0;
 
 
 
@@ -784,8 +770,6 @@ abstract contract ERC677 is IERC677, ERC20 {
 
 // File contracts/v0.6/ITypeAndVersion.sol
 
-pragma solidity >0.6.0;
-
 /// @dev Interface contracts should use to report its type and version.
 interface ITypeAndVersion {
   /**
@@ -802,8 +786,6 @@ interface ITypeAndVersion {
 
 
 // File contracts/v0.6/LinkToken.sol
-
-pragma solidity >0.6.0 <0.8.0;
 
 
 

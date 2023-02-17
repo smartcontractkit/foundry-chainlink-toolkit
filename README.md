@@ -219,6 +219,12 @@ This command installs [Forge Standard Library](https://github.com/foundry-rs/for
   During the execution of the command, you will need to enter:
   - Consumer contract address
 
+> **Note**  
+> In the current version of the package, some smart contracts are developed for different compiler versions.  
+> Therefore, specifying a version of Solidity compiler in ```foundry.toml``` or as a ```forge``` parameter (e.g. ```--use solc:0.7.0```) can lead to errors.  
+> Use a default compiler version provided by ```forge```.  
+> This issue will be fixed in future releases.
+
 ### Testing
 Testing flow is based on the [Chainlink fulfilling requests](https://docs.chain.link/chainlink-nodes/v1/fulfilling-requests) tutorial. 
 

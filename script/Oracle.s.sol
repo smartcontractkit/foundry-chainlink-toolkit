@@ -2,9 +2,9 @@
 pragma solidity >=0.6.0 <0.7.0;
 
 import "forge-std/Script.sol";
-import "../src/Oracle.sol";
+import "chainlink/v0.6/Oracle.sol";
 
-contract DeployOracle is Script {
+contract OracleScript is Script {
   function run() external {
     console.log("Please run deploy(address,address) method.");
   }

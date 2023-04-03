@@ -1,0 +1,7 @@
+global:
+  scrape_interval: 5s
+scrape_configs:
+  - job_name: 'local_scrape'
+    scrape_interval: 1s
+    static_configs:
+      - targets: ['node:6688', 'node-2:6688', 'node-3:6688', 'node-4:6688', 'node-5:6688', 'node_exporter:9100']

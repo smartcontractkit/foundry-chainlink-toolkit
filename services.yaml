@@ -69,3 +69,5 @@ services:
       - ETH_URL=${ETH_URL}
       - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@chainlink_db:5432/chainlink?sslmode=disable
       - LINK_CONTRACT_ADDRESS=${LINK_CONTRACT_ADDRESS}
+    env_file:
+      - ./chainlink/chainlink.env

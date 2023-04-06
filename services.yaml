@@ -35,8 +35,8 @@ services:
     image: postgres:15
     command: postgres -c 'max_connections=${PG_MAX_CONNECTIONS}'
     volumes:
-      - ./chainlink/drop_tables.sql:/docker-entrypoint-initdb.d/1-drop_tables.sql
-      - ./chainlink/create_tables.sql:/docker-entrypoint-initdb.d/2-create_tables.sql
+      - ./chainlink/sql/drop_tables.sql:/docker-entrypoint-initdb.d/1-drop_tables.sql
+      - ./chainlink/sql/create_tables.sql:/docker-entrypoint-initdb.d/2-create_tables.sql
     environment:
       POSTGRES_DB: chainlink
       POSTGRES_USER: ${POSTGRES_USER}
@@ -55,7 +55,13 @@ services:
     command: local node -p ${ROOT}/chainlink_password -a ${ROOT}/chainlink_api_credentials --vrfpassword=${ROOT}/chainlink_api_credentials
     restart: on-failure
     volumes:
-      - ./chainlink:${ROOT}
+      - ./chainlink/chainlink.env:${ROOT}/chainlink.env
+      - ./chainlink/settings/chainlink_api_credentials:${ROOT}/chainlink_api_credentials
+      - ./chainlink/settings/chainlink_password:${ROOT}/chainlink_password
+      - ./chainlink/jobs/cron_job.toml:${ROOT}/cron_job.toml
+      - ./chainlink/jobs/direct_request_job.toml:${ROOT}/direct_request_job.toml
+      - ./chainlink/jobs/keeper_job.toml:${ROOT}/keeper_job.toml
+      - ./chainlink/jobs/webhook_job.toml:${ROOT}/webhook_job.toml
     depends_on:
       chainlink_db:
         condition: service_healthy

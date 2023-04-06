@@ -35,7 +35,6 @@ install:
 	forge install OpenZeppelin/openzeppelin-contracts --no-commit
 
 # Chainlink Nodes Management Scripts
-
 run-nodes:
 	$(call check_defined, ROOT) \
 	$(call check_defined, ETH_CHAIN_ID) \

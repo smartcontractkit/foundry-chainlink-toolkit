@@ -26,6 +26,8 @@ services:
     ports:
       - 6711:6688
       - 6061:6060
+    volumes:
+      - ./chainlink/${CHAINLINK_CONTAINER_NAME}1:${ROOT}
   chainlink_node2:
     extends:
       file: services.yaml
@@ -36,6 +38,8 @@ services:
     ports:
       - 6722:6688
       - 6062:6060
+    volumes:
+      - ./chainlink/${CHAINLINK_CONTAINER_NAME}2:${ROOT}
   chainlink_node3:
     extends:
       file: services.yaml
@@ -46,6 +50,8 @@ services:
     ports:
       - 6733:6688
       - 6063:6060
+    volumes:
+      - ./chainlink/${CHAINLINK_CONTAINER_NAME}3:${ROOT}
   chainlink_node4:
     extends:
       file: services.yaml
@@ -56,3 +62,5 @@ services:
     ports:
       - 6744:6688
       - 6064:6060
+    volumes:
+      - ./chainlink/${CHAINLINK_CONTAINER_NAME}4:${ROOT}

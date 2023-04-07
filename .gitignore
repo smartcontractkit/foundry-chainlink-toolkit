@@ -3,9 +3,10 @@
 # forge
 broadcast/
 cache/
-out/
 lib/
+out/
 # chainlink
+chainlink/foundry-chainlink-node*/
 chainlink/cookie
 chainlink/secret
 chainlink/*.log

@@ -3,7 +3,6 @@ schemaVersion = 1
 name = "Get > Uint256 CONSUMER_ADDRESS (cron)"
 # Optional External Job ID: Automatically generated if unspecified
 # externalJobID = "b1d42cd5-4a3a-4200-b1f7-25a68e48aad8"
-contractAddress = "CONSUMER_ADDRESS"
 schedule = "CRON_TZ=UTC @every 1m"
 maxTaskDuration = "0s"
 observationSource = """

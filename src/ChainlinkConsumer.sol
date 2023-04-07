@@ -53,7 +53,7 @@ contract ChainlinkConsumer is ChainlinkClient, ConfirmedOwner {
     req.add('get', 'https://min-api.cryptocompare.com/data/pricemultifull?fsyms=ETH&tsyms=USD');
     // req.add("path", "RAW.ETH.USD.CHANGEPCTDAY"); // Chainlink nodes prior to 1.0.0 support this format
     req.add('path', 'RAW,ETH,USD,CHANGEPCTDAY'); // Chainlink nodes 1.0.0 and later support this format
-    req.addInt('times', 1000000000);
+    req.addInt('times', 100);
     sendChainlinkRequestTo(_oracle, req, ORACLE_PAYMENT);
   }
 

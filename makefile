@@ -154,22 +154,19 @@ create-direct-request-job:
 	docker exec $$chainlinkContainerName bash -c "chainlink jobs create ${ROOT}/direct_request_job_tmp.toml && rm ${ROOT}/direct_request_job_tmp.toml"
 
 create-cron-job:
-	$(call check_set_parameter,CRON_CONSUMER_ADDRESS,cronConsumerAddress) \
+	$(call check_set_parameter,CRON_CONSUMER_ADDRESS,consumerAddress) \
 	$(call check_set_parameter,NODE_ID,nodeId) \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
 	make login NODE_ID=$$nodeId; \
 	docker exec $$chainlinkContainerName bash -c "touch ${ROOT}/cron_job_tmp.toml \
-	&& sed 's/CONSUMER_ADDRESS/$$cronConsumerAddress/g' ${ROOT}/cron_job.toml > ${ROOT}/cron_job_tmp.toml" && \
+	&& sed 's/CONSUMER_ADDRESS/$$consumerAddress/g' ${ROOT}/cron_job.toml > ${ROOT}/cron_job_tmp.toml" && \
 	docker exec $$chainlinkContainerName bash -c "chainlink jobs create ${ROOT}/cron_job_tmp.toml && rm ${ROOT}/cron_job_tmp.toml"
 
 create-webhook-job:
-	$(call check_set_parameter,CONSUMER_ADDRESS,consumerAddress) \
 	$(call check_set_parameter,NODE_ID,nodeId) \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
 	make login NODE_ID=$$nodeId; \
-	docker exec $$chainlinkContainerName bash -c "touch ${ROOT}/webhook_job_tmp.toml \
-	&& sed 's/CONSUMER_ADDRESS/$$consumerAddress/g' ${ROOT}/webhook_job.toml > ${ROOT}/webhook_job_tmp.toml" && \
-	docker exec $$chainlinkContainerName bash -c "chainlink jobs create ${ROOT}/webhook_job_tmp.toml && rm ${ROOT}/webhook_job_tmp.toml"
+	docker exec $$chainlinkContainerName bash -c "chainlink jobs create ${ROOT}/webhook_job.toml"
 
 create-keeper-job:
 	$(call check_set_parameter,REGISTRY_ADDRESS,registryAddress) \

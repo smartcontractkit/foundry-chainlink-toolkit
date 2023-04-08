@@ -52,16 +52,11 @@ services:
     container_name: ${CHAINLINK_CONTAINER_NAME}
     platform: linux/x86_64
     image: smartcontract/chainlink:1.12.0
-    command: local node -p ${ROOT}/chainlink_password -a ${ROOT}/chainlink_api_credentials --vrfpassword=${ROOT}/chainlink_api_credentials
+    command: local node -p ${ROOT}/settings/chainlink_password -a ${ROOT}/settings/chainlink_api_credentials --vrfpassword=${ROOT}/settings/chainlink_api_credentials
     restart: on-failure
     volumes:
-      - ./chainlink/chainlink.env:${ROOT}/chainlink.env
-      - ./chainlink/settings/chainlink_api_credentials:${ROOT}/chainlink_api_credentials
-      - ./chainlink/settings/chainlink_password:${ROOT}/chainlink_password
-      - ./chainlink/jobs/cron_job.toml:${ROOT}/cron_job.toml
-      - ./chainlink/jobs/direct_request_job.toml:${ROOT}/direct_request_job.toml
-      - ./chainlink/jobs/keeper_job.toml:${ROOT}/keeper_job.toml
-      - ./chainlink/jobs/webhook_job.toml:${ROOT}/webhook_job.toml
+      - ./chainlink/settings/:${ROOT}/settings
+      - ./chainlink/jobs:${ROOT}/jobs
     depends_on:
       chainlink_db:
         condition: service_healthy

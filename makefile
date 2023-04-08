@@ -61,7 +61,7 @@ login:
 	$(call check_set_parameter,NODE_ID,nodeId) \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
 	printf "%s\n" "Logging in Chainlink Node..."; \
-	docker exec $$chainlinkContainerName chainlink admin login -f ${ROOT}/chainlink_api_credentials
+	docker exec $$chainlinkContainerName chainlink admin login -f ${ROOT}/settings/chainlink_api_credentials
 
 get-node-info:
 	$(call check_set_parameter,NODE_ID,nodeId) \
@@ -113,6 +113,8 @@ deploy-keeper-registry:
 	printf "%s\n" "Deploying Chainlink Registry. Please wait..."; \
 	forge script ./script/Registry.s.sol --sig "deploy(address)" $$linkContractAddress --rpc-url ${RPC_URL} --broadcast --silent
 
+deploy-chainlink-offchain-aggregator:
+
 # Helper Scripts
 transfer-eth:
 	$(call check_defined, PRIVATE_KEY) \
@@ -149,24 +151,24 @@ create-direct-request-job:
 	$(call check_set_parameter,NODE_ID,nodeId) \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
 	make login NODE_ID=$$nodeId; \
-	docker exec $$chainlinkContainerName bash -c "touch ${ROOT}/direct_request_job_tmp.toml \
-	&& sed 's/ORACLE_ADDRESS/$$oracleAddress/g' ${ROOT}/direct_request_job.toml > ${ROOT}/direct_request_job_tmp.toml" && \
-	docker exec $$chainlinkContainerName bash -c "chainlink jobs create ${ROOT}/direct_request_job_tmp.toml && rm ${ROOT}/direct_request_job_tmp.toml"
+	docker exec $$chainlinkContainerName bash -c "touch ${ROOT}/jobs/direct_request_job_tmp.toml \
+	&& sed 's/ORACLE_ADDRESS/$$oracleAddress/g' ${ROOT}/jobs/direct_request_job.toml > ${ROOT}/jobs/direct_request_job_tmp.toml" && \
+	docker exec $$chainlinkContainerName bash -c "chainlink jobs create ${ROOT}/jobs/direct_request_job_tmp.toml && rm ${ROOT}/jobs/direct_request_job_tmp.toml"
 
 create-cron-job:
 	$(call check_set_parameter,CRON_CONSUMER_ADDRESS,consumerAddress) \
 	$(call check_set_parameter,NODE_ID,nodeId) \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
 	make login NODE_ID=$$nodeId; \
-	docker exec $$chainlinkContainerName bash -c "touch ${ROOT}/cron_job_tmp.toml \
-	&& sed 's/CONSUMER_ADDRESS/$$consumerAddress/g' ${ROOT}/cron_job.toml > ${ROOT}/cron_job_tmp.toml" && \
-	docker exec $$chainlinkContainerName bash -c "chainlink jobs create ${ROOT}/cron_job_tmp.toml && rm ${ROOT}/cron_job_tmp.toml"
+	docker exec $$chainlinkContainerName bash -c "touch ${ROOT}/jobs/cron_job_tmp.toml \
+	&& sed 's/CONSUMER_ADDRESS/$$consumerAddress/g' ${ROOT}/jobs/cron_job.toml > ${ROOT}/jobs/cron_job_tmp.toml" && \
+	docker exec $$chainlinkContainerName bash -c "chainlink jobs create ${ROOT}/jobs/cron_job_tmp.toml && rm ${ROOT}/jobs/cron_job_tmp.toml"
 
 create-webhook-job:
 	$(call check_set_parameter,NODE_ID,nodeId) \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
 	make login NODE_ID=$$nodeId; \
-	docker exec $$chainlinkContainerName bash -c "chainlink jobs create ${ROOT}/webhook_job.toml"
+	docker exec $$chainlinkContainerName bash -c "chainlink jobs create ${ROOT}/jobs/webhook_job.toml"
 
 create-keeper-job:
 	$(call check_set_parameter,REGISTRY_ADDRESS,registryAddress) \
@@ -174,9 +176,9 @@ create-keeper-job:
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
 	make login NODE_ID=$$nodeId; \
 	$(call get_node_address,$$chainlinkContainerName,nodeAddress) \
-	docker exec $$chainlinkContainerName bash -c "touch ${ROOT}/keeper_job_tmp.toml \
-	&& sed -e 's/REGISTRY_ADDRESS/$$registryAddress/g' -e 's/NODE_ADDRESS/$$nodeAddress/g' ${ROOT}/keeper_job.toml > ${ROOT}/keeper_job_tmp.toml" && \
-	docker exec $$chainlinkContainerName bash -c "chainlink jobs create ${ROOT}/keeper_job_tmp.toml && rm ${ROOT}/keeper_job_tmp.toml"
+	docker exec $$chainlinkContainerName bash -c "touch ${ROOT}/jobs/keeper_job_tmp.toml \
+	&& sed -e 's/REGISTRY_ADDRESS/$$registryAddress/g' -e 's/NODE_ADDRESS/$$nodeAddress/g' ${ROOT}/jobs/keeper_job.toml > ${ROOT}/jobs/keeper_job_tmp.toml" && \
+	docker exec $$chainlinkContainerName bash -c "chainlink jobs create ${ROOT}/jobs/keeper_job_tmp.toml && rm ${ROOT}/jobs/keeper_job_tmp.toml"
 
 create-keeper-jobs:
 	make create-keeper-job NODE_ID=1 && \
@@ -232,8 +234,10 @@ set-keepers:
 	$(call get_node_address, $(CHAINLINK_CONTAINER_NAME)3,nodeAddress3) \
 	make login NODE_ID=4 && \
 	$(call get_node_address, $(CHAINLINK_CONTAINER_NAME)4,nodeAddress4) \
+	make login NODE_ID=5 && \
+	$(call get_node_address, $(CHAINLINK_CONTAINER_NAME)5,nodeAddress4) \
 	printf "%s\n" "Setting Keepers in Registry. Please wait..."; \
-	forge script ./script/Registry.s.sol --sig "setKeepers(address,address,address[])" $$registryAddress $$keeperConsumerAddress [$$nodeAddress1,$$nodeAddress2,$$nodeAddress3,$$nodeAddress4] --rpc-url ${RPC_URL} --broadcast --silent
+	forge script ./script/Registry.s.sol --sig "setKeepers(address,address,address[])" $$registryAddress $$keeperConsumerAddress [$$nodeAddress1,$$nodeAddress2,$$nodeAddress3,$$nodeAddress4,$$nodeAddress5] --rpc-url ${RPC_URL} --broadcast --silent
 
 get-last-active-upkeep-id:
 	$(call check_defined, PRIVATE_KEY) \

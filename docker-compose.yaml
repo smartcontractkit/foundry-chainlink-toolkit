@@ -64,3 +64,15 @@ services:
       - 6064:6060
     volumes:
       - ./chainlink/${CHAINLINK_CONTAINER_NAME}4:${ROOT}
+  chainlink_node5:
+    extends:
+      file: services.yaml
+      service: chainlink_node
+    container_name: ${CHAINLINK_CONTAINER_NAME}5
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@chainlink_db:5432/chainlink5?sslmode=disable
+    ports:
+      - 6755:6688
+      - 6065:6060
+    volumes:
+      - ./chainlink/${CHAINLINK_CONTAINER_NAME}5:${ROOT}

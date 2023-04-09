@@ -3,7 +3,7 @@
 // File: @chainlink/contracts/src/v0.6/vendor/SafeMathChainlink.sol
 
 
-pragma solidity >=0.6.0 <0.8.0;
+pragma solidity >=0.6.0 <0.7.0;
 
 /**
  * @dev Wrappers over Solidity's arithmetic operations with added overflow

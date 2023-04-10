@@ -280,4 +280,4 @@ transfer-and-call-link:
 	$(call check_set_parameter,UPKEEP_ID,upkeepId) \
 	$(call check_set_parameter,LINK_CONTRACT_ADDRESS,linkContractAddress) \
 	echo "Transferring Link Tokens to the recipient. Please wait..."; \
-	forge script ./script/LinkToken.s.sol --sig "transferAndCall(address, address, uint256, uint256)" $$linkContractAddress $$registryAddress 1000000000000000000 $$upkeepId --rpc-url ${RPC_URL} --broadcast -vvvv \
+	forge script ./script/LinkToken.s.sol --sig "transferAndCall(address, address, uint256, uint256)" $$linkContractAddress $$registryAddress 1000000000000000000 $$upkeepId --rpc-url ${RPC_URL} --broadcast --silent \

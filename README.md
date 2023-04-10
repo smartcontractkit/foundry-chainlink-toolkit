@@ -128,7 +128,7 @@ This command installs:
 - [Openzeppelin Contracts](https://github.com/OpenZeppelin/openzeppelin-contracts)
 
 ## Usage
-Below are the scripts contained in the makefile[makefile](makefile). Some scripts have parameters that can be passed either on the command line, interactively or in the `.env` file.
+Below are the scripts contained in the [makefile](makefile). Some scripts have parameters that can be passed either on the command line, interactively or in the `.env` file.
 
 ### Helper scripts
 

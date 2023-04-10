@@ -124,7 +124,7 @@ deploy-chainlink-offchain-aggregator:
 	printf "%s\n" "Deploying Chainlink OffChain Aggregator. Please wait..."; \
 	forge script ./script/OffchainAggregator.s.sol --sig "deploy(address)" $$linkContractAddress --rpc-url ${RPC_URL} --broadcast --silent
 
-# Helper Scripts
+# Helper Solidity Scripts
 transfer-eth:
 	$(call check_defined, PRIVATE_KEY) \
 	$(call check_defined, RPC_URL) \
@@ -198,10 +198,12 @@ create-keeper-job:
 	docker exec $$chainlinkContainerName bash -c "chainlink jobs create ${ROOT}/jobs/keeper_job_tmp.toml && rm ${ROOT}/jobs/keeper_job_tmp.toml"
 
 create-keeper-jobs:
-	make create-keeper-job NODE_ID=1 && \
-	make create-keeper-job NODE_ID=2 && \
-	make create-keeper-job NODE_ID=3 && \
-	make create-keeper-job NODE_ID=4;
+	$(call check_set_parameter,REGISTRY_ADDRESS,registryAddress) \
+	make create-keeper-job NODE_ID=1 REGISTRY_ADDRESS=$$registryAddress && \
+	make create-keeper-job NODE_ID=2 REGISTRY_ADDRESS=$$registryAddress && \
+	make create-keeper-job NODE_ID=3 REGISTRY_ADDRESS=$$registryAddress && \
+	make create-keeper-job NODE_ID=4 REGISTRY_ADDRESS=$$registryAddress && \
+	make create-keeper-job NODE_ID=5 REGISTRY_ADDRESS=$$registryAddress;
 
 # Chainlink Consumer Solidity Scripts
 request-eth-price-consumer:
@@ -234,9 +236,8 @@ register-upkeep:
 	$(call check_defined, RPC_URL) \
 	$(call check_set_parameter,REGISTRY_ADDRESS,registryAddress) \
 	$(call check_set_parameter,KEEPER_CONSUMER_ADDRESS,keeperConsumerAddress) \
-	$(call check_set_parameter,LINK_CONTRACT_ADDRESS,linkContractAddress) \
 	echo "Registering Upkeep in the Chainlink Registry. Please wait..."; \
-	forge script ./script/Registry.s.sol --sig "registerUpkeep(address,address,address,uint256)" $$registryAddress $$keeperConsumerAddress $$linkContractAddress 1000000000000000000000 --rpc-url ${RPC_URL} --broadcast --silent
+	forge script ./script/Registry.s.sol --sig "registerUpkeep(address,address)" $$registryAddress $$keeperConsumerAddress --rpc-url ${RPC_URL} --broadcast --silent
 
 set-keepers:
 	$(call check_defined, PRIVATE_KEY) \
@@ -252,7 +253,7 @@ set-keepers:
 	make login NODE_ID=4 && \
 	$(call get_node_address, $(CHAINLINK_CONTAINER_NAME)4,nodeAddress4) \
 	make login NODE_ID=5 && \
-	$(call get_node_address, $(CHAINLINK_CONTAINER_NAME)5,nodeAddress4) \
+	$(call get_node_address, $(CHAINLINK_CONTAINER_NAME)5,nodeAddress5) \
 	printf "%s\n" "Setting Keepers in Registry. Please wait..."; \
 	forge script ./script/Registry.s.sol --sig "setKeepers(address,address,address[])" $$registryAddress $$keeperConsumerAddress [$$nodeAddress1,$$nodeAddress2,$$nodeAddress3,$$nodeAddress4,$$nodeAddress5] --rpc-url ${RPC_URL} --broadcast --silent
 
@@ -260,7 +261,7 @@ get-last-active-upkeep-id:
 	$(call check_defined, PRIVATE_KEY) \
 	$(call check_defined, RPC_URL) \
 	$(call check_set_parameter,REGISTRY_ADDRESS,registryAddress) \
-	echo "Getting active Upkeep ids. Please wait..."; \
+	echo "Getting the last active upkeep id. Please wait..."; \
 	forge script ./script/Registry.s.sol --sig "getLastActiveUpkeepID(address)" $$registryAddress --rpc-url ${RPC_URL} --broadcast --silent
 
 # Chainlink Keeper Consumer Solidity Scripts

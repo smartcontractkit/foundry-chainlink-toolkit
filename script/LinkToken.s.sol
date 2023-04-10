@@ -21,8 +21,10 @@ contract LinkTokenScript is Script {
   function transferAndCall(address tokenAddress, address to, uint256 amount, uint256 upkeepId) external {
     uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
     vm.broadcast(deployerPrivateKey);
+
     LinkToken linkToken = LinkToken(tokenAddress);
     linkToken.transferAndCall(to, amount, abi.encode(upkeepId));
+
     vm.stopBroadcast();
   }
 }

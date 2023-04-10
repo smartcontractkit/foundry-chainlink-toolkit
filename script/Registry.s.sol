@@ -40,11 +40,12 @@ contract RegistryScript is Script {
   }
 
   function setKeepers(address registryAddress, address upkeepAddress, address[] memory nodesArray) external {
-    address[] memory payees = new address[](4);
+    address[] memory payees = new address[](5);
     payees[0] = upkeepAddress;
     payees[1] = upkeepAddress;
     payees[2] = upkeepAddress;
     payees[3] = upkeepAddress;
+    payees[4] = upkeepAddress;
 
     uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
     vm.startBroadcast(deployerPrivateKey);
@@ -57,24 +58,22 @@ contract RegistryScript is Script {
     vm.stopBroadcast();
   }
 
-  function registerUpkeep(address registryAddress, address upkeepAddress, address linkTokenAddress, uint256 amount) external {
+  function registerUpkeep(address registryAddress, address upkeepAddress) external {
     uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
+    address deployerAddress = vm.envAddress("DEPLOYER_ADDRESS");
 
-    bytes memory checkData = new bytes(0);
     address payable registryAddressPayable = payable(registryAddress);
     KeeperRegistry1_3 registry = KeeperRegistry1_3(registryAddressPayable);
 
-
     vm.startBroadcast(deployerPrivateKey);
-    uint256 upkeepId = registry.registerUpkeep(upkeepAddress, 499999, address(0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266), checkData);
-    console.logUint(upkeepId);
-
+    bytes memory checkData = new bytes(0);
+    uint256 upkeepId = registry.registerUpkeep(upkeepAddress, 499999, deployerAddress, checkData);
     vm.stopBroadcast();
   }
 
   function getState(address registryAddress) external {
     uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
-    address[] memory keepers = new address[](4);
+    address[] memory keepers = new address[](5);
     address payable registryAddressPayable = payable(registryAddress);
     KeeperRegistry1_3 registry = KeeperRegistry1_3(registryAddressPayable);
     (,,keepers) = registry.getState();
@@ -82,6 +81,7 @@ contract RegistryScript is Script {
     console.logAddress(keepers[1]);
     console.logAddress(keepers[2]);
     console.logAddress(keepers[3]);
+    console.logAddress(keepers[4]);
     vm.stopBroadcast();
   }
 

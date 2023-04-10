@@ -29,6 +29,10 @@ define get_node_address
 	$2=$$(docker exec $1 chainlink -j keys eth list | grep "address" | cut -d'"' -f4 | sed 's/\"//g');
 endef
 
+define get_cookie
+	$2=$$(cat ./chainlink/$1/cookie | grep "clsession");
+endef
+
 install:
 	forge install foundry-rs/forge-std --no-commit; \
 	forge install smartcontractkit/chainlink --no-commit; \
@@ -175,6 +179,14 @@ create-webhook-job:
 	make login NODE_ID=$$nodeId; \
 	docker exec $$chainlinkContainerName bash -c "chainlink jobs create ${ROOT}/jobs/webhook_job.toml"
 
+run-webhook-job:
+	$(call check_set_parameter,NODE_ID,nodeId) \
+	$(call check_set_parameter,JOB_ID,jobId) \
+	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
+	make login NODE_ID=$$nodeId; \
+	$(call get_cookie,$$chainlinkContainerName,cookie) \
+	curl --cookie "$$cookie" -X POST -H "Content-Type: application/json" http://localhost:67$$nodeId$$nodeId/v2/jobs/$$jobId/runs
+
 create-keeper-job:
 	$(call check_set_parameter,REGISTRY_ADDRESS,registryAddress) \
 	$(call check_set_parameter,NODE_ID,nodeId) \
@@ -191,7 +203,7 @@ create-keeper-jobs:
 	make create-keeper-job NODE_ID=3 && \
 	make create-keeper-job NODE_ID=4;
 
-# Chainlink Consumer Scripts
+# Chainlink Consumer Solidity Scripts
 request-eth-price-consumer:
 	$(call check_defined, PRIVATE_KEY) \
 	$(call check_defined, RPC_URL) \
@@ -208,7 +220,7 @@ get-eth-price-consumer:
 	echo "Getting current ETH price. Please wait..."; \
 	forge script ./script/ChainlinkConsumer.s.sol --sig "getEthereumPrice(address)" $$consumerAddress --rpc-url ${RPC_URL} --broadcast --silent
 
-# Chainlink Cron Consumer Scripts
+# Chainlink Cron Consumer Solidity Scripts
 get-eth-price-cron-consumer:
 	$(call check_defined, PRIVATE_KEY) \
 	$(call check_defined, RPC_URL) \
@@ -216,7 +228,7 @@ get-eth-price-cron-consumer:
 	echo "Getting current ETH price. Please wait..."; \
 	forge script ./script/ChainlinkCronConsumer.s.sol --sig "getEthereumPrice(address)" $$cronConsumerAddress --rpc-url ${RPC_URL} --broadcast --silent
 
-# Chainlink Registry Scripts
+# Chainlink Registry Solidity Scripts
 register-upkeep:
 	$(call check_defined, PRIVATE_KEY) \
 	$(call check_defined, RPC_URL) \
@@ -251,7 +263,7 @@ get-last-active-upkeep-id:
 	echo "Getting active Upkeep ids. Please wait..."; \
 	forge script ./script/Registry.s.sol --sig "getLastActiveUpkeepID(address)" $$registryAddress --rpc-url ${RPC_URL} --broadcast --silent
 
-# Chainlink Keeper Consumer Scripts
+# Chainlink Keeper Consumer Solidity Scripts
 get-keeper-counter:
 	$(call check_defined, PRIVATE_KEY) \
 	$(call check_defined, RPC_URL) \
@@ -259,7 +271,7 @@ get-keeper-counter:
 	echo "Getting current counter. Please wait..."; \
 	forge script ./script/ChainlinkKeeperConsumer.s.sol --sig "getCounter(address)" $$keeperConsumerAddress --rpc-url ${RPC_URL} --broadcast --silent
 
-# Link Token Script
+# Link Token Solidity Scripts
 transfer-and-call-link:
 	$(call check_defined, PRIVATE_KEY) \
 	$(call check_defined, RPC_URL) \

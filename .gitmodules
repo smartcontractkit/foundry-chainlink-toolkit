@@ -2,10 +2,6 @@
 	path = lib/forge-std
 	url = https://github.com/foundry-rs/forge-std
 	branch = v1.5.0
-[submodule "lib/chainlink-brownie-contracts"]
-	path = lib/chainlink-brownie-contracts
-	url = https://github.com/smartcontractkit/chainlink-brownie-contracts
-	branch = 1.2.0
 [submodule "lib/chainlink"]
 	path = lib/chainlink
 	url = https://github.com/smartcontractkit/chainlink
@@ -14,9 +10,3 @@
 	path = lib/openzeppelin-contracts
 	url = https://github.com/OpenZeppelin/openzeppelin-contracts
 	branch = v4.8.2
-[submodule "lib/LinkToken"]
-	path = lib/LinkToken
-	url = https://github.com/smartcontractkit/LinkToken
-[submodule "lib/openzeppelin-contracts@v3.4.2/lib/openzeppelin-contracts@v3.4.2/lib/openzeppelin-contracts"]
-	path = lib/openzeppelin-contracts@v3.4.2/lib/openzeppelin-contracts@v3.4.2/lib/openzeppelin-contracts
-	url = https://github.com/OpenZeppelin/openzeppelin-contracts

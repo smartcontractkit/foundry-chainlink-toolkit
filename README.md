@@ -169,9 +169,9 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   During the execution of the command, you will need to enter:
   - NODE_ID - Chainlink node ID
 
-#### Get Chainlink node info
+#### Get Chainlink ETH keys
   ```
-  make get-info
+  make get-eth-keys
   ```
   This command returns data related to Chainlink node's EVM Chain Accounts, e.g.:
   - Account address (this is the address for a Chainlink node wallet)
@@ -181,8 +181,26 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   During the execution of the command, you will need to enter:
   - NODE_ID - Chainlink node ID
 
-   > **Note**  
-   > You also can find this information in the node Operator GUI under the Key Management configuration.
+#### Get Chainlink OCR keys
+  ```
+  make get-ocr-keys
+  ```
+  This command returns Chainlink node's OCR keys.
+
+  During the execution of the command, you will need to enter:
+  - NODE_ID - Chainlink node ID
+
+#### Get Chainlink P2P keys
+  ```
+  make get-p2p-keys
+  ```
+  This command returns Chainlink node's P2P keys.
+
+  During the execution of the command, you will need to enter:
+  - NODE_ID - Chainlink node ID
+
+> **Note**  
+> You also can find information on keys in the node Operator GUI under the Key Management configuration.
 
 ### Smart Contracts Deployment Scripts
 > **Note**  
@@ -230,6 +248,15 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   make deploy-consumer
   ```
   This command deploys an instance of Chainlink Registry.sol contract.
+
+  During the execution of the command, you will need to enter:
+  - LINK_CONTRACT_ADDRESS - Link Token contract address
+
+#### Deploy Chainlink Offchain Aggregator contract
+  ```
+  make chainlink-offchain-aggregator
+  ```
+  This command deploys an instance of Chainlink [OffchainAggregator.sol](src%2FOffchainAggregator%2FOffchainAggregator.sol) contract.
 
   During the execution of the command, you will need to enter:
   - LINK_CONTRACT_ADDRESS - Link Token contract address
@@ -329,10 +356,39 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   ```
   make create-keeper-jobs
   ```
-  This command creates Chainlink job for each Chainlink node in a cluster according to [keeper_job.toml](chainlink%2Fjobs%2Fkeeper_job.toml).
+  This command creates a Chainlink job for each Chainlink node in a cluster according to [keeper_job.toml](chainlink%2Fjobs%2Fkeeper_job.toml).
 
   During the execution of the command, you will need to enter:
   - REGISTRY_ADDRESS - Registry contract address
+
+#### Create Chainlink OCR (bootstrap) job
+  ```
+  make create-ocr-bootstrap-job
+  ```
+  This command creates a Chainlink job for the first Chainlink node in a cluster according to [ocr_job_bootstrap.toml](chainlink%2Fjobs%2Focr_job_bootstrap.toml).
+
+  During the execution of the command, you will need to enter:
+  - OFFCHAIN_AGGREGATOR_ADDRESS - Offchain Aggregator contract address
+
+#### Create Chainlink OCR job
+  ```
+  make create-ocr-bootstrap-job
+  ```
+  This command creates a Chainlink job according to [ocr_job.toml](chainlink%2Fjobs%2Focr_job.toml).
+
+  During the execution of the command, you will need to enter:
+  - NODE_ID - Chainlink node ID
+  - OFFCHAIN_AGGREGATOR_ADDRESS - Offchain Aggregator contract address
+  - BOOTSTRAP_P2P_KEY - P2P key for an OCR bootstrap Chainlink node
+
+#### Create Chainlink OCR jobs
+  ```
+  make create-ocr-bootstrap-jobs
+  ```
+  This command creates a Chainlink job for each Chainlink node except the first one (bootstrap) in a cluster according to [ocr_job.toml](chainlink%2Fjobs%2Focr_job.toml).
+
+  During the execution of the command, you will need to enter:
+  - OFFCHAIN_AGGREGATOR_ADDRESS - Offchain Aggregator contract address
 
    > **Note**  
    > You can check list of created jobs with Chainlink Operator GUI.
@@ -404,19 +460,6 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   During the execution of the command, you will need to enter:
   - REGISTRY_ADDRESS - Registry contract address
 
-### Link Token Solidity Scripts
-
-#### Transfer-and-Call Link Token
-  ```
-  make transfer-and-call-link
-  ```
-  This command transfers Link tokens to the Registry contract and calls it's `onTokenTransfer` method that verifies that an upkeep is funded.
-
-  During the execution of the command, you will need to enter:
-  - LINK_CONTRACT_ADDRESS - Link Token contract address
-  - REGISTRY_ADDRESS - Registry contract address
-  - UPKEEP_ID - Keeper Consumer upkeep ID
-
 ### Chainlink Keeper Consumer Solidity Scripts
 
 #### Get Keeper Counter
@@ -427,6 +470,72 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
 
   During the execution of the command, you will need to enter:
   - KEEPER_CONSUMER_ADDRESS - Keeper Consumer contract address
+
+### Link Token Solidity Scripts
+
+#### Transfer-and-Call Link Token
+  ```
+  make transfer-and-call-link
+  ```
+  This command transfers Link tokens to the Registry contract and calls it's `onTokenTransfer` method that verifies that an upkeep is funded.
+
+  During the execution of the command, you will need to enter:
+  - LINK_CONTRACT_ADDRESS - Link Token contract address
+
+#### Get Link Token balance
+  ```
+  make get-balance
+  ```
+  This command gets Link Token balance of an account.
+
+  During the execution of the command, you will need to enter:
+  - LINK_CONTRACT_ADDRESS - Link Token contract address
+  - ACCOUNT - Account
+
+### Offchain Aggregator Solidity Scripts
+
+#### Set Payees
+  ```
+  make set-payees
+  ```
+  This command sets `payees` in the Offchain Aggregator contract.
+
+  During the execution of the command, you will need to enter:
+  - OFFCHAIN_AGGREGATOR_ADDRESS - Offchain Aggregator contract address
+
+#### Set Config
+  ```
+  make set-config
+  ```
+  This command sets OCR configuration in the Offchain Aggregator contract.
+
+  During the execution of the command, you will need to enter:
+  - OFFCHAIN_AGGREGATOR_ADDRESS - Offchain Aggregator contract address
+
+> **Note**  
+> This package uses external [Go library](external%2FOCRHelper) to prepare an OCR configuration.  
+> It has pre-built binaries for platforms: darwin/amd64, darwin/arm64, linux/amd64, linux/arm,linux/arm64.  
+> If you use another platform, please run in advance:  
+> ```make build-ocr-helper```  
+> to build external library for your platform. It requires Go (1.19) installed.
+
+#### Request New Round
+  ```
+  make request-new-round
+  ```
+  This command requests new OCR round immediately.
+
+  During the execution of the command, you will need to enter:
+  - OFFCHAIN_AGGREGATOR_ADDRESS - Offchain Aggregator contract address
+
+#### Get The Latest Answer
+  ```
+  make get-latest-answer
+  ```
+  This command gets an answer of the latest OCR round.
+
+  During the execution of the command, you will need to enter:
+  - OFFCHAIN_AGGREGATOR_ADDRESS - Offchain Aggregator contract address
 
 > **Note**  
 > In the current version of the package, some smart contracts are developed for different compiler versions.  
@@ -467,6 +576,15 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
 5. Register Keeper Consumer as upkeep in a Registry contract
 6. Get last upkeep ID in the Registry contract and run `Transfer and Call Link` script
 7. Get value of `counter` variable in a Keeper contract
+
+#### OCR Job
+1. Deploy Offchain Aggregator contract
+2. Set Offchain Aggregator payees
+3. Set Offchain Aggregator config
+4. Create OCR Job for a bootstrap Chainlink node (first in a cluster)
+5. Create OCR Jobs for Chainlink nodes in a cluster except the first one (bootstrap)
+6. Request new OCR round in the Offchain Aggregator contract
+7. Get the answer of the latest OCR round from the Offchain Aggregator contract
 
 ## Acknowledgements
 This project based on https://github.com/protofire/hardhat-chainlink-plugin. 

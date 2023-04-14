@@ -25,18 +25,61 @@ define get_chainlink_container_name
 	$2=$(CHAINLINK_CONTAINER_NAME)$(strip $1);
 endef
 
+# Reading only the first eth key list
 define get_node_address
-	$2=$$(docker exec $1 chainlink -j keys eth list | grep "address" | cut -d'"' -f4 | sed 's/\"//g');
+	$2=$$(docker exec $1 chainlink -j keys eth list | grep -m1 -o '"address": "[^"]*"' | head -1 | cut -d'"' -f4);
+endef
+
+# Reading only the first ocr key list
+define get_ocr_keys
+	temp=$$(docker exec $1 chainlink -j keys ocr list); \
+	$2=$$(echo $$temp | grep -m1 -o '"id": "[^"]*"' | head -1 | cut -d'"' -f4); \
+	$3=$$(echo $$temp | grep -m1 -o '"onChainSigningAddress": "[^"]*"' | head -1 | cut -d'"' -f4 | cut -d'_' -f2); \
+	$4=$$(echo $$temp | grep -m1 -o '"offChainPublicKey": "[^"]*"' | head -1 | cut -d'"' -f4 | cut -d'_' -f2); \
+	$5=$$(echo $$temp | grep -m1 -o '"configPublicKey": "[^"]*"' | head -1 | cut -d'"' -f4 | cut -d'_' -f2);
+endef
+
+# Reading only the first p2p key list
+define get_p2p_keys
+	temp=$$(docker exec $1 chainlink -j keys p2p list); \
+	$2=$$(echo $$temp | grep -m 1 -o '"peerId": "[^"]*"' | head -1 | cut -d'"' -f4 | cut -d'_' -f2); \
+	$3=$$(echo $$temp | grep -m 1 -o '"publicKey": "[^"]*"' | head -1 | cut -d'"' -f4);
 endef
 
 define get_cookie
 	$2=$$(cat ./chainlink/$1/cookie | grep "clsession");
 endef
 
+# Set OCRHelperPath variable
+ifeq ($(shell uname), Darwin)
+# Set variable for MacOS
+	ifeq ($(shell uname -m), amd64)
+	OCRHelperPath = "./external/OCRHelper/bin/ocr-helper-darwin-amd64"
+	else ifeq ($(shell uname -m), arm64)
+	OCRHelperPath = "./external/OCRHelper/bin/ocr-helper-darwin-arm64"
+	endif
+else ifeq ($(shell uname), Linux)
+# Set variable for Linux
+	ifeq ($(shell uname -m), amd64)
+	OCRHelperPath = "./external/OCRHelper/bin/ocr-helper-linux-amd64"
+	else ifeq ($(shell uname -m), arm)
+	OCRHelperPath = "./external/OCRHelper/bin/ocr-helper-linux-arm"
+	else ifeq ($(shell uname -m), arm64)
+	OCRHelperPath = "./external/OCRHelper/bin/ocr-helper-linux-arm64"
+	endif
+else
+# Set variable for other operating systems, binary has to be built in advance
+OCRHelperPath = "./external/OCRHelper/bin/ocr-helper"
+endif
+
 install:
 	forge install foundry-rs/forge-std --no-commit; \
 	forge install smartcontractkit/chainlink --no-commit; \
 	forge install OpenZeppelin/openzeppelin-contracts --no-commit
+
+# Build external libraries
+build-ocr-helper:
+	cd ./external/OCRHelper && go build -o bin/ocr-helper;
 
 # Chainlink Nodes Management Scripts
 run-nodes:
@@ -64,14 +107,26 @@ login:
 	$(call check_defined, CHAINLINK_CONTAINER_NAME) \
 	$(call check_set_parameter,NODE_ID,nodeId) \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
-	printf "%s\n" "Logging in Chainlink Node..."; \
+	printf "%s\n" "Logging in Chainlink Node $$nodeId..."; \
 	docker exec $$chainlinkContainerName chainlink admin login -f ${ROOT}/settings/chainlink_api_credentials
 
-get-node-info:
+get-eth-keys:
 	$(call check_set_parameter,NODE_ID,nodeId) \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
 	make login NODE_ID=$$nodeId; \
 	docker exec $$chainlinkContainerName chainlink -j keys eth list
+
+get-ocr-keys:
+	$(call check_set_parameter,NODE_ID,nodeId) \
+	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
+	make login NODE_ID=$$nodeId; \
+	docker exec $$chainlinkContainerName chainlink -j keys ocr list
+
+get-p2p-keys:
+	$(call check_set_parameter,NODE_ID,nodeId) \
+	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
+	make login NODE_ID=$$nodeId; \
+	docker exec $$chainlinkContainerName chainlink -j keys p2p list
 
 # Smart Contracts Deployment Scripts
 deploy-link-token:
@@ -205,6 +260,43 @@ create-keeper-jobs:
 	make create-keeper-job NODE_ID=4 REGISTRY_ADDRESS=$$registryAddress && \
 	make create-keeper-job NODE_ID=5 REGISTRY_ADDRESS=$$registryAddress;
 
+# Considering Chainlink Node with NODE_ID 1 is always a bootstrap node
+create-ocr-bootstrap-job:
+	nodeId=1; \
+	$(call check_set_parameter,OFFCHAIN_AGGREGATOR_ADDRESS,offchainAggregatorAddress) \
+	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
+	make login NODE_ID=$$nodeId; \
+	$(call get_node_address,$$chainlinkContainerName,nodeAddress) \
+	$(call get_p2p_keys,$$chainlinkContainerName,peerId,_) \
+	docker exec $$chainlinkContainerName bash -c "touch ${ROOT}/jobs/ocr_job_bootstrap_tmp.toml \
+	&& sed -e 's/OFFCHAIN_AGGREGATOR_ADDRESS/$$offchainAggregatorAddress/g' -e 's/PEER_ID/$$peerId/g' ${ROOT}/jobs/ocr_job_bootstrap.toml > ${ROOT}/jobs/ocr_job_bootstrap_tmp.toml" && \
+	docker exec $$chainlinkContainerName bash -c "chainlink jobs create ${ROOT}/jobs/ocr_job_bootstrap_tmp.toml && rm ${ROOT}/jobs/ocr_job_bootstrap_tmp.toml"
+
+create-ocr-job:
+	$(call check_set_parameter,OFFCHAIN_AGGREGATOR_ADDRESS,offchainAggregatorAddress) \
+	$(call check_set_parameter,BOOTSTRAP_P2P_KEY,bootstrapP2PKey) \
+	$(call check_set_parameter,NODE_ID,nodeId) \
+	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
+	make login NODE_ID=$$nodeId; \
+	$(call get_node_address,$$chainlinkContainerName,nodeAddress) \
+	$(call get_ocr_keys,$$chainlinkContainerName,ocrKeyId,_,_,_) \
+	$(call get_p2p_keys,$$chainlinkContainerName,peerId,_) \
+	docker exec $$chainlinkContainerName bash -c "touch ${ROOT}/jobs/ocr_job_tmp.toml \
+	&& sed -e 's/OFFCHAIN_AGGREGATOR_ADDRESS/$$offchainAggregatorAddress/g' -e 's/BOOTSTRAP_P2P_KEY/$$bootstrapP2PKey/g' -e 's/PEER_ID/$$peerId/g' -e 's/OCR_KEY_ID/$$ocrKeyId/g' -e 's/NODE_ADDRESS/$$nodeAddress/g' ${ROOT}/jobs/ocr_job.toml > ${ROOT}/jobs/ocr_job_tmp.toml" && \
+	docker exec $$chainlinkContainerName bash -c "chainlink jobs create ${ROOT}/jobs/ocr_job_tmp.toml && rm ${ROOT}/jobs/ocr_job_tmp.toml"
+
+create-ocr-jobs:
+	nodeId=1; \
+	$(call check_set_parameter,OFFCHAIN_AGGREGATOR_ADDRESS,offchainAggregatorAddress) \
+	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
+	make login NODE_ID=$$nodeId; \
+	$(call get_p2p_keys,$$chainlinkContainerName,peerId,_) \
+	$(call check_set_parameter,OFFCHAIN_AGGREGATOR_ADDRESS,offchainAggregatorAddress) \
+	make create-ocr-job NODE_ID=2 OFFCHAIN_AGGREGATOR_ADDRESS=$$offchainAggregatorAddress BOOTSTRAP_P2P_KEY=$$peerId && \
+	make create-ocr-job NODE_ID=3 OFFCHAIN_AGGREGATOR_ADDRESS=$$offchainAggregatorAddress BOOTSTRAP_P2P_KEY=$$peerId && \
+	make create-ocr-job NODE_ID=4 OFFCHAIN_AGGREGATOR_ADDRESS=$$offchainAggregatorAddress BOOTSTRAP_P2P_KEY=$$peerId && \
+	make create-ocr-job NODE_ID=5 OFFCHAIN_AGGREGATOR_ADDRESS=$$offchainAggregatorAddress BOOTSTRAP_P2P_KEY=$$peerId;
+
 # Chainlink Consumer Solidity Scripts
 request-eth-price-consumer:
 	$(call check_defined, PRIVATE_KEY) \
@@ -244,16 +336,26 @@ set-keepers:
 	$(call check_defined, RPC_URL) \
 	$(call check_set_parameter,REGISTRY_ADDRESS,registryAddress) \
 	$(call check_set_parameter,KEEPER_CONSUMER_ADDRESS,keeperConsumerAddress) \
-	make login NODE_ID=1 && \
-	$(call get_node_address, $(CHAINLINK_CONTAINER_NAME)1,nodeAddress1) \
-	make login NODE_ID=2 && \
-	$(call get_node_address, $(CHAINLINK_CONTAINER_NAME)2,nodeAddress2) \
-	make login NODE_ID=3 && \
-	$(call get_node_address, $(CHAINLINK_CONTAINER_NAME)3,nodeAddress3) \
-	make login NODE_ID=4 && \
-	$(call get_node_address, $(CHAINLINK_CONTAINER_NAME)4,nodeAddress4) \
-	make login NODE_ID=5 && \
-	$(call get_node_address, $(CHAINLINK_CONTAINER_NAME)5,nodeAddress5) \
+	nodeId=1; \
+	make login NODE_ID=$$nodeId && \
+	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
+	$(call get_node_address,$$chainlinkContainerName,nodeAddress1) \
+	nodeId=2; \
+	make login NODE_ID=$$nodeId && \
+	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
+	$(call get_node_address,$$chainlinkContainerName,nodeAddress2) \
+	nodeId=3; \
+	make login NODE_ID=$$nodeId && \
+	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
+	$(call get_node_address,$$chainlinkContainerName,nodeAddress3) \
+	nodeId=4; \
+	make login NODE_ID=$$nodeId && \
+	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
+	$(call get_node_address,$$chainlinkContainerName,nodeAddress4) \
+	nodeId=5; \
+	make login NODE_ID=$$nodeId && \
+	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
+	$(call get_node_address,$$chainlinkContainerName,nodeAddress5) \
 	printf "%s\n" "Setting Keepers in Registry. Please wait..."; \
 	forge script ./script/Registry.s.sol --sig "setKeepers(address,address,address[])" $$registryAddress $$keeperConsumerAddress [$$nodeAddress1,$$nodeAddress2,$$nodeAddress3,$$nodeAddress4,$$nodeAddress5] --rpc-url ${RPC_URL} --broadcast --silent
 
@@ -280,4 +382,97 @@ transfer-and-call-link:
 	$(call check_set_parameter,UPKEEP_ID,upkeepId) \
 	$(call check_set_parameter,LINK_CONTRACT_ADDRESS,linkContractAddress) \
 	echo "Transferring Link Tokens to the recipient. Please wait..."; \
-	forge script ./script/LinkToken.s.sol --sig "transferAndCall(address, address, uint256, uint256)" $$linkContractAddress $$registryAddress 1000000000000000000 $$upkeepId --rpc-url ${RPC_URL} --broadcast --silent \
+	forge script ./script/LinkToken.s.sol --sig "transferAndCall(address, address, uint256, uint256)" $$linkContractAddress $$registryAddress 1000000000000000000 $$upkeepId --rpc-url ${RPC_URL} --broadcast --silent
+
+get-balance:
+	$(call check_defined, PRIVATE_KEY) \
+	$(call check_defined, RPC_URL) \
+	$(call check_set_parameter,LINK_CONTRACT_ADDRESS,linkContractAddress) \
+	$(call check_set_parameter,ACCOUNT,account) \
+	echo "Getting Link Token balance for the account. Please wait..."; \
+	forge script ./script/LinkToken.s.sol --sig "getBalance(address,address)" $$linkContractAddress $$account --rpc-url ${RPC_URL} --broadcast --silent
+
+# Offchain Aggregator
+# Excluding Node 1 as a bootstrap node
+set-payees:
+	$(call check_defined, PRIVATE_KEY) \
+	$(call check_defined, RPC_URL) \
+	$(call check_set_parameter,OFFCHAIN_AGGREGATOR_ADDRESS,offchainAggregatorAddress) \
+	nodeId=2; \
+	make login NODE_ID=$$nodeId && \
+	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
+	$(call get_node_address,$$chainlinkContainerName,nodeAddress2) \
+	nodeId=3; \
+	make login NODE_ID=$$nodeId && \
+	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
+	$(call get_node_address,$$chainlinkContainerName,nodeAddress3) \
+	nodeId=4; \
+	make login NODE_ID=$$nodeId && \
+	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
+	$(call get_node_address,$$chainlinkContainerName,nodeAddress4) \
+	nodeId=5; \
+	make login NODE_ID=$$nodeId && \
+	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
+	$(call get_node_address,$$chainlinkContainerName,nodeAddress5) \
+	printf "%s\n" "Setting Payees in the Offchain Aggregator contract. Please wait..."; \
+	forge script ./script/OffchainAggregator.s.sol --sig "setPayees(address,address[])" $$offchainAggregatorAddress [$$nodeAddress2,$$nodeAddress3,$$nodeAddress4,$$nodeAddress5] --rpc-url ${RPC_URL} --broadcast --silent
+
+# This is an internal method. Do not call it directly
+set-config_internal:
+	$(call check_set_parameter,OFFCHAIN_AGGREGATOR_ADDRESS,offchainAggregatorAddress) \
+	$(eval OCR_CONFIG=$(shell $(OCRHelperPath) \
+		$(nodeAddress2),$(nodeAddress3),$(nodeAddress4),$(nodeAddress5) \
+		$(offChainPublicKey2),$(offChainPublicKey3),$(offChainPublicKey4),$(offChainPublicKey5) \
+		$(configPublicKey2),$(configPublicKey3),$(configPublicKey4),$(configPublicKey5) \
+		$(onChainSigningAddress2),$(onChainSigningAddress3),$(onChainSigningAddress4),$(onChainSigningAddress5) \
+		$(peerId2),$(peerId3),$(peerId4),$(peerId5))) \
+	forge script ./script/OffchainAggregator.s.sol --sig "setConfig(address,address[],address[],uint8,uint64,bytes)" $$offchainAggregatorAddress $(OCR_CONFIG) --rpc-url ${RPC_URL} --broadcast --silent
+
+set-config:
+	$(call check_defined, PRIVATE_KEY) \
+	$(call check_defined, RPC_URL) \
+	nodeId=2; \
+	make login NODE_ID=$$nodeId && \
+	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
+	$(call get_node_address,$$chainlinkContainerName,nodeAddress2) \
+	$(call get_ocr_keys,$$chainlinkContainerName,_,onChainSigningAddress2,offChainPublicKey2,configPublicKey2) \
+	$(call get_p2p_keys,$$chainlinkContainerName,peerId2,_) \
+	nodeId=3; \
+	make login NODE_ID=$$nodeId && \
+	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
+	$(call get_node_address,$$chainlinkContainerName,nodeAddress3) \
+	$(call get_ocr_keys,$$chainlinkContainerName,_,onChainSigningAddress3,offChainPublicKey3,configPublicKey3) \
+	$(call get_p2p_keys,$$chainlinkContainerName,peerId3,_) \
+	nodeId=4; \
+	make login NODE_ID=$$nodeId && \
+	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
+	$(call get_node_address,$$chainlinkContainerName,nodeAddress4) \
+	$(call get_ocr_keys,$$chainlinkContainerName,_,onChainSigningAddress4,offChainPublicKey4,configPublicKey4) \
+	$(call get_p2p_keys,$$chainlinkContainerName,peerId4,_) \
+	nodeId=5; \
+	make login NODE_ID=$$nodeId && \
+	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
+	$(call get_node_address,$$chainlinkContainerName,nodeAddress5) \
+	$(call get_ocr_keys,$$chainlinkContainerName,_,onChainSigningAddress5,offChainPublicKey5,configPublicKey5) \
+	$(call get_p2p_keys,$$chainlinkContainerName,peerId5,_) \
+	make set-config_internal \
+		nodeAddress2=$$nodeAddress2 nodeAddress3=$$nodeAddress3 nodeAddress4=$$nodeAddress4 nodeAddress5=$$nodeAddress5 \
+		onChainSigningAddress2=$$onChainSigningAddress2 onChainSigningAddress3=$$onChainSigningAddress3 onChainSigningAddress4=$$onChainSigningAddress4 onChainSigningAddress5=$$onChainSigningAddress5 \
+		offChainPublicKey2=$$offChainPublicKey2 offChainPublicKey3=$$offChainPublicKey3 offChainPublicKey4=$$offChainPublicKey4 offChainPublicKey5=$$offChainPublicKey5 \
+		configPublicKey2=$$configPublicKey2 configPublicKey3=$$configPublicKey3 configPublicKey4=$$configPublicKey4 configPublicKey5=$$configPublicKey5 \
+		peerId2=$$peerId2 peerId3=$$peerId3 peerId4=$$peerId4 peerId5=$$peerId5;
+
+request-new-round:
+	$(call check_defined, PRIVATE_KEY) \
+	$(call check_defined, RPC_URL) \
+	$(call check_set_parameter,OFFCHAIN_AGGREGATOR_ADDRESS,offchainAggregatorAddress) \
+	printf "%s\n" "Requesting new round in the Offchain Aggregator contract. Please wait..."; \
+	forge script ./script/OffchainAggregator.s.sol --sig "requestNewRound(address)" $$offchainAggregatorAddress --rpc-url ${RPC_URL} --broadcast --silent
+
+get-latest-answer:
+	$(call check_defined, PRIVATE_KEY) \
+	$(call check_defined, RPC_URL) \
+	$(call check_set_parameter,OFFCHAIN_AGGREGATOR_ADDRESS,offchainAggregatorAddress) \
+	printf "%s\n" "Getting the latest answer in the Offchain Aggregator contract. Please wait..."; \
+	forge script ./script/OffchainAggregator.s.sol --sig "latestAnswer(address)" $$offchainAggregatorAddress --rpc-url ${RPC_URL} --broadcast --silent
+

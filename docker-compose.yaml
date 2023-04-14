@@ -26,6 +26,7 @@ services:
     ports:
       - 6711:6688
       - 6061:6060
+      - 6690:6690
     volumes:
       - ./chainlink/${CHAINLINK_CONTAINER_NAME}1:${ROOT}
   chainlink_node2:

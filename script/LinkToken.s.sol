@@ -27,4 +27,10 @@ contract LinkTokenScript is Script {
 
     vm.stopBroadcast();
   }
+
+  function getBalance(address tokenAddress, address account) external returns(uint256){
+    LinkToken linkToken = LinkToken(tokenAddress);
+    uint256 balance = linkToken.balanceOf(account);
+    return balance;
+  }
 }

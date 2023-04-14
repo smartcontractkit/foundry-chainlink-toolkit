@@ -14,6 +14,7 @@ contract OffchainAggregatorScript is Script {
 
   function deploy(address tokenAddress) external {
     uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
+    uint256 deployerAddress = vm.envUint("DEPLOYER_ADDRESS");
     vm.startBroadcast(deployerPrivateKey);
 
     MockAccessController mockAccessController = new MockAccessController();
@@ -35,5 +36,61 @@ contract OffchainAggregatorScript is Script {
     );
 
     vm.stopBroadcast();
+  }
+
+  function setPayees(address offchainAggregatorAddress, address[] memory nodesArray) external {
+    address deployerAddress = vm.envAddress("DEPLOYER_ADDRESS");
+    address[] memory payees = new address[](4);
+    payees[0] = deployerAddress;
+    payees[1] = deployerAddress;
+    payees[2] = deployerAddress;
+    payees[3] = deployerAddress;
+
+    uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
+    vm.startBroadcast(deployerPrivateKey);
+
+    OffchainAggregator offchainAggregator = OffchainAggregator(offchainAggregatorAddress);
+    offchainAggregator.setPayees(nodesArray, payees);
+
+    vm.stopBroadcast();
+  }
+
+  function setConfig(
+    address offchainAggregatorAddress,
+    address[] calldata signers,
+    address[] calldata transmitters,
+    uint8 threshold,
+    uint64 encodedConfigVersion,
+    bytes calldata encoded
+  ) external {
+    uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
+    vm.startBroadcast(deployerPrivateKey);
+
+    OffchainAggregator offchainAggregator = OffchainAggregator(offchainAggregatorAddress);
+    offchainAggregator.setConfig(signers, transmitters, threshold, encodedConfigVersion, encoded);
+
+    vm.stopBroadcast();
+  }
+
+  function requestNewRound(address offchainAggregatorAddress) external {
+    uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
+    vm.startBroadcast(deployerPrivateKey);
+
+    OffchainAggregator offchainAggregator = OffchainAggregator(offchainAggregatorAddress);
+    offchainAggregator.requestNewRound();
+
+    vm.stopBroadcast();
+  }
+
+  function latestAnswer(address offchainAggregatorAddress) external returns (int256) {
+    uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
+    vm.startBroadcast(deployerPrivateKey);
+
+    OffchainAggregator offchainAggregator = OffchainAggregator(offchainAggregatorAddress);
+    int256 answer = offchainAggregator.latestAnswer();
+
+    vm.stopBroadcast();
+
+    return answer;
   }
 }

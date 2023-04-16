@@ -186,6 +186,13 @@ deploy-chainlink-offchain-aggregator:
 	printf "%s\n" "Deploying Chainlink OffChain Aggregator. Please wait..."; \
 	forge script ./script/OffchainAggregator.s.sol --sig "deploy(address)" $$linkContractAddress --rpc-url ${RPC_URL} --broadcast --silent
 
+deploy-chainlink-flux-aggregator:
+	$(call check_defined, PRIVATE_KEY) \
+	$(call check_defined, RPC_URL) \
+	$(call check_set_parameter,LINK_CONTRACT_ADDRESS,linkContractAddress) \
+	printf "%s\n" "Deploying Chainlink Flux Aggregator. Please wait..."; \
+	forge script ./script/FluxAggregator.s.sol --sig "deploy(address)" $$linkContractAddress --rpc-url ${RPC_URL} --broadcast --silent
+
 # Helper Solidity Scripts
 transfer-eth:
 	$(call check_defined, PRIVATE_KEY) \
@@ -303,6 +310,22 @@ create-ocr-jobs:
 	make create-ocr-job NODE_ID=3 OFFCHAIN_AGGREGATOR_ADDRESS=$$offchainAggregatorAddress BOOTSTRAP_P2P_KEY=$$peerId && \
 	make create-ocr-job NODE_ID=4 OFFCHAIN_AGGREGATOR_ADDRESS=$$offchainAggregatorAddress BOOTSTRAP_P2P_KEY=$$peerId && \
 	make create-ocr-job NODE_ID=5 OFFCHAIN_AGGREGATOR_ADDRESS=$$offchainAggregatorAddress BOOTSTRAP_P2P_KEY=$$peerId;
+
+create-flux-job:
+	$(call check_set_parameter,FLUX_AGGREGATOR_ADDRESS,fluxAggregatorAddress) \
+	$(call check_set_parameter,NODE_ID,nodeId) \
+	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
+	make login NODE_ID=$$nodeId; \
+	docker exec $$chainlinkContainerName bash -c "touch ${ROOT}/jobs/flux_job_tmp.toml \
+	&& sed -e 's/FLUX_AGGREGATOR_ADDRESS/$$fluxAggregatorAddress/g' ${ROOT}/jobs/flux_job.toml > ${ROOT}/jobs/flux_job_tmp.toml" && \
+	docker exec $$chainlinkContainerName bash -c "chainlink jobs create ${ROOT}/jobs/flux_job_tmp.toml && rm ${ROOT}/jobs/flux_job_tmp.toml"
+
+# Create a Flux Jo for the first 3 nodes of a Chainlink cluster
+create-flux-jobs:
+	$(call check_set_parameter,FLUX_AGGREGATOR_ADDRESS,fluxAggregatorAddress) \
+	make create-flux-job NODE_ID=1 FLUX_AGGREGATOR_ADDRESS=$$fluxAggregatorAddress && \
+	make create-flux-job NODE_ID=2 FLUX_AGGREGATOR_ADDRESS=$$fluxAggregatorAddress && \
+	make create-flux-job NODE_ID=3 FLUX_AGGREGATOR_ADDRESS=$$fluxAggregatorAddress
 
 # Chainlink Consumer Solidity Scripts
 request-eth-price-consumer:
@@ -476,10 +499,51 @@ request-new-round:
 	printf "%s\n" "Requesting new round in the Offchain Aggregator contract. Please wait..."; \
 	forge script ./script/OffchainAggregator.s.sol --sig "requestNewRound(address)" $$offchainAggregatorAddress --rpc-url ${RPC_URL} --broadcast --silent
 
-get-latest-answer:
+get-ocr-latest-answer:
 	$(call check_defined, PRIVATE_KEY) \
 	$(call check_defined, RPC_URL) \
 	$(call check_set_parameter,OFFCHAIN_AGGREGATOR_ADDRESS,offchainAggregatorAddress) \
 	printf "%s\n" "Getting the latest answer in the Offchain Aggregator contract. Please wait..."; \
 	forge script ./script/OffchainAggregator.s.sol --sig "latestAnswer(address)" $$offchainAggregatorAddress --rpc-url ${RPC_URL} --broadcast --silent
 
+# Flux Aggregator
+update-available-funds:
+	$(call check_defined, PRIVATE_KEY) \
+	$(call check_defined, RPC_URL) \
+	$(call check_set_parameter,FLUX_AGGREGATOR_ADDRESS,fluxAggregatorAddress) \
+	printf "%s\n" "Updating available funds in the Flux Aggregator contract. Please wait..."; \
+	forge script ./script/FluxAggregator.s.sol --sig "updateAvailableFunds(address)" $$fluxAggregatorAddress --rpc-url ${RPC_URL} --broadcast --silent
+
+# For the Flux Aggregator, we use the first 3 nodes of a Chainlink cluster
+set-oracles:
+	$(call check_defined, PRIVATE_KEY) \
+	$(call check_defined, RPC_URL) \
+	$(call check_set_parameter,FLUX_AGGREGATOR_ADDRESS,fluxAggregatorAddress) \
+	nodeId=1; \
+	make login NODE_ID=$$nodeId && \
+	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
+	$(call get_node_address,$$chainlinkContainerName,nodeAddress1) \
+	nodeId=2; \
+	make login NODE_ID=$$nodeId && \
+	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
+	$(call get_node_address,$$chainlinkContainerName,nodeAddress2) \
+	nodeId=3; \
+	make login NODE_ID=$$nodeId && \
+	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
+	$(call get_node_address,$$chainlinkContainerName,nodeAddress3) \
+	printf "%s\n" "Setting Oracles in Flux Aggregator. Please wait..."; \
+	forge script ./script/FluxAggregator.s.sol --sig "setOracles(address,address[])" $$fluxAggregatorAddress [$$nodeAddress1,$$nodeAddress2,$$nodeAddress3] --rpc-url ${RPC_URL} --broadcast --silent
+
+get-oracles:
+	$(call check_defined, PRIVATE_KEY) \
+	$(call check_defined, RPC_URL) \
+	$(call check_set_parameter,FLUX_AGGREGATOR_ADDRESS,fluxAggregatorAddress) \
+	printf "%s\n" "Getting oracles in the Flux Aggregator contract. Please wait..."; \
+	forge script ./script/FluxAggregator.s.sol --sig "getOracles(address)" $$fluxAggregatorAddress --rpc-url ${RPC_URL} --broadcast --silent
+
+get-flux-latest-answer:
+	$(call check_defined, PRIVATE_KEY) \
+	$(call check_defined, RPC_URL) \
+	$(call check_set_parameter,FLUX_AGGREGATOR_ADDRESS,fluxAggregatorAddress) \
+	printf "%s\n" "Getting the latest answer in the Flux Aggregator contract. Please wait..."; \
+	forge script ./script/FluxAggregator.s.sol --sig "getLatestAnswer(address)" $$fluxAggregatorAddress --rpc-url ${RPC_URL} --broadcast --silent

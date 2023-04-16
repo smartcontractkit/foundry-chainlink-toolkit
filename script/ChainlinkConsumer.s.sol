@@ -9,13 +9,15 @@ contract ChainlinkConsumerScript is Script {
     console.log("Please run deploy() method.");
   }
 
-  function deploy(address tokenAddress) external {
+  function deploy(address tokenAddress) external returns(address) {
     uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
     vm.startBroadcast(deployerPrivateKey);
 
     ChainlinkConsumer chainlinkConsumer = new ChainlinkConsumer(tokenAddress);
 
     vm.stopBroadcast();
+
+    return address(chainlinkConsumer);
   }
 
   function requestEthereumPrice(address consumerAddress, address oracleAddress, string memory jobId) external {

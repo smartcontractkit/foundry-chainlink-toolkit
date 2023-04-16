@@ -18,14 +18,27 @@ contract RegistryScript is Script {
     console.log("Please run deploy() method.");
   }
 
-  function deploy(address linkTokenAddress) external {
+  function deploy(address linkTokenAddress) external returns(address) {
     uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
     vm.startBroadcast(deployerPrivateKey);
 
     MockEthFeed mockEthFeed = new MockEthFeed();
     MockGasFeed mockGasFeed = new MockGasFeed();
 
-    Config memory registryConfig = Config(250000000, 0, 1, 500000, 3600, 1, 0, 500000, 100, 200000000, randomAddress, randomAddress);
+    Config memory registryConfig = Config(
+      250000000,
+      0,
+      1,
+      500000,
+      3600,
+      1,
+      0,
+      500000,
+      100,
+      200000000,
+      randomAddress,
+      randomAddress
+    );
 
     KeeperRegistryLogic1_3 registryLogic = new KeeperRegistryLogic1_3(
       KeeperRegistryBase1_3.PaymentModel.DEFAULT,
@@ -37,6 +50,8 @@ contract RegistryScript is Script {
     KeeperRegistry1_3 registry = new KeeperRegistry1_3(registryLogic, registryConfig);
 
     vm.stopBroadcast();
+
+    return address(registry);
   }
 
   function setKeepers(address registryAddress, address upkeepAddress, address[] memory nodesArray) external {

@@ -9,13 +9,15 @@ contract ChainlinkCronConsumerScript is Script {
     console.log("Please run deploy() method.");
   }
 
-  function deploy() external {
+  function deploy() external returns(address) {
     uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
     vm.startBroadcast(deployerPrivateKey);
 
     ChainlinkCronConsumer chainlinkCronConsumer = new ChainlinkCronConsumer();
 
     vm.stopBroadcast();
+
+    return address(chainlinkCronConsumer);
   }
 
   function getEthereumPrice(address consumerAddress)

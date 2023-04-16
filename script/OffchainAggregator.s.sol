@@ -12,7 +12,7 @@ contract OffchainAggregatorScript is Script {
     console.log("Please run deploy() method.");
   }
 
-  function deploy(address tokenAddress) external {
+  function deploy(address tokenAddress) external returns(address) {
     uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
     uint256 deployerAddress = vm.envUint("DEPLOYER_ADDRESS");
     vm.startBroadcast(deployerPrivateKey);
@@ -36,6 +36,8 @@ contract OffchainAggregatorScript is Script {
     );
 
     vm.stopBroadcast();
+
+    return address(offchainAggregator);
   }
 
   function setPayees(address offchainAggregatorAddress, address[] memory nodesArray) external {

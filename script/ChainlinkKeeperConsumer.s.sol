@@ -9,13 +9,15 @@ contract ChainlinkKeeperConsumerScript is Script {
     console.log("Please run deploy() method.");
   }
 
-  function deploy() external {
+  function deploy() external returns(address) {
     uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
     vm.startBroadcast(deployerPrivateKey);
 
     ChainlinkKeeperConsumer chainlinkKeeperConsumer = new ChainlinkKeeperConsumer();
 
     vm.stopBroadcast();
+
+    return address(chainlinkKeeperConsumer);
   }
 
   function getCounter(address chainlinkKeeperConsumerAddress)

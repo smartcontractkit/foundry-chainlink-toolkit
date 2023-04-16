@@ -9,7 +9,7 @@ contract OracleScript is Script {
     console.log("Please run deploy(address,address) method.");
   }
 
-  function deploy(address tokenAddress, address nodeAddress) external {
+  function deploy(address tokenAddress, address nodeAddress) external returns(address) {
     uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
     vm.startBroadcast(deployerPrivateKey);
 
@@ -17,5 +17,7 @@ contract OracleScript is Script {
     oracle.setFulfillmentPermission(nodeAddress, true);
 
     vm.stopBroadcast();
+
+    return address(oracle);
   }
 }

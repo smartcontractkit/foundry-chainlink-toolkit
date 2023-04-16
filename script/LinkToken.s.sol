@@ -9,13 +9,15 @@ contract LinkTokenScript is Script {
     console.log("Please run deploy() method.");
   }
 
-  function deploy() external {
+  function deploy() external returns(address) {
     uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
     vm.startBroadcast(deployerPrivateKey);
 
     LinkToken linkToken = new LinkToken();
 
     vm.stopBroadcast();
+
+    return address(linkToken);
   }
 
   function transferAndCall(address tokenAddress, address to, uint256 amount, uint256 upkeepId) external {

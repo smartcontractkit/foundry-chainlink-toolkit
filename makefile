@@ -100,7 +100,14 @@ restart-nodes:
 	$(call check_defined, POSTGRES_USER) \
 	$(call check_defined, POSTGRES_PASSWORD) \
 	$(call check_defined, LINK_CONTRACT_ADDRESS) \
-	docker compose -f docker-compose-cluster.yaml restart
+	if [ -n "$(CLEAN_RESTART)" ]; then \
+		docker compose down; \
+		docker volume rm foundry-chainlink-plugin_db-data foundry-chainlink-plugin_prometheus_data; \
+		rm -rf ./chainlink/foundry-chainlink-node*; \
+		docker compose up -d; \
+	else \
+		docker compose restart; \
+	fi
 
 login:
 	$(call check_defined, ROOT) \

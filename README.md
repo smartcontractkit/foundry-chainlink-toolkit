@@ -11,18 +11,35 @@
 This project uses [Foundry](https://book.getfoundry.sh) tools to deploy and test smart contracts.  
 It can be easily integrated into an existing Foundry project.
 
-## Table of Contents<!-- TOC -->
-* [Overview](#overview)
-* [Getting Started](#getting-started)
-  * [Prerequisites](#prerequisites)
-  * [Chain RPC node](#chain-rpc-node)
-  * [Chainlink shared folder](#chainlink-shared-folder)
-  * [Solidity Scripting](#solidity-scripting)
-  * [Environment variables](#environment-variables)
-* [Usage](#usage)
-  * [Available scripts](#available-scripts)
-  * [Testing](#testing)
-* [Acknowledgements](#acknowledgements)
+<!-- TOC -->
+  * [Overview](#overview)
+  * [Getting Started](#getting-started)
+    * [Prerequisites](#prerequisites)
+    * [Chain RPC node](#chain-rpc-node)
+    * [Chainlink shared folder](#chainlink-shared-folder)
+    * [Environment variables](#environment-variables)
+    * [Solidity Scripting](#solidity-scripting)
+  * [Usage](#usage)
+    * [Helper scripts](#helper-scripts)
+    * [Smart Contracts Deployment Scripts](#smart-contracts-deployment-scripts)
+    * [Helper Solidity Scripts](#helper-solidity-scripts)
+    * [Chainlink Jobs Scripts](#chainlink-jobs-scripts)
+    * [Chainlink Consumer Solidity Scripts](#chainlink-consumer-solidity-scripts)
+    * [Chainlink Cron Consumer Solidity Scripts](#chainlink-cron-consumer-solidity-scripts)
+    * [Chainlink Registry Solidity Scripts](#chainlink-registry-solidity-scripts)
+    * [Chainlink Keeper Consumer Solidity Scripts](#chainlink-keeper-consumer-solidity-scripts)
+    * [Link Token Solidity Scripts](#link-token-solidity-scripts)
+    * [Offchain Aggregator Solidity Scripts](#offchain-aggregator-solidity-scripts)
+    * [Flux Aggregator Solidity Scripts](#flux-aggregator-solidity-scripts)
+    * [Testing flows](#testing-flows)
+      * [Initial setup](#initial-setup)
+      * [Direct Request Job](#direct-request-job)
+      * [Cron Job](#cron-job)
+      * [Webhook Job](#webhook-job)
+      * [Keeper Job](#keeper-job)
+      * [OCR Job](#ocr-job)
+      * [Flux Job](#flux-job)
+  * [Acknowledgements](#acknowledgements)
 <!-- TOC -->
 
 ## Overview
@@ -158,7 +175,8 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   ```
   make restart-nodes
   ```
-  This command restarts Chainlink nodes cluster according to the [docker-compose.yaml](docker-compose.yaml).
+  This command restarts Chainlink nodes cluster according to the [docker-compose.yaml](docker-compose.yaml).  
+  Pass argument `CLEAN_RESTART` if you want to make a clean restart: delete all volumes and logs.
 
 #### Login Chainlink node
   ```
@@ -254,7 +272,16 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
 
 #### Deploy Chainlink Offchain Aggregator contract
   ```
-  make chainlink-offchain-aggregator
+  make deploy-chainlink-offchain-aggregator
+  ```
+  This command deploys an instance of Chainlink [OffchainAggregator.sol](src%2FOffchainAggregator%2FOffchainAggregator.sol) contract.
+
+  During the execution of the command, you will need to enter:
+  - LINK_CONTRACT_ADDRESS - Link Token contract address
+
+#### Deploy Chainlink Flux Aggregator contract
+  ```
+  make deploy-chainlink-flux-aggregator
   ```
   This command deploys an instance of Chainlink [OffchainAggregator.sol](src%2FOffchainAggregator%2FOffchainAggregator.sol) contract.
 
@@ -372,7 +399,7 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
 
 #### Create Chainlink OCR job
   ```
-  make create-ocr-bootstrap-job
+  make create-ocr-job
   ```
   This command creates a Chainlink job according to [ocr_job.toml](chainlink%2Fjobs%2Focr_job.toml).
 
@@ -383,12 +410,31 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
 
 #### Create Chainlink OCR jobs
   ```
-  make create-ocr-bootstrap-jobs
+  make create-ocr-jobs
   ```
   This command creates a Chainlink job for each Chainlink node except the first one (bootstrap) in a cluster according to [ocr_job.toml](chainlink%2Fjobs%2Focr_job.toml).
 
   During the execution of the command, you will need to enter:
   - OFFCHAIN_AGGREGATOR_ADDRESS - Offchain Aggregator contract address
+
+#### Create Chainlink Flux job
+  ```
+  make create-flux-job
+  ```
+  This command creates a Chainlink job according to [flux_job.toml](chainlink%2Fjobs%2Fflux_job.toml).
+
+  During the execution of the command, you will need to enter:
+  - NODE_ID - Chainlink node ID
+  - FLUX_AGGREGATOR_ADDRESS - Flux Aggregator contract address
+
+#### Create Chainlink Flux jobs
+  ```
+  make create-flux-jobs
+  ```
+  This command creates a Chainlink job for the first 3 Chainlink nodes in a cluster according to [flux_job.toml](chainlink%2Fjobs%2Fflux_job.toml).
+
+  During the execution of the command, you will need to enter:
+  - FLUX_AGGREGATOR_ADDRESS - Flux Aggregator contract address
 
    > **Note**  
    > You can check list of created jobs with Chainlink Operator GUI.
@@ -455,7 +501,7 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   ```
   make get-last-active-upkeep-id
   ```
-  This command gets an ID of the last registered upkeep in the Registry contract.
+  This command returns an ID of the last registered upkeep in the Registry contract.
 
   During the execution of the command, you will need to enter:
   - REGISTRY_ADDRESS - Registry contract address
@@ -466,7 +512,7 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   ```
   make get-keeper-counter
   ```
-  This command gets the latest value of the `counter` variable stored in the Keeper Consumer contract. This variable reflects the number of times the keepers performed the Keeper job.
+  This command returns the latest value of the `counter` variable stored in the Keeper Consumer contract. This variable reflects the number of times the keepers performed the Keeper job.
 
   During the execution of the command, you will need to enter:
   - KEEPER_CONSUMER_ADDRESS - Keeper Consumer contract address
@@ -486,7 +532,7 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   ```
   make get-balance
   ```
-  This command gets Link Token balance of an account.
+  This command returns Link Token balance of an account.
 
   During the execution of the command, you will need to enter:
   - LINK_CONTRACT_ADDRESS - Link Token contract address
@@ -513,7 +559,8 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   - OFFCHAIN_AGGREGATOR_ADDRESS - Offchain Aggregator contract address
 
 > **Note**  
-> This package uses external [Go library](external%2FOCRHelper) to prepare an OCR configuration.  
+> This package uses external Go library [OCRHelper](external%2FOCRHelper) to prepare an OCR configuration.  
+> This Go library is based on https://github.com/smartcontractkit/chainlink integration tests.  
 > It has pre-built binaries for platforms: darwin/amd64, darwin/arm64, linux/amd64, linux/arm,linux/arm64.  
 > If you use another platform, please run in advance:  
 > ```make build-ocr-helper```  
@@ -528,14 +575,52 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   During the execution of the command, you will need to enter:
   - OFFCHAIN_AGGREGATOR_ADDRESS - Offchain Aggregator contract address
 
-#### Get The Latest Answer
+#### Get OCR Latest Answer
   ```
-  make get-latest-answer
+  make get-ocr-latest-answer
   ```
-  This command gets an answer of the latest OCR round.
+  This command returns an answer of the latest OCR round.
 
   During the execution of the command, you will need to enter:
   - OFFCHAIN_AGGREGATOR_ADDRESS - Offchain Aggregator contract address
+
+### Flux Aggregator Solidity Scripts
+
+#### Update Available Funds
+  ```
+  make update-available-funds
+  ```
+  This command recalculate the amount of LINK available for payouts in the Flux Aggregator contract.
+
+  During the execution of the command, you will need to enter:
+  - FLUX_AGGREGATOR_ADDRESS - Flux Aggregator contract address
+
+#### Set Oracles
+  ```
+  make set-oracles
+  ```
+  This command adds new oracles as well as updates the round related parameters in the Flux Aggregator contract.
+
+  During the execution of the command, you will need to enter:
+  - FLUX_AGGREGATOR_ADDRESS - Flux Aggregator contract address
+
+#### Get Oracles
+  ```
+  make get-oracles
+  ```
+  This command returns an array of addresses containing the oracles in the Flux Aggregator contract.
+
+  During the execution of the command, you will need to enter:
+  - FLUX_AGGREGATOR_ADDRESS - Flux Aggregator contract address
+
+#### Get Flux Latest Answer
+  ```
+  make get-flux-latest-answer
+  ```
+  This command returns an answer of the latest Flux round.
+
+  During the execution of the command, you will need to enter:
+  - FLUX_AGGREGATOR_ADDRESS - Flux Aggregator contract address
 
 > **Note**  
 > In the current version of the package, some smart contracts are developed for different compiler versions.  
@@ -583,8 +668,16 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
 3. Set Offchain Aggregator config
 4. Create OCR Job for a bootstrap Chainlink node (first in a cluster)
 5. Create OCR Jobs for Chainlink nodes in a cluster except the first one (bootstrap)
-6. Request new OCR round in the Offchain Aggregator contract
+6. Request new OCR round in the Offchain Aggregator contract (optional)
 7. Get the answer of the latest OCR round from the Offchain Aggregator contract
+
+#### Flux Job
+1. Deploy Flux Aggregator contract
+2. Fund Flux Aggregator contract with Link tokens 
+3. Update Flux Aggregator available funds
+4. Set Flux Aggregator oracles
+5. Create Flux Jobs for the first 3 Chainlink nodes in a cluster
+6. Get the answer of the latest Flux round from the Flux Aggregator contract
 
 ## Acknowledgements
 This project based on https://github.com/protofire/hardhat-chainlink-plugin. 

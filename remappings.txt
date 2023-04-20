@@ -1,4 +1,6 @@
-chainlink/=lib/chainlink/contracts/src/
 ds-test/=lib/forge-std/lib/ds-test/src/
 forge-std/=lib/forge-std/src/
+@chainlink/=lib/chainlink-brownie-contracts/contracts/src/
+@chainlink-testing/=lib/chainlink-testing-framework/contracts/ethereum/
+@linktoken/=lib/LinkToken/contracts/
 @openzeppelin/=lib/openzeppelin-contracts/

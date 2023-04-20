@@ -12,23 +12,25 @@ This project uses [Foundry](https://book.getfoundry.sh) tools to deploy and test
 It can be easily integrated into an existing Foundry project.
 
 <!-- TOC -->
+* [Chainlink-Foundry Toolkit](#chainlink-foundry-toolkit)
   * [Overview](#overview)
   * [Getting Started](#getting-started)
     * [Prerequisites](#prerequisites)
     * [Chain RPC node](#chain-rpc-node)
-    * [Chainlink shared folder](#chainlink-shared-folder)
+    * [Chainlink shared folders](#chainlink-shared-folders)
     * [Environment variables](#environment-variables)
+    * [Chainlink Consumer Contracts](#chainlink-consumer-contracts)
     * [Solidity Scripting](#solidity-scripting)
   * [Usage](#usage)
     * [Helper scripts](#helper-scripts)
     * [Smart Contracts Deployment Scripts](#smart-contracts-deployment-scripts)
-    * [Helper Solidity Scripts](#helper-solidity-scripts)
     * [Chainlink Jobs Scripts](#chainlink-jobs-scripts)
+    * [Helper Solidity Scripts](#helper-solidity-scripts)
+    * [Link Token Solidity Scripts](#link-token-solidity-scripts)
     * [Chainlink Consumer Solidity Scripts](#chainlink-consumer-solidity-scripts)
     * [Chainlink Cron Consumer Solidity Scripts](#chainlink-cron-consumer-solidity-scripts)
-    * [Chainlink Registry Solidity Scripts](#chainlink-registry-solidity-scripts)
     * [Chainlink Keeper Consumer Solidity Scripts](#chainlink-keeper-consumer-solidity-scripts)
-    * [Link Token Solidity Scripts](#link-token-solidity-scripts)
+    * [Registry Solidity Scripts](#registry-solidity-scripts)
     * [Offchain Aggregator Solidity Scripts](#offchain-aggregator-solidity-scripts)
     * [Flux Aggregator Solidity Scripts](#flux-aggregator-solidity-scripts)
     * [Testing flows](#testing-flows)
@@ -86,7 +88,7 @@ For local testing, we recommend using [Anvil](https://book.getfoundry.sh/anvil/)
 
 Run Anvil using the following command:
 ```
-anvil --block-time 10
+anvil --block-time 10 --chain-id 1337
 ```
 
 By default, Anvil runs with the following options:
@@ -94,8 +96,8 @@ By default, Anvil runs with the following options:
 - web socket: [ws://localhost:8545](ws://localhost:8545)
 - chain ID: 31337
 
-### Chainlink shared folder
-We use the [chainlink](chainlink) folder as shared folder with Chainlink node Docker images. Its contents as follows:
+### Chainlink shared folders
+We use some subdirectories of the [chainlink](chainlink) folder as shared folders with Chainlink node containers and Postgres container.
 
 #### Settings
 - [chainlink_api_credentials](chainlink%2Fsettings%2Fchainlink_api_credentials) - Chainlink API credentials
@@ -104,15 +106,27 @@ We use the [chainlink](chainlink) folder as shared folder with Chainlink node Do
 > **Note**  
 > More info on authentication can be found here [github.com/smartcontractkit/chainlink/wiki/Authenticating-with-the-API](https://github.com/smartcontractkit/chainlink/wiki/Authenticating-with-the-API).
 > You can specify any credentials there. Password provided must be 16 characters or more.
+
 #### Jobs
 - [cron_job.toml](chainlink%2Fjobs%2Fcron_job.toml) - example configuration file for a Chainlink Cron job  
 - [direct_request_job.toml](chainlink%2Fjobs%2Fdirect_request_job.toml) - example configuration file for a Chainlink Direct Request job  
+- [flux_job.toml](chainlink%2Fjobs%2Fflux_job.toml) - example configuration file for a Chainlink Flux job  
 - [keeper_job.toml](chainlink%2Fjobs%2Fkeeper_job.toml) - example configuration file for a Chainlink Keeper job  
+- [ocr_job.toml](chainlink%2Fjobs%2Focr_job.toml) - example configuration file for a Chainlink OCR job  
+- [ocr_job_bootstrap.toml](chainlink%2Fjobs%2Focr_job_bootstrap.toml) - example configuration file for a Chainlink OCR (bootstrap) job  
 - [webhook_job.toml](chainlink%2Fjobs%2Fwebhook_job.toml) - example configuration file for a Chainlink Webhook job  
 
 > **Note**  
 > More info on Chainlink v2 Jobs, their types and configuration can be found here: [docs.chain.link/chainlink-nodes/oracle-jobs/jobs/](https://docs.chain.link/chainlink-nodes/oracle-jobs/jobs/).
 > You can change this configuration according to your requirements.
+
+#### SQL scripts
+- [create_tables.sql](chainlink%2Fsql%2Fcreate_tables.sql) - psql script to create tables related to Chainlink nodes in a Postgres DB
+- [drop_tables.sql](chainlink%2Fsql%2Fdrop_tables.sql) - psql script to delete tables related to Chainlink nodes in a Postgres DB
+
+#### Chainlink nodes logs directories
+Once a Chainlink cluster is started, log directories will be created for each Chainlink node.  
+Log directory name format: `${CHAINLINK_CONTAINER_NAME}${NODE_ID}`.
 
 ### Environment variables
 Based on the [env.template](env.template) - create or update an `.env` file in the root directory of your project.  
@@ -123,16 +137,23 @@ Below are comments on some environment variables:
 - `PRIVATE_KEY` - private key of an account used for deployment and interaction with smart contracts. Once Anvil is started, a set of private keys for local usage is provided. Use one of these for local development.
 - `ROOT` - root directory of the Chainlink node
 - `CHAINLINK_CONTAINER_NAME` - preferred name for the container of the Chainlink node for the possibility of automating communication with it
+- `FOUNDRY_PROFILE` - selected Foundry profile in [foundry.toml](foundry.toml), more on Foundry profiles: https://book.getfoundry.sh/reference/config/overview?highlight=profile#profiles
 
 Besides that, there is the [chainlink.env](chainlink%2Fchainlink.env) that contains environment variables related to a Chainlink node configuration.
 > **Note**  
 > More info on Chainlink node environment variables can be found here: [https://docs.chain.link/chainlink-nodes/v1/configuration](https://docs.chain.link/chainlink-nodes/v1/configuration).
 > You can specify any parameters according to your preferences.
 
+### Chainlink Consumer Contracts
+The [contracts](chainlink%2Fcontracts) directory contains examples of Chainlink Consumer contracts:  
+- [ChainlinkConsumer.sol](chainlink%2Fcontracts%2FChainlinkConsumer.sol) - sample Consumer contract for a Chainlink Direct Request job
+- [ChainlinkCronConsumer.sol](chainlink%2Fcontracts%2FChainlinkCronConsumer.sol) - sample Consumer contract for a Chainlink Cron job
+- [ChainlinkKeeperConsumer.sol](chainlink%2Fcontracts%2FChainlinkKeeperConsumer.sol) - sample Consumer contract for a Chainlink Keeper job
+
 ### Solidity Scripting
 Functionality related to deployment and interaction with smart contracts is implemented using [Foundry Solidity Scripting](https://book.getfoundry.sh/tutorials/solidity-scripting?highlight=script#solidity-scripting).  
-The [script](script) directory contains scripts for the Link Token, Oracle, Chainlink Consumer contracts, as well as the transfer of ETH and Link tokens.  
-Scripts are run with the command: `forge script path/to/script`. Logs and artifacts dedicated to each script run, including a transaction hash and an address of deployed smart contract, are stored in a corresponding subdirectory of the [broadcast](broadcast) folder (created automatically).
+The [script](script) directory contains scripts for the Link Token, Oracle, Registry, Chainlink Consumer contracts, Flux and Offchain aggregators as well as the transfer of ETH and Link tokens.  
+Scripts are run with the command: `forge script path/to/script [--args]`. Logs and artifacts dedicated to each script run, including a transaction hash and an address of deployed smart contract, are stored in a corresponding subdirectory of the [broadcast](broadcast) folder (created automatically).
 
 All necessary scripts are also included in the [makefile](makefile). In order to run these scripts, you first need to install the necessary dependencies:
 ```
@@ -141,15 +162,26 @@ make install
 
 This command installs:
 - [Forge Standard Library](https://github.com/foundry-rs/forge-std)
-- [Chainlink Contracts](https://github.com/smartcontractkit/chainlink)
-- [Openzeppelin Contracts](https://github.com/OpenZeppelin/openzeppelin-contracts)
+- [Chainlink Contracts](https://github.com/smartcontractkit/chainlink-brownie-contracts) [version:0.6.1]
+- [Chainlink Testing Framework Contracts](https://github.com/smartcontractkit/chainlink-testing-framework) [version:v1.11.5]
+- [Link Token Contract](https://github.com/smartcontractkit/LinkToken)
+- [Openzeppelin Contracts](https://github.com/OpenZeppelin/openzeppelin-contracts) [version:v4.8.2]
 
 ## Usage
 Below are the scripts contained in the [makefile](makefile). Some scripts have parameters that can be passed either on the command line, interactively or in the `.env` file.
 
 ### Helper scripts
 
-#### Spin up a Chainlink node
+#### Build Chainlink Contracts
+  ```
+  make build-chainlink-contracts
+  ```
+  This command builds Chainlink contracts artifacts.
+  The contracts to be built:
+  - Contracts from external libraries: Link Token, Oracle, Registry related contracts, Flux and Offchain Aggregators
+  - Chainlink Consumer contracts, located in the [contracts](chainlink%2Fcontracts) directory
+
+#### Spin up a Chainlink cluster
   ```
   make run-nodes
   ```
@@ -171,14 +203,14 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
    > ```The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested```  
    > You can safely ignore these warnings, container will start normally.
 
-#### Restart Chainlink node
+#### Restart a Chainlink cluster
   ```
   make restart-nodes
   ```
   This command restarts Chainlink nodes cluster according to the [docker-compose.yaml](docker-compose.yaml).  
   Pass argument `CLEAN_RESTART` if you want to make a clean restart: delete all volumes and logs.
 
-#### Login Chainlink node
+#### Login a Chainlink node
   ```
   make login
   ```
@@ -288,46 +320,6 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   During the execution of the command, you will need to enter:
   - LINK_CONTRACT_ADDRESS - Link Token contract address
 
-### Helper Solidity Scripts
-
-#### Transfer ETH
-  ```
-  make transfer-eth
-  ```
-  With this command, you can send ETH to any specified recipient.  
-
-  During the execution of the command, you will need to enter:
-  - RECIPIENT - Recipient address
-
-#### Transfer ETH to Chainlink node
-  ```
-  make transfer-eth-to-node
-  ```
-  With this command, you can send ETH to any specified Chainlink node.
-
-  During the execution of the command, you will need to enter:
-  - NODE_ID - Chainlink node ID
-
-#### Transfer Link tokens
-  ```
-  make transfer-link
-  ```
-  With this command, you can send Link tokens to any specified recipient.  
-
-  During the execution of the command, you will need to enter:
-  - LINK_CONTRACT_ADDRESS - Link Token contract address
-  - RECIPIENT - Recipient address
-
-#### Transfer Link tokens to Chainlink node
-  ```
-  make transfer-link-tonode
-  ```
-  With this command, you can send Link tokens to any specified Chainlink node.  
-
-  During the execution of the command, you will need to enter:
-  - NODE_ID - Chainlink node ID
-  - LINK_CONTRACT_ADDRESS - Link Token contract address
-
 ### Chainlink Jobs Scripts
 
 #### Create Chainlink Direct Request job
@@ -367,7 +359,7 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
 
   During the execution of the command, you will need to enter:
   - NODE_ID - Chainlink node ID
-  - JOB_ID - Webhook job ID
+  - WEBHOOK_JOB_ID - Webhook job ID
 
 #### Create Chainlink Keeper job
   ```
@@ -387,6 +379,9 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
 
   During the execution of the command, you will need to enter:
   - REGISTRY_ADDRESS - Registry contract address
+
+  > **Note**  
+  > For the Chainlink Keeper Job it was noticed that Chainlink nodes require a current blockchain height to be approximately at least 100 blocks.
 
 #### Create Chainlink OCR (bootstrap) job
   ```
@@ -439,6 +434,67 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
    > **Note**  
    > You can check list of created jobs with Chainlink Operator GUI.
 
+### Helper Solidity Scripts
+
+#### Transfer ETH
+  ```
+  make transfer-eth
+  ```
+  With this command, you can send ETH to any specified recipient.
+
+  During the execution of the command, you will need to enter:
+  - RECIPIENT - Recipient address
+
+#### Transfer ETH to Chainlink node
+  ```
+  make transfer-eth-to-node
+  ```
+  With this command, you can send ETH to any specified Chainlink node.
+
+  During the execution of the command, you will need to enter:
+  - NODE_ID - Chainlink node ID
+
+#### Transfer Link tokens
+  ```
+  make transfer-link
+  ```
+  With this command, you can send Link tokens to any specified recipient.
+
+  During the execution of the command, you will need to enter:
+  - LINK_CONTRACT_ADDRESS - Link Token contract address
+  - RECIPIENT - Recipient address
+
+#### Transfer Link tokens to Chainlink node
+  ```
+  make transfer-link-tonode
+  ```
+  With this command, you can send Link tokens to any specified Chainlink node.
+
+  During the execution of the command, you will need to enter:
+  - NODE_ID - Chainlink node ID
+  - LINK_CONTRACT_ADDRESS - Link Token contract address
+
+### Link Token Solidity Scripts
+
+#### Transfer-and-Call Link Token
+  ```
+  make transfer-and-call-link
+  ```
+  This command transfers Link tokens to the Registry contract and calls it's `onTokenTransfer` method that verifies that an upkeep is funded.
+
+  During the execution of the command, you will need to enter:
+  - LINK_CONTRACT_ADDRESS - Link Token contract address
+
+#### Get Link Token balance
+  ```
+  make get-balance
+  ```
+  This command returns Link Token balance of an account.
+
+  During the execution of the command, you will need to enter:
+  - LINK_CONTRACT_ADDRESS - Link Token contract address
+  - ACCOUNT - Account
+
 ### Chainlink Consumer Solidity Scripts
 
 #### Request ETH price
@@ -450,7 +506,7 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   During the execution of the command, you will need to enter:
   - CONSUMER_ADDRESS - Consumer contract address
   - ORACLE_ADDRESS - Oracle contract address
-  - JOB_ID - External Job ID **without dashes** - you can get one with Chainlink Operator GUI on the Jobs tab
+  - DIRECT_REQUEST_EXTERNAL_JOB_ID - Direct request External Job ID **without dashes** - you can get one with Chainlink Operator GUI on the Jobs tab
 
    > **Note**  
    > You can check list of runs of jobs with Chainlink Operator GUI.
@@ -475,7 +531,18 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   During the execution of the command, you will need to enter:
   - CRON_CONSUMER_ADDRESS - Cron Consumer contract address
 
-### Chainlink Registry Solidity Scripts
+### Chainlink Keeper Consumer Solidity Scripts
+
+#### Get Keeper Counter
+  ```
+  make get-keeper-counter
+  ```
+  This command returns the latest value of the `counter` variable stored in the Keeper Consumer contract. This variable reflects the number of times the keepers performed the Keeper job.
+
+  During the execution of the command, you will need to enter:
+  - KEEPER_CONSUMER_ADDRESS - Keeper Consumer contract address
+
+### Registry Solidity Scripts
 
 #### Register Keeper Consumer
   ```
@@ -505,38 +572,6 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
 
   During the execution of the command, you will need to enter:
   - REGISTRY_ADDRESS - Registry contract address
-
-### Chainlink Keeper Consumer Solidity Scripts
-
-#### Get Keeper Counter
-  ```
-  make get-keeper-counter
-  ```
-  This command returns the latest value of the `counter` variable stored in the Keeper Consumer contract. This variable reflects the number of times the keepers performed the Keeper job.
-
-  During the execution of the command, you will need to enter:
-  - KEEPER_CONSUMER_ADDRESS - Keeper Consumer contract address
-
-### Link Token Solidity Scripts
-
-#### Transfer-and-Call Link Token
-  ```
-  make transfer-and-call-link
-  ```
-  This command transfers Link tokens to the Registry contract and calls it's `onTokenTransfer` method that verifies that an upkeep is funded.
-
-  During the execution of the command, you will need to enter:
-  - LINK_CONTRACT_ADDRESS - Link Token contract address
-
-#### Get Link Token balance
-  ```
-  make get-balance
-  ```
-  This command returns Link Token balance of an account.
-
-  During the execution of the command, you will need to enter:
-  - LINK_CONTRACT_ADDRESS - Link Token contract address
-  - ACCOUNT - Account
 
 ### Offchain Aggregator Solidity Scripts
 
@@ -577,7 +612,7 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
 
 #### Get OCR Latest Answer
   ```
-  make get-ocr-latest-answer
+  make get-latest-answer-ocr
   ```
   This command returns an answer of the latest OCR round.
 
@@ -615,25 +650,31 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
 
 #### Get Flux Latest Answer
   ```
-  make get-flux-latest-answer
+  make get-latest-answer-flux
   ```
   This command returns an answer of the latest Flux round.
 
   During the execution of the command, you will need to enter:
   - FLUX_AGGREGATOR_ADDRESS - Flux Aggregator contract address
 
-> **Note**  
-> In the current version of the package, some smart contracts are developed for different compiler versions.  
-> Therefore, specifying a version of Solidity compiler in ```foundry.toml``` or as a ```forge``` parameter (e.g. ```--use solc:0.7.0```) can lead to errors.  
-> Use a default compiler version provided by ```forge```.  
-> This issue will be fixed in future releases.
+  > **Note**  
+  > Current version of the package intended to support different compiler versions in range `[>=0.6.2 <0.9.0]`.  
+  > It was tested e2e with solc versions specified in [foundry.toml](foundry.toml) profiles:
+  > - 0.6.2
+  > - 0.6.12 [profile:0_6_x]
+  > - 0.7.6 [profile:0_7_x]
+  > - 0.8.12 [profile:default]
+  > 
+  > Therefore, you can specify any supported version of Solidity compiler in [foundry.toml](foundry.toml).  
+  > In case you find any problems when using other versions of the compiler from range `[>=0.6.2 <0.9.0]` you are welcome to open an issue.
 
 ### Testing flows
 #### Initial setup
-1. Deploy Link Token contract
-2. Set `LINK_TOKEN_CONTRACT` in `.env`
-3. Spin up a Chainlink nodes cluster
-4. Fund Chainlink nodes with ETH
+1. Build Chainlink contracts artifacts
+2. Deploy Link Token contract
+3. Set `LINK_TOKEN_CONTRACT` in `.env`
+4. Spin up a Chainlink nodes cluster
+5. Fund Chainlink nodes with ETH
 6. Fund Chainlink nodes with Link tokens
 
 #### Direct Request Job

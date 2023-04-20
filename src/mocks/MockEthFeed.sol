@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.0;
+pragma solidity >=0.6.2 <0.9.0;
 
 import "forge-std/Script.sol";
-import "chainlink/v0.8/interfaces/AggregatorV3Interface.sol";
+import "../interfaces/AggregatorV3Interface.sol";
 
 contract MockEthFeed is AggregatorV3Interface {
   uint80 roundId;
@@ -11,7 +11,7 @@ contract MockEthFeed is AggregatorV3Interface {
   uint256 updatedAt;
   uint80 answeredInRound;
 
-  constructor () {
+  constructor () public {
     roundId = 0;
     answer = 0;
     startedAt = block.timestamp;

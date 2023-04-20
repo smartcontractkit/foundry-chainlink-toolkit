@@ -74,8 +74,53 @@ endif
 
 install:
 	forge install foundry-rs/forge-std --no-commit; \
-	forge install smartcontractkit/chainlink --no-commit; \
-	forge install OpenZeppelin/openzeppelin-contracts --no-commit
+	forge install smartcontractkit/chainlink-brownie-contracts@0.6.1 --no-commit; \
+	forge install smartcontractkit/chainlink-testing-framework@v1.11.5 --no-commit; \
+	forge install smartcontractkit/LinkToken --no-commit; \
+	forge install OpenZeppelin/openzeppelin-contracts@v4.8.2 --no-commit
+
+# Build Chainlink contracts:
+# Forge can not build individual contracts in a directory, so,
+# During script execution, necessary contracts are copied to the `tmp` directory,
+# Relative dependencies paths are being replaced with the new ones,
+# Contracts are compiled with the required compiler version
+build-chainlink-contracts:
+	printf "%s\n" "Building Chainlink contracts..."; \
+	mkdir -p tmp; \
+	touch ./tmp/Oracle.sol && \
+	touch ./tmp/FluxAggregator.sol && \
+	sed -e 's/import ".\//import "@chainlink\/v0.6\//g' ./lib/chainlink-brownie-contracts/contracts/src/v0.6/Oracle.sol > ./tmp/Oracle.sol; \
+	sed -e 's/import ".\//import "@chainlink-testing\/v0.6\/src\//g' ./lib/chainlink-testing-framework/contracts/ethereum/v0.6/src/FluxAggregator.sol > ./tmp/FluxAggregator.sol; \
+	forge build -c ./tmp/ --skip script test --names --use solc:0.6.6; \
+	rm ./tmp/Oracle.sol; \
+	rm ./tmp/FluxAggregator.sol; \
+	touch ./tmp/LinkToken.sol && \
+	sed -e 's/import ".\//import "@linktoken\/v0.6\//g' ./lib/LinkToken/contracts/v0.6/LinkToken.sol > ./tmp/LinkToken.sol; \
+	forge build -c ./tmp/ --skip script test --names --use solc:0.6.12; \
+	rm ./tmp/LinkToken.sol; \
+	touch ./tmp/OffchainAggregator.sol && \
+	sed -e 's/import ".\//import "@chainlink-testing\/v0.7\/src\//g' ./lib/chainlink-testing-framework/contracts/ethereum/v0.7/src/OffchainAggregator.sol > ./tmp/OffchainAggregator.sol; \
+	forge build -c ./tmp/ --skip script test --names --use solc:0.7.6; \
+	rm ./tmp/OffchainAggregator.sol; \
+	touch ./tmp/KeeperRegistry1_3.sol && \
+	touch ./tmp/KeeperRegistryLogic1_3.sol && \
+	sed -e 's/import ".\//import "@chainlink\/v0.8\//g' -e 's/from ".\//from "@chainlink\/v0.8\//g' ./lib/chainlink-brownie-contracts/contracts/src/v0.8/KeeperRegistry1_3.sol > ./tmp/KeeperRegistry1_3.sol; \
+	sed -e 's/import ".\//import "@chainlink\/v0.8\//g' -e 's/from ".\//from "@chainlink\/v0.8\//g' ./lib/chainlink-brownie-contracts/contracts/src/v0.8/KeeperRegistryLogic1_3.sol > ./tmp/KeeperRegistryLogic1_3.sol; \
+	forge build -c ./tmp/ --skip script test --names --use solc:0.8.6; \
+	rm ./tmp/KeeperRegistry1_3.sol; \
+	rm ./tmp/KeeperRegistryLogic1_3.sol; \
+	touch ./tmp/ChainlinkConsumer.sol && \
+	touch ./tmp/ChainlinkCronConsumer.sol && \
+	touch ./tmp/ChainlinkKeeperConsumer.sol && \
+	cat ./chainlink/contracts/ChainlinkConsumer.sol > ./tmp/ChainlinkConsumer.sol; \
+	cat ./chainlink/contracts/ChainlinkCronConsumer.sol > ./tmp/ChainlinkCronConsumer.sol; \
+	cat ./chainlink/contracts/ChainlinkKeeperConsumer.sol > ./tmp/ChainlinkKeeperConsumer.sol; \
+	forge build -c ./tmp/ --skip script test --names --use solc:0.8.12; \
+	rm ./tmp/ChainlinkConsumer.sol; \
+	rm ./tmp/ChainlinkCronConsumer.sol; \
+	rm ./tmp/ChainlinkKeeperConsumer.sol; \
+	rm -rf tmp; \
+	printf "%s\n" "Done";
 
 # Build external libraries
 build-ocr-helper:
@@ -193,36 +238,6 @@ deploy-chainlink-flux-aggregator:
 	printf "%s\n" "Deploying Chainlink Flux Aggregator. Please wait..."; \
 	forge script ./script/FluxAggregator.s.sol --sig "deploy(address)" $$linkContractAddress --rpc-url ${RPC_URL} --broadcast --silent
 
-# Helper Solidity Scripts
-transfer-eth:
-	$(call check_defined, PRIVATE_KEY) \
-	$(call check_defined, RPC_URL) \
-	$(call check_set_parameter,RECIPIENT,recipient) \
-	printf "%s\n" "Transferring ETH to the $$recipient. Please wait..."; \
-	forge script ./script/Helper.s.sol --sig "transferEth(address, uint256)" $$recipient 1000000000000000000 --rpc-url ${RPC_URL} --broadcast --silent
-
-transfer-eth-to-node:
-	$(call check_set_parameter,NODE_ID,nodeId) \
-	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
-	make login NODE_ID=$$nodeId; \
-	$(call get_node_address,$$chainlinkContainerName,nodeAddress) \
-	make transfer-eth RECIPIENT=$$nodeAddress;
-
-transfer-link:
-	$(call check_defined, PRIVATE_KEY) \
-	$(call check_defined, RPC_URL) \
-	$(call check_set_parameter,LINK_CONTRACT_ADDRESS,linkContractAddress) \
-	$(call check_set_parameter,RECIPIENT,recipient) \
-	printf "%s\n" "Transferring Link Tokens to $$recipient. Please wait..."; \
-	forge script ./script/Helper.s.sol --sig "transferLink(address, address, uint256)" $$recipient $$linkContractAddress 100000000000000000000 --rpc-url ${RPC_URL} --broadcast --silent
-
-transfer-link-to-node:
-	$(call check_set_parameter,NODE_ID,nodeId) \
-	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
-	make login NODE_ID=$$nodeId; \
-	$(call get_node_address,$$chainlinkContainerName,nodeAddress) \
-	make transfer-link RECIPIENT=$$nodeAddress;
-
 # Chainlink Jobs Scripts
 create-direct-request-job:
 	$(call check_set_parameter,ORACLE_ADDRESS,oracleAddress) \
@@ -250,11 +265,11 @@ create-webhook-job:
 
 run-webhook-job:
 	$(call check_set_parameter,NODE_ID,nodeId) \
-	$(call check_set_parameter,JOB_ID,jobId) \
+	$(call check_set_parameter,WEBHOOK_JOB_ID,webhookJobId) \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
 	make login NODE_ID=$$nodeId; \
 	$(call get_cookie,$$chainlinkContainerName,cookie) \
-	curl --cookie "$$cookie" -X POST -H "Content-Type: application/json" http://localhost:67$$nodeId$$nodeId/v2/jobs/$$jobId/runs
+	curl --cookie "$$cookie" -X POST -H "Content-Type: application/json" http://localhost:67$$nodeId$$nodeId/v2/jobs/$$webhookJobId/runs
 
 create-keeper-job:
 	$(call check_set_parameter,REGISTRY_ADDRESS,registryAddress) \
@@ -320,12 +335,60 @@ create-flux-job:
 	&& sed -e 's/FLUX_AGGREGATOR_ADDRESS/$$fluxAggregatorAddress/g' ${ROOT}/jobs/flux_job.toml > ${ROOT}/jobs/flux_job_tmp.toml" && \
 	docker exec $$chainlinkContainerName bash -c "chainlink jobs create ${ROOT}/jobs/flux_job_tmp.toml && rm ${ROOT}/jobs/flux_job_tmp.toml"
 
-# Create a Flux Jo for the first 3 nodes of a Chainlink cluster
+# Create a Flux Job for the first 3 nodes of a Chainlink cluster
 create-flux-jobs:
 	$(call check_set_parameter,FLUX_AGGREGATOR_ADDRESS,fluxAggregatorAddress) \
 	make create-flux-job NODE_ID=1 FLUX_AGGREGATOR_ADDRESS=$$fluxAggregatorAddress && \
 	make create-flux-job NODE_ID=2 FLUX_AGGREGATOR_ADDRESS=$$fluxAggregatorAddress && \
 	make create-flux-job NODE_ID=3 FLUX_AGGREGATOR_ADDRESS=$$fluxAggregatorAddress
+
+# Helper Solidity Scripts
+transfer-eth:
+	$(call check_defined, PRIVATE_KEY) \
+	$(call check_defined, RPC_URL) \
+	$(call check_set_parameter,RECIPIENT,recipient) \
+	printf "%s\n" "Transferring ETH to the $$recipient. Please wait..."; \
+	forge script ./script/Helper.s.sol --sig "transferEth(address, uint256)" $$recipient 1000000000000000000 --rpc-url ${RPC_URL} --broadcast --silent
+
+transfer-eth-to-node:
+	$(call check_set_parameter,NODE_ID,nodeId) \
+	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
+	make login NODE_ID=$$nodeId; \
+	$(call get_node_address,$$chainlinkContainerName,nodeAddress) \
+	make transfer-eth RECIPIENT=$$nodeAddress;
+
+transfer-link:
+	$(call check_defined, PRIVATE_KEY) \
+	$(call check_defined, RPC_URL) \
+	$(call check_set_parameter,LINK_CONTRACT_ADDRESS,linkContractAddress) \
+	$(call check_set_parameter,RECIPIENT,recipient) \
+	printf "%s\n" "Transferring Link Tokens to $$recipient. Please wait..."; \
+	forge script ./script/Helper.s.sol --sig "transferLink(address, address, uint256)" $$recipient $$linkContractAddress 100000000000000000000 --rpc-url ${RPC_URL} --broadcast --silent
+
+transfer-link-to-node:
+	$(call check_set_parameter,NODE_ID,nodeId) \
+	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
+	make login NODE_ID=$$nodeId; \
+	$(call get_node_address,$$chainlinkContainerName,nodeAddress) \
+	make transfer-link RECIPIENT=$$nodeAddress;
+
+# Link Token Solidity Scripts
+transfer-and-call-link:
+	$(call check_defined, PRIVATE_KEY) \
+	$(call check_defined, RPC_URL) \
+	$(call check_set_parameter,REGISTRY_ADDRESS,registryAddress) \
+	$(call check_set_parameter,UPKEEP_ID,upkeepId) \
+	$(call check_set_parameter,LINK_CONTRACT_ADDRESS,linkContractAddress) \
+	echo "Transferring Link Tokens to the recipient. Please wait..."; \
+	forge script ./script/LinkToken.s.sol --sig "transferAndCall(address, address, uint256, uint256)" $$linkContractAddress $$registryAddress 1000000000000000000 $$upkeepId --rpc-url ${RPC_URL} --broadcast --silent
+
+get-balance:
+	$(call check_defined, PRIVATE_KEY) \
+	$(call check_defined, RPC_URL) \
+	$(call check_set_parameter,LINK_CONTRACT_ADDRESS,linkContractAddress) \
+	$(call check_set_parameter,ACCOUNT,account) \
+	echo "Getting Link Token balance for the account. Please wait..."; \
+	forge script ./script/LinkToken.s.sol --sig "getBalance(address,address)" $$linkContractAddress $$account --rpc-url ${RPC_URL} --broadcast --silent
 
 # Chainlink Consumer Solidity Scripts
 request-eth-price-consumer:
@@ -333,9 +396,9 @@ request-eth-price-consumer:
 	$(call check_defined, RPC_URL) \
 	$(call check_set_parameter,CONSUMER_ADDRESS,consumerAddress) \
 	$(call check_set_parameter,ORACLE_ADDRESS,oracleAddress) \
-	$(call check_set_parameter,JOB_ID,jobId) \
+	$(call check_set_parameter,DIRECT_REQUEST_EXTERNAL_JOB_ID,directRequestExternalJobId) \
 	printf "%s\n" "Requesting current ETH price. Please wait..."; \
-	forge script ./script/ChainlinkConsumer.s.sol --sig "requestEthereumPrice(address, address, string)" $$consumerAddress $$oracleAddress $$jobId --rpc-url ${RPC_URL} --broadcast --silent
+	forge script ./script/ChainlinkConsumer.s.sol --sig "requestEthereumPrice(address, address, string)" $$consumerAddress $$oracleAddress $$directRequestExternalJobId --rpc-url ${RPC_URL} --broadcast --silent
 
 get-eth-price-consumer:
 	$(call check_defined, PRIVATE_KEY) \
@@ -352,7 +415,15 @@ get-eth-price-cron-consumer:
 	echo "Getting current ETH price. Please wait..."; \
 	forge script ./script/ChainlinkCronConsumer.s.sol --sig "getEthereumPrice(address)" $$cronConsumerAddress --rpc-url ${RPC_URL} --broadcast --silent
 
-# Chainlink Registry Solidity Scripts
+# Chainlink Keeper Consumer Solidity Scripts
+get-keeper-counter:
+	$(call check_defined, PRIVATE_KEY) \
+	$(call check_defined, RPC_URL) \
+	$(call check_set_parameter,KEEPER_CONSUMER_ADDRESS,keeperConsumerAddress) \
+	echo "Getting current counter. Please wait..."; \
+	forge script ./script/ChainlinkKeeperConsumer.s.sol --sig "getCounter(address)" $$keeperConsumerAddress --rpc-url ${RPC_URL} --broadcast --silent
+
+# Registry Solidity Scripts
 register-upkeep:
 	$(call check_defined, PRIVATE_KEY) \
 	$(call check_defined, RPC_URL) \
@@ -396,34 +467,8 @@ get-last-active-upkeep-id:
 	echo "Getting the last active upkeep id. Please wait..."; \
 	forge script ./script/Registry.s.sol --sig "getLastActiveUpkeepID(address)" $$registryAddress --rpc-url ${RPC_URL} --broadcast --silent
 
-# Chainlink Keeper Consumer Solidity Scripts
-get-keeper-counter:
-	$(call check_defined, PRIVATE_KEY) \
-	$(call check_defined, RPC_URL) \
-	$(call check_set_parameter,KEEPER_CONSUMER_ADDRESS,keeperConsumerAddress) \
-	echo "Getting current counter. Please wait..."; \
-	forge script ./script/ChainlinkKeeperConsumer.s.sol --sig "getCounter(address)" $$keeperConsumerAddress --rpc-url ${RPC_URL} --broadcast --silent
-
-# Link Token Solidity Scripts
-transfer-and-call-link:
-	$(call check_defined, PRIVATE_KEY) \
-	$(call check_defined, RPC_URL) \
-	$(call check_set_parameter,REGISTRY_ADDRESS,registryAddress) \
-	$(call check_set_parameter,UPKEEP_ID,upkeepId) \
-	$(call check_set_parameter,LINK_CONTRACT_ADDRESS,linkContractAddress) \
-	echo "Transferring Link Tokens to the recipient. Please wait..."; \
-	forge script ./script/LinkToken.s.sol --sig "transferAndCall(address, address, uint256, uint256)" $$linkContractAddress $$registryAddress 1000000000000000000 $$upkeepId --rpc-url ${RPC_URL} --broadcast --silent
-
-get-balance:
-	$(call check_defined, PRIVATE_KEY) \
-	$(call check_defined, RPC_URL) \
-	$(call check_set_parameter,LINK_CONTRACT_ADDRESS,linkContractAddress) \
-	$(call check_set_parameter,ACCOUNT,account) \
-	echo "Getting Link Token balance for the account. Please wait..."; \
-	forge script ./script/LinkToken.s.sol --sig "getBalance(address,address)" $$linkContractAddress $$account --rpc-url ${RPC_URL} --broadcast --silent
-
-# Offchain Aggregator
-# Excluding Node 1 as a bootstrap node
+# Offchain Aggregator Solidity Scripts
+# Setting payees excluding Node 1 as a bootstrap node
 set-payees:
 	$(call check_defined, PRIVATE_KEY) \
 	$(call check_defined, RPC_URL) \
@@ -499,14 +544,14 @@ request-new-round:
 	printf "%s\n" "Requesting new round in the Offchain Aggregator contract. Please wait..."; \
 	forge script ./script/OffchainAggregator.s.sol --sig "requestNewRound(address)" $$offchainAggregatorAddress --rpc-url ${RPC_URL} --broadcast --silent
 
-get-ocr-latest-answer:
+get-latest-answer-ocr:
 	$(call check_defined, PRIVATE_KEY) \
 	$(call check_defined, RPC_URL) \
 	$(call check_set_parameter,OFFCHAIN_AGGREGATOR_ADDRESS,offchainAggregatorAddress) \
 	printf "%s\n" "Getting the latest answer in the Offchain Aggregator contract. Please wait..."; \
 	forge script ./script/OffchainAggregator.s.sol --sig "latestAnswer(address)" $$offchainAggregatorAddress --rpc-url ${RPC_URL} --broadcast --silent
 
-# Flux Aggregator
+# Flux Aggregator Solidity Scripts
 update-available-funds:
 	$(call check_defined, PRIVATE_KEY) \
 	$(call check_defined, RPC_URL) \
@@ -541,7 +586,7 @@ get-oracles:
 	printf "%s\n" "Getting oracles in the Flux Aggregator contract. Please wait..."; \
 	forge script ./script/FluxAggregator.s.sol --sig "getOracles(address)" $$fluxAggregatorAddress --rpc-url ${RPC_URL} --broadcast --silent
 
-get-flux-latest-answer:
+get-latest-answer-flux:
 	$(call check_defined, PRIVATE_KEY) \
 	$(call check_defined, RPC_URL) \
 	$(call check_set_parameter,FLUX_AGGREGATOR_ADDRESS,fluxAggregatorAddress) \

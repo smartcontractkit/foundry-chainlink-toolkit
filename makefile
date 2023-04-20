@@ -16,9 +16,9 @@ __check_defined = \
 define check_set_parameter
 	if [ -n "$($1)" ]; then \
 		$2=$($1); \
-    else \
+	else \
 		$2=$$(read -p "Please enter a value for $1: " param && echo "$$param"); \
-    fi;
+	fi;
 endef
 
 define get_chainlink_container_name

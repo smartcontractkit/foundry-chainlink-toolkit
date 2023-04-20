@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.0;
+pragma solidity >=0.6.2 <0.9.0;
 
 import "forge-std/Script.sol";
-import "../src/ChainlinkCronConsumer.sol";
+import "../src/interfaces/ChainlinkCronConsumerInterface.sol";
 
 contract ChainlinkCronConsumerScript is Script {
   function run() external {
@@ -11,20 +11,18 @@ contract ChainlinkCronConsumerScript is Script {
 
   function deploy() external returns(address) {
     uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
+
     vm.startBroadcast(deployerPrivateKey);
 
-    ChainlinkCronConsumer chainlinkCronConsumer = new ChainlinkCronConsumer();
+    address chainlinkCronConsumer = deployCode("ChainlinkCronConsumer.sol:ChainlinkCronConsumer");
 
     vm.stopBroadcast();
 
     return address(chainlinkCronConsumer);
   }
 
-  function getEthereumPrice(address consumerAddress)
-  external
-  view
-  returns(uint256) {
-    ChainlinkCronConsumer chainlinkCronConsumer = ChainlinkCronConsumer(consumerAddress);
+  function getEthereumPrice(address consumerAddress) external view returns(uint256) {
+    ChainlinkCronConsumerInterface chainlinkCronConsumer = ChainlinkCronConsumerInterface(consumerAddress);
     return chainlinkCronConsumer.currentPrice();
   }
 }

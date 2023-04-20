@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.0;
+pragma solidity >=0.6.2 <0.9.0;
 
 import "forge-std/Script.sol";
-import "../src/LinkToken.sol";
+import "../src/interfaces/LinkTokenInterface.sol";
 
 contract LinkTokenScript is Script {
   function run() external {
@@ -11,27 +11,29 @@ contract LinkTokenScript is Script {
 
   function deploy() external returns(address) {
     uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
+
     vm.startBroadcast(deployerPrivateKey);
 
-    LinkToken linkToken = new LinkToken();
+    address linkToken = deployCode("LinkToken.sol:LinkToken");
 
     vm.stopBroadcast();
 
-    return address(linkToken);
+    return linkToken;
   }
 
   function transferAndCall(address tokenAddress, address to, uint256 amount, uint256 upkeepId) external {
     uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
+
     vm.broadcast(deployerPrivateKey);
 
-    LinkToken linkToken = LinkToken(tokenAddress);
+    LinkTokenInterface linkToken = LinkTokenInterface(tokenAddress);
     linkToken.transferAndCall(to, amount, abi.encode(upkeepId));
 
     vm.stopBroadcast();
   }
 
   function getBalance(address tokenAddress, address account) external returns(uint256){
-    LinkToken linkToken = LinkToken(tokenAddress);
+    LinkTokenInterface linkToken = LinkTokenInterface(tokenAddress);
     uint256 balance = linkToken.balanceOf(account);
     return balance;
   }

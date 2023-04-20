@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.0;
+pragma solidity >=0.6.2 <0.9.0;
 
 import "forge-std/Script.sol";
-import "../src/ChainlinkKeeperConsumer.sol";
+import "../src/interfaces/ChainlinkKeeperConsumerInterface.sol";
 
 contract ChainlinkKeeperConsumerScript is Script {
   function run() external {
@@ -11,20 +11,18 @@ contract ChainlinkKeeperConsumerScript is Script {
 
   function deploy() external returns(address) {
     uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
+
     vm.startBroadcast(deployerPrivateKey);
 
-    ChainlinkKeeperConsumer chainlinkKeeperConsumer = new ChainlinkKeeperConsumer();
+    address chainlinkKeeperConsumer = deployCode("ChainlinkKeeperConsumer.sol:ChainlinkKeeperConsumer");
 
     vm.stopBroadcast();
 
     return address(chainlinkKeeperConsumer);
   }
 
-  function getCounter(address chainlinkKeeperConsumerAddress)
-  external
-  view
-  returns(uint256) {
-    ChainlinkKeeperConsumer chainlinkKeeperConsumer = ChainlinkKeeperConsumer(chainlinkKeeperConsumerAddress);
+  function getCounter(address chainlinkKeeperConsumerAddress) external view returns(uint256) {
+    ChainlinkKeeperConsumerInterface chainlinkKeeperConsumer = ChainlinkKeeperConsumerInterface(chainlinkKeeperConsumerAddress);
     return chainlinkKeeperConsumer.counter();
   }
 }

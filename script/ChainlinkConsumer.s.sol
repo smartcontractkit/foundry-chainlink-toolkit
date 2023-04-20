@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.0;
+pragma solidity >=0.6.2 <0.9.0;
 
 import "forge-std/Script.sol";
-import "../src/ChainlinkConsumer.sol";
+import "../src/interfaces/ChainlinkConsumerInterface.sol";
 
 contract ChainlinkConsumerScript is Script {
   function run() external {
@@ -13,25 +13,25 @@ contract ChainlinkConsumerScript is Script {
     uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
     vm.startBroadcast(deployerPrivateKey);
 
-    ChainlinkConsumer chainlinkConsumer = new ChainlinkConsumer(tokenAddress);
+    address chainlinkConsumer = deployCode("ChainlinkConsumer.sol:ChainlinkConsumer", abi.encode(tokenAddress));
 
     vm.stopBroadcast();
 
-    return address(chainlinkConsumer);
+    return chainlinkConsumer;
   }
 
-  function requestEthereumPrice(address consumerAddress, address oracleAddress, string memory jobId) external {
+  function requestEthereumPrice(address consumerAddress, address oracleAddress, string calldata jobId) external {
     uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
     vm.startBroadcast(deployerPrivateKey);
 
-    ChainlinkConsumer chainlinkConsumer = ChainlinkConsumer(consumerAddress);
+    ChainlinkConsumerInterface chainlinkConsumer = ChainlinkConsumerInterface(consumerAddress);
     chainlinkConsumer.requestEthereumPrice(oracleAddress, jobId);
 
     vm.stopBroadcast();
   }
 
   function getEthereumPrice(address consumerAddress) external view returns(uint256) {
-    ChainlinkConsumer chainlinkConsumer = ChainlinkConsumer(consumerAddress);
+    ChainlinkConsumerInterface chainlinkConsumer = ChainlinkConsumerInterface(consumerAddress);
     return chainlinkConsumer.currentPrice();
   }
 }

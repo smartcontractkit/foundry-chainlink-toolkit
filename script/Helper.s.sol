@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.0;
+pragma solidity >=0.6.2 <0.9.0;
 
 import "forge-std/Script.sol";
-import "chainlink/v0.8/interfaces/LinkTokenInterface.sol";
+import "../src/interfaces/LinkTokenInterface.sol";
 
 contract HelperScript is Script {
   function run() external {
@@ -11,6 +11,7 @@ contract HelperScript is Script {
 
   function transferEth(address payable receiverAddress, uint256 amount) external {
     uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
+
     vm.startBroadcast(deployerPrivateKey);
 
     (bool sent, bytes memory data) = receiverAddress.call{value: amount}("");
@@ -23,6 +24,7 @@ contract HelperScript is Script {
 
   function transferLink(address recipientAddress, address tokenAddress, uint256 amount) external {
     uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
+
     vm.startBroadcast(deployerPrivateKey);
 
     LinkTokenInterface linkToken = LinkTokenInterface(tokenAddress);

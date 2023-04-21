@@ -1,19 +1,15 @@
 [submodule "lib/forge-std"]
 	path = lib/forge-std
 	url = https://github.com/foundry-rs/forge-std
-	branch = v1.5.0
-[submodule "lib/chainlink-testing-framework"]
-	path = lib/chainlink-testing-framework
-	url = https://github.com/smartcontractkit/chainlink-testing-framework
-	branch = v1.11.5
 [submodule "lib/chainlink-brownie-contracts"]
 	path = lib/chainlink-brownie-contracts
 	url = https://github.com/smartcontractkit/chainlink-brownie-contracts
-	branch = 0.6.1
+[submodule "lib/chainlink-testing-framework"]
+	path = lib/chainlink-testing-framework
+	url = https://github.com/smartcontractkit/chainlink-testing-framework
 [submodule "lib/LinkToken"]
 	path = lib/LinkToken
 	url = https://github.com/smartcontractkit/LinkToken
 [submodule "lib/openzeppelin-contracts"]
 	path = lib/openzeppelin-contracts
 	url = https://github.com/OpenZeppelin/openzeppelin-contracts
-	branch = v4.8.2

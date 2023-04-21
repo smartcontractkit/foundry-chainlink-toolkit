@@ -8,7 +8,7 @@ import "../src/interfaces/OffchainAggregatorInterface.sol";
 import "../src/mocks/MockAccessController.sol";
 
 contract OffchainAggregatorScript is Script {
-  function run() external {
+  function run() external view {
     console.log("Please run deploy() method.");
   }
 

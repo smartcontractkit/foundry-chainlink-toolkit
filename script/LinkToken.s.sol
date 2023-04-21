@@ -5,7 +5,7 @@ import "forge-std/Script.sol";
 import "../src/interfaces/LinkTokenInterface.sol";
 
 contract LinkTokenScript is Script {
-  function run() external {
+  function run() external view {
     console.log("Please run deploy() method.");
   }
 
@@ -28,11 +28,9 @@ contract LinkTokenScript is Script {
 
     LinkTokenInterface linkToken = LinkTokenInterface(tokenAddress);
     linkToken.transferAndCall(to, amount, abi.encode(upkeepId));
-
-    vm.stopBroadcast();
   }
 
-  function getBalance(address tokenAddress, address account) external returns(uint256){
+  function getBalance(address tokenAddress, address account) external view returns(uint256){
     LinkTokenInterface linkToken = LinkTokenInterface(tokenAddress);
     uint256 balance = linkToken.balanceOf(account);
     return balance;

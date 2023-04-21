@@ -5,24 +5,24 @@ import "forge-std/Script.sol";
 import "../src/interfaces/LinkTokenInterface.sol";
 
 contract HelperScript is Script {
-  function run() external {
+  function run() external view {
     console.log("Please run transferEth(uint256) or transferLink(uint256,address) method.");
   }
 
-  function transferEth(address payable receiverAddress, uint256 amount) external {
+  function transferEth(address payable receiverAddress, uint256 amount) external returns(uint256) {
     uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
 
     vm.startBroadcast(deployerPrivateKey);
 
-    (bool sent, bytes memory data) = receiverAddress.call{value: amount}("");
+    (bool sent,) = receiverAddress.call{value: amount}("");
     require(sent, "Failed to send Ether");
 
     vm.stopBroadcast();
 
-    console.log(receiverAddress.balance);
+    return receiverAddress.balance;
   }
 
-  function transferLink(address recipientAddress, address tokenAddress, uint256 amount) external {
+  function transferLink(address recipientAddress, address tokenAddress, uint256 amount) external returns(uint256) {
     uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
 
     vm.startBroadcast(deployerPrivateKey);
@@ -31,5 +31,7 @@ contract HelperScript is Script {
     linkToken.transfer(recipientAddress, amount);
 
     vm.stopBroadcast();
+
+    return linkToken.balanceOf(recipientAddress);
   }
 }

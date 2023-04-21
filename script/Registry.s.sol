@@ -31,7 +31,7 @@ contract RegistryScript is Script {
     OPTIMISM
   }
 
-  function run() external {
+  function run() external view {
     console.log("Please run deploy() method.");
   }
 

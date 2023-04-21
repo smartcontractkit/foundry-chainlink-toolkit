@@ -5,7 +5,7 @@ import "forge-std/Script.sol";
 import "../src/interfaces/ChainlinkKeeperConsumerInterface.sol";
 
 contract ChainlinkKeeperConsumerScript is Script {
-  function run() external {
+  function run() external view {
     console.log("Please run deploy() method.");
   }
 

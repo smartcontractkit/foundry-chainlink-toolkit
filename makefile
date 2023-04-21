@@ -76,7 +76,6 @@ install:
 	forge install foundry-rs/forge-std --no-git --no-commit; \
 	forge install smartcontractkit/chainlink-brownie-contracts@0.6.1 --no-git --no-commit; \
 	forge install smartcontractkit/chainlink-testing-framework@v1.11.5 --no-git --no-commit; \
-	forge install smartcontractkit/LinkToken --no-git --no-commit; \
 	forge install OpenZeppelin/openzeppelin-contracts@v4.8.2 --no-git --no-commit
 
 # Build Chainlink contracts:
@@ -95,7 +94,7 @@ build-chainlink-contracts:
 	rm ./tmp/Oracle.sol; \
 	rm ./tmp/FluxAggregator.sol; \
 	touch ./tmp/LinkToken.sol && \
-	sed -e 's/import ".\//import "@linktoken\/v0.6\//g' ./lib/LinkToken/contracts/v0.6/LinkToken.sol > ./tmp/LinkToken.sol; \
+	cat ./chainlink/contracts/LinkToken.sol > ./tmp/LinkToken.sol; \
 	forge build --contracts ./tmp/ --skip script test --names --use solc:0.6.12; \
 	rm ./tmp/LinkToken.sol; \
 	touch ./tmp/OffchainAggregator.sol && \
@@ -185,7 +184,7 @@ deploy-link-token:
 	$(call check_defined, PRIVATE_KEY) \
 	$(call check_defined, RPC_URL) \
 	printf "%s\n" "Deploying Link Token contract. Please wait..."; \
-	forge script ./script/LinkToken.s.sol --sig "deploy()" --rpc-url ${RPC_URL} --broadcast --silent
+	forge script ./script/LinkToken.s.sol --sig "deploy()" --rpc-url ${RPC_URL} --broadcast
 
 deploy-oracle:
 	$(call check_defined, PRIVATE_KEY) \
@@ -196,47 +195,47 @@ deploy-oracle:
 	make login NODE_ID=$$nodeId; \
 	$(call get_node_address,$$chainlinkContainerName,nodeAddress) \
 	printf "%s\n" "Deploying Oracle contract. Please wait..."; \
-	forge script ./script/Oracle.s.sol --sig "deploy(address, address)" $$linkContractAddress $$nodeAddress --rpc-url ${RPC_URL} --broadcast --silent
+	forge script ./script/Oracle.s.sol --sig "deploy(address, address)" $$linkContractAddress $$nodeAddress --rpc-url ${RPC_URL} --broadcast
 
 deploy-consumer:
 	$(call check_defined, PRIVATE_KEY) \
 	$(call check_defined, RPC_URL) \
 	$(call check_set_parameter,LINK_CONTRACT_ADDRESS,linkContractAddress) \
 	printf "%s\n" "Deploying Chainlink Direct Request Consumer. Please wait..."; \
-	forge script ./script/ChainlinkConsumer.s.sol --sig "deploy(address)" $$linkContractAddress --rpc-url ${RPC_URL} --broadcast --silent
+	forge script ./script/ChainlinkConsumer.s.sol --sig "deploy(address)" $$linkContractAddress --rpc-url ${RPC_URL} --broadcast
 
 deploy-cron-consumer:
 	$(call check_defined, PRIVATE_KEY) \
 	$(call check_defined, RPC_URL) \
 	printf "%s\n" "Deploying Chainlink Cron Consumer. Please wait..."; \
-	forge script ./script/ChainlinkCronConsumer.s.sol --sig "deploy()" --rpc-url ${RPC_URL} --broadcast --silent
+	forge script ./script/ChainlinkCronConsumer.s.sol --sig "deploy()" --rpc-url ${RPC_URL} --broadcast
 
 deploy-keeper-consumer:
 	$(call check_defined, PRIVATE_KEY) \
 	$(call check_defined, RPC_URL) \
 	printf "%s\n" "Deploying Chainlink Keeper Consumer. Please wait..."; \
-	forge script ./script/ChainlinkKeeperConsumer.s.sol --sig "deploy()" --rpc-url ${RPC_URL} --broadcast --silent
+	forge script ./script/ChainlinkKeeperConsumer.s.sol --sig "deploy()" --rpc-url ${RPC_URL} --broadcast
 
 deploy-keeper-registry:
 	$(call check_defined, PRIVATE_KEY) \
 	$(call check_defined, RPC_URL) \
 	$(call check_set_parameter,LINK_CONTRACT_ADDRESS,linkContractAddress) \
 	printf "%s\n" "Deploying Chainlink Registry. Please wait..."; \
-	forge script ./script/Registry.s.sol --sig "deploy(address)" $$linkContractAddress --rpc-url ${RPC_URL} --broadcast --silent
+	forge script ./script/Registry.s.sol --sig "deploy(address)" $$linkContractAddress --rpc-url ${RPC_URL} --broadcast
 
 deploy-chainlink-offchain-aggregator:
 	$(call check_defined, PRIVATE_KEY) \
 	$(call check_defined, RPC_URL) \
 	$(call check_set_parameter,LINK_CONTRACT_ADDRESS,linkContractAddress) \
 	printf "%s\n" "Deploying Chainlink OffChain Aggregator. Please wait..."; \
-	forge script ./script/OffchainAggregator.s.sol --sig "deploy(address)" $$linkContractAddress --rpc-url ${RPC_URL} --broadcast --silent
+	forge script ./script/OffchainAggregator.s.sol --sig "deploy(address)" $$linkContractAddress --rpc-url ${RPC_URL} --broadcast
 
 deploy-chainlink-flux-aggregator:
 	$(call check_defined, PRIVATE_KEY) \
 	$(call check_defined, RPC_URL) \
 	$(call check_set_parameter,LINK_CONTRACT_ADDRESS,linkContractAddress) \
 	printf "%s\n" "Deploying Chainlink Flux Aggregator. Please wait..."; \
-	forge script ./script/FluxAggregator.s.sol --sig "deploy(address)" $$linkContractAddress --rpc-url ${RPC_URL} --broadcast --silent
+	forge script ./script/FluxAggregator.s.sol --sig "deploy(address)" $$linkContractAddress --rpc-url ${RPC_URL} --broadcast
 
 # Chainlink Jobs Scripts
 create-direct-request-job:
@@ -348,7 +347,7 @@ transfer-eth:
 	$(call check_defined, RPC_URL) \
 	$(call check_set_parameter,RECIPIENT,recipient) \
 	printf "%s\n" "Transferring ETH to the $$recipient. Please wait..."; \
-	forge script ./script/Helper.s.sol --sig "transferEth(address, uint256)" $$recipient 1000000000000000000 --rpc-url ${RPC_URL} --broadcast --silent
+	forge script ./script/Helper.s.sol --sig "transferEth(address, uint256)" $$recipient 1000000000000000000 --rpc-url ${RPC_URL} --broadcast
 
 transfer-eth-to-node:
 	$(call check_set_parameter,NODE_ID,nodeId) \
@@ -363,7 +362,7 @@ transfer-link:
 	$(call check_set_parameter,LINK_CONTRACT_ADDRESS,linkContractAddress) \
 	$(call check_set_parameter,RECIPIENT,recipient) \
 	printf "%s\n" "Transferring Link Tokens to $$recipient. Please wait..."; \
-	forge script ./script/Helper.s.sol --sig "transferLink(address, address, uint256)" $$recipient $$linkContractAddress 100000000000000000000 --rpc-url ${RPC_URL} --broadcast --silent
+	forge script ./script/Helper.s.sol --sig "transferLink(address, address, uint256)" $$recipient $$linkContractAddress 100000000000000000000 --rpc-url ${RPC_URL} --broadcast
 
 transfer-link-to-node:
 	$(call check_set_parameter,NODE_ID,nodeId) \
@@ -380,7 +379,7 @@ transfer-and-call-link:
 	$(call check_set_parameter,UPKEEP_ID,upkeepId) \
 	$(call check_set_parameter,LINK_CONTRACT_ADDRESS,linkContractAddress) \
 	echo "Transferring Link Tokens to the recipient. Please wait..."; \
-	forge script ./script/LinkToken.s.sol --sig "transferAndCall(address, address, uint256, uint256)" $$linkContractAddress $$registryAddress 1000000000000000000 $$upkeepId --rpc-url ${RPC_URL} --broadcast --silent
+	forge script ./script/LinkToken.s.sol --sig "transferAndCall(address, address, uint256, uint256)" $$linkContractAddress $$registryAddress 1000000000000000000 $$upkeepId --rpc-url ${RPC_URL} --broadcast
 
 get-balance:
 	$(call check_defined, PRIVATE_KEY) \
@@ -388,7 +387,7 @@ get-balance:
 	$(call check_set_parameter,LINK_CONTRACT_ADDRESS,linkContractAddress) \
 	$(call check_set_parameter,ACCOUNT,account) \
 	echo "Getting Link Token balance for the account. Please wait..."; \
-	forge script ./script/LinkToken.s.sol --sig "getBalance(address,address)" $$linkContractAddress $$account --rpc-url ${RPC_URL} --broadcast --silent
+	forge script ./script/LinkToken.s.sol --sig "getBalance(address,address)" $$linkContractAddress $$account --rpc-url ${RPC_URL} --broadcast
 
 # Chainlink Consumer Solidity Scripts
 request-eth-price-consumer:
@@ -398,14 +397,14 @@ request-eth-price-consumer:
 	$(call check_set_parameter,ORACLE_ADDRESS,oracleAddress) \
 	$(call check_set_parameter,DIRECT_REQUEST_EXTERNAL_JOB_ID,directRequestExternalJobId) \
 	printf "%s\n" "Requesting current ETH price. Please wait..."; \
-	forge script ./script/ChainlinkConsumer.s.sol --sig "requestEthereumPrice(address, address, string)" $$consumerAddress $$oracleAddress $$directRequestExternalJobId --rpc-url ${RPC_URL} --broadcast --silent
+	forge script ./script/ChainlinkConsumer.s.sol --sig "requestEthereumPrice(address, address, string)" $$consumerAddress $$oracleAddress $$directRequestExternalJobId --rpc-url ${RPC_URL} --broadcast
 
 get-eth-price-consumer:
 	$(call check_defined, PRIVATE_KEY) \
 	$(call check_defined, RPC_URL) \
 	$(call check_set_parameter,CONSUMER_ADDRESS,consumerAddress) \
 	echo "Getting current ETH price. Please wait..."; \
-	forge script ./script/ChainlinkConsumer.s.sol --sig "getEthereumPrice(address)" $$consumerAddress --rpc-url ${RPC_URL} --broadcast --silent
+	forge script ./script/ChainlinkConsumer.s.sol --sig "getEthereumPrice(address)" $$consumerAddress --rpc-url ${RPC_URL} --broadcast
 
 # Chainlink Cron Consumer Solidity Scripts
 get-eth-price-cron-consumer:
@@ -413,7 +412,7 @@ get-eth-price-cron-consumer:
 	$(call check_defined, RPC_URL) \
 	$(call check_set_parameter,CRON_CONSUMER_ADDRESS,cronConsumerAddress) \
 	echo "Getting current ETH price. Please wait..."; \
-	forge script ./script/ChainlinkCronConsumer.s.sol --sig "getEthereumPrice(address)" $$cronConsumerAddress --rpc-url ${RPC_URL} --broadcast --silent
+	forge script ./script/ChainlinkCronConsumer.s.sol --sig "getEthereumPrice(address)" $$cronConsumerAddress --rpc-url ${RPC_URL} --broadcast
 
 # Chainlink Keeper Consumer Solidity Scripts
 get-keeper-counter:
@@ -421,7 +420,7 @@ get-keeper-counter:
 	$(call check_defined, RPC_URL) \
 	$(call check_set_parameter,KEEPER_CONSUMER_ADDRESS,keeperConsumerAddress) \
 	echo "Getting current counter. Please wait..."; \
-	forge script ./script/ChainlinkKeeperConsumer.s.sol --sig "getCounter(address)" $$keeperConsumerAddress --rpc-url ${RPC_URL} --broadcast --silent
+	forge script ./script/ChainlinkKeeperConsumer.s.sol --sig "getCounter(address)" $$keeperConsumerAddress --rpc-url ${RPC_URL} --broadcast
 
 # Registry Solidity Scripts
 register-upkeep:
@@ -430,7 +429,7 @@ register-upkeep:
 	$(call check_set_parameter,REGISTRY_ADDRESS,registryAddress) \
 	$(call check_set_parameter,KEEPER_CONSUMER_ADDRESS,keeperConsumerAddress) \
 	echo "Registering Upkeep in the Chainlink Registry. Please wait..."; \
-	forge script ./script/Registry.s.sol --sig "registerUpkeep(address,address)" $$registryAddress $$keeperConsumerAddress --rpc-url ${RPC_URL} --broadcast --silent
+	forge script ./script/Registry.s.sol --sig "registerUpkeep(address,address)" $$registryAddress $$keeperConsumerAddress --rpc-url ${RPC_URL} --broadcast
 
 set-keepers:
 	$(call check_defined, PRIVATE_KEY) \
@@ -458,14 +457,14 @@ set-keepers:
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
 	$(call get_node_address,$$chainlinkContainerName,nodeAddress5) \
 	printf "%s\n" "Setting Keepers in Registry. Please wait..."; \
-	forge script ./script/Registry.s.sol --sig "setKeepers(address,address,address[])" $$registryAddress $$keeperConsumerAddress [$$nodeAddress1,$$nodeAddress2,$$nodeAddress3,$$nodeAddress4,$$nodeAddress5] --rpc-url ${RPC_URL} --broadcast --silent
+	forge script ./script/Registry.s.sol --sig "setKeepers(address,address,address[])" $$registryAddress $$keeperConsumerAddress [$$nodeAddress1,$$nodeAddress2,$$nodeAddress3,$$nodeAddress4,$$nodeAddress5] --rpc-url ${RPC_URL} --broadcast
 
 get-last-active-upkeep-id:
 	$(call check_defined, PRIVATE_KEY) \
 	$(call check_defined, RPC_URL) \
 	$(call check_set_parameter,REGISTRY_ADDRESS,registryAddress) \
 	echo "Getting the last active upkeep id. Please wait..."; \
-	forge script ./script/Registry.s.sol --sig "getLastActiveUpkeepID(address)" $$registryAddress --rpc-url ${RPC_URL} --broadcast --silent
+	forge script ./script/Registry.s.sol --sig "getLastActiveUpkeepID(address)" $$registryAddress --rpc-url ${RPC_URL} --broadcast
 
 # Offchain Aggregator Solidity Scripts
 # Setting payees excluding Node 1 as a bootstrap node
@@ -490,7 +489,7 @@ set-payees:
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
 	$(call get_node_address,$$chainlinkContainerName,nodeAddress5) \
 	printf "%s\n" "Setting Payees in the Offchain Aggregator contract. Please wait..."; \
-	forge script ./script/OffchainAggregator.s.sol --sig "setPayees(address,address[])" $$offchainAggregatorAddress [$$nodeAddress2,$$nodeAddress3,$$nodeAddress4,$$nodeAddress5] --rpc-url ${RPC_URL} --broadcast --silent
+	forge script ./script/OffchainAggregator.s.sol --sig "setPayees(address,address[])" $$offchainAggregatorAddress [$$nodeAddress2,$$nodeAddress3,$$nodeAddress4,$$nodeAddress5] --rpc-url ${RPC_URL} --broadcast
 
 # This is an internal method. Do not call it directly
 set-config_internal:
@@ -501,7 +500,7 @@ set-config_internal:
 		$(configPublicKey2),$(configPublicKey3),$(configPublicKey4),$(configPublicKey5) \
 		$(onChainSigningAddress2),$(onChainSigningAddress3),$(onChainSigningAddress4),$(onChainSigningAddress5) \
 		$(peerId2),$(peerId3),$(peerId4),$(peerId5))) \
-	forge script ./script/OffchainAggregator.s.sol --sig "setConfig(address,address[],address[],uint8,uint64,bytes)" $$offchainAggregatorAddress $(OCR_CONFIG) --rpc-url ${RPC_URL} --broadcast --silent
+	forge script ./script/OffchainAggregator.s.sol --sig "setConfig(address,address[],address[],uint8,uint64,bytes)" $$offchainAggregatorAddress $(OCR_CONFIG) --rpc-url ${RPC_URL} --broadcast
 
 set-config:
 	$(call check_defined, PRIVATE_KEY) \
@@ -542,14 +541,14 @@ request-new-round:
 	$(call check_defined, RPC_URL) \
 	$(call check_set_parameter,OFFCHAIN_AGGREGATOR_ADDRESS,offchainAggregatorAddress) \
 	printf "%s\n" "Requesting new round in the Offchain Aggregator contract. Please wait..."; \
-	forge script ./script/OffchainAggregator.s.sol --sig "requestNewRound(address)" $$offchainAggregatorAddress --rpc-url ${RPC_URL} --broadcast --silent
+	forge script ./script/OffchainAggregator.s.sol --sig "requestNewRound(address)" $$offchainAggregatorAddress --rpc-url ${RPC_URL} --broadcast
 
 get-latest-answer-ocr:
 	$(call check_defined, PRIVATE_KEY) \
 	$(call check_defined, RPC_URL) \
 	$(call check_set_parameter,OFFCHAIN_AGGREGATOR_ADDRESS,offchainAggregatorAddress) \
 	printf "%s\n" "Getting the latest answer in the Offchain Aggregator contract. Please wait..."; \
-	forge script ./script/OffchainAggregator.s.sol --sig "latestAnswer(address)" $$offchainAggregatorAddress --rpc-url ${RPC_URL} --broadcast --silent
+	forge script ./script/OffchainAggregator.s.sol --sig "latestAnswer(address)" $$offchainAggregatorAddress --rpc-url ${RPC_URL} --broadcast
 
 # Flux Aggregator Solidity Scripts
 update-available-funds:
@@ -557,7 +556,7 @@ update-available-funds:
 	$(call check_defined, RPC_URL) \
 	$(call check_set_parameter,FLUX_AGGREGATOR_ADDRESS,fluxAggregatorAddress) \
 	printf "%s\n" "Updating available funds in the Flux Aggregator contract. Please wait..."; \
-	forge script ./script/FluxAggregator.s.sol --sig "updateAvailableFunds(address)" $$fluxAggregatorAddress --rpc-url ${RPC_URL} --broadcast --silent
+	forge script ./script/FluxAggregator.s.sol --sig "updateAvailableFunds(address)" $$fluxAggregatorAddress --rpc-url ${RPC_URL} --broadcast
 
 # For the Flux Aggregator, we use the first 3 nodes of a Chainlink cluster
 set-oracles:
@@ -577,18 +576,18 @@ set-oracles:
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
 	$(call get_node_address,$$chainlinkContainerName,nodeAddress3) \
 	printf "%s\n" "Setting Oracles in Flux Aggregator. Please wait..."; \
-	forge script ./script/FluxAggregator.s.sol --sig "setOracles(address,address[])" $$fluxAggregatorAddress [$$nodeAddress1,$$nodeAddress2,$$nodeAddress3] --rpc-url ${RPC_URL} --broadcast --silent
+	forge script ./script/FluxAggregator.s.sol --sig "setOracles(address,address[])" $$fluxAggregatorAddress [$$nodeAddress1,$$nodeAddress2,$$nodeAddress3] --rpc-url ${RPC_URL} --broadcast
 
 get-oracles:
 	$(call check_defined, PRIVATE_KEY) \
 	$(call check_defined, RPC_URL) \
 	$(call check_set_parameter,FLUX_AGGREGATOR_ADDRESS,fluxAggregatorAddress) \
 	printf "%s\n" "Getting oracles in the Flux Aggregator contract. Please wait..."; \
-	forge script ./script/FluxAggregator.s.sol --sig "getOracles(address)" $$fluxAggregatorAddress --rpc-url ${RPC_URL} --broadcast --silent
+	forge script ./script/FluxAggregator.s.sol --sig "getOracles(address)" $$fluxAggregatorAddress --rpc-url ${RPC_URL} --broadcast
 
 get-latest-answer-flux:
 	$(call check_defined, PRIVATE_KEY) \
 	$(call check_defined, RPC_URL) \
 	$(call check_set_parameter,FLUX_AGGREGATOR_ADDRESS,fluxAggregatorAddress) \
 	printf "%s\n" "Getting the latest answer in the Flux Aggregator contract. Please wait..."; \
-	forge script ./script/FluxAggregator.s.sol --sig "getLatestAnswer(address)" $$fluxAggregatorAddress --rpc-url ${RPC_URL} --broadcast --silent
+	forge script ./script/FluxAggregator.s.sol --sig "getLatestAnswer(address)" $$fluxAggregatorAddress --rpc-url ${RPC_URL} --broadcast

@@ -60,6 +60,13 @@ The purpose of this project is to simplify the immersion in the development and 
       ```
       foundryup
       ```
+      
+> **Note**  
+> You may see the following error on MacOS: ```dyld: Library not loaded: /usr/local/opt/libusb/lib/libusb-1.0.0.dylib```  
+> In order to fix this, you should install libusb:  
+> ```brew install libusb```  
+> 
+> Reference: https://github.com/foundry-rs/foundry/blob/master/README.md#troubleshooting-installation
 
 2. Install [GNU make](https://www.gnu.org/software/make/). The functionality of the project is wrapped in the [makefile](makefile). Reference the below commands based on your OS or go to [Make documentation](https://www.gnu.org/software/make/manual/make.html).
 

@@ -3,6 +3,7 @@
 # forge
 broadcast/
 cache/
+lib/
 out/
 # chainlink
 chainlink/foundry-chainlink-node*/

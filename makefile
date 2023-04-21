@@ -91,22 +91,22 @@ build-chainlink-contracts:
 	touch ./tmp/FluxAggregator.sol && \
 	sed -e 's/import ".\//import "@chainlink\/v0.6\//g' ./lib/chainlink-brownie-contracts/contracts/src/v0.6/Oracle.sol > ./tmp/Oracle.sol; \
 	sed -e 's/import ".\//import "@chainlink-testing\/v0.6\/src\//g' ./lib/chainlink-testing-framework/contracts/ethereum/v0.6/src/FluxAggregator.sol > ./tmp/FluxAggregator.sol; \
-	forge build -c ./tmp/ --skip script test --names --use solc:0.6.6; \
+	forge build --contracts ./tmp/ --skip script test --names --use solc:0.6.6; \
 	rm ./tmp/Oracle.sol; \
 	rm ./tmp/FluxAggregator.sol; \
 	touch ./tmp/LinkToken.sol && \
 	sed -e 's/import ".\//import "@linktoken\/v0.6\//g' ./lib/LinkToken/contracts/v0.6/LinkToken.sol > ./tmp/LinkToken.sol; \
-	forge build -c ./tmp/ --skip script test --names --use solc:0.6.12; \
+	forge build --contracts ./tmp/ --skip script test --names --use solc:0.6.12; \
 	rm ./tmp/LinkToken.sol; \
 	touch ./tmp/OffchainAggregator.sol && \
 	sed -e 's/import ".\//import "@chainlink-testing\/v0.7\/src\//g' ./lib/chainlink-testing-framework/contracts/ethereum/v0.7/src/OffchainAggregator.sol > ./tmp/OffchainAggregator.sol; \
-	forge build -c ./tmp/ --skip script test --names --use solc:0.7.6; \
+	forge build --contracts ./tmp/ --skip script test --names --use solc:0.7.6; \
 	rm ./tmp/OffchainAggregator.sol; \
 	touch ./tmp/KeeperRegistry1_3.sol && \
 	touch ./tmp/KeeperRegistryLogic1_3.sol && \
 	sed -e 's/import ".\//import "@chainlink\/v0.8\//g' -e 's/from ".\//from "@chainlink\/v0.8\//g' ./lib/chainlink-brownie-contracts/contracts/src/v0.8/KeeperRegistry1_3.sol > ./tmp/KeeperRegistry1_3.sol; \
 	sed -e 's/import ".\//import "@chainlink\/v0.8\//g' -e 's/from ".\//from "@chainlink\/v0.8\//g' ./lib/chainlink-brownie-contracts/contracts/src/v0.8/KeeperRegistryLogic1_3.sol > ./tmp/KeeperRegistryLogic1_3.sol; \
-	forge build -c ./tmp/ --skip script test --names --use solc:0.8.6; \
+	forge build --contracts ./tmp/ --skip script test --names --use solc:0.8.6; \
 	rm ./tmp/KeeperRegistry1_3.sol; \
 	rm ./tmp/KeeperRegistryLogic1_3.sol; \
 	touch ./tmp/ChainlinkConsumer.sol && \
@@ -115,7 +115,7 @@ build-chainlink-contracts:
 	cat ./chainlink/contracts/ChainlinkConsumer.sol > ./tmp/ChainlinkConsumer.sol; \
 	cat ./chainlink/contracts/ChainlinkCronConsumer.sol > ./tmp/ChainlinkCronConsumer.sol; \
 	cat ./chainlink/contracts/ChainlinkKeeperConsumer.sol > ./tmp/ChainlinkKeeperConsumer.sol; \
-	forge build -c ./tmp/ --skip script test --names --use solc:0.8.12; \
+	forge build --contracts ./tmp/ --skip script test --names --use solc:0.8.12; \
 	rm ./tmp/ChainlinkConsumer.sol; \
 	rm ./tmp/ChainlinkCronConsumer.sol; \
 	rm ./tmp/ChainlinkKeeperConsumer.sol; \

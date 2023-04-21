@@ -73,11 +73,11 @@ OCRHelperPath = "./external/OCRHelper/bin/ocr-helper"
 endif
 
 install:
-	forge install foundry-rs/forge-std --no-commit; \
-	forge install smartcontractkit/chainlink-brownie-contracts@0.6.1 --no-commit; \
-	forge install smartcontractkit/chainlink-testing-framework@v1.11.5 --no-commit; \
-	forge install smartcontractkit/LinkToken --no-commit; \
-	forge install OpenZeppelin/openzeppelin-contracts@v4.8.2 --no-commit
+	forge install foundry-rs/forge-std --no-git --no-commit; \
+	forge install smartcontractkit/chainlink-brownie-contracts@0.6.1 --no-git --no-commit; \
+	forge install smartcontractkit/chainlink-testing-framework@v1.11.5 --no-git --no-commit; \
+	forge install smartcontractkit/LinkToken --no-git --no-commit; \
+	forge install OpenZeppelin/openzeppelin-contracts@v4.8.2 --no-git --no-commit
 
 # Build Chainlink contracts:
 # Forge can not build individual contracts in a directory, so,

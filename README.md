@@ -157,6 +157,9 @@ Besides that, there is the [chainlink.env](chainlink%2Fchainlink.env) that conta
 > More info on Chainlink node environment variables can be found here: [https://docs.chain.link/chainlink-nodes/v1/configuration](https://docs.chain.link/chainlink-nodes/v1/configuration).
 > You can specify any parameters according to your preferences.
 
+> **Note**  
+> If environment variables related to a Chainlink node, such as the Link Token contract address, were changed during your work you should run the ```make run-nodes``` command in order for them to be applied.
+
 ### Chainlink Consumer Contracts
 The [contracts](chainlink%2Fcontracts) directory contains examples of Chainlink Consumer contracts:  
 - [ChainlinkConsumer.sol](chainlink%2Fcontracts%2FChainlinkConsumer.sol) - sample Consumer contract for a Chainlink Direct Request job

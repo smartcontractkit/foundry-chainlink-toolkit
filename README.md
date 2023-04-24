@@ -62,10 +62,10 @@ The purpose of this project is to simplify the immersion in the development and 
       ```
       
 > **Note**  
-> You may see the following error on MacOS: ```dyld: Library not loaded: /usr/local/opt/libusb/lib/libusb-1.0.0.dylib```  
-> In order to fix this, you should install libusb:  
-> ```brew install libusb```  
+> Tested with forge 0.2.0 (e99cf83 2023-04-21T00:15:57.602861000Z).
 > 
+> You may see the following error on MacOS: ```dyld: Library not loaded: /usr/local/opt/libusb/lib/libusb-1.0.0.dylib```.  
+> In order to fix this, you should install libusb: ```brew install libusb```.  
 > Reference: https://github.com/foundry-rs/foundry/blob/master/README.md#troubleshooting-installation
 
 2. Install [GNU make](https://www.gnu.org/software/make/). The functionality of the project is wrapped in the [makefile](makefile). Reference the below commands based on your OS or go to [Make documentation](https://www.gnu.org/software/make/manual/make.html).
@@ -85,7 +85,13 @@ The purpose of this project is to simplify the immersion in the development and 
       yum install make
       ```
 
+> **Note**  
+> Tested with GNU Make 3.81.
+
 3. Install and run Docker; for convenience, the Chainlink nodes run in a container. Instructions: [docs.docker.com/get-docker](https://docs.docker.com/get-docker/).
+
+> **Note**  
+> Tested with Docker version 20.10.23, build 7155243.
 
 ### Chain RPC node
 In order for a Chainlink node to be able to interact with the blockchain, and to interact with the blockchain using the [Forge](https://book.getfoundry.sh/forge/), you have to know an RPC node http endpoint and web socket for a chosen network compatible with Chainlink.

@@ -181,7 +181,8 @@ This command installs:
 - [Openzeppelin Contracts](https://github.com/OpenZeppelin/openzeppelin-contracts) [version:v4.8.2]
 
 ## Usage
-Below are the scripts contained in the [makefile](makefile). Some scripts have parameters that can be passed either on the command line, interactively or in the `.env` file.
+Below are the scripts contained in the [makefile](makefile).  
+Some scripts have parameters that can be provided either with the command line (e.g. ```make target PARAM={value}```), in the `.env` file, or interactively in the command line.
 
 ### Helper scripts
 
@@ -229,7 +230,7 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   ```
   This command authorizes a Chainlink operator session.  
 
-  During the execution of the command, you will need to enter:
+  During the execution of the command, you will need to provide:
   - NODE_ID - Chainlink node ID
 
 #### Get Chainlink ETH keys
@@ -241,7 +242,7 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   - Link token balance
   - ETH balance  
 
-  During the execution of the command, you will need to enter:
+  During the execution of the command, you will need to provide:
   - NODE_ID - Chainlink node ID
 
 #### Get Chainlink OCR keys
@@ -250,7 +251,7 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   ```
   This command returns Chainlink node's OCR keys.
 
-  During the execution of the command, you will need to enter:
+  During the execution of the command, you will need to provide:
   - NODE_ID - Chainlink node ID
 
 #### Get Chainlink P2P keys
@@ -259,7 +260,7 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   ```
   This command returns Chainlink node's P2P keys.
 
-  During the execution of the command, you will need to enter:
+  During the execution of the command, you will need to provide:
   - NODE_ID - Chainlink node ID
 
 > **Note**  
@@ -273,15 +274,15 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   ```
   make deploy-link-token
   ```
-  This command deploys an instance of [LinkToken.sol](src%2FLinkToken.sol) contract.
+  This command deploys an instance of [LinkToken.sol](chainlink%2Fcontracts%2FLinkToken.sol) contract.
 
 #### Deploy Oracle contract
   ```
   make deploy-oracle
   ```
-  This command deploys an instance of [Oracle.sol](src%2FOracle.sol) contract and whitelists Chainlink node address in the deployed contract.
+  This command deploys an instance of Chainlink Oracle.sol contract and whitelists Chainlink node address in the deployed contract.
 
-  During the execution of the command, you will need to enter:
+  During the execution of the command, you will need to provide:
   - NODE_ID - Chainlink node ID
   - LINK_CONTRACT_ADDRESS - Link Token contract address
 
@@ -289,48 +290,48 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   ```
   make deploy-consumer
   ```
-  This command deploys an instance of [ChainlinkCronConsumer.sol](src%2FChainlinkCronConsumer.sol) contract.
+  This command deploys an instance of [ChainlinkConsumer.sol](chainlink%2Fcontracts%2FChainlinkConsumer.sol) contract.
+
+  During the execution of the command, you will need to provide:
+  - LINK_CONTRACT_ADDRESS - Link Token contract address
 
 #### Deploy Cron Consumer contract
   ```
-  make deploy-consumer
+  make deploy-cron-consumer
   ```
-  This command deploys an instance of [ChainlinkConsumer.sol](src%2FChainlinkConsumer.sol) contract.
-
-  During the execution of the command, you will need to enter:
-  - LINK_CONTRACT_ADDRESS - Link Token contract address
+  This command deploys an instance of [ChainlinkCronConsumer.sol](chainlink%2Fcontracts%2FChainlinkCronConsumer.sol) contract.
 
 #### Deploy Keeper Consumer contract
   ```
-  make deploy-consumer
+  make deploy-keeper-consumer
   ```
-  This command deploys an instance of [ChainlinkKeeperConsumer.sol](src%2FChainlinkKeeperConsumer.sol) contract.
+  This command deploys an instance of [ChainlinkKeeperConsumer.sol](chainlink%2Fcontracts%2FChainlinkKeeperConsumer.sol) contract.
 
 #### Deploy Keeper Registry contract
   ```
-  make deploy-consumer
+  make deploy-keeper-registry
   ```
   This command deploys an instance of Chainlink Registry.sol contract.
 
-  During the execution of the command, you will need to enter:
+  During the execution of the command, you will need to provide:
   - LINK_CONTRACT_ADDRESS - Link Token contract address
 
 #### Deploy Chainlink Offchain Aggregator contract
   ```
   make deploy-chainlink-offchain-aggregator
   ```
-  This command deploys an instance of Chainlink [OffchainAggregator.sol](src%2FOffchainAggregator%2FOffchainAggregator.sol) contract.
+  This command deploys an instance of Chainlink OffchainAggregator.sol contract.
 
-  During the execution of the command, you will need to enter:
+  During the execution of the command, you will need to provide:
   - LINK_CONTRACT_ADDRESS - Link Token contract address
 
 #### Deploy Chainlink Flux Aggregator contract
   ```
   make deploy-chainlink-flux-aggregator
   ```
-  This command deploys an instance of Chainlink [OffchainAggregator.sol](src%2FOffchainAggregator%2FOffchainAggregator.sol) contract.
+  This command deploys an instance of Chainlink FluxAggregator.sol contract.
 
-  During the execution of the command, you will need to enter:
+  During the execution of the command, you will need to provide:
   - LINK_CONTRACT_ADDRESS - Link Token contract address
 
 ### Chainlink Jobs Scripts
@@ -341,7 +342,7 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   ```
   This command creates a Chainlink job according to [direct_request_job.toml](chainlink%2Fjobs%2Fdirect_request_job.toml). 
 
-  During the execution of the command, you will need to enter:
+  During the execution of the command, you will need to provide:
   - NODE_ID - Chainlink node ID
   - ORACLE_ADDRESS - Oracle contract address
 
@@ -351,7 +352,7 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   ```
   This command creates a Chainlink job according to [cron_job.toml](chainlink%2Fjobs%2Fcron_job.toml).
 
-  During the execution of the command, you will need to enter:
+  During the execution of the command, you will need to provide:
   - NODE_ID - Chainlink node ID
   - CRON_CONSUMER_ADDRESS - Cron consumer contract address
 
@@ -361,7 +362,7 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   ```
   This command creates a Chainlink job according to [webhook_job.toml](chainlink%2Fjobs%2Fwebhook_job.toml).
 
-  During the execution of the command, you will need to enter:
+  During the execution of the command, you will need to provide:
   - NODE_ID - Chainlink node ID
 
 #### Run Chainlink Webhook job
@@ -370,7 +371,7 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   ```
   This command runs an existing Chainlink Webhook job.
 
-  During the execution of the command, you will need to enter:
+  During the execution of the command, you will need to provide:
   - NODE_ID - Chainlink node ID
   - WEBHOOK_JOB_ID - Webhook job ID
 
@@ -380,7 +381,7 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   ```
   This command creates a Chainlink job according to [keeper_job.toml](chainlink%2Fjobs%2Fkeeper_job.toml).
 
-  During the execution of the command, you will need to enter:
+  During the execution of the command, you will need to provide:
   - NODE_ID - Chainlink node ID
   - REGISTRY_ADDRESS - Registry contract address
 
@@ -390,7 +391,7 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   ```
   This command creates a Chainlink job for each Chainlink node in a cluster according to [keeper_job.toml](chainlink%2Fjobs%2Fkeeper_job.toml).
 
-  During the execution of the command, you will need to enter:
+  During the execution of the command, you will need to provide:
   - REGISTRY_ADDRESS - Registry contract address
 
   > **Note**  
@@ -402,7 +403,7 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   ```
   This command creates a Chainlink job for the first Chainlink node in a cluster according to [ocr_job_bootstrap.toml](chainlink%2Fjobs%2Focr_job_bootstrap.toml).
 
-  During the execution of the command, you will need to enter:
+  During the execution of the command, you will need to provide:
   - OFFCHAIN_AGGREGATOR_ADDRESS - Offchain Aggregator contract address
 
 #### Create Chainlink OCR job
@@ -411,7 +412,7 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   ```
   This command creates a Chainlink job according to [ocr_job.toml](chainlink%2Fjobs%2Focr_job.toml).
 
-  During the execution of the command, you will need to enter:
+  During the execution of the command, you will need to provide:
   - NODE_ID - Chainlink node ID
   - OFFCHAIN_AGGREGATOR_ADDRESS - Offchain Aggregator contract address
   - BOOTSTRAP_P2P_KEY - P2P key for an OCR bootstrap Chainlink node
@@ -422,7 +423,7 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   ```
   This command creates a Chainlink job for each Chainlink node except the first one (bootstrap) in a cluster according to [ocr_job.toml](chainlink%2Fjobs%2Focr_job.toml).
 
-  During the execution of the command, you will need to enter:
+  During the execution of the command, you will need to provide:
   - OFFCHAIN_AGGREGATOR_ADDRESS - Offchain Aggregator contract address
 
 #### Create Chainlink Flux job
@@ -431,7 +432,7 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   ```
   This command creates a Chainlink job according to [flux_job.toml](chainlink%2Fjobs%2Fflux_job.toml).
 
-  During the execution of the command, you will need to enter:
+  During the execution of the command, you will need to provide:
   - NODE_ID - Chainlink node ID
   - FLUX_AGGREGATOR_ADDRESS - Flux Aggregator contract address
 
@@ -441,7 +442,7 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   ```
   This command creates a Chainlink job for the first 3 Chainlink nodes in a cluster according to [flux_job.toml](chainlink%2Fjobs%2Fflux_job.toml).
 
-  During the execution of the command, you will need to enter:
+  During the execution of the command, you will need to provide:
   - FLUX_AGGREGATOR_ADDRESS - Flux Aggregator contract address
 
    > **Note**  
@@ -455,7 +456,7 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   ```
   With this command, you can send ETH to any specified recipient.
 
-  During the execution of the command, you will need to enter:
+  During the execution of the command, you will need to provide:
   - RECIPIENT - Recipient address
 
 #### Transfer ETH to Chainlink node
@@ -464,7 +465,7 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   ```
   With this command, you can send ETH to any specified Chainlink node.
 
-  During the execution of the command, you will need to enter:
+  During the execution of the command, you will need to provide:
   - NODE_ID - Chainlink node ID
 
 #### Transfer ETH to Chainlink nodes
@@ -479,7 +480,7 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   ```
   With this command, you can send Link tokens to any specified recipient.
 
-  During the execution of the command, you will need to enter:
+  During the execution of the command, you will need to provide:
   - LINK_CONTRACT_ADDRESS - Link Token contract address
   - RECIPIENT - Recipient address
 
@@ -489,7 +490,7 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   ```
   With this command, you can send Link tokens to any specified Chainlink node.
 
-  During the execution of the command, you will need to enter:
+  During the execution of the command, you will need to provide:
   - NODE_ID - Chainlink node ID
   - LINK_CONTRACT_ADDRESS - Link Token contract address
 
@@ -499,7 +500,7 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   ```
   With this command, you can send Link tokens to all Chainlink nodes in a cluster.
 
-  During the execution of the command, you will need to enter:
+  During the execution of the command, you will need to provide:
   - LINK_CONTRACT_ADDRESS - Link Token contract address
 
 ### Link Token Solidity Scripts
@@ -510,7 +511,7 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   ```
   This command transfers Link tokens to the Registry contract and calls it's `onTokenTransfer` method that verifies that an upkeep is funded.
 
-  During the execution of the command, you will need to enter:
+  During the execution of the command, you will need to provide:
   - LINK_CONTRACT_ADDRESS - Link Token contract address
 
 #### Get Link Token balance
@@ -519,7 +520,7 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   ```
   This command returns Link Token balance of an account.
 
-  During the execution of the command, you will need to enter:
+  During the execution of the command, you will need to provide:
   - LINK_CONTRACT_ADDRESS - Link Token contract address
   - ACCOUNT - Account
 
@@ -531,7 +532,7 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   ```
   This command calls `requestEthereumPrice` method of the Consumer contract, which asks the node to retrieve data specified in a Job configuration.  
 
-  During the execution of the command, you will need to enter:
+  During the execution of the command, you will need to provide:
   - CONSUMER_ADDRESS - Consumer contract address
   - ORACLE_ADDRESS - Oracle contract address
   - DIRECT_REQUEST_EXTERNAL_JOB_ID - Direct request External Job ID **without dashes** - you can get one with Chainlink Operator GUI on the Jobs tab
@@ -545,7 +546,7 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   ```
   This command returns current value of `currentPrice` variable specified in the Consumer contract state.  
 
-  During the execution of the command, you will need to enter:
+  During the execution of the command, you will need to provide:
   - CONSUMER_ADDRESS - Consumer contract address
 
 ### Chainlink Cron Consumer Solidity Scripts
@@ -556,7 +557,7 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   ```
   This command returns current value of `currentPrice` variable specified in the Consumer contract state.
 
-  During the execution of the command, you will need to enter:
+  During the execution of the command, you will need to provide:
   - CRON_CONSUMER_ADDRESS - Cron Consumer contract address
 
 ### Chainlink Keeper Consumer Solidity Scripts
@@ -567,7 +568,7 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   ```
   This command returns the latest value of the `counter` variable stored in the Keeper Consumer contract. This variable reflects the number of times the keepers performed the Keeper job.
 
-  During the execution of the command, you will need to enter:
+  During the execution of the command, you will need to provide:
   - KEEPER_CONSUMER_ADDRESS - Keeper Consumer contract address
 
 ### Registry Solidity Scripts
@@ -578,7 +579,7 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   ```
   This command registers Keeper Consumer in the Registry contract as upkeep.
 
-  During the execution of the command, you will need to enter:
+  During the execution of the command, you will need to provide:
   - REGISTRY_ADDRESS - Registry contract address
   - KEEPER_CONSUMER_ADDRESS - Keeper Consumer contract address
 
@@ -588,7 +589,7 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   ```
   This command sets Chainlink nodes in the cluster as keepers in the Registry contract.
 
-  During the execution of the command, you will need to enter:
+  During the execution of the command, you will need to provide:
   - REGISTRY_ADDRESS - Registry contract address
   - KEEPER_CONSUMER_ADDRESS - Keeper Consumer contract address
 
@@ -598,7 +599,7 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   ```
   This command returns an ID of the last registered upkeep in the Registry contract.
 
-  During the execution of the command, you will need to enter:
+  During the execution of the command, you will need to provide:
   - REGISTRY_ADDRESS - Registry contract address
 
 ### Offchain Aggregator Solidity Scripts
@@ -609,7 +610,7 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   ```
   This command sets `payees` in the Offchain Aggregator contract.
 
-  During the execution of the command, you will need to enter:
+  During the execution of the command, you will need to provide:
   - OFFCHAIN_AGGREGATOR_ADDRESS - Offchain Aggregator contract address
 
 #### Set Config
@@ -618,7 +619,7 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   ```
   This command sets OCR configuration in the Offchain Aggregator contract.
 
-  During the execution of the command, you will need to enter:
+  During the execution of the command, you will need to provide:
   - OFFCHAIN_AGGREGATOR_ADDRESS - Offchain Aggregator contract address
 
 > **Note**  
@@ -635,7 +636,7 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   ```
   This command requests new OCR round immediately.
 
-  During the execution of the command, you will need to enter:
+  During the execution of the command, you will need to provide:
   - OFFCHAIN_AGGREGATOR_ADDRESS - Offchain Aggregator contract address
 
 #### Get OCR Latest Answer
@@ -644,7 +645,7 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   ```
   This command returns an answer of the latest OCR round.
 
-  During the execution of the command, you will need to enter:
+  During the execution of the command, you will need to provide:
   - OFFCHAIN_AGGREGATOR_ADDRESS - Offchain Aggregator contract address
 
 ### Flux Aggregator Solidity Scripts
@@ -655,7 +656,7 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   ```
   This command recalculate the amount of LINK available for payouts in the Flux Aggregator contract.
 
-  During the execution of the command, you will need to enter:
+  During the execution of the command, you will need to provide:
   - FLUX_AGGREGATOR_ADDRESS - Flux Aggregator contract address
 
 #### Set Oracles
@@ -664,7 +665,7 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   ```
   This command adds new oracles as well as updates the round related parameters in the Flux Aggregator contract.
 
-  During the execution of the command, you will need to enter:
+  During the execution of the command, you will need to provide:
   - FLUX_AGGREGATOR_ADDRESS - Flux Aggregator contract address
 
 #### Get Oracles
@@ -673,7 +674,7 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   ```
   This command returns an array of addresses containing the oracles in the Flux Aggregator contract.
 
-  During the execution of the command, you will need to enter:
+  During the execution of the command, you will need to provide:
   - FLUX_AGGREGATOR_ADDRESS - Flux Aggregator contract address
 
 #### Get Flux Latest Answer
@@ -682,7 +683,7 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   ```
   This command returns an answer of the latest Flux round.
 
-  During the execution of the command, you will need to enter:
+  During the execution of the command, you will need to provide:
   - FLUX_AGGREGATOR_ADDRESS - Flux Aggregator contract address
 
   > **Note**  

@@ -212,7 +212,7 @@ Some scripts have parameters that can be provided either with the command line (
   - http://127.0.0.1:6744 - Chainlink node 4
   - http://127.0.0.1:6755 - Chainlink node 5 
 
-  For authorization, you must use the credentials specified in the [chainlink_api_credentials](chainlink%2Fchainlink_api_credentials).
+  For authorization, you must use the credentials specified in the [chainlink_api_credentials](chainlink%2Fsettings%2Fchainlink_api_credentials).
    > **Note**  
    > To run a single Chainlink node you can use [docker-compose-single.yaml](docker-compose-single.yaml).  
    > Node Operator GUI: http://127.0.0.1:6688  

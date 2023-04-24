@@ -410,6 +410,7 @@ request-eth-price-consumer:
 	$(call check_set_parameter,CONSUMER_ADDRESS,consumerAddress) \
 	$(call check_set_parameter,ORACLE_ADDRESS,oracleAddress) \
 	$(call check_set_parameter,DIRECT_REQUEST_EXTERNAL_JOB_ID,directRequestExternalJobId) \
+	directRequestExternalJobId=$$(echo $$directRequestExternalJobId | tr -d '-'); \
 	printf "%s\n" "Requesting current ETH price. Please wait..."; \
 	forge script ./script/ChainlinkConsumer.s.sol --sig "requestEthereumPrice(address, address, string)" $$consumerAddress $$oracleAddress $$directRequestExternalJobId --rpc-url ${RPC_URL} --broadcast
 

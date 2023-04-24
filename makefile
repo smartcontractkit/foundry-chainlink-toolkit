@@ -356,6 +356,13 @@ transfer-eth-to-node:
 	$(call get_node_address,$$chainlinkContainerName,nodeAddress) \
 	make transfer-eth RECIPIENT=$$nodeAddress;
 
+transfer-eth-to-nodes:
+	make transfer-eth-to-node NODE_ID=1;
+	make transfer-eth-to-node NODE_ID=2;
+	make transfer-eth-to-node NODE_ID=3;
+	make transfer-eth-to-node NODE_ID=4;
+	make transfer-eth-to-node NODE_ID=5;
+
 transfer-link:
 	$(call check_defined, PRIVATE_KEY) \
 	$(call check_defined, RPC_URL) \
@@ -370,6 +377,13 @@ transfer-link-to-node:
 	make login NODE_ID=$$nodeId; \
 	$(call get_node_address,$$chainlinkContainerName,nodeAddress) \
 	make transfer-link RECIPIENT=$$nodeAddress;
+
+transfer-link-to-nodes:
+	make transfer-link-to-node NODE_ID=1;
+	make transfer-link-to-node NODE_ID=2;
+	make transfer-link-to-node NODE_ID=3;
+	make transfer-link-to-node NODE_ID=4;
+	make transfer-link-to-node NODE_ID=5;
 
 # Link Token Solidity Scripts
 transfer-and-call-link:

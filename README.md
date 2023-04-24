@@ -467,6 +467,12 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
   During the execution of the command, you will need to enter:
   - NODE_ID - Chainlink node ID
 
+#### Transfer ETH to Chainlink nodes
+  ```
+  make transfer-eth-to-nodes
+  ```
+  With this command, you can send ETH to all Chainlink nodes in a cluster.
+
 #### Transfer Link tokens
   ```
   make transfer-link
@@ -479,12 +485,21 @@ Below are the scripts contained in the [makefile](makefile). Some scripts have p
 
 #### Transfer Link tokens to Chainlink node
   ```
-  make transfer-link-tonode
+  make transfer-link-to-node
   ```
   With this command, you can send Link tokens to any specified Chainlink node.
 
   During the execution of the command, you will need to enter:
   - NODE_ID - Chainlink node ID
+  - LINK_CONTRACT_ADDRESS - Link Token contract address
+
+#### Transfer Link tokens to Chainlink nodes
+  ```
+  make transfer-link-to-nodes
+  ```
+  With this command, you can send Link tokens to all Chainlink nodes in a cluster.
+
+  During the execution of the command, you will need to enter:
   - LINK_CONTRACT_ADDRESS - Link Token contract address
 
 ### Link Token Solidity Scripts

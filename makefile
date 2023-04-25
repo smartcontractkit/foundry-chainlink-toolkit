@@ -54,22 +54,26 @@ endef
 ifeq ($(shell uname), Darwin)
 # Set variable for MacOS
 	ifeq ($(shell uname -m), amd64)
-	OCRHelperPath = "./external/OCRHelper/bin/ocr-helper-darwin-amd64"
+	OCRHelperPath = external/OCRHelper/bin/ocr-helper-darwin-amd64
+	else ifeq ($(shell uname -m), x86_64)
+	OCRHelperPath = external/OCRHelper/bin/ocr-helper-darwin-amd64
 	else ifeq ($(shell uname -m), arm64)
-	OCRHelperPath = "./external/OCRHelper/bin/ocr-helper-darwin-arm64"
+	OCRHelperPath = external/OCRHelper/bin/ocr-helper-darwin-arm64
 	endif
 else ifeq ($(shell uname), Linux)
 # Set variable for Linux
 	ifeq ($(shell uname -m), amd64)
-	OCRHelperPath = "./external/OCRHelper/bin/ocr-helper-linux-amd64"
+	OCRHelperPath = external/OCRHelper/bin/ocr-helper-linux-amd64
+	else ifeq ($(shell uname -m), x86_64)
+	OCRHelperPath = external/OCRHelper/bin/ocr-helper-linux-amd64
 	else ifeq ($(shell uname -m), arm)
-	OCRHelperPath = "./external/OCRHelper/bin/ocr-helper-linux-arm"
+	OCRHelperPath = external/OCRHelper/bin/ocr-helper-linux-arm
 	else ifeq ($(shell uname -m), arm64)
-	OCRHelperPath = "./external/OCRHelper/bin/ocr-helper-linux-arm64"
+	OCRHelperPath = external/OCRHelper/bin/ocr-helper-linux-arm64
 	endif
 else
 # Set variable for other operating systems, binary has to be built in advance
-OCRHelperPath = "./external/OCRHelper/bin/ocr-helper"
+OCRHelperPath = external/OCRHelper/bin/ocr-helper
 endif
 
 install:
@@ -520,36 +524,43 @@ set-config_internal:
 set-config:
 	$(call check_defined, PRIVATE_KEY) \
 	$(call check_defined, RPC_URL) \
-	nodeId=2; \
-	make login NODE_ID=$$nodeId && \
-	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
-	$(call get_node_address,$$chainlinkContainerName,nodeAddress2) \
-	$(call get_ocr_keys,$$chainlinkContainerName,_,onChainSigningAddress2,offChainPublicKey2,configPublicKey2) \
-	$(call get_p2p_keys,$$chainlinkContainerName,peerId2,_) \
-	nodeId=3; \
-	make login NODE_ID=$$nodeId && \
-	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
-	$(call get_node_address,$$chainlinkContainerName,nodeAddress3) \
-	$(call get_ocr_keys,$$chainlinkContainerName,_,onChainSigningAddress3,offChainPublicKey3,configPublicKey3) \
-	$(call get_p2p_keys,$$chainlinkContainerName,peerId3,_) \
-	nodeId=4; \
-	make login NODE_ID=$$nodeId && \
-	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
-	$(call get_node_address,$$chainlinkContainerName,nodeAddress4) \
-	$(call get_ocr_keys,$$chainlinkContainerName,_,onChainSigningAddress4,offChainPublicKey4,configPublicKey4) \
-	$(call get_p2p_keys,$$chainlinkContainerName,peerId4,_) \
-	nodeId=5; \
-	make login NODE_ID=$$nodeId && \
-	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
-	$(call get_node_address,$$chainlinkContainerName,nodeAddress5) \
-	$(call get_ocr_keys,$$chainlinkContainerName,_,onChainSigningAddress5,offChainPublicKey5,configPublicKey5) \
-	$(call get_p2p_keys,$$chainlinkContainerName,peerId5,_) \
-	make set-config_internal \
-		nodeAddress2=$$nodeAddress2 nodeAddress3=$$nodeAddress3 nodeAddress4=$$nodeAddress4 nodeAddress5=$$nodeAddress5 \
-		onChainSigningAddress2=$$onChainSigningAddress2 onChainSigningAddress3=$$onChainSigningAddress3 onChainSigningAddress4=$$onChainSigningAddress4 onChainSigningAddress5=$$onChainSigningAddress5 \
-		offChainPublicKey2=$$offChainPublicKey2 offChainPublicKey3=$$offChainPublicKey3 offChainPublicKey4=$$offChainPublicKey4 offChainPublicKey5=$$offChainPublicKey5 \
-		configPublicKey2=$$configPublicKey2 configPublicKey3=$$configPublicKey3 configPublicKey4=$$configPublicKey4 configPublicKey5=$$configPublicKey5 \
-		peerId2=$$peerId2 peerId3=$$peerId3 peerId4=$$peerId4 peerId5=$$peerId5;
+	if [ "$(wildcard ${PWD}/${OCRHelperPath})" = "" ]; then \
+		printf "%s\n%s\n%s\n" "Binary file \"$(OCRHelperPath)\" does not exist." \
+			"Please run: 'make build-ocr-helper' to build OS dependent OCR Helper external library." \
+			"Find more information in the README file."; \
+	else \
+		nodeId=2; \
+		make login NODE_ID=$$nodeId && \
+		$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
+		$(call get_node_address,$$chainlinkContainerName,nodeAddress2) \
+		$(call get_ocr_keys,$$chainlinkContainerName,_,onChainSigningAddress2,offChainPublicKey2,configPublicKey2) \
+		$(call get_p2p_keys,$$chainlinkContainerName,peerId2,_) \
+		nodeId=3; \
+		make login NODE_ID=$$nodeId && \
+		$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
+		$(call get_node_address,$$chainlinkContainerName,nodeAddress3) \
+		$(call get_ocr_keys,$$chainlinkContainerName,_,onChainSigningAddress3,offChainPublicKey3,configPublicKey3) \
+		$(call get_p2p_keys,$$chainlinkContainerName,peerId3,_) \
+		nodeId=4; \
+		make login NODE_ID=$$nodeId && \
+		$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
+		$(call get_node_address,$$chainlinkContainerName,nodeAddress4) \
+		$(call get_ocr_keys,$$chainlinkContainerName,_,onChainSigningAddress4,offChainPublicKey4,configPublicKey4) \
+		$(call get_p2p_keys,$$chainlinkContainerName,peerId4,_) \
+		nodeId=5; \
+		make login NODE_ID=$$nodeId && \
+		$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
+		$(call get_node_address,$$chainlinkContainerName,nodeAddress5) \
+		$(call get_ocr_keys,$$chainlinkContainerName,_,onChainSigningAddress5,offChainPublicKey5,configPublicKey5) \
+		$(call get_p2p_keys,$$chainlinkContainerName,peerId5,_) \
+		printf "%s\n" "Generating and setting OCR config in the Offchain Aggregator. Please wait..."; \
+		make set-config_internal \
+			nodeAddress2=$$nodeAddress2 nodeAddress3=$$nodeAddress3 nodeAddress4=$$nodeAddress4 nodeAddress5=$$nodeAddress5 \
+			onChainSigningAddress2=$$onChainSigningAddress2 onChainSigningAddress3=$$onChainSigningAddress3 onChainSigningAddress4=$$onChainSigningAddress4 onChainSigningAddress5=$$onChainSigningAddress5 \
+			offChainPublicKey2=$$offChainPublicKey2 offChainPublicKey3=$$offChainPublicKey3 offChainPublicKey4=$$offChainPublicKey4 offChainPublicKey5=$$offChainPublicKey5 \
+			configPublicKey2=$$configPublicKey2 configPublicKey3=$$configPublicKey3 configPublicKey4=$$configPublicKey4 configPublicKey5=$$configPublicKey5 \
+			peerId2=$$peerId2 peerId3=$$peerId3 peerId4=$$peerId4 peerId5=$$peerId5; \
+	fi
 
 request-new-round:
 	$(call check_defined, PRIVATE_KEY) \

@@ -635,7 +635,7 @@ Some scripts have parameters that can be provided either with the command line (
 > **Note**  
 > This package uses external Go library [OCRHelper](external%2FOCRHelper) to prepare an OCR configuration.  
 > This Go library is based on https://github.com/smartcontractkit/chainlink integration tests.  
-> It has pre-built binaries for platforms: darwin/amd64, darwin/arm64, linux/amd64, linux/arm,linux/arm64.  
+> It has pre-built binaries for platforms: darwin/amd64(x86_64), darwin/arm64, linux/amd64(x86_64), linux/arm,linux/arm64.  
 > If you use another platform, please run in advance:  
 > ```make build-ocr-helper```  
 > to build external library for your platform. It requires Go (1.19) installed.

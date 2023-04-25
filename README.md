@@ -515,15 +515,6 @@ Some scripts have parameters that can be provided either with the command line (
 
 ### Link Token Solidity Scripts
 
-#### Transfer-and-Call Link Token
-  ```
-  make transfer-and-call-link
-  ```
-  This command transfers Link tokens to the Registry contract and calls it's `onTokenTransfer` method that verifies that an upkeep is funded.
-
-  During the execution of the command, you will need to provide:
-  - LINK_CONTRACT_ADDRESS - Link Token contract address
-
 #### Get Link Token balance
   ```
   make get-balance
@@ -603,14 +594,15 @@ Some scripts have parameters that can be provided either with the command line (
   - REGISTRY_ADDRESS - Registry contract address
   - KEEPER_CONSUMER_ADDRESS - Keeper Consumer contract address
 
-#### Get Upkeep ID
+#### Fund Latest Upkeep
   ```
-  make get-last-active-upkeep-id
+  make fund-latest-upkeep
   ```
-  This command returns an ID of the last registered upkeep in the Registry contract.
+  This command funds the latest upkeep in the Registry contract.
 
   During the execution of the command, you will need to provide:
   - REGISTRY_ADDRESS - Registry contract address
+  - LINK_CONTRACT_ADDRESS - Link Token contract address
 
 ### Offchain Aggregator Solidity Scripts
 
@@ -739,7 +731,7 @@ Some scripts have parameters that can be provided either with the command line (
 3. Create Keeper Jobs for Chainlink nodes in a cluster
 4. Register Chainlink nodes as keepers in a Registry contract
 5. Register Keeper Consumer as upkeep in a Registry contract
-6. Get last upkeep ID in the Registry contract and run `Transfer and Call Link` script
+6. Fund the latest upkeep in a Registry contract
 7. Get value of `counter` variable in a Keeper contract
 
 #### OCR Job

@@ -1,27 +1,12 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma experimental ABIEncoderV2;
-pragma solidity  >=0.6.2 <0.9.0;
+pragma solidity >=0.6.2 <0.9.0;
 
 import "forge-std/Script.sol";
 import "../src/interfaces/LinkTokenInterface.sol";
-import "../src/interfaces/KeeperRegistryInterface.sol";
+import { KeeperRegistryInterface, Config, State } from "../src/interfaces/KeeperRegistryInterface.sol";
 import "../src/mocks/MockEthFeed.sol";
 import "../src/mocks/MockGasFeed.sol";
-
-struct Config {
-  uint32 paymentPremiumPPB;
-  uint32 flatFeeMicroLink; // min 0.000001 LINK, max 4294 LINK
-  uint24 blockCountPerTurn;
-  uint32 checkGasLimit;
-  uint24 stalenessSeconds;
-  uint16 gasCeilingMultiplier;
-  uint96 minUpkeepSpend;
-  uint32 maxPerformGas;
-  uint256 fallbackGasPrice;
-  uint256 fallbackLinkPrice;
-  address transcoder;
-  address registrar;
-}
 
 contract RegistryScript is Script {
   address randomAddress = address(0x8A791620dd6260079BF849Dc5567aDC3F2FdC318);
@@ -112,25 +97,19 @@ contract RegistryScript is Script {
     vm.stopBroadcast();
   }
 
-  function getLastActiveUpkeepID(address registryAddress) external returns (uint256) {
+  function fundLatestUpkeep(address registryAddress, address linkTokenAddress, uint256 amount) external {
     uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
 
     vm.startBroadcast(deployerPrivateKey);
 
     address payable registryAddressPayable = payable(registryAddress);
     KeeperRegistryInterface registry = KeeperRegistryInterface(registryAddressPayable);
-    uint256[] memory ids = registry.getActiveUpkeepIDs(0, 1);
+    (State memory state,,) = registry.getState();
+    uint[] memory ids = registry.getActiveUpkeepIDs(0, state.numUpkeeps);
 
-    (address target,uint32 executeGas,,uint96 balance,address lastKeeper,,uint maxValidBlocknumber,,bool paused) = registry.getUpkeep(ids[0]);
-    console.logAddress(target);
-    console.logAddress(lastKeeper);
-    console.logUint(maxValidBlocknumber);
-    console.logUint(executeGas);
-    console.logUint(balance);
-    console.logBool(paused);
+    LinkTokenInterface linkToken = LinkTokenInterface(linkTokenAddress);
+    linkToken.transferAndCall(registryAddress, amount, abi.encode(ids[state.numUpkeeps - 1]));
 
     vm.stopBroadcast();
-
-    return ids[0];
   }
 }

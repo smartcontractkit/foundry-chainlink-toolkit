@@ -390,15 +390,6 @@ transfer-link-to-nodes:
 	make transfer-link-to-node NODE_ID=5;
 
 # Link Token Solidity Scripts
-transfer-and-call-link:
-	$(call check_defined, PRIVATE_KEY) \
-	$(call check_defined, RPC_URL) \
-	$(call check_set_parameter,REGISTRY_ADDRESS,registryAddress) \
-	$(call check_set_parameter,UPKEEP_ID,upkeepId) \
-	$(call check_set_parameter,LINK_CONTRACT_ADDRESS,linkContractAddress) \
-	echo "Transferring Link Tokens to the recipient. Please wait..."; \
-	forge script ./script/LinkToken.s.sol --sig "transferAndCall(address, address, uint256, uint256)" $$linkContractAddress $$registryAddress 1000000000000000000 $$upkeepId --rpc-url ${RPC_URL} --broadcast
-
 get-balance:
 	$(call check_defined, PRIVATE_KEY) \
 	$(call check_defined, RPC_URL) \
@@ -478,12 +469,13 @@ set-keepers:
 	printf "%s\n" "Setting Keepers in Registry. Please wait..."; \
 	forge script ./script/Registry.s.sol --sig "setKeepers(address,address,address[])" $$registryAddress $$keeperConsumerAddress [$$nodeAddress1,$$nodeAddress2,$$nodeAddress3,$$nodeAddress4,$$nodeAddress5] --rpc-url ${RPC_URL} --broadcast
 
-get-last-active-upkeep-id:
+fund-latest-upkeep:
 	$(call check_defined, PRIVATE_KEY) \
 	$(call check_defined, RPC_URL) \
 	$(call check_set_parameter,REGISTRY_ADDRESS,registryAddress) \
-	echo "Getting the last active upkeep id. Please wait..."; \
-	forge script ./script/Registry.s.sol --sig "getLastActiveUpkeepID(address)" $$registryAddress --rpc-url ${RPC_URL} --broadcast
+	$(call check_set_parameter,LINK_CONTRACT_ADDRESS,linkContractAddress) \
+	echo "Funding the latest upkeep in Registry contract. Please wait..."; \
+	forge script ./script/Registry.s.sol --sig "fundLatestUpkeep(address,address,uint256)" $$registryAddress $$linkContractAddress 1000000000000000000 --rpc-url ${RPC_URL} --broadcast
 
 # Offchain Aggregator Solidity Scripts
 # Setting payees excluding Node 1 as a bootstrap node

@@ -21,15 +21,6 @@ contract LinkTokenScript is Script {
     return linkToken;
   }
 
-  function transferAndCall(address tokenAddress, address to, uint256 amount, uint256 upkeepId) external {
-    uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
-
-    vm.broadcast(deployerPrivateKey);
-
-    LinkTokenInterface linkToken = LinkTokenInterface(tokenAddress);
-    linkToken.transferAndCall(to, amount, abi.encode(upkeepId));
-  }
-
   function getBalance(address tokenAddress, address account) external view returns(uint256){
     LinkTokenInterface linkToken = LinkTokenInterface(tokenAddress);
     uint256 balance = linkToken.balanceOf(account);

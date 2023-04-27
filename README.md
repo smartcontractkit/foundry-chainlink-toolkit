@@ -552,7 +552,7 @@ Some scripts have parameters that can be provided either with the command line (
 
 ### Chainlink Cron Consumer Solidity Scripts
 
-#### Get ETH price
+#### Get ETH price (cron)
   ```
   make get-eth-price-cron-consumer
   ```
@@ -701,55 +701,55 @@ Some scripts have parameters that can be provided either with the command line (
 
 ### Testing flows
 #### Initial setup
-1. Build Chainlink contracts artifacts
-2. Deploy Link Token contract
+1. [Build Chainlink contracts artifacts](#build-chainlink-contracts)
+2. [Deploy Link Token contract](#deploy-link-token-contract)
 3. Set `LINK_TOKEN_CONTRACT` in `.env`
-4. Spin up a Chainlink nodes cluster
-5. Fund Chainlink nodes with ETH
-6. Fund Chainlink nodes with Link tokens
+4. [Spin up a Chainlink nodes cluster](#spin-up-a-chainlink-cluster)
+5. [Fund Chainlink nodes with ETH](#transfer-eth-to-chainlink-nodes)
+6. [Fund Chainlink nodes with Link tokens](#transfer-link-tokens-to-chainlink-nodes)
 
 #### Direct Request Job
-1. Deploy Oracle contract
-2. Deploy Consumer contract
-3. Fund Consumer contract with Link tokens
-4. Create Direct Request Job
-5. Request ETH price with Consumer contract, a corresponding job will be launched
-6. Get ETH price after completing a job
+1. [Deploy Oracle contract](#deploy-oracle-contract)
+2. [Deploy Consumer contract](#deploy-consumer-contract)
+3. [Fund Consumer contract with Link tokens](#transfer-link-tokens)
+4. [Create Direct Request Job](#create-chainlink-direct-request-job)
+5. [Request ETH price with Consumer contract, a corresponding job will be launched](#request-eth-price)
+6. [Get ETH price after completing a job](#get-eth-price)
 
 #### Cron Job
-1. Deploy Cron Consumer contract
-2. Create Cron Job
-3. Get ETH price after completing a job
+1. [Deploy Cron Consumer contract](#deploy-cron-consumer-contract)
+2. [Create Cron Job](#create-chainlink-cron-job)
+3. [Get ETH price after completing a job](#get-eth-price--cron-)
 
 #### Webhook Job
-1. Create Webhook Job
-2. Run Webhook Job
+1. [Create Webhook Job](#create-chainlink-webhook-job)
+2. [Run Webhook Job](#run-chainlink-webhook-job)
 
 #### Keeper Job
-1. Deploy Keeper Consumer contract
-2. Deploy Registry contract
-3. Create Keeper Jobs for Chainlink nodes in a cluster
-4. Register Chainlink nodes as keepers in a Registry contract
-5. Register Keeper Consumer as upkeep in a Registry contract
-6. Fund the latest upkeep in a Registry contract
-7. Get value of `counter` variable in a Keeper contract
+1. [Deploy Keeper Consumer contract](#deploy-keeper-consumer-contract)
+2. [Deploy Registry contract](#deploy-keeper-registry-contract)
+3. [Create Keeper Jobs for Chainlink nodes in a cluster](#create-chainlink-keeper-jobs)
+4. [Register Chainlink nodes as keepers in a Registry contract](#set-keepers)
+5. [Register Keeper Consumer as upkeep in a Registry contract](#register-keeper-consumer)
+6. [Fund the latest upkeep in a Registry contract](#fund-latest-upkeep)
+7. [Get value of `counter` variable in a Keeper contract](#get-keeper-counter)
 
 #### OCR Job
-1. Deploy Offchain Aggregator contract
-2. Set Offchain Aggregator payees
-3. Set Offchain Aggregator config
-4. Create OCR Job for a bootstrap Chainlink node (first in a cluster)
-5. Create OCR Jobs for Chainlink nodes in a cluster except the first one (bootstrap)
-6. Request new OCR round in the Offchain Aggregator contract (optional)
-7. Get the answer of the latest OCR round from the Offchain Aggregator contract
+1. [Deploy Offchain Aggregator contract](#deploy-chainlink-offchain-aggregator-contract)
+2. [Set Offchain Aggregator payees](#set-payees)
+3. [Set Offchain Aggregator config](#set-config)
+4. [Create OCR Job for a bootstrap Chainlink node (first in a cluster)](#create-chainlink-ocr--bootstrap--job)
+5. [Create OCR Jobs for Chainlink nodes in a cluster except the first one (bootstrap)](#create-chainlink-ocr-jobs)
+6. [Request new OCR round in the Offchain Aggregator contract (optional)](#request-new-round)
+7. [Get the answer of the latest OCR round from the Offchain Aggregator contract](#get-ocr-latest-answer)
 
 #### Flux Job
-1. Deploy Flux Aggregator contract
-2. Fund Flux Aggregator contract with Link tokens 
-3. Update Flux Aggregator available funds
-4. Set Flux Aggregator oracles
-5. Create Flux Jobs for the first 3 Chainlink nodes in a cluster
-6. Get the answer of the latest Flux round from the Flux Aggregator contract
+1. [Deploy Flux Aggregator contract](#deploy-chainlink-flux-aggregator-contract)
+2. [Fund Flux Aggregator contract with Link tokens](#transfer-link-tokens) 
+3. [Update Flux Aggregator available funds](#update-available-funds)
+4. [Set Flux Aggregator oracles](#set-oracles)
+5. [Create Flux Jobs for the first 3 Chainlink nodes in a cluster](#create-chainlink-flux-jobs)
+6. [Get the answer of the latest Flux round from the Flux Aggregator contract](#get-flux-latest-answer)
 
 ## Acknowledgements
 This project based on https://github.com/protofire/hardhat-chainlink-plugin. 

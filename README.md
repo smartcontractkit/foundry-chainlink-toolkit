@@ -63,10 +63,13 @@ The purpose of this project is to simplify the immersion in the development and 
       
 > **Note**  
 > Tested with forge 0.2.0 (e99cf83 2023-04-21T00:15:57.602861000Z).
-> 
-> You may see the following error on MacOS: ```dyld: Library not loaded: /usr/local/opt/libusb/lib/libusb-1.0.0.dylib```.  
-> In order to fix this, you should install libusb: ```brew install libusb```.  
-> Reference: https://github.com/foundry-rs/foundry/blob/master/README.md#troubleshooting-installation
+      > You may see the following error on MacOS: 
+      ```dyld: Library not loaded: /usr/local/opt/libusb/lib/libusb-1.0.0.dylib```.  
+      
+      > In order to fix this, you should install libusb: 
+      ```brew install libusb```.  
+      
+      > Reference: https://github.com/foundry-rs/foundry/blob/master/README.md#troubleshooting-installation
 
 2. Install [GNU make](https://www.gnu.org/software/make/). The functionality of the project is wrapped in the [makefile](makefile). Reference the below commands based on your OS or go to [Make documentation](https://www.gnu.org/software/make/manual/make.html).
 
@@ -85,13 +88,13 @@ The purpose of this project is to simplify the immersion in the development and 
       yum install make
       ```
 
-> **Note**  
-> Tested with GNU Make 3.81.
+      > **Note**  
+      > Tested with GNU Make 3.81.
 
 3. Install and run Docker; for convenience, the Chainlink nodes run in a container. Instructions: [docs.docker.com/get-docker](https://docs.docker.com/get-docker/).
 
-> **Note**  
-> Tested with Docker version 20.10.23, build 7155243.
+      > **Note**  
+      > Tested with Docker version 20.10.23, build 7155243.
 
 ### Chain RPC node
 In order for a Chainlink node to be able to interact with the blockchain, and to interact with the blockchain using the [Forge](https://book.getfoundry.sh/forge/), you have to know an RPC node http endpoint and web socket for a chosen network compatible with Chainlink.
@@ -121,13 +124,13 @@ We use some subdirectories of the [chainlink](chainlink) folder as shared folder
 > You can specify any credentials there. Password provided must be 16 characters or more.
 
 #### Jobs
-- [cron_job.toml](chainlink%2Fjobs%2Fcron_job.toml) - example configuration file for a Chainlink Cron job  
-- [direct_request_job.toml](chainlink%2Fjobs%2Fdirect_request_job.toml) - example configuration file for a Chainlink Direct Request job  
-- [flux_job.toml](chainlink%2Fjobs%2Fflux_job.toml) - example configuration file for a Chainlink Flux job  
-- [keeper_job.toml](chainlink%2Fjobs%2Fkeeper_job.toml) - example configuration file for a Chainlink Keeper job  
-- [ocr_job.toml](chainlink%2Fjobs%2Focr_job.toml) - example configuration file for a Chainlink OCR job  
+- [cron_job.toml](chainlink%2Fjobs%2Fcron_job.toml) - example configuration file for a Chainlink [Cron job](https://docs.chain.link/chainlink-nodes/oracle-jobs/all-jobs#solidity-cron-jobs)
+- [direct_request_job.toml](chainlink%2Fjobs%2Fdirect_request_job.toml) - example configuration file for a Chainlink [Direct Request job](https://docs.chain.link/chainlink-nodes/oracle-jobs/all-jobs#direct-request-jobs)
+- [flux_job.toml](chainlink%2Fjobs%2Fflux_job.toml) - example configuration file for a Chainlink [Flux job](https://docs.chain.link/chainlink-nodes/oracle-jobs/all-jobs#flux-monitor-jobs)
+- [keeper_job.toml](chainlink%2Fjobs%2Fkeeper_job.toml) - example configuration file for a Chainlink [Keeper job](https://docs.chain.link/chainlink-nodes/oracle-jobs/all-jobs#keeper-jobs)
+- [ocr_job.toml](chainlink%2Fjobs%2Focr_job.toml) - example configuration file for a Chainlink [OCR job](https://docs.chain.link/chainlink-nodes/oracle-jobs/all-jobs#off-chain-reporting-jobs)
 - [ocr_job_bootstrap.toml](chainlink%2Fjobs%2Focr_job_bootstrap.toml) - example configuration file for a Chainlink OCR (bootstrap) job  
-- [webhook_job.toml](chainlink%2Fjobs%2Fwebhook_job.toml) - example configuration file for a Chainlink Webhook job  
+- [webhook_job.toml](chainlink%2Fjobs%2Fwebhook_job.toml) - example configuration file for a Chainlink [Webhook job](https://docs.chain.link/chainlink-nodes/oracle-jobs/all-jobs/#webhook-jobs)
 
 > **Note**  
 > More info on Chainlink v2 Jobs, their types and configuration can be found here: [docs.chain.link/chainlink-nodes/oracle-jobs/jobs/](https://docs.chain.link/chainlink-nodes/oracle-jobs/jobs/).
@@ -162,13 +165,15 @@ Besides that, there is the [chainlink.env](chainlink%2Fchainlink.env) that conta
 
 ### Chainlink Consumer Contracts
 The [contracts](chainlink%2Fcontracts) directory contains examples of Chainlink Consumer contracts:  
-- [ChainlinkConsumer.sol](chainlink%2Fcontracts%2FChainlinkConsumer.sol) - sample Consumer contract for a Chainlink Direct Request job
-- [ChainlinkCronConsumer.sol](chainlink%2Fcontracts%2FChainlinkCronConsumer.sol) - sample Consumer contract for a Chainlink Cron job
-- [ChainlinkKeeperConsumer.sol](chainlink%2Fcontracts%2FChainlinkKeeperConsumer.sol) - sample Consumer contract for a Chainlink Keeper job
+- [ChainlinkConsumer.sol](chainlink%2Fcontracts%2FChainlinkConsumer.sol) - sample Consumer contract for a Chainlink [Direct Request job](https://docs.chain.link/chainlink-nodes/oracle-jobs/all-jobs#direct-request-jobs)
+- [ChainlinkCronConsumer.sol](chainlink%2Fcontracts%2FChainlinkCronConsumer.sol) - sample Consumer contract for a Chainlink [Cron job](https://docs.chain.link/chainlink-nodes/oracle-jobs/all-jobs#solidity-cron-jobs)
+- [ChainlinkKeeperConsumer.sol](chainlink%2Fcontracts%2FChainlinkKeeperConsumer.sol) - sample Consumer contract for a Chainlink [Keeper job](https://docs.chain.link/chainlink-nodes/oracle-jobs/all-jobs#keeper-jobs)
 
 ### Solidity Scripting
 Functionality related to deployment and interaction with smart contracts is implemented using [Foundry Solidity Scripting](https://book.getfoundry.sh/tutorials/solidity-scripting?highlight=script#solidity-scripting).  
-The [script](script) directory contains scripts for the Link Token, Oracle, Registry, Chainlink Consumer contracts, Flux and Offchain aggregators as well as the transfer of ETH and Link tokens.  
+
+The [script](script) directory contains scripts for the Link Token, Oracle, Registry, Chainlink Consumer contracts, Flux and Offchain aggregators as well as the transfer of ETH and Link tokens. 
+
 Scripts are run with the command: `forge script path/to/script [--args]`. Logs and artifacts dedicated to each script run, including a transaction hash and an address of deployed smart contract, are stored in a corresponding subdirectory of the [broadcast](broadcast) folder (created automatically).
 
 All necessary scripts are also included in the [makefile](makefile). In order to run these scripts, you first need to install the necessary dependencies:
@@ -353,8 +358,8 @@ Some scripts have parameters that can be provided either with the command line (
   This command creates a Chainlink job according to [direct_request_job.toml](chainlink%2Fjobs%2Fdirect_request_job.toml). 
 
   During the execution of the command, you will need to provide:
-  - NODE_ID - Chainlink node ID
-  - ORACLE_ADDRESS - Oracle contract address
+  - `NODE_ID` - Chainlink node ID
+  - `ORACLE_ADDRESS` - Oracle contract address
 
 #### Create Chainlink Cron job
   ```
@@ -363,8 +368,8 @@ Some scripts have parameters that can be provided either with the command line (
   This command creates a Chainlink job according to [cron_job.toml](chainlink%2Fjobs%2Fcron_job.toml).
 
   During the execution of the command, you will need to provide:
-  - NODE_ID - Chainlink node ID
-  - CRON_CONSUMER_ADDRESS - Cron consumer contract address
+  - `NODE_ID` - Chainlink node ID
+  - `CRON_CONSUMER_ADDRESS` - Cron consumer contract address
 
 #### Create Chainlink Webhook job
   ```
@@ -373,7 +378,7 @@ Some scripts have parameters that can be provided either with the command line (
   This command creates a Chainlink job according to [webhook_job.toml](chainlink%2Fjobs%2Fwebhook_job.toml).
 
   During the execution of the command, you will need to provide:
-  - NODE_ID - Chainlink node ID
+  - `NODE_ID` - Chainlink node ID
 
 #### Run Chainlink Webhook job
   ```
@@ -382,8 +387,8 @@ Some scripts have parameters that can be provided either with the command line (
   This command runs an existing Chainlink Webhook job.
 
   During the execution of the command, you will need to provide:
-  - NODE_ID - Chainlink node ID
-  - WEBHOOK_JOB_ID - Webhook job ID
+  - `NODE_ID` - Chainlink node ID
+  - `WEBHOOK_JOB_ID` - Webhook job ID
 
 #### Create Chainlink Keeper job
   ```
@@ -392,8 +397,8 @@ Some scripts have parameters that can be provided either with the command line (
   This command creates a Chainlink job according to [keeper_job.toml](chainlink%2Fjobs%2Fkeeper_job.toml).
 
   During the execution of the command, you will need to provide:
-  - NODE_ID - Chainlink node ID
-  - REGISTRY_ADDRESS - Registry contract address
+  - `NODE_ID` - Chainlink node ID
+  - `REGISTRY_ADDRESS` - Registry contract address
 
 #### Create Chainlink Keeper jobs
   ```
@@ -402,7 +407,7 @@ Some scripts have parameters that can be provided either with the command line (
   This command creates a Chainlink job for each Chainlink node in a cluster according to [keeper_job.toml](chainlink%2Fjobs%2Fkeeper_job.toml).
 
   During the execution of the command, you will need to provide:
-  - REGISTRY_ADDRESS - Registry contract address
+  - `REGISTRY_ADDRESS` - Registry contract address
 
   > **Note**  
   > For the Chainlink Keeper Job it was noticed that Chainlink nodes require a current blockchain height to be approximately at least 100 blocks.
@@ -414,7 +419,7 @@ Some scripts have parameters that can be provided either with the command line (
   This command creates a Chainlink job for the first Chainlink node in a cluster according to [ocr_job_bootstrap.toml](chainlink%2Fjobs%2Focr_job_bootstrap.toml).
 
   During the execution of the command, you will need to provide:
-  - OFFCHAIN_AGGREGATOR_ADDRESS - Offchain Aggregator contract address
+  - `OFFCHAIN_AGGREGATOR_ADDRESS` - Offchain Aggregator contract address
 
 #### Create Chainlink OCR job
   ```
@@ -423,9 +428,9 @@ Some scripts have parameters that can be provided either with the command line (
   This command creates a Chainlink job according to [ocr_job.toml](chainlink%2Fjobs%2Focr_job.toml).
 
   During the execution of the command, you will need to provide:
-  - NODE_ID - Chainlink node ID
-  - OFFCHAIN_AGGREGATOR_ADDRESS - Offchain Aggregator contract address
-  - BOOTSTRAP_P2P_KEY - P2P key for an OCR bootstrap Chainlink node
+  - `NODE_ID` - Chainlink node ID
+  - `OFFCHAIN_AGGREGATOR_ADDRESS` - Offchain Aggregator contract address
+  - `BOOTSTRAP_P2P_KEY` - P2P key for an OCR bootstrap Chainlink node
 
 #### Create Chainlink OCR jobs
   ```
@@ -434,7 +439,7 @@ Some scripts have parameters that can be provided either with the command line (
   This command creates a Chainlink job for each Chainlink node except the first one (bootstrap) in a cluster according to [ocr_job.toml](chainlink%2Fjobs%2Focr_job.toml).
 
   During the execution of the command, you will need to provide:
-  - OFFCHAIN_AGGREGATOR_ADDRESS - Offchain Aggregator contract address
+  - `OFFCHAIN_AGGREGATOR_ADDRESS` - Offchain Aggregator contract address
 
 #### Create Chainlink Flux job
   ```
@@ -443,8 +448,8 @@ Some scripts have parameters that can be provided either with the command line (
   This command creates a Chainlink job according to [flux_job.toml](chainlink%2Fjobs%2Fflux_job.toml).
 
   During the execution of the command, you will need to provide:
-  - NODE_ID - Chainlink node ID
-  - FLUX_AGGREGATOR_ADDRESS - Flux Aggregator contract address
+  - `NODE_ID` - Chainlink node ID
+  - `FLUX_AGGREGATOR_ADDRESS` - Flux Aggregator contract address
 
 #### Create Chainlink Flux jobs
   ```
@@ -453,7 +458,7 @@ Some scripts have parameters that can be provided either with the command line (
   This command creates a Chainlink job for the first 3 Chainlink nodes in a cluster according to [flux_job.toml](chainlink%2Fjobs%2Fflux_job.toml).
 
   During the execution of the command, you will need to provide:
-  - FLUX_AGGREGATOR_ADDRESS - Flux Aggregator contract address
+  - `FLUX_AGGREGATOR_ADDRESS` - Flux Aggregator contract address
 
    > **Note**  
    > You can check list of created jobs with Chainlink Operator GUI.
@@ -467,7 +472,7 @@ Some scripts have parameters that can be provided either with the command line (
   With this command, you can send ETH to any specified recipient.
 
   During the execution of the command, you will need to provide:
-  - RECIPIENT - Recipient address
+  - `RECIPIENT` - Recipient address
 
 #### Transfer ETH to Chainlink node
   ```
@@ -476,7 +481,7 @@ Some scripts have parameters that can be provided either with the command line (
   With this command, you can send ETH to any specified Chainlink node.
 
   During the execution of the command, you will need to provide:
-  - NODE_ID - Chainlink node ID
+  - `NODE_ID` - Chainlink node ID
 
 #### Transfer ETH to Chainlink nodes
   ```
@@ -491,8 +496,8 @@ Some scripts have parameters that can be provided either with the command line (
   With this command, you can send Link tokens to any specified recipient.
 
   During the execution of the command, you will need to provide:
-  - LINK_CONTRACT_ADDRESS - Link Token contract address
-  - RECIPIENT - Recipient address
+  - `LINK_CONTRACT_ADDRESS` - Link Token contract address
+  - `RECIPIENT` - Recipient address
 
 #### Transfer Link tokens to Chainlink node
   ```
@@ -501,8 +506,8 @@ Some scripts have parameters that can be provided either with the command line (
   With this command, you can send Link tokens to any specified Chainlink node.
 
   During the execution of the command, you will need to provide:
-  - NODE_ID - Chainlink node ID
-  - LINK_CONTRACT_ADDRESS - Link Token contract address
+  - `NODE_ID` - Chainlink node ID
+  - `LINK_CONTRACT_ADDRESS` - Link Token contract address
 
 #### Transfer Link tokens to Chainlink nodes
   ```
@@ -511,7 +516,7 @@ Some scripts have parameters that can be provided either with the command line (
   With this command, you can send Link tokens to all Chainlink nodes in a cluster.
 
   During the execution of the command, you will need to provide:
-  - LINK_CONTRACT_ADDRESS - Link Token contract address
+  - `LINK_CONTRACT_ADDRESS` - Link Token contract address
 
 ### Link Token Solidity Scripts
 
@@ -522,8 +527,8 @@ Some scripts have parameters that can be provided either with the command line (
   This command returns Link Token balance of an account.
 
   During the execution of the command, you will need to provide:
-  - LINK_CONTRACT_ADDRESS - Link Token contract address
-  - ACCOUNT - Account
+  - `LINK_CONTRACT_ADDRESS` - Link Token contract address
+  - `ACCOUNT` - Account
 
 ### Chainlink Consumer Solidity Scripts
 
@@ -534,9 +539,9 @@ Some scripts have parameters that can be provided either with the command line (
   This command calls `requestEthereumPrice` method of the Consumer contract, which asks the node to retrieve data specified in a Job configuration.  
 
   During the execution of the command, you will need to provide:
-  - CONSUMER_ADDRESS - Consumer contract address
-  - ORACLE_ADDRESS - Oracle contract address
-  - DIRECT_REQUEST_EXTERNAL_JOB_ID - Direct request External Job ID - you can get one with Chainlink Operator GUI on the Jobs tab
+  - `CONSUMER_ADDRESS` - Consumer contract address
+  - `ORACLE_ADDRESS` - Oracle contract address
+  - `DIRECT_REQUEST_EXTERNAL_JOB_ID` - Direct request External Job ID - you can get one with Chainlink Operator GUI on the Jobs tab
 
    > **Note**  
    > You can check list of runs of jobs with Chainlink Operator GUI.
@@ -548,7 +553,7 @@ Some scripts have parameters that can be provided either with the command line (
   This command returns current value of `currentPrice` variable specified in the Consumer contract state.  
 
   During the execution of the command, you will need to provide:
-  - CONSUMER_ADDRESS - Consumer contract address
+  - `CONSUMER_ADDRESS` - Consumer contract address
 
 ### Chainlink Cron Consumer Solidity Scripts
 
@@ -559,7 +564,7 @@ Some scripts have parameters that can be provided either with the command line (
   This command returns current value of `currentPrice` variable specified in the Consumer contract state.
 
   During the execution of the command, you will need to provide:
-  - CRON_CONSUMER_ADDRESS - Cron Consumer contract address
+  - `CRON_CONSUMER_ADDRESS` - Cron Consumer contract address
 
 ### Chainlink Keeper Consumer Solidity Scripts
 
@@ -570,7 +575,7 @@ Some scripts have parameters that can be provided either with the command line (
   This command returns the latest value of the `counter` variable stored in the Keeper Consumer contract. This variable reflects the number of times the keepers performed the Keeper job.
 
   During the execution of the command, you will need to provide:
-  - KEEPER_CONSUMER_ADDRESS - Keeper Consumer contract address
+  - `KEEPER_CONSUMER_ADDRESS` - Keeper Consumer contract address
 
 ### Registry Solidity Scripts
 
@@ -581,8 +586,8 @@ Some scripts have parameters that can be provided either with the command line (
   This command registers Keeper Consumer in the Registry contract as upkeep.
 
   During the execution of the command, you will need to provide:
-  - REGISTRY_ADDRESS - Registry contract address
-  - KEEPER_CONSUMER_ADDRESS - Keeper Consumer contract address
+  - `REGISTRY_ADDRESS` - Registry contract address
+  - `KEEPER_CONSUMER_ADDRESS` - Keeper Consumer contract address
 
 #### Set Keepers
   ```
@@ -591,8 +596,8 @@ Some scripts have parameters that can be provided either with the command line (
   This command sets Chainlink nodes in the cluster as keepers in the Registry contract.
 
   During the execution of the command, you will need to provide:
-  - REGISTRY_ADDRESS - Registry contract address
-  - KEEPER_CONSUMER_ADDRESS - Keeper Consumer contract address
+  - `REGISTRY_ADDRESS` - Registry contract address
+  - `KEEPER_CONSUMER_ADDRESS` - Keeper Consumer contract address
 
 #### Fund Latest Upkeep
   ```
@@ -601,8 +606,8 @@ Some scripts have parameters that can be provided either with the command line (
   This command funds the latest upkeep in the Registry contract.
 
   During the execution of the command, you will need to provide:
-  - REGISTRY_ADDRESS - Registry contract address
-  - LINK_CONTRACT_ADDRESS - Link Token contract address
+  - `REGISTRY_ADDRESS` - Registry contract address
+  - `LINK_CONTRACT_ADDRESS` - Link Token contract address
 
 ### Offchain Aggregator Solidity Scripts
 
@@ -613,7 +618,7 @@ Some scripts have parameters that can be provided either with the command line (
   This command sets `payees` in the Offchain Aggregator contract.
 
   During the execution of the command, you will need to provide:
-  - OFFCHAIN_AGGREGATOR_ADDRESS - Offchain Aggregator contract address
+  - `OFFCHAIN_AGGREGATOR_ADDRESS` - Offchain Aggregator contract address
 
 #### Set Config
   ```
@@ -622,7 +627,7 @@ Some scripts have parameters that can be provided either with the command line (
   This command sets OCR configuration in the Offchain Aggregator contract.
 
   During the execution of the command, you will need to provide:
-  - OFFCHAIN_AGGREGATOR_ADDRESS - Offchain Aggregator contract address
+  - `OFFCHAIN_AGGREGATOR_ADDRESS` - Offchain Aggregator contract address
 
 > **Note**  
 > This package uses external Go library [OCRHelper](external%2FOCRHelper) to prepare an OCR configuration.  
@@ -639,7 +644,7 @@ Some scripts have parameters that can be provided either with the command line (
   This command requests new OCR round immediately.
 
   During the execution of the command, you will need to provide:
-  - OFFCHAIN_AGGREGATOR_ADDRESS - Offchain Aggregator contract address
+  - `OFFCHAIN_AGGREGATOR_ADDRESS` - Offchain Aggregator contract address
 
 #### Get OCR Latest Answer
   ```
@@ -648,7 +653,7 @@ Some scripts have parameters that can be provided either with the command line (
   This command returns an answer of the latest OCR round.
 
   During the execution of the command, you will need to provide:
-  - OFFCHAIN_AGGREGATOR_ADDRESS - Offchain Aggregator contract address
+  - `OFFCHAIN_AGGREGATOR_ADDRESS` - Offchain Aggregator contract address
 
 ### Flux Aggregator Solidity Scripts
 
@@ -659,7 +664,7 @@ Some scripts have parameters that can be provided either with the command line (
   This command recalculate the amount of LINK available for payouts in the Flux Aggregator contract.
 
   During the execution of the command, you will need to provide:
-  - FLUX_AGGREGATOR_ADDRESS - Flux Aggregator contract address
+  - `FLUX_AGGREGATOR_ADDRESS` - Flux Aggregator contract address
 
 #### Set Oracles
   ```
@@ -668,7 +673,7 @@ Some scripts have parameters that can be provided either with the command line (
   This command adds new oracles as well as updates the round related parameters in the Flux Aggregator contract.
 
   During the execution of the command, you will need to provide:
-  - FLUX_AGGREGATOR_ADDRESS - Flux Aggregator contract address
+  - `FLUX_AGGREGATOR_ADDRESS` - Flux Aggregator contract address
 
 #### Get Oracles
   ```
@@ -677,7 +682,7 @@ Some scripts have parameters that can be provided either with the command line (
   This command returns an array of addresses containing the oracles in the Flux Aggregator contract.
 
   During the execution of the command, you will need to provide:
-  - FLUX_AGGREGATOR_ADDRESS - Flux Aggregator contract address
+  - `FLUX_AGGREGATOR_ADDRESS` - Flux Aggregator contract address
 
 #### Get Flux Latest Answer
   ```
@@ -686,7 +691,7 @@ Some scripts have parameters that can be provided either with the command line (
   This command returns an answer of the latest Flux round.
 
   During the execution of the command, you will need to provide:
-  - FLUX_AGGREGATOR_ADDRESS - Flux Aggregator contract address
+  - `FLUX_AGGREGATOR_ADDRESS` - Flux Aggregator contract address
 
   > **Note**  
   > Current version of the package intended to support different compiler versions in range `[>=0.6.2 <0.9.0]`.  

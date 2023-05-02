@@ -246,7 +246,7 @@ Some scripts have parameters that can be provided either with the command line (
   This command authorizes a Chainlink operator session.  
 
   During the execution of the command, you will need to provide:
-  - NODE_ID - Chainlink node ID
+  - `NODE_ID` - Chainlink node ID
 
 #### Get Chainlink ETH keys
   ```
@@ -258,7 +258,7 @@ Some scripts have parameters that can be provided either with the command line (
   - ETH balance  
 
   During the execution of the command, you will need to provide:
-  - NODE_ID - Chainlink node ID
+  - `NODE_ID` - Chainlink node ID
 
 #### Get Chainlink OCR keys
   ```
@@ -267,7 +267,7 @@ Some scripts have parameters that can be provided either with the command line (
   This command returns Chainlink node's OCR keys.
 
   During the execution of the command, you will need to provide:
-  - NODE_ID - Chainlink node ID
+  - `NODE_ID` - Chainlink node ID
 
 #### Get Chainlink P2P keys
   ```
@@ -276,7 +276,7 @@ Some scripts have parameters that can be provided either with the command line (
   This command returns Chainlink node's P2P keys.
 
   During the execution of the command, you will need to provide:
-  - NODE_ID - Chainlink node ID
+  - `NODE_ID` - Chainlink node ID
 
 > **Note**  
 > You also can find information on keys in the node Operator GUI under the Key Management configuration.
@@ -298,8 +298,8 @@ Some scripts have parameters that can be provided either with the command line (
   This command deploys an instance of Chainlink Oracle.sol contract and whitelists Chainlink node address in the deployed contract.
 
   During the execution of the command, you will need to provide:
-  - NODE_ID - Chainlink node ID
-  - LINK_CONTRACT_ADDRESS - Link Token contract address
+  - `NODE_ID` - Chainlink node ID
+  - `LINK_CONTRACT_ADDRESS` - Link Token contract address
 
 #### Deploy Consumer contract
   ```
@@ -308,7 +308,7 @@ Some scripts have parameters that can be provided either with the command line (
   This command deploys an instance of [ChainlinkConsumer.sol](chainlink%2Fcontracts%2FChainlinkConsumer.sol) contract.
 
   During the execution of the command, you will need to provide:
-  - LINK_CONTRACT_ADDRESS - Link Token contract address
+  - `LINK_CONTRACT_ADDRESS` - Link Token contract address
 
 #### Deploy Cron Consumer contract
   ```
@@ -329,7 +329,7 @@ Some scripts have parameters that can be provided either with the command line (
   This command deploys an instance of Chainlink Registry.sol contract.
 
   During the execution of the command, you will need to provide:
-  - LINK_CONTRACT_ADDRESS - Link Token contract address
+  - `LINK_CONTRACT_ADDRESS` - Link Token contract address
 
 #### Deploy Chainlink Offchain Aggregator contract
   ```
@@ -338,7 +338,7 @@ Some scripts have parameters that can be provided either with the command line (
   This command deploys an instance of Chainlink OffchainAggregator.sol contract.
 
   During the execution of the command, you will need to provide:
-  - LINK_CONTRACT_ADDRESS - Link Token contract address
+  - `LINK_CONTRACT_ADDRESS` - Link Token contract address
 
 #### Deploy Chainlink Flux Aggregator contract
   ```
@@ -347,7 +347,7 @@ Some scripts have parameters that can be provided either with the command line (
   This command deploys an instance of Chainlink FluxAggregator.sol contract.
 
   During the execution of the command, you will need to provide:
-  - LINK_CONTRACT_ADDRESS - Link Token contract address
+  - `LINK_CONTRACT_ADDRESS` - Link Token contract address
 
 ### Chainlink Jobs Scripts
 

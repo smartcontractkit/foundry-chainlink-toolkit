@@ -278,6 +278,15 @@ Some scripts have parameters that can be provided either with the command line (
   During the execution of the command, you will need to provide:
   - `NODE_ID` - Chainlink node ID
 
+#### Get Chainlink Node address
+  ```
+  make get-node-address
+  ```
+  This command returns Chainlink node's account address.
+
+  During the execution of the command, you will need to provide:
+  - `NODE_ID` - Chainlink node ID
+
 > **Note**  
 > You also can find information on keys in the node Operator GUI under the Key Management configuration.
 

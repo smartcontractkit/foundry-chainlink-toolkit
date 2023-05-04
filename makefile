@@ -2,6 +2,10 @@
 # (-include to ignore error if it does not exist)
 include .env
 
+# Default values
+# You can override it with .env or by passing it as a parameter to a target
+CONTAINERS_COUNT ?= 8
+
 # exclude this .SILENT target to display all command lines
 .SILENT:
 
@@ -160,6 +164,10 @@ restart-nodes:
 	else \
 		docker compose restart; \
 	fi
+
+check-docker-network:
+	$(call check_defined, COMPOSE_PROJECT_NAME) \
+	bash ./chainlink/check-docker-network.sh "${COMPOSE_PROJECT_NAME}_default" $(CONTAINERS_COUNT);
 
 login:
 	$(call check_defined, ROOT) \

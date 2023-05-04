@@ -152,7 +152,8 @@ Below are comments on some environment variables:
 - `RPC_URL` - RPC node http endpoint used by Forge
 - `PRIVATE_KEY` - private key of an account used for deployment and interaction with smart contracts. Once Anvil is started, a set of private keys for local usage is provided. Use one of these for local development.
 - `ROOT` - root directory of the Chainlink node
-- `CHAINLINK_CONTAINER_NAME` - preferred name for the container of the Chainlink node for the possibility of automating communication with it
+- `CHAINLINK_CONTAINER_NAME` - Chainlink node container name for the possibility of automating communication with it
+- `COMPOSE_PROJECT_NAME` - Docker network project name for the possibility of automating communication with it, more on it: https://docs.docker.com/compose/environment-variables/envvars/#compose_project_name
 - `FOUNDRY_PROFILE` - selected Foundry profile in [foundry.toml](foundry.toml), more on Foundry profiles: https://book.getfoundry.sh/reference/config/overview?highlight=profile#profiles
 
 Besides that, there is the [chainlink.env](chainlink%2Fchainlink.env) that contains environment variables related to a Chainlink node configuration.
@@ -231,6 +232,12 @@ Some scripts have parameters that can be provided either with the command line (
   ```
   This command restarts Chainlink nodes cluster according to the [docker-compose.yaml](docker-compose.yaml).  
   Pass argument `CLEAN_RESTART` if you want to make a clean restart: delete all volumes and logs.
+
+#### Check a Chainlink cluster network
+  ```
+  make check-docker-network
+  ```
+  This command runs a script that checks if docker engine is up and all the containers related to [docker-compose.yaml](docker-compose.yaml) are running.
 
 #### Login a Chainlink node
   ```

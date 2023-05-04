@@ -195,6 +195,13 @@ get-p2p-keys:
 	make login NODE_ID=$$nodeId; \
 	docker exec $$chainlinkContainerName chainlink -j keys p2p list
 
+get-node-address:
+	$(call check_set_parameter,NODE_ID,nodeId) \
+	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
+	make login NODE_ID=$$nodeId >/dev/null 2>&1; \
+	$(call get_node_address,$$chainlinkContainerName,nodeAddress) \
+	printf "%s" $$nodeAddress
+
 # Smart Contracts Deployment Scripts
 deploy-link-token:
 	$(call check_defined, PRIVATE_KEY) \

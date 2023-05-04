@@ -191,13 +191,6 @@ This command installs:
 ## Usage
 Below are the scripts contained in the [makefile](makefile).  
 Some scripts have parameters that can be provided either with the command line (e.g. ```make target PARAM={value}```), in the `.env` file, or interactively in the command line.
-> **Note**  
-> Ethereum addresses should be provided in the EIP55 format.  
-> If you are referring to the address of a contract deployed with a script below, you can find it in the correct format:
-> - in a corresponding subdirectory of the [broadcast](broadcast) directory in the "returns" section of an artifacts *.json file
-> - in the "== Return ==" section of the command line output of a deployment script  
-> 
-> You can also use an online tool to get EIP55 formatted address, e.g. https://web3-tools.netlify.app/.
 
 ### Helper scripts
 

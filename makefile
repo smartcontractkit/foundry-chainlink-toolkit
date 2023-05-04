@@ -50,6 +50,10 @@ define get_cookie
 	$2=$$(cat ./chainlink/$1/cookie | grep "clsession");
 endef
 
+define format_eip55_address
+	$2=$$(forge script ./script/Helper.s.sol --sig "formatAddress(address)" $1 | tail -c 43);
+endef
+
 # Set OCRHelperPath variable
 ifeq ($(shell uname), Darwin)
 # Set variable for MacOS
@@ -247,17 +251,19 @@ create-direct-request-job:
 	$(call check_set_parameter,NODE_ID,nodeId) \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
 	make login NODE_ID=$$nodeId; \
+	$(call format_eip55_address,$$oracleAddress,oracleAddressFormatted) \
 	docker exec $$chainlinkContainerName bash -c "touch ${ROOT}/jobs/direct_request_job_tmp.toml \
-	&& sed 's/ORACLE_ADDRESS/$$oracleAddress/g' ${ROOT}/jobs/direct_request_job.toml > ${ROOT}/jobs/direct_request_job_tmp.toml" && \
+	&& sed 's/ORACLE_ADDRESS/$$oracleAddressFormatted/g' ${ROOT}/jobs/direct_request_job.toml > ${ROOT}/jobs/direct_request_job_tmp.toml" && \
 	docker exec $$chainlinkContainerName bash -c "chainlink jobs create ${ROOT}/jobs/direct_request_job_tmp.toml && rm ${ROOT}/jobs/direct_request_job_tmp.toml"
 
 create-cron-job:
 	$(call check_set_parameter,CRON_CONSUMER_ADDRESS,consumerAddress) \
 	$(call check_set_parameter,NODE_ID,nodeId) \
-	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
+	$(call format_eip55_address,$$consumerAddress,consumerAddressFormatted) \
 	make login NODE_ID=$$nodeId; \
+	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
 	docker exec $$chainlinkContainerName bash -c "touch ${ROOT}/jobs/cron_job_tmp.toml \
-	&& sed 's/CONSUMER_ADDRESS/$$consumerAddress/g' ${ROOT}/jobs/cron_job.toml > ${ROOT}/jobs/cron_job_tmp.toml" && \
+	&& sed 's/CONSUMER_ADDRESS/$$consumerAddressFormatted/g' ${ROOT}/jobs/cron_job.toml > ${ROOT}/jobs/cron_job_tmp.toml" && \
 	docker exec $$chainlinkContainerName bash -c "chainlink jobs create ${ROOT}/jobs/cron_job_tmp.toml && rm ${ROOT}/jobs/cron_job_tmp.toml"
 
 create-webhook-job:
@@ -280,8 +286,9 @@ create-keeper-job:
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
 	make login NODE_ID=$$nodeId; \
 	$(call get_node_address,$$chainlinkContainerName,nodeAddress) \
+	$(call format_eip55_address,$$registryAddress,registryAddressFormatted) \
 	docker exec $$chainlinkContainerName bash -c "touch ${ROOT}/jobs/keeper_job_tmp.toml \
-	&& sed -e 's/REGISTRY_ADDRESS/$$registryAddress/g' -e 's/NODE_ADDRESS/$$nodeAddress/g' ${ROOT}/jobs/keeper_job.toml > ${ROOT}/jobs/keeper_job_tmp.toml" && \
+	&& sed -e 's/REGISTRY_ADDRESS/$$registryAddressFormatted/g' -e 's/NODE_ADDRESS/$$nodeAddress/g' ${ROOT}/jobs/keeper_job.toml > ${ROOT}/jobs/keeper_job_tmp.toml" && \
 	docker exec $$chainlinkContainerName bash -c "chainlink jobs create ${ROOT}/jobs/keeper_job_tmp.toml && rm ${ROOT}/jobs/keeper_job_tmp.toml"
 
 create-keeper-jobs:
@@ -300,8 +307,9 @@ create-ocr-bootstrap-job:
 	make login NODE_ID=$$nodeId; \
 	$(call get_node_address,$$chainlinkContainerName,nodeAddress) \
 	$(call get_p2p_keys,$$chainlinkContainerName,peerId,_) \
+	$(call format_eip55_address,$$offchainAggregatorAddress,offchainAggregatorAddressFormatted) \
 	docker exec $$chainlinkContainerName bash -c "touch ${ROOT}/jobs/ocr_job_bootstrap_tmp.toml \
-	&& sed -e 's/OFFCHAIN_AGGREGATOR_ADDRESS/$$offchainAggregatorAddress/g' -e 's/PEER_ID/$$peerId/g' ${ROOT}/jobs/ocr_job_bootstrap.toml > ${ROOT}/jobs/ocr_job_bootstrap_tmp.toml" && \
+	&& sed -e 's/OFFCHAIN_AGGREGATOR_ADDRESS/$$offchainAggregatorAddressFormatted/g' -e 's/PEER_ID/$$peerId/g' ${ROOT}/jobs/ocr_job_bootstrap.toml > ${ROOT}/jobs/ocr_job_bootstrap_tmp.toml" && \
 	docker exec $$chainlinkContainerName bash -c "chainlink jobs create ${ROOT}/jobs/ocr_job_bootstrap_tmp.toml && rm ${ROOT}/jobs/ocr_job_bootstrap_tmp.toml"
 
 create-ocr-job:
@@ -313,8 +321,9 @@ create-ocr-job:
 	$(call get_node_address,$$chainlinkContainerName,nodeAddress) \
 	$(call get_ocr_keys,$$chainlinkContainerName,ocrKeyId,_,_,_) \
 	$(call get_p2p_keys,$$chainlinkContainerName,peerId,_) \
+	$(call format_eip55_address,$$offchainAggregatorAddress,offchainAggregatorAddressFormatted) \
 	docker exec $$chainlinkContainerName bash -c "touch ${ROOT}/jobs/ocr_job_tmp.toml \
-	&& sed -e 's/OFFCHAIN_AGGREGATOR_ADDRESS/$$offchainAggregatorAddress/g' -e 's/BOOTSTRAP_P2P_KEY/$$bootstrapP2PKey/g' -e 's/PEER_ID/$$peerId/g' -e 's/OCR_KEY_ID/$$ocrKeyId/g' -e 's/NODE_ADDRESS/$$nodeAddress/g' ${ROOT}/jobs/ocr_job.toml > ${ROOT}/jobs/ocr_job_tmp.toml" && \
+	&& sed -e 's/OFFCHAIN_AGGREGATOR_ADDRESS/$$offchainAggregatorAddressFormatted/g' -e 's/BOOTSTRAP_P2P_KEY/$$bootstrapP2PKey/g' -e 's/PEER_ID/$$peerId/g' -e 's/OCR_KEY_ID/$$ocrKeyId/g' -e 's/NODE_ADDRESS/$$nodeAddress/g' ${ROOT}/jobs/ocr_job.toml > ${ROOT}/jobs/ocr_job_tmp.toml" && \
 	docker exec $$chainlinkContainerName bash -c "chainlink jobs create ${ROOT}/jobs/ocr_job_tmp.toml && rm ${ROOT}/jobs/ocr_job_tmp.toml"
 
 create-ocr-jobs:
@@ -334,8 +343,9 @@ create-flux-job:
 	$(call check_set_parameter,NODE_ID,nodeId) \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
 	make login NODE_ID=$$nodeId; \
+	$(call format_eip55_address,$$fluxAggregatorAddress,fluxAggregatorAddressFormatted) \
 	docker exec $$chainlinkContainerName bash -c "touch ${ROOT}/jobs/flux_job_tmp.toml \
-	&& sed -e 's/FLUX_AGGREGATOR_ADDRESS/$$fluxAggregatorAddress/g' ${ROOT}/jobs/flux_job.toml > ${ROOT}/jobs/flux_job_tmp.toml" && \
+	&& sed -e 's/FLUX_AGGREGATOR_ADDRESS/$$fluxAggregatorAddressFormatted/g' ${ROOT}/jobs/flux_job.toml > ${ROOT}/jobs/flux_job_tmp.toml" && \
 	docker exec $$chainlinkContainerName bash -c "chainlink jobs create ${ROOT}/jobs/flux_job_tmp.toml && rm ${ROOT}/jobs/flux_job_tmp.toml"
 
 # Create a Flux Job for the first 3 nodes of a Chainlink cluster

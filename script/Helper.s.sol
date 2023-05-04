@@ -34,4 +34,8 @@ contract HelperScript is Script {
 
     return linkToken.balanceOf(recipientAddress);
   }
+
+  function formatAddress(address a) external pure returns(address) {
+    return a;
+  }
 }

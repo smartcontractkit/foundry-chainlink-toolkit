@@ -3,15 +3,14 @@ volumes:
   prometheus_data: { }
 services:
   node_exporter:
-    image: prom/node-exporter:v1.4.1
-    container_name: node_exporter
+    image: prom/node-exporter:latest
+    container_name: chainlink-node_exporter
     volumes:
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
-      - /:/rootfs:ro
     command:
+      - '--path.rootfs=/host'
       - '--path.procfs=/host/proc'
-      - '--path.rootfs=/rootfs'
       - '--path.sysfs=/host/sys'
       - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
     restart: always
@@ -19,6 +18,7 @@ services:
       - 9100:9100
   prometheus:
     image: prom/prometheus:main
+    container_name: chainlink-prometheus
     volumes:
       - ./prometheus.yaml:/etc/prometheus/prometheus.yaml
       - prometheus_data:/prometheus

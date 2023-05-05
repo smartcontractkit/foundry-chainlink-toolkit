@@ -9,11 +9,11 @@ contract ChainlinkConsumerScript is Script {
     console.log("Please run deploy() method.");
   }
 
-  function deploy(address tokenAddress) external returns(address) {
+  function deploy(address linkTokenAddress) external returns(address) {
     uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
     vm.startBroadcast(deployerPrivateKey);
 
-    address chainlinkConsumer = deployCode("ChainlinkConsumer.sol:ChainlinkConsumer", abi.encode(tokenAddress));
+    address chainlinkConsumer = deployCode("ChainlinkConsumer.sol:ChainlinkConsumer", abi.encode(linkTokenAddress));
 
     vm.stopBroadcast();
 

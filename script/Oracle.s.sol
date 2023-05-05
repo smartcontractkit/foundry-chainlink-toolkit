@@ -9,12 +9,12 @@ contract OracleScript is Script {
     console.log("Please run deploy(address,address) method.");
   }
 
-  function deploy(address tokenAddress, address nodeAddress) external returns(address) {
+  function deploy(address linkTokenAddress, address nodeAddress) external returns(address) {
     uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
 
     vm.startBroadcast(deployerPrivateKey);
 
-    address oracleAddress = deployCode("Oracle.sol:Oracle", abi.encode(tokenAddress));
+    address oracleAddress = deployCode("Oracle.sol:Oracle", abi.encode(linkTokenAddress));
     OracleInterface oracle = OracleInterface(oracleAddress);
     oracle.setFulfillmentPermission(nodeAddress, true);
 

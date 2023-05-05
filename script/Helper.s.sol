@@ -22,12 +22,12 @@ contract HelperScript is Script {
     return receiverAddress.balance;
   }
 
-  function transferLink(address recipientAddress, address tokenAddress, uint256 amount) external returns(uint256) {
+  function transferLink(address recipientAddress, address linkTokenAddress, uint256 amount) external returns(uint256) {
     uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
 
     vm.startBroadcast(deployerPrivateKey);
 
-    LinkTokenInterface linkToken = LinkTokenInterface(tokenAddress);
+    LinkTokenInterface linkToken = LinkTokenInterface(linkTokenAddress);
     linkToken.transfer(recipientAddress, amount);
 
     vm.stopBroadcast();

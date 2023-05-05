@@ -290,6 +290,29 @@ Some scripts have parameters that can be provided either with the command line (
 > **Note**  
 > You also can find information on keys in the node Operator GUI under the Key Management configuration.
 
+#### Get Chainlink Job ID
+  ```
+  make get-job-id
+  ```
+  This command returns an ID of a Chainlink job whose name contains the specified contract address.
+
+  During the execution of the command, you will need to provide:
+  - `NODE_ID` - Chainlink node ID
+  - `CONTRACT_ADDRESS` - Contract address identifying a Chainlink job
+
+#### Get Chainlink External Job ID
+  ```
+  make get-job-id
+  ```
+  This command returns an External ID of a Chainlink job whose name contains the specified contract address.
+
+  During the execution of the command, you will need to provide:
+  - `NODE_ID` - Chainlink node ID
+  - `CONTRACT_ADDRESS` - Contract address identifying a Chainlink job
+
+> **Note**  
+> You also can find information on jobs in the node Operator GUI under the Jobs tab.
+
 ### Smart Contracts Deployment Scripts
 > **Note**  
 > All contracts are deployed on behalf of the account specified in [.env](.env).
@@ -471,6 +494,16 @@ Some scripts have parameters that can be provided either with the command line (
 
    > **Note**  
    > You can check list of created jobs with Chainlink Operator GUI.
+
+#### Delete job
+  ```
+  make delete-job
+  ```
+  This command deletes a Chainlink job with a specified job ID.
+
+  During the execution of the command, you will need to provide:
+  - `NODE_ID` - Chainlink node ID
+  - `JOB_ID` - Chainlink job ID
 
 ### Helper Solidity Scripts
 

@@ -50,6 +50,15 @@ define get_p2p_keys
 	$3=$$(echo $$temp | grep -m 1 -o '"publicKey": "[^"]*"' | head -1 | cut -d'"' -f4);
 endef
 
+# Reading only the first matched job id
+define get_job_id
+	$3=$$(docker exec $1 chainlink -j jobs list | grep -o -B 1 '"name": "[^"]*"' | grep -m 1 -B 1 -F "$2" | grep -o '"id": "[^"]*"' | cut -d'"' -f4);
+endef
+
+define get_external_job_id
+	$3=$$(docker exec $1 chainlink -j jobs list | grep -o -A 6 '"name": "[^"]*"' | grep -m 1 -A 6 -F "$2" | grep -o '"externalJobID": "[^"]*"' | cut -d'"' -f4);
+endef
+
 define get_cookie
 	$2=$$(cat ./chainlink/$1/cookie | grep "clsession");
 endef
@@ -201,6 +210,22 @@ get-node-address:
 	make login NODE_ID=$$nodeId >/dev/null 2>&1; \
 	$(call get_node_address,$$chainlinkContainerName,nodeAddress) \
 	printf "%s" $$nodeAddress
+
+get-job-id:
+	$(call check_set_parameter,NODE_ID,nodeId) \
+	$(call check_set_parameter,CONTRACT_ADDRESS,contractAddress) \
+	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
+	make login NODE_ID=$$nodeId >/dev/null 2>&1; \
+	$(call get_job_id,$$chainlinkContainerName,$$contractAddress,jobId) \
+	printf "%s" $$jobId
+
+get-external-job-id:
+	$(call check_set_parameter,NODE_ID,nodeId) \
+	$(call check_set_parameter,CONTRACT_ADDRESS,contractAddress) \
+	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
+	make login NODE_ID=$$nodeId >/dev/null 2>&1; \
+	$(call get_external_job_id,$$chainlinkContainerName,$$contractAddress,externalJobId) \
+	printf "%s" $$externalJobId
 
 # Smart Contracts Deployment Scripts
 deploy-link-token:
@@ -369,6 +394,13 @@ create-flux-jobs:
 	make create-flux-job NODE_ID=1 FLUX_AGGREGATOR_ADDRESS=$$fluxAggregatorAddress && \
 	make create-flux-job NODE_ID=2 FLUX_AGGREGATOR_ADDRESS=$$fluxAggregatorAddress && \
 	make create-flux-job NODE_ID=3 FLUX_AGGREGATOR_ADDRESS=$$fluxAggregatorAddress
+
+delete-job:
+	$(call check_set_parameter,NODE_ID,nodeId) \
+	$(call check_set_parameter,JOB_ID,jobId) \
+	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
+	make login NODE_ID=$$nodeId; \
+	docker exec $$chainlinkContainerName chainlink -j jobs delete $$jobId;
 
 # Helper Solidity Scripts
 transfer-eth:

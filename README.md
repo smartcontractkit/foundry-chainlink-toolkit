@@ -302,7 +302,7 @@ Some scripts have parameters that can be provided either with the command line (
 
 #### Get Chainlink External Job ID
   ```
-  make get-job-id
+  make get-external-job-id
   ```
   This command returns an External ID of a Chainlink job whose name contains the specified contract address.
 
@@ -579,11 +579,12 @@ Some scripts have parameters that can be provided either with the command line (
   make request-eth-price-consumer
   ```
   This command calls `requestEthereumPrice` method of the Consumer contract, which asks the node to retrieve data specified in a Job configuration.  
+  The corresponding Chainlink Direct Request job will be found using [get-external-job-id](#get-chainlink-external-job-id) script.  
 
   During the execution of the command, you will need to provide:
+  - `NODE_ID` - Chainlink node ID
   - `CONSUMER_ADDRESS` - Consumer contract address
   - `ORACLE_ADDRESS` - Oracle contract address
-  - `DIRECT_REQUEST_EXTERNAL_JOB_ID` - Direct request External Job ID - you can get one with Chainlink Operator GUI on the Jobs tab
 
    > **Note**  
    > You can check list of runs of jobs with Chainlink Operator GUI.

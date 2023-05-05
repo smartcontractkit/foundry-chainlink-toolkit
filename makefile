@@ -449,7 +449,7 @@ transfer-link-to-nodes:
 	make transfer-link-to-node NODE_ID=5;
 
 # Link Token Solidity Scripts
-get-balance:
+get-link-balance:
 	$(call check_defined, PRIVATE_KEY) \
 	$(call check_defined, RPC_URL) \
 	$(call check_set_parameter,LINK_CONTRACT_ADDRESS,linkContractAddress) \

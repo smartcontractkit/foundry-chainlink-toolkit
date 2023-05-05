@@ -564,7 +564,7 @@ Some scripts have parameters that can be provided either with the command line (
 
 #### Get Link Token balance
   ```
-  make get-balance
+  make get-link-balance
   ```
   This command returns Link Token balance of an account.
 

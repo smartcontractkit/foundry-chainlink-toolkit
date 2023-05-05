@@ -189,19 +189,19 @@ login:
 get-eth-keys:
 	$(call check_set_parameter,NODE_ID,nodeId) \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
-	make login NODE_ID=$$nodeId; \
+	make login NODE_ID=$$nodeId >/dev/null 2>&1; \
 	docker exec $$chainlinkContainerName chainlink -j keys eth list
 
 get-ocr-keys:
 	$(call check_set_parameter,NODE_ID,nodeId) \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
-	make login NODE_ID=$$nodeId; \
+	make login NODE_ID=$$nodeId >/dev/null 2>&1; \
 	docker exec $$chainlinkContainerName chainlink -j keys ocr list
 
 get-p2p-keys:
 	$(call check_set_parameter,NODE_ID,nodeId) \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
-	make login NODE_ID=$$nodeId; \
+	make login NODE_ID=$$nodeId >/dev/null 2>&1; \
 	docker exec $$chainlinkContainerName chainlink -j keys p2p list
 
 get-node-address:
@@ -242,7 +242,7 @@ deploy-oracle:
 	$(call check_set_parameter,LINK_CONTRACT_ADDRESS,linkContractAddress) \
 	$(call check_set_parameter,NODE_ID,nodeId) \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
-	make login NODE_ID=$$nodeId; \
+	make login NODE_ID=$$nodeId >/dev/null 2>&1; \
 	$(call get_node_address,$$chainlinkContainerName,nodeAddress) \
 	printf "%s\n" "Deploying Oracle contract. Please wait..."; \
 	forge script ./script/Oracle.s.sol --sig "deploy(address, address)" $$linkContractAddress $$nodeAddress --rpc-url ${RPC_URL} --broadcast
@@ -292,7 +292,7 @@ create-direct-request-job:
 	$(call check_set_parameter,ORACLE_ADDRESS,oracleAddress) \
 	$(call check_set_parameter,NODE_ID,nodeId) \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
-	make login NODE_ID=$$nodeId; \
+	make login NODE_ID=$$nodeId >/dev/null 2>&1; \
 	$(call format_eip55_address,$$oracleAddress,oracleAddressFormatted) \
 	docker exec $$chainlinkContainerName bash -c "touch ${ROOT}/jobs/direct_request_job_tmp.toml \
 	&& sed 's/ORACLE_ADDRESS/$$oracleAddressFormatted/g' ${ROOT}/jobs/direct_request_job.toml > ${ROOT}/jobs/direct_request_job_tmp.toml" && \
@@ -302,7 +302,7 @@ create-cron-job:
 	$(call check_set_parameter,CRON_CONSUMER_ADDRESS,consumerAddress) \
 	$(call check_set_parameter,NODE_ID,nodeId) \
 	$(call format_eip55_address,$$consumerAddress,consumerAddressFormatted) \
-	make login NODE_ID=$$nodeId; \
+	make login NODE_ID=$$nodeId >/dev/null 2>&1; \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
 	docker exec $$chainlinkContainerName bash -c "touch ${ROOT}/jobs/cron_job_tmp.toml \
 	&& sed 's/CONSUMER_ADDRESS/$$consumerAddressFormatted/g' ${ROOT}/jobs/cron_job.toml > ${ROOT}/jobs/cron_job_tmp.toml" && \
@@ -311,14 +311,14 @@ create-cron-job:
 create-webhook-job:
 	$(call check_set_parameter,NODE_ID,nodeId) \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
-	make login NODE_ID=$$nodeId; \
+	make login NODE_ID=$$nodeId >/dev/null 2>&1; \
 	docker exec $$chainlinkContainerName bash -c "chainlink jobs create ${ROOT}/jobs/webhook_job.toml"
 
 run-webhook-job:
 	$(call check_set_parameter,NODE_ID,nodeId) \
 	$(call check_set_parameter,WEBHOOK_JOB_ID,webhookJobId) \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
-	make login NODE_ID=$$nodeId; \
+	make login NODE_ID=$$nodeId >/dev/null 2>&1; \
 	$(call get_cookie,$$chainlinkContainerName,cookie) \
 	curl --cookie "$$cookie" -X POST -H "Content-Type: application/json" http://localhost:67$$nodeId$$nodeId/v2/jobs/$$webhookJobId/runs
 
@@ -326,7 +326,7 @@ create-keeper-job:
 	$(call check_set_parameter,REGISTRY_ADDRESS,registryAddress) \
 	$(call check_set_parameter,NODE_ID,nodeId) \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
-	make login NODE_ID=$$nodeId; \
+	make login NODE_ID=$$nodeId >/dev/null 2>&1; \
 	$(call get_node_address,$$chainlinkContainerName,nodeAddress) \
 	$(call format_eip55_address,$$registryAddress,registryAddressFormatted) \
 	docker exec $$chainlinkContainerName bash -c "touch ${ROOT}/jobs/keeper_job_tmp.toml \
@@ -346,7 +346,7 @@ create-ocr-bootstrap-job:
 	nodeId=1; \
 	$(call check_set_parameter,OFFCHAIN_AGGREGATOR_ADDRESS,offchainAggregatorAddress) \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
-	make login NODE_ID=$$nodeId; \
+	make login NODE_ID=$$nodeId >/dev/null 2>&1; \
 	$(call get_node_address,$$chainlinkContainerName,nodeAddress) \
 	$(call get_p2p_keys,$$chainlinkContainerName,peerId,_) \
 	$(call format_eip55_address,$$offchainAggregatorAddress,offchainAggregatorAddressFormatted) \
@@ -359,7 +359,7 @@ create-ocr-job:
 	$(call check_set_parameter,BOOTSTRAP_P2P_KEY,bootstrapP2PKey) \
 	$(call check_set_parameter,NODE_ID,nodeId) \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
-	make login NODE_ID=$$nodeId; \
+	make login NODE_ID=$$nodeId >/dev/null 2>&1; \
 	$(call get_node_address,$$chainlinkContainerName,nodeAddress) \
 	$(call get_ocr_keys,$$chainlinkContainerName,ocrKeyId,_,_,_) \
 	$(call get_p2p_keys,$$chainlinkContainerName,peerId,_) \
@@ -372,7 +372,7 @@ create-ocr-jobs:
 	nodeId=1; \
 	$(call check_set_parameter,OFFCHAIN_AGGREGATOR_ADDRESS,offchainAggregatorAddress) \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
-	make login NODE_ID=$$nodeId; \
+	make login NODE_ID=$$nodeId >/dev/null 2>&1; \
 	$(call get_p2p_keys,$$chainlinkContainerName,peerId,_) \
 	$(call check_set_parameter,OFFCHAIN_AGGREGATOR_ADDRESS,offchainAggregatorAddress) \
 	make create-ocr-job NODE_ID=2 OFFCHAIN_AGGREGATOR_ADDRESS=$$offchainAggregatorAddress BOOTSTRAP_P2P_KEY=$$peerId && \
@@ -384,7 +384,7 @@ create-flux-job:
 	$(call check_set_parameter,FLUX_AGGREGATOR_ADDRESS,fluxAggregatorAddress) \
 	$(call check_set_parameter,NODE_ID,nodeId) \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
-	make login NODE_ID=$$nodeId; \
+	make login NODE_ID=$$nodeId >/dev/null 2>&1; \
 	$(call format_eip55_address,$$fluxAggregatorAddress,fluxAggregatorAddressFormatted) \
 	docker exec $$chainlinkContainerName bash -c "touch ${ROOT}/jobs/flux_job_tmp.toml \
 	&& sed -e 's/FLUX_AGGREGATOR_ADDRESS/$$fluxAggregatorAddressFormatted/g' ${ROOT}/jobs/flux_job.toml > ${ROOT}/jobs/flux_job_tmp.toml" && \
@@ -401,7 +401,7 @@ delete-job:
 	$(call check_set_parameter,NODE_ID,nodeId) \
 	$(call check_set_parameter,JOB_ID,jobId) \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
-	make login NODE_ID=$$nodeId; \
+	make login NODE_ID=$$nodeId >/dev/null 2>&1; \
 	docker exec $$chainlinkContainerName chainlink -j jobs delete $$jobId;
 
 # Helper Solidity Scripts
@@ -415,7 +415,7 @@ transfer-eth:
 transfer-eth-to-node:
 	$(call check_set_parameter,NODE_ID,nodeId) \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
-	make login NODE_ID=$$nodeId; \
+	make login NODE_ID=$$nodeId >/dev/null 2>&1; \
 	$(call get_node_address,$$chainlinkContainerName,nodeAddress) \
 	make transfer-eth RECIPIENT=$$nodeAddress;
 
@@ -437,7 +437,7 @@ transfer-link:
 transfer-link-to-node:
 	$(call check_set_parameter,NODE_ID,nodeId) \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
-	make login NODE_ID=$$nodeId; \
+	make login NODE_ID=$$nodeId >/dev/null 2>&1; \
 	$(call get_node_address,$$chainlinkContainerName,nodeAddress) \
 	make transfer-link RECIPIENT=$$nodeAddress;
 
@@ -506,23 +506,23 @@ set-keepers:
 	$(call check_set_parameter,REGISTRY_ADDRESS,registryAddress) \
 	$(call check_set_parameter,KEEPER_CONSUMER_ADDRESS,keeperConsumerAddress) \
 	nodeId=1; \
-	make login NODE_ID=$$nodeId && \
+	make login NODE_ID=$$nodeId >/dev/null 2>&1 && \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
 	$(call get_node_address,$$chainlinkContainerName,nodeAddress1) \
 	nodeId=2; \
-	make login NODE_ID=$$nodeId && \
+	make login NODE_ID=$$nodeId >/dev/null 2>&1 && \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
 	$(call get_node_address,$$chainlinkContainerName,nodeAddress2) \
 	nodeId=3; \
-	make login NODE_ID=$$nodeId && \
+	make login NODE_ID=$$nodeId >/dev/null 2>&1 && \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
 	$(call get_node_address,$$chainlinkContainerName,nodeAddress3) \
 	nodeId=4; \
-	make login NODE_ID=$$nodeId && \
+	make login NODE_ID=$$nodeId >/dev/null 2>&1 && \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
 	$(call get_node_address,$$chainlinkContainerName,nodeAddress4) \
 	nodeId=5; \
-	make login NODE_ID=$$nodeId && \
+	make login NODE_ID=$$nodeId >/dev/null 2>&1 && \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
 	$(call get_node_address,$$chainlinkContainerName,nodeAddress5) \
 	printf "%s\n" "Setting Keepers in Registry. Please wait..."; \
@@ -543,19 +543,19 @@ set-payees:
 	$(call check_defined, RPC_URL) \
 	$(call check_set_parameter,OFFCHAIN_AGGREGATOR_ADDRESS,offchainAggregatorAddress) \
 	nodeId=2; \
-	make login NODE_ID=$$nodeId && \
+	make login NODE_ID=$$nodeId >/dev/null 2>&1 && \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
 	$(call get_node_address,$$chainlinkContainerName,nodeAddress2) \
 	nodeId=3; \
-	make login NODE_ID=$$nodeId && \
+	make login NODE_ID=$$nodeId >/dev/null 2>&1 && \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
 	$(call get_node_address,$$chainlinkContainerName,nodeAddress3) \
 	nodeId=4; \
-	make login NODE_ID=$$nodeId && \
+	make login NODE_ID=$$nodeId >/dev/null 2>&1 && \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
 	$(call get_node_address,$$chainlinkContainerName,nodeAddress4) \
 	nodeId=5; \
-	make login NODE_ID=$$nodeId && \
+	make login NODE_ID=$$nodeId >/dev/null 2>&1 && \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
 	$(call get_node_address,$$chainlinkContainerName,nodeAddress5) \
 	printf "%s\n" "Setting Payees in the Offchain Aggregator contract. Please wait..."; \
@@ -581,25 +581,25 @@ set-config:
 			"Find more information in the README file."; \
 	else \
 		nodeId=2; \
-		make login NODE_ID=$$nodeId && \
+		make login NODE_ID=$$nodeId >/dev/null 2>&1 && \
 		$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
 		$(call get_node_address,$$chainlinkContainerName,nodeAddress2) \
 		$(call get_ocr_keys,$$chainlinkContainerName,_,onChainSigningAddress2,offChainPublicKey2,configPublicKey2) \
 		$(call get_p2p_keys,$$chainlinkContainerName,peerId2,_) \
 		nodeId=3; \
-		make login NODE_ID=$$nodeId && \
+		make login NODE_ID=$$nodeId >/dev/null 2>&1 && \
 		$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
 		$(call get_node_address,$$chainlinkContainerName,nodeAddress3) \
 		$(call get_ocr_keys,$$chainlinkContainerName,_,onChainSigningAddress3,offChainPublicKey3,configPublicKey3) \
 		$(call get_p2p_keys,$$chainlinkContainerName,peerId3,_) \
 		nodeId=4; \
-		make login NODE_ID=$$nodeId && \
+		make login NODE_ID=$$nodeId >/dev/null 2>&1 && \
 		$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
 		$(call get_node_address,$$chainlinkContainerName,nodeAddress4) \
 		$(call get_ocr_keys,$$chainlinkContainerName,_,onChainSigningAddress4,offChainPublicKey4,configPublicKey4) \
 		$(call get_p2p_keys,$$chainlinkContainerName,peerId4,_) \
 		nodeId=5; \
-		make login NODE_ID=$$nodeId && \
+		make login NODE_ID=$$nodeId >/dev/null 2>&1 && \
 		$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
 		$(call get_node_address,$$chainlinkContainerName,nodeAddress5) \
 		$(call get_ocr_keys,$$chainlinkContainerName,_,onChainSigningAddress5,offChainPublicKey5,configPublicKey5) \
@@ -641,15 +641,15 @@ set-oracles:
 	$(call check_defined, RPC_URL) \
 	$(call check_set_parameter,FLUX_AGGREGATOR_ADDRESS,fluxAggregatorAddress) \
 	nodeId=1; \
-	make login NODE_ID=$$nodeId && \
+	make login NODE_ID=$$nodeId >/dev/null 2>&1 && \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
 	$(call get_node_address,$$chainlinkContainerName,nodeAddress1) \
 	nodeId=2; \
-	make login NODE_ID=$$nodeId && \
+	make login NODE_ID=$$nodeId >/dev/null 2>&1 && \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
 	$(call get_node_address,$$chainlinkContainerName,nodeAddress2) \
 	nodeId=3; \
-	make login NODE_ID=$$nodeId && \
+	make login NODE_ID=$$nodeId >/dev/null 2>&1 && \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
 	$(call get_node_address,$$chainlinkContainerName,nodeAddress3) \
 	printf "%s\n" "Setting Oracles in Flux Aggregator. Please wait..."; \

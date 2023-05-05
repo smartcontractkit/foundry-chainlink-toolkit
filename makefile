@@ -59,6 +59,10 @@ define get_external_job_id
 	$3=$$(docker exec $1 chainlink -j jobs list | grep -o -A 6 '"name": "[^"]*"' | grep -m 1 -A 6 -F "$2" | grep -o '"externalJobID": "[^"]*"' | cut -d'"' -f4 | tr -d '-');
 endef
 
+define get_last_webhook_job_id
+	$2=$$(docker exec $1 chainlink -j jobs list | grep -o -B 2 '"type": "[^"]*"' | grep -m 1 -B 2 -F "webhook" | grep -o '"id": "[^"]*"' | cut -d'"' -f4);
+endef
+
 define get_cookie
 	$2=$$(cat ./chainlink/$1/cookie | grep "clsession");
 endef
@@ -229,6 +233,13 @@ get-external-job-id:
 	$(call get_external_job_id,$$chainlinkContainerName,$$contractAddressFormatted,externalJobId) \
 	printf "%s" $$externalJobId
 
+get-last-webhook-job-id:
+	$(call check_set_parameter,NODE_ID,nodeId) \
+	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
+	make login NODE_ID=$$nodeId >/dev/null 2>&1; \
+	$(call get_last_webhook_job_id,$$chainlinkContainerName,jobId) \
+	printf "%s" $$jobId
+
 # Smart Contracts Deployment Scripts
 deploy-link-token:
 	$(call check_defined, PRIVATE_KEY) \
@@ -316,11 +327,31 @@ create-webhook-job:
 
 run-webhook-job:
 	$(call check_set_parameter,NODE_ID,nodeId) \
+	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
+	make login NODE_ID=$$nodeId >/dev/null 2>&1; \
+	$(call get_last_webhook_job_id,$$chainlinkContainerName,webhookJobId) \
+	$(call get_cookie,$$chainlinkContainerName,cookie) \
+	res=$$(curl -s --cookie "$$cookie" -X POST -H "Content-Type: application/json" http://localhost:67$$nodeId$$nodeId/v2/jobs/$$webhookJobId/runs); \
+	runId=$$(echo $$res | grep -m 1 -o '"id":"[^"]*"' | cut -d':' -f2); \
+	outputs=$$(echo $$res | grep -m 1 -o '"outputs":[^,]*' | cut -d':' -f2); \
+	errors=$$(echo $$res | grep -m 1 -o '"errors":[^,]*' | cut -d':' -f2); \
+	printf "%s\n" "Run ID: $$runId"; \
+	printf "%s\n" "Outputs: $$outputs"; \
+	printf "%s\n" "Errors: $$errors";
+
+run-webhook-job-external:
+	$(call check_set_parameter,NODE_ID,nodeId) \
 	$(call check_set_parameter,WEBHOOK_JOB_ID,webhookJobId) \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
 	make login NODE_ID=$$nodeId >/dev/null 2>&1; \
 	$(call get_cookie,$$chainlinkContainerName,cookie) \
-	curl --cookie "$$cookie" -X POST -H "Content-Type: application/json" http://localhost:67$$nodeId$$nodeId/v2/jobs/$$webhookJobId/runs
+	res=$$(curl -s --cookie "$$cookie" -X POST -H "Content-Type: application/json" http://localhost:67$$nodeId$$nodeId/v2/jobs/$$webhookJobId/runs); \
+	runId=$$(echo $$res | grep -m 1 -o '"id":"[^"]*"' | cut -d':' -f2); \
+	outputs=$$(echo $$res | grep -m 1 -o '"outputs":[^,]*' | cut -d':' -f2); \
+	errors=$$(echo $$res | grep -m 1 -o '"errors":[^,]*' | cut -d':' -f2); \
+	printf "%s\n" "Run ID: $$runId"; \
+	printf "%s\n" "Outputs: $$outputs"; \
+	printf "%s\n" "Errors: $$errors";
 
 create-keeper-job:
 	$(call check_set_parameter,REGISTRY_ADDRESS,registryAddress) \

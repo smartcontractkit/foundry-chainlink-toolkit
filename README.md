@@ -310,6 +310,15 @@ Some scripts have parameters that can be provided either with the command line (
   - `NODE_ID` - Chainlink node ID
   - `CONTRACT_ADDRESS` - Contract address identifying a Chainlink job
 
+#### Get Chainlink Webhook Job Latest ID
+  ```
+  make get-last-webhook-job-id
+  ```
+  This command returns a Job ID of the latest created Chainlink Webhook job.
+
+  During the execution of the command, you will need to provide:
+  - `NODE_ID` - Chainlink node ID
+
 > **Note**  
 > You also can find information on jobs in the node Operator GUI under the Jobs tab.
 
@@ -415,6 +424,16 @@ Some scripts have parameters that can be provided either with the command line (
 #### Run Chainlink Webhook job
   ```
   make run-webhook-job
+  ```
+  This command runs the latest Chainlink Webhook job.  
+  The corresponding Chainlink Webhook job will be found using [get-last-webhook-job-id](#get-chainlink-webhook-job-latest-id) script.
+
+  During the execution of the command, you will need to provide:
+  - `NODE_ID` - Chainlink node ID
+
+#### Run Chainlink Webhook job (external)
+  ```
+  make run-webhook-job-external
   ```
   This command runs an existing Chainlink Webhook job.
 

@@ -56,7 +56,7 @@ define get_job_id
 endef
 
 define get_external_job_id
-	$3=$$(docker exec $1 chainlink -j jobs list | grep -o -A 6 '"name": "[^"]*"' | grep -m 1 -A 6 -F "$2" | grep -o '"externalJobID": "[^"]*"' | cut -d'"' -f4);
+	$3=$$(docker exec $1 chainlink -j jobs list | grep -o -A 6 '"name": "[^"]*"' | grep -m 1 -A 6 -F "$2" | grep -o '"externalJobID": "[^"]*"' | cut -d'"' -f4 | tr -d '-');
 endef
 
 define get_cookie

@@ -586,6 +586,17 @@ Some scripts have parameters that can be provided either with the command line (
   - `CONSUMER_ADDRESS` - Consumer contract address
   - `ORACLE_ADDRESS` - Oracle contract address
 
+#### Request ETH price (external)
+  ```
+  make request-eth-price-consumer-external
+  ```
+  This command calls `requestEthereumPrice` method of the Consumer contract, which asks the node to retrieve data specified in a Job configuration.
+
+  During the execution of the command, you will need to provide:
+  - `CONSUMER_ADDRESS` - Consumer contract address
+  - `ORACLE_ADDRESS` - Oracle contract address
+  - `DIRECT_REQUEST_EXTERNAL_JOB_ID` - Direct request External Job ID - you can get one with Chainlink Operator GUI on the Jobs tab
+
    > **Note**  
    > You can check list of runs of jobs with Chainlink Operator GUI.
 

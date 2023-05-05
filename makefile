@@ -216,7 +216,8 @@ get-job-id:
 	$(call check_set_parameter,CONTRACT_ADDRESS,contractAddress) \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
 	make login NODE_ID=$$nodeId >/dev/null 2>&1; \
-	$(call get_job_id,$$chainlinkContainerName,$$contractAddress,jobId) \
+	$(call format_eip55_address,$$contractAddress,contractAddressFormatted) \
+	$(call get_job_id,$$chainlinkContainerName,$$contractAddressFormatted,jobId) \
 	printf "%s" $$jobId
 
 get-external-job-id:
@@ -224,7 +225,8 @@ get-external-job-id:
 	$(call check_set_parameter,CONTRACT_ADDRESS,contractAddress) \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
 	make login NODE_ID=$$nodeId >/dev/null 2>&1; \
-	$(call get_external_job_id,$$chainlinkContainerName,$$contractAddress,externalJobId) \
+	$(call format_eip55_address,$$contractAddress,contractAddressFormatted) \
+	$(call get_external_job_id,$$chainlinkContainerName,$$contractAddressFormatted,externalJobId) \
 	printf "%s" $$externalJobId
 
 # Smart Contracts Deployment Scripts

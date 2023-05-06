@@ -222,7 +222,7 @@ get-job-id:
 	make login NODE_ID=$$nodeId >/dev/null 2>&1; \
 	$(call format_eip55_address,$$contractAddress,contractAddressFormatted) \
 	$(call get_job_id,$$chainlinkContainerName,$$contractAddressFormatted,jobId) \
-	printf "%02d" $$jobId
+	printf "%s" "${PREFIX}$$jobId"
 
 get-external-job-id:
 	$(call check_set_parameter,NODE_ID,nodeId) \
@@ -238,7 +238,7 @@ get-last-webhook-job-id:
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
 	make login NODE_ID=$$nodeId >/dev/null 2>&1; \
 	$(call get_last_webhook_job_id,$$chainlinkContainerName,jobId) \
-	printf "%s" $$jobId
+	printf "%s" "${PREFIX}$$jobId"
 
 # Smart Contracts Deployment Scripts
 deploy-link-token:

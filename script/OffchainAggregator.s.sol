@@ -14,7 +14,6 @@ contract OffchainAggregatorScript is Script {
 
   function deploy(address linkTokenAddress) external returns(address) {
     uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
-    uint256 deployerAddress = vm.envUint("DEPLOYER_ADDRESS");
 
     vm.startBroadcast(deployerPrivateKey);
 
@@ -44,7 +43,7 @@ contract OffchainAggregatorScript is Script {
 
   function setPayees(address offchainAggregatorAddress, address[] calldata nodesArray) external {
     uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
-    address deployerAddress = vm.envAddress("DEPLOYER_ADDRESS");
+    address deployerAddress = vm.addr(deployerPrivateKey);
 
     address[] memory payees = new address[](4);
     payees[0] = deployerAddress;

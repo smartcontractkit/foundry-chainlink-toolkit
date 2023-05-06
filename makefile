@@ -222,7 +222,7 @@ get-job-id:
 	make login NODE_ID=$$nodeId >/dev/null 2>&1; \
 	$(call format_eip55_address,$$contractAddress,contractAddressFormatted) \
 	$(call get_job_id,$$chainlinkContainerName,$$contractAddressFormatted,jobId) \
-	printf "%s" $$jobId
+	printf "%02d" $$jobId
 
 get-external-job-id:
 	$(call check_set_parameter,NODE_ID,nodeId) \

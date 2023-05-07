@@ -60,6 +60,14 @@ contract OffchainAggregatorScript is Script {
     vm.stopBroadcast();
   }
 
+  function setPayees(address offchainAggregatorAddress, string[] memory nodesArrayStr) public {
+    address[] memory nodesArray = new address[](nodesArrayStr.length);
+    for (uint i; i < nodesArrayStr.length; i++) {
+      nodesArray[i] = vm.parseAddress(nodesArrayStr[i]);
+    }
+    setPayees(offchainAggregatorAddress, nodesArray);
+  }
+
   function setConfig(
     address offchainAggregatorAddress,
     address[] memory signers,

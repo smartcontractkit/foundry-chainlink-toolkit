@@ -174,7 +174,7 @@ restart-nodes:
 	$(call check_defined, LINK_CONTRACT_ADDRESS) \
 	if [ -n "$(CLEAN_RESTART)" ]; then \
 		docker compose down; \
-		docker volume rm foundry-chainlink-plugin_db-data foundry-chainlink-plugin_prometheus_data; \
+		docker volume rm foundry-chainlink-plugin_prometheus_data; \
 		rm -rf ./chainlink/foundry-chainlink-node*; \
 		docker compose up -d; \
 	else \

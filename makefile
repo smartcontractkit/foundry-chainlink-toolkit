@@ -94,8 +94,11 @@ else ifeq ($(shell uname), Linux)
 	endif
 else
 # Set variable for other operating systems, binary has to be built in advance
-OCRHelperPath = external/OCRHelper/bin/ocr-helper
+	OCRHelperPath = external/OCRHelper/bin/ocr-helper
 endif
+
+get-ocr-helper-path:
+	printf "%s" $(OCRHelperPath)
 
 install:
 	forge install foundry-rs/forge-std --no-git --no-commit; \

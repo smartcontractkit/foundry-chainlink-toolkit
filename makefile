@@ -218,6 +218,15 @@ get-node-address:
 	$(call get_node_address,$$chainlinkContainerName,nodeAddress) \
 	printf "%s" $$nodeAddress
 
+get-node-config:
+	$(call check_set_parameter,NODE_ID,nodeId) \
+	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
+	make login NODE_ID=$$nodeId >/dev/null 2>&1; \
+	$(call get_node_address,$$chainlinkContainerName,nodeAddress) \
+	$(call get_ocr_keys,$$chainlinkContainerName,_,onChainSigningAddress,offChainPublicKey,configPublicKey) \
+	$(call get_p2p_keys,$$chainlinkContainerName,peerId,_) \
+	printf "%s" "$$nodeAddress,$$onChainSigningAddress,$$offChainPublicKey,$$configPublicKey,$$peerId"
+
 get-job-id:
 	$(call check_set_parameter,NODE_ID,nodeId) \
 	$(call check_set_parameter,CONTRACT_ADDRESS,contractAddress) \

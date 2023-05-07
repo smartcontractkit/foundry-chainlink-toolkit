@@ -290,6 +290,20 @@ Some scripts have parameters that can be provided either with the command line (
 > **Note**  
 > You also can find information on keys in the node Operator GUI under the Key Management configuration.
 
+#### Get Chainlink Node Configuration
+  ```
+  make get-node-config
+  ```
+  This command returns a Chainlink node configuration. The result contains comma-separated values, including:
+  - `Node address`
+  - `On-chain signing address`
+  - `Off-chain public key`
+  - `Config public key`
+  - `Peer ID`
+
+  During the execution of the command, you will need to provide:
+  - `NODE_ID` - Chainlink node ID
+
 #### Get Chainlink Job ID
   ```
   make get-job-id

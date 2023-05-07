@@ -317,6 +317,7 @@ create-direct-request-job:
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
 	make login NODE_ID=$$nodeId >/dev/null 2>&1; \
 	$(call format_eip55_address,$$oracleAddress,oracleAddressFormatted) \
+	printf "%s\n" "Creating Direct Request Job on Chainlink node $$nodeId. Please wait..."; \
 	docker exec $$chainlinkContainerName bash -c "touch ${ROOT}/jobs/direct_request_job_tmp.toml \
 	&& sed 's/ORACLE_ADDRESS/$$oracleAddressFormatted/g' ${ROOT}/jobs/direct_request_job.toml > ${ROOT}/jobs/direct_request_job_tmp.toml" && \
 	docker exec $$chainlinkContainerName bash -c "chainlink jobs create ${ROOT}/jobs/direct_request_job_tmp.toml && rm ${ROOT}/jobs/direct_request_job_tmp.toml"
@@ -327,6 +328,7 @@ create-cron-job:
 	$(call format_eip55_address,$$consumerAddress,consumerAddressFormatted) \
 	make login NODE_ID=$$nodeId >/dev/null 2>&1; \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
+	printf "%s\n" "Creating Cron Job on Chainlink node $$nodeId. Please wait..."; \
 	docker exec $$chainlinkContainerName bash -c "touch ${ROOT}/jobs/cron_job_tmp.toml \
 	&& sed 's/CONSUMER_ADDRESS/$$consumerAddressFormatted/g' ${ROOT}/jobs/cron_job.toml > ${ROOT}/jobs/cron_job_tmp.toml" && \
 	docker exec $$chainlinkContainerName bash -c "chainlink jobs create ${ROOT}/jobs/cron_job_tmp.toml && rm ${ROOT}/jobs/cron_job_tmp.toml"
@@ -335,6 +337,7 @@ create-webhook-job:
 	$(call check_set_parameter,NODE_ID,nodeId) \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
 	make login NODE_ID=$$nodeId >/dev/null 2>&1; \
+	printf "%s\n" "Creating Webhook Job on Chainlink node $$nodeId. Please wait..."; \
 	docker exec $$chainlinkContainerName bash -c "chainlink jobs create ${ROOT}/jobs/webhook_job.toml"
 
 run-webhook-job:
@@ -343,6 +346,7 @@ run-webhook-job:
 	make login NODE_ID=$$nodeId >/dev/null 2>&1; \
 	$(call get_last_webhook_job_id,$$chainlinkContainerName,webhookJobId) \
 	$(call get_cookie,$$chainlinkContainerName,cookie) \
+	printf "%s\n" "Running Webhook Job with ID $$webhookJobId on Chainlink node $$nodeId. Please wait..."; \
 	res=$$(curl -s --cookie "$$cookie" -X POST -H "Content-Type: application/json" http://localhost:67$$nodeId$$nodeId/v2/jobs/$$webhookJobId/runs); \
 	runId=$$(echo $$res | grep -m 1 -o '"id":"[^"]*"' | cut -d':' -f2); \
 	outputs=$$(echo $$res | grep -m 1 -o '"outputs":[^,]*' | cut -d':' -f2); \
@@ -357,6 +361,7 @@ run-webhook-job-external:
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
 	make login NODE_ID=$$nodeId >/dev/null 2>&1; \
 	$(call get_cookie,$$chainlinkContainerName,cookie) \
+	printf "%s\n" "Running Webhook Job with ID $$webhookJobId on Chainlink node $$nodeId. Please wait..."; \
 	res=$$(curl -s --cookie "$$cookie" -X POST -H "Content-Type: application/json" http://localhost:67$$nodeId$$nodeId/v2/jobs/$$webhookJobId/runs); \
 	runId=$$(echo $$res | grep -m 1 -o '"id":"[^"]*"' | cut -d':' -f2); \
 	outputs=$$(echo $$res | grep -m 1 -o '"outputs":[^,]*' | cut -d':' -f2); \
@@ -372,6 +377,7 @@ create-keeper-job:
 	make login NODE_ID=$$nodeId >/dev/null 2>&1; \
 	$(call get_node_address,$$chainlinkContainerName,nodeAddress) \
 	$(call format_eip55_address,$$registryAddress,registryAddressFormatted) \
+	printf "%s\n" "Creating Keeper Job on Chainlink node $$nodeId. Please wait..."; \
 	docker exec $$chainlinkContainerName bash -c "touch ${ROOT}/jobs/keeper_job_tmp.toml \
 	&& sed -e 's/REGISTRY_ADDRESS/$$registryAddressFormatted/g' -e 's/NODE_ADDRESS/$$nodeAddress/g' ${ROOT}/jobs/keeper_job.toml > ${ROOT}/jobs/keeper_job_tmp.toml" && \
 	docker exec $$chainlinkContainerName bash -c "chainlink jobs create ${ROOT}/jobs/keeper_job_tmp.toml && rm ${ROOT}/jobs/keeper_job_tmp.toml"
@@ -393,6 +399,7 @@ create-ocr-bootstrap-job:
 	$(call get_node_address,$$chainlinkContainerName,nodeAddress) \
 	$(call get_p2p_keys,$$chainlinkContainerName,peerId,_) \
 	$(call format_eip55_address,$$offchainAggregatorAddress,offchainAggregatorAddressFormatted) \
+	printf "%s\n" "Creating OCR Job (bootstrap) on Chainlink node $$nodeId. Please wait..."; \
 	docker exec $$chainlinkContainerName bash -c "touch ${ROOT}/jobs/ocr_job_bootstrap_tmp.toml \
 	&& sed -e 's/OFFCHAIN_AGGREGATOR_ADDRESS/$$offchainAggregatorAddressFormatted/g' -e 's/PEER_ID/$$peerId/g' ${ROOT}/jobs/ocr_job_bootstrap.toml > ${ROOT}/jobs/ocr_job_bootstrap_tmp.toml" && \
 	docker exec $$chainlinkContainerName bash -c "chainlink jobs create ${ROOT}/jobs/ocr_job_bootstrap_tmp.toml && rm ${ROOT}/jobs/ocr_job_bootstrap_tmp.toml"
@@ -407,6 +414,7 @@ create-ocr-job:
 	$(call get_ocr_keys,$$chainlinkContainerName,ocrKeyId,_,_,_) \
 	$(call get_p2p_keys,$$chainlinkContainerName,peerId,_) \
 	$(call format_eip55_address,$$offchainAggregatorAddress,offchainAggregatorAddressFormatted) \
+	printf "%s\n" "Creating OCR Job on Chainlink node $$nodeId. Please wait..."; \
 	docker exec $$chainlinkContainerName bash -c "touch ${ROOT}/jobs/ocr_job_tmp.toml \
 	&& sed -e 's/OFFCHAIN_AGGREGATOR_ADDRESS/$$offchainAggregatorAddressFormatted/g' -e 's/BOOTSTRAP_P2P_KEY/$$bootstrapP2PKey/g' -e 's/PEER_ID/$$peerId/g' -e 's/OCR_KEY_ID/$$ocrKeyId/g' -e 's/NODE_ADDRESS/$$nodeAddress/g' ${ROOT}/jobs/ocr_job.toml > ${ROOT}/jobs/ocr_job_tmp.toml" && \
 	docker exec $$chainlinkContainerName bash -c "chainlink jobs create ${ROOT}/jobs/ocr_job_tmp.toml && rm ${ROOT}/jobs/ocr_job_tmp.toml"
@@ -429,6 +437,7 @@ create-flux-job:
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
 	make login NODE_ID=$$nodeId >/dev/null 2>&1; \
 	$(call format_eip55_address,$$fluxAggregatorAddress,fluxAggregatorAddressFormatted) \
+	printf "%s\n" "Creating Flux Job on Chainlink node $$nodeId. Please wait..."; \
 	docker exec $$chainlinkContainerName bash -c "touch ${ROOT}/jobs/flux_job_tmp.toml \
 	&& sed -e 's/FLUX_AGGREGATOR_ADDRESS/$$fluxAggregatorAddressFormatted/g' ${ROOT}/jobs/flux_job.toml > ${ROOT}/jobs/flux_job_tmp.toml" && \
 	docker exec $$chainlinkContainerName bash -c "chainlink jobs create ${ROOT}/jobs/flux_job_tmp.toml && rm ${ROOT}/jobs/flux_job_tmp.toml"
@@ -445,6 +454,7 @@ delete-job:
 	$(call check_set_parameter,JOB_ID,jobId) \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
 	make login NODE_ID=$$nodeId >/dev/null 2>&1; \
+	printf "%s\n" "Deleting Job with ID $$jobId on Chainlink node $$nodeId. Please wait..."; \
 	docker exec $$chainlinkContainerName chainlink -j jobs delete $$jobId;
 
 # Helper Solidity Scripts
@@ -497,7 +507,7 @@ get-link-balance:
 	$(call check_defined, RPC_URL) \
 	$(call check_set_parameter,LINK_CONTRACT_ADDRESS,linkContractAddress) \
 	$(call check_set_parameter,ACCOUNT,account) \
-	echo "Getting Link Token balance for the account. Please wait..."; \
+	printf "%s\n" "Getting Link Token balance for the account. Please wait..."; \
 	forge script ./script/LinkToken.s.sol --sig "getBalance(address,address)" $$linkContractAddress $$account --rpc-url ${RPC_URL} --broadcast
 
 # Chainlink Consumer Solidity Scripts
@@ -528,7 +538,7 @@ get-eth-price-consumer:
 	$(call check_defined, PRIVATE_KEY) \
 	$(call check_defined, RPC_URL) \
 	$(call check_set_parameter,CONSUMER_ADDRESS,consumerAddress) \
-	echo "Getting current ETH price. Please wait..."; \
+	printf "%s\n" "Getting current ETH price. Please wait..."; \
 	forge script ./script/ChainlinkConsumer.s.sol --sig "getEthereumPrice(address)" $$consumerAddress --rpc-url ${RPC_URL} --broadcast
 
 # Chainlink Cron Consumer Solidity Scripts
@@ -536,7 +546,7 @@ get-eth-price-cron-consumer:
 	$(call check_defined, PRIVATE_KEY) \
 	$(call check_defined, RPC_URL) \
 	$(call check_set_parameter,CRON_CONSUMER_ADDRESS,cronConsumerAddress) \
-	echo "Getting current ETH price. Please wait..."; \
+	printf "%s\n" "Getting current ETH price. Please wait..."; \
 	forge script ./script/ChainlinkCronConsumer.s.sol --sig "getEthereumPrice(address)" $$cronConsumerAddress --rpc-url ${RPC_URL} --broadcast
 
 # Chainlink Keeper Consumer Solidity Scripts
@@ -544,7 +554,7 @@ get-keeper-counter:
 	$(call check_defined, PRIVATE_KEY) \
 	$(call check_defined, RPC_URL) \
 	$(call check_set_parameter,KEEPER_CONSUMER_ADDRESS,keeperConsumerAddress) \
-	echo "Getting current counter. Please wait..."; \
+	printf "%s\n" "Getting current counter. Please wait..."; \
 	forge script ./script/ChainlinkKeeperConsumer.s.sol --sig "getCounter(address)" $$keeperConsumerAddress --rpc-url ${RPC_URL} --broadcast
 
 # Registry Solidity Scripts
@@ -553,7 +563,7 @@ register-upkeep:
 	$(call check_defined, RPC_URL) \
 	$(call check_set_parameter,REGISTRY_ADDRESS,registryAddress) \
 	$(call check_set_parameter,KEEPER_CONSUMER_ADDRESS,keeperConsumerAddress) \
-	echo "Registering Upkeep in the Chainlink Registry. Please wait..."; \
+	printf "%s\n" "Registering Upkeep in the Chainlink Registry. Please wait..."; \
 	forge script ./script/Registry.s.sol --sig "registerUpkeep(address,address)" $$registryAddress $$keeperConsumerAddress --rpc-url ${RPC_URL} --broadcast
 
 set-keepers:

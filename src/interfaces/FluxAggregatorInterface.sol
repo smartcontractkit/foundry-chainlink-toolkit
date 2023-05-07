@@ -3,9 +3,9 @@ pragma solidity >=0.6.2 <0.9.0;
 
 interface FluxAggregatorInterface {
   function changeOracles(
-    address[] calldata _removed,
-    address[] calldata _added,
-    address[] calldata _addedAdmins,
+    address[] memory _removed,
+    address[] memory _added,
+    address[] memory _addedAdmins,
     uint32 _minSubmissions,
     uint32 _maxSubmissions,
     uint32 _restartDelay

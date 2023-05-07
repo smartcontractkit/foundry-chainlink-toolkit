@@ -62,7 +62,7 @@ contract RegistryScript is Script {
     return registry;
   }
 
-  function setKeepers(address registryAddress, address upkeepAddress, address[] calldata nodesArray) external {
+  function setKeepers(address registryAddress, address upkeepAddress, address[] memory nodesArray) public {
     address[] memory payees = new address[](5);
     payees[0] = upkeepAddress;
     payees[1] = upkeepAddress;

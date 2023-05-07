@@ -20,7 +20,7 @@ contract ChainlinkConsumerScript is Script {
     return chainlinkConsumer;
   }
 
-  function requestEthereumPrice(address consumerAddress, address oracleAddress, string calldata jobId) external {
+  function requestEthereumPrice(address consumerAddress, address oracleAddress, string memory jobId) public {
     uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
     vm.startBroadcast(deployerPrivateKey);
 

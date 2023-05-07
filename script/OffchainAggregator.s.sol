@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: UNLICENSED
+pragma experimental ABIEncoderV2;
 pragma solidity >=0.6.2 <0.9.0;
 
 import "forge-std/Script.sol";
@@ -41,7 +42,7 @@ contract OffchainAggregatorScript is Script {
     return offchainAggregator;
   }
 
-  function setPayees(address offchainAggregatorAddress, address[] calldata nodesArray) external {
+  function setPayees(address offchainAggregatorAddress, address[] memory nodesArray) public {
     uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
     address deployerAddress = vm.addr(deployerPrivateKey);
 
@@ -61,12 +62,12 @@ contract OffchainAggregatorScript is Script {
 
   function setConfig(
     address offchainAggregatorAddress,
-    address[] calldata signers,
-    address[] calldata transmitters,
+    address[] memory signers,
+    address[] memory transmitters,
     uint8 threshold,
     uint64 encodedConfigVersion,
-    bytes calldata encoded
-  ) external {
+    bytes memory encoded
+  ) public {
     uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
 
     vm.startBroadcast(deployerPrivateKey);

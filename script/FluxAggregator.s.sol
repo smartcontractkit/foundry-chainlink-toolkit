@@ -45,7 +45,7 @@ contract FluxAggregatorScript is Script {
     return fluxAggregator.availableFunds();
   }
 
-  function setOracles(address fluxAggregatorAddress, address[] calldata nodesArray) external {
+  function setOracles(address fluxAggregatorAddress, address[] memory nodesArray) public {
     uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
 
     address[] memory removedOracles;

@@ -3,16 +3,16 @@ pragma solidity >=0.6.2 <0.9.0;
 
 interface OffchainAggregatorInterface {
   function setConfig(
-    address[] calldata _signers,
-    address[] calldata _transmitters,
+    address[] memory _signers,
+    address[] memory _transmitters,
     uint8 _threshold,
     uint64 _encodedConfigVersion,
     bytes calldata _encoded
   ) external;
 
   function setPayees(
-    address[] calldata _transmitters,
-    address[] calldata _payees
+    address[] memory _transmitters,
+    address[] memory _payees
   ) external;
 
   function latestAnswer() external view returns (int256);

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+pragma experimental ABIEncoderV2;
 pragma solidity >=0.6.2 <0.9.0;
 
 struct State {
@@ -24,7 +25,7 @@ struct Config {
 }
 
 interface KeeperRegistryInterface {
-  function setKeepers(address[] calldata keepers, address[] calldata payees) external;
+  function setKeepers(address[] memory keepers, address[] memory payees) external;
   function registerUpkeep(
     address target,
     uint32 gasLimit,

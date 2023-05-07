@@ -372,18 +372,18 @@ Some scripts have parameters that can be provided either with the command line (
   During the execution of the command, you will need to provide:
   - `LINK_CONTRACT_ADDRESS` - Link Token contract address
 
-#### Deploy Chainlink Offchain Aggregator contract
+#### Deploy Offchain Aggregator contract
   ```
-  make deploy-chainlink-offchain-aggregator
+  make deploy-offchain-aggregator
   ```
   This command deploys an instance of Chainlink OffchainAggregator.sol contract.
 
   During the execution of the command, you will need to provide:
   - `LINK_CONTRACT_ADDRESS` - Link Token contract address
 
-#### Deploy Chainlink Flux Aggregator contract
+#### Deploy Flux Aggregator contract
   ```
-  make deploy-chainlink-flux-aggregator
+  make deploy-flux-aggregator
   ```
   This command deploys an instance of Chainlink FluxAggregator.sol contract.
 
@@ -813,7 +813,7 @@ Some scripts have parameters that can be provided either with the command line (
 7. [Get value of `counter` variable in a Keeper contract](#get-keeper-counter)
 
 #### OCR Job
-1. [Deploy Offchain Aggregator contract](#deploy-chainlink-offchain-aggregator-contract)
+1. [Deploy Offchain Aggregator contract](#deploy-offchain-aggregator-contract)
 2. [Set Offchain Aggregator payees](#set-payees)
 3. [Set Offchain Aggregator config](#set-config)
 4. [Create OCR Job for a bootstrap Chainlink node (first in a cluster)](#create-chainlink-ocr--bootstrap--job)
@@ -822,7 +822,7 @@ Some scripts have parameters that can be provided either with the command line (
 7. [Get the answer of the latest OCR round from the Offchain Aggregator contract](#get-ocr-latest-answer)
 
 #### Flux Job
-1. [Deploy Flux Aggregator contract](#deploy-chainlink-flux-aggregator-contract)
+1. [Deploy Flux Aggregator contract](#deploy-flux-aggregator-contract)
 2. [Fund Flux Aggregator contract with Link tokens](#transfer-link-tokens) 
 3. [Update Flux Aggregator available funds](#update-available-funds)
 4. [Set Flux Aggregator oracles](#set-oracles)

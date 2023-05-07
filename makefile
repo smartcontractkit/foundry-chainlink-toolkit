@@ -284,14 +284,14 @@ deploy-keeper-registry:
 	printf "%s\n" "Deploying Chainlink Registry. Please wait..."; \
 	forge script ./script/Registry.s.sol --sig "deploy(address)" $$linkContractAddress --rpc-url ${RPC_URL} --broadcast
 
-deploy-chainlink-offchain-aggregator:
+deploy-offchain-aggregator:
 	$(call check_defined, PRIVATE_KEY) \
 	$(call check_defined, RPC_URL) \
 	$(call check_set_parameter,LINK_CONTRACT_ADDRESS,linkContractAddress) \
 	printf "%s\n" "Deploying Chainlink OffChain Aggregator. Please wait..."; \
 	forge script ./script/OffchainAggregator.s.sol --sig "deploy(address)" $$linkContractAddress --rpc-url ${RPC_URL} --broadcast
 
-deploy-chainlink-flux-aggregator:
+deploy-flux-aggregator:
 	$(call check_defined, PRIVATE_KEY) \
 	$(call check_defined, RPC_URL) \
 	$(call check_set_parameter,LINK_CONTRACT_ADDRESS,linkContractAddress) \

@@ -740,3 +740,65 @@ get-latest-answer-flux:
 	$(call check_set_parameter,FLUX_AGGREGATOR_ADDRESS,fluxAggregatorAddress) \
 	printf "%s\n" "Getting the latest answer in the Flux Aggregator contract. Please wait..."; \
 	forge script ./script/FluxAggregator.s.sol --sig "getLatestAnswer(address)" $$fluxAggregatorAddress --rpc-url ${RPC_URL} --broadcast
+
+# Automation [ON CHAIN]
+setup-direct-request-job:
+	make check-docker-network || sh -c 'exit 1'
+	$(call check_defined, RPC_URL) \
+	$(call check_defined, PRIVATE_KEY) \
+	$(call check_defined, LINK_CONTRACT_ADDRESS) \
+	$(call check_set_parameter,NODE_ID,nodeId) \
+	printf "%s\n" "Setting up Direct Request Job on Chainlink node $$nodeId. Please wait..."; \
+	forge script ./script/DirectRequestJob.s.sol --sig "run(string)" $$nodeId --ffi --rpc-url ${RPC_URL} --broadcast
+
+setup-cron-job:
+	make check-docker-network || sh -c 'exit 1'
+	$(call check_defined, RPC_URL) \
+	$(call check_defined, PRIVATE_KEY) \
+	$(call check_defined, LINK_CONTRACT_ADDRESS) \
+	$(call check_set_parameter,NODE_ID,nodeId) \
+	printf "%s\n" "Setting up Cron Job on Chainlink node $$nodeId. Please wait..."; \
+	forge script ./script/CronJob.s.sol --sig "run(string)" $$nodeId --ffi --rpc-url ${RPC_URL} --broadcast
+
+setup-webhook-job:
+	make check-docker-network || sh -c 'exit 1'
+	$(call check_defined, RPC_URL) \
+	$(call check_defined, PRIVATE_KEY) \
+	$(call check_set_parameter,NODE_ID,nodeId) \
+	printf "%s\n" "Setting up Webhook Job on Chainlink node $$nodeId. Please wait..."; \
+	forge script ./script/WebhookJob.s.sol --sig "run(string)" $$nodeId --ffi --rpc-url ${RPC_URL} --broadcast
+
+setup-keeper-job:
+	make check-docker-network || sh -c 'exit 1'
+	$(call check_defined, RPC_URL) \
+	$(call check_defined, PRIVATE_KEY) \
+	printf "%s\n" "Setting up Keeper Job. Please wait..."; \
+	res=$$(forge script ./script/KeeperJob.s.sol --ffi --rpc-url ${RPC_URL} --broadcast -vv); \
+    registryAddress=$$(echo $$res | grep -m1 -o '== Logs == [^ ]*' | cut -d' ' -f4 | cut -d',' -f1); \
+	keeperConsumerAddress=$$(echo $$res | grep -m1 -o '== Logs == [^ ]*' | cut -d' ' -f4 | cut -d',' -f2); \
+	forge script ./script/KeeperJob.s.sol --sig "finalize(address,address)" $$registryAddress $$keeperConsumerAddress --ffi --rpc-url ${RPC_URL} --broadcast --private-key ${PRIVATE_KEY}
+
+setup-ocr-job:
+ifeq ($(OCRHelperPathWildcard),"")
+	printf ">  %s\n>  %s\n>  %s\n" \
+		"Binary file \"$(OCRHelperPath)\" does not exist." \
+		"Please run: 'make build-ocr-helper' to build OS dependent OCR Helper external library." \
+		"Find more information in the README file."
+else
+	make check-docker-network || sh -c 'exit 1'
+	$(call check_defined, RPC_URL) \
+	$(call check_defined, PRIVATE_KEY) \
+	printf "%s\n" "Setting up OCR Job. Please wait..."; \
+	res=$$(forge script ./script/OCRJob.s.sol --ffi --rpc-url ${RPC_URL} --broadcast -vv); \
+    offchainAggregatorAddress=$$(echo $$res | grep -m1 -o '== Logs == [^ ]*' | cut -d' ' -f4); \
+	forge script ./script/OCRJob.s.sol --sig "finalize(address)" $$offchainAggregatorAddress --ffi --rpc-url ${RPC_URL} --broadcast --private-key ${PRIVATE_KEY}
+endif
+
+setup-flux-job:
+	make check-docker-network || sh -c 'exit 1'
+	$(call check_defined, RPC_URL) \
+	$(call check_defined, PRIVATE_KEY) \
+	printf "%s\n" "Setting up Flux Job. Please wait..."; \
+	res=$$(forge script ./script/FluxJob.s.sol --ffi --rpc-url ${RPC_URL} --broadcast -vv); \
+    fluxAggregatorAddress=$$(echo $$res | grep -m1 -o '== Logs == [^ ]*' | cut -d' ' -f4); \
+	forge script ./script/FluxJob.s.sol --sig "finalize(address)" $$fluxAggregatorAddress --ffi --rpc-url ${RPC_URL} --broadcast --private-key ${PRIVATE_KEY}

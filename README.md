@@ -171,11 +171,12 @@ The [contracts](chainlink%2Fcontracts) directory contains examples of Chainlink 
 - [ChainlinkKeeperConsumer.sol](chainlink%2Fcontracts%2FChainlinkKeeperConsumer.sol) - sample Consumer contract for a Chainlink [Keeper job](https://docs.chain.link/chainlink-nodes/oracle-jobs/all-jobs#keeper-jobs)
 
 ### Solidity Scripting
-Functionality related to deployment and interaction with smart contracts is implemented using [Foundry Solidity Scripting](https://book.getfoundry.sh/tutorials/solidity-scripting?highlight=script#solidity-scripting).  
+Functionality related to deployment and interaction with smart contracts is implemented using [Foundry Solidity Scripting](https://book.getfoundry.sh/tutorials/solidity-scripting).  
 
 The [script](script) directory contains scripts for the Link Token, Oracle, Registry, Chainlink Consumer contracts, Flux and Offchain aggregators as well as the transfer of ETH and Link tokens. 
 
-Scripts are run with the command: `forge script path/to/script [--args]`. Logs and artifacts dedicated to each script run, including a transaction hash and an address of deployed smart contract, are stored in a corresponding subdirectory of the [broadcast](broadcast) folder (created automatically).
+Scripts are run with the command: `forge script path/to/script [--args]`. Logs and artifacts dedicated to each script run, including a transaction hash and an address of deployed smart contract, are stored in a corresponding subdirectory of the [broadcast](broadcast) folder (created automatically).  
+More info on `forge script` you can find here: https://book.getfoundry.sh/reference/forge/forge-script.
 
 All necessary scripts are also included in the [makefile](makefile). In order to run these scripts, you first need to install the necessary dependencies:
 ```
@@ -795,6 +796,12 @@ Some scripts have parameters that can be provided either with the command line (
   > In case you find any problems when using other versions of the compiler from range `[>=0.6.2 <0.9.0]` you are welcome to open an issue.
 
 ### Testing flows
+To set up different Chainlink Job types, testing flows were implemented.  
+You can go through them:
+- manually, executing each part of a chosen flow manually using scripts from makefile
+- using automations implemented with Solidity Scripting and ffi cheat code
+More info on ffi cheat code you can find here: https://book.getfoundry.sh/cheatcodes/ffi.
+
 #### Initial setup
 1. [Build Chainlink contracts artifacts](#build-chainlink-contracts)
 2. [Deploy Link Token contract](#deploy-link-token-contract)
@@ -809,16 +816,31 @@ Some scripts have parameters that can be provided either with the command line (
 3. [Fund Consumer contract with Link tokens](#transfer-link-tokens)
 4. [Create Direct Request Job](#create-chainlink-direct-request-job)
 5. [Request ETH price with Consumer contract, a corresponding job will be launched](#request-eth-price)
-6. [Get ETH price after completing a job](#get-eth-price)
+6. [Get ETH price after completing a job](#get-eth-price)  
+
+Automated setup:
+  ```
+  make setup-direct-request-job
+  ```
 
 #### Cron Job
 1. [Deploy Cron Consumer contract](#deploy-cron-consumer-contract)
 2. [Create Cron Job](#create-chainlink-cron-job)
 3. [Get ETH price after completing a job](#get-eth-price--cron-)
 
+Automated setup:
+  ```
+  make setup-cron-job
+  ```
+
 #### Webhook Job
 1. [Create Webhook Job](#create-chainlink-webhook-job)
 2. [Run Webhook Job](#run-chainlink-webhook-job)
+
+Automated setup:
+  ```
+  make setup-webhook-job
+  ```
 
 #### Keeper Job
 1. [Deploy Keeper Consumer contract](#deploy-keeper-consumer-contract)
@@ -829,6 +851,11 @@ Some scripts have parameters that can be provided either with the command line (
 6. [Fund the latest upkeep in a Registry contract](#fund-latest-upkeep)
 7. [Get value of `counter` variable in a Keeper contract](#get-keeper-counter)
 
+Automated setup:
+  ```
+  make setup-keeper-job
+  ```
+
 #### OCR Job
 1. [Deploy Offchain Aggregator contract](#deploy-offchain-aggregator-contract)
 2. [Set Offchain Aggregator payees](#set-payees)
@@ -837,6 +864,11 @@ Some scripts have parameters that can be provided either with the command line (
 5. [Request new OCR round in the Offchain Aggregator contract (optional)](#request-new-round)
 6. [Get the answer of the latest OCR round from the Offchain Aggregator contract](#get-ocr-latest-answer)
 
+Automated setup:
+  ```
+  make setup-ocr-job
+  ```
+
 #### Flux Job
 1. [Deploy Flux Aggregator contract](#deploy-flux-aggregator-contract)
 2. [Fund Flux Aggregator contract with Link tokens](#transfer-link-tokens) 
@@ -844,6 +876,11 @@ Some scripts have parameters that can be provided either with the command line (
 4. [Set Flux Aggregator oracles](#set-oracles)
 5. [Create Flux Jobs for the first 3 Chainlink nodes in a cluster](#create-chainlink-flux-jobs)
 6. [Get the answer of the latest Flux round from the Flux Aggregator contract](#get-flux-latest-answer)
+
+Automated setup:
+  ```
+  make setup-flux-job
+  ```
 
 ## Acknowledgements
 This project based on https://github.com/protofire/hardhat-chainlink-plugin. 

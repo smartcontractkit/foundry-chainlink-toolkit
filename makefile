@@ -100,6 +100,20 @@ endif
 get-ocr-helper-path:
 	printf "%s" $(OCRHelperPath)
 
+get-ocr-config:
+	$(call check_defined, NODE_ADDRESSES) \
+	$(call check_defined, OFFCHAIN_PUBLIC_KEYS) \
+	$(call check_defined, CONFIG_PUBLIC_KEYS) \
+	$(call check_defined, ONCHAIN_SIGNING_ADDRESSES) \
+	$(call check_defined, PEER_IDS) \
+	$(eval OCR_CONFIG=$(shell $(OCRHelperPath) \
+		$(NODE_ADDRESSES) \
+		$(OFFCHAIN_PUBLIC_KEYS) \
+		$(CONFIG_PUBLIC_KEYS) \
+		$(ONCHAIN_SIGNING_ADDRESSES) \
+		$(PEER_IDS))) \
+	echo "$(OCR_CONFIG)"
+
 install:
 	forge install foundry-rs/forge-std --no-git --no-commit; \
 	forge install smartcontractkit/chainlink-brownie-contracts@0.6.1 --no-git --no-commit; \
@@ -630,13 +644,14 @@ set-payees:
 # This is an internal method. Do not call it directly
 set-config_internal:
 	$(call check_set_parameter,OFFCHAIN_AGGREGATOR_ADDRESS,offchainAggregatorAddress) \
-	$(eval OCR_CONFIG=$(shell $(OCRHelperPath) \
-		$(nodeAddress2),$(nodeAddress3),$(nodeAddress4),$(nodeAddress5) \
-		$(offChainPublicKey2),$(offChainPublicKey3),$(offChainPublicKey4),$(offChainPublicKey5) \
-		$(configPublicKey2),$(configPublicKey3),$(configPublicKey4),$(configPublicKey5) \
-		$(onChainSigningAddress2),$(onChainSigningAddress3),$(onChainSigningAddress4),$(onChainSigningAddress5) \
-		$(peerId2),$(peerId3),$(peerId4),$(peerId5))) \
-	forge script ./script/OffchainAggregator.s.sol --sig "setConfig(address,address[],address[],uint8,uint64,bytes)" $$offchainAggregatorAddress $(OCR_CONFIG) --rpc-url ${RPC_URL} --broadcast
+	ocrConfig=$$(make get-ocr-config \
+		NODE_ADDRESSES=$(nodeAddress2),$(nodeAddress3),$(nodeAddress4),$(nodeAddress5) \
+		OFFCHAIN_PUBLIC_KEYS=$(offChainPublicKey2),$(offChainPublicKey3),$(offChainPublicKey4),$(offChainPublicKey5) \
+		CONFIG_PUBLIC_KEYS=$(configPublicKey2),$(configPublicKey3),$(configPublicKey4),$(configPublicKey5) \
+		ONCHAIN_SIGNING_ADDRESSES=$(onChainSigningAddress2),$(onChainSigningAddress3),$(onChainSigningAddress4),$(onChainSigningAddress5) \
+		PEER_IDS=$(peerId2),$(peerId3),$(peerId4),$(peerId5) \
+	); \
+	forge script ./script/OffchainAggregator.s.sol --sig "setConfig(address,address[],address[],uint8,uint64,bytes)" $$offchainAggregatorAddress $$ocrConfig --rpc-url ${RPC_URL} --broadcast
 
 set-config:
 	$(call check_defined, PRIVATE_KEY) \

@@ -481,9 +481,10 @@ Some scripts have parameters that can be provided either with the command line (
   ```
   make create-ocr-bootstrap-job
   ```
-  This command creates a Chainlink job for the first Chainlink node in a cluster according to [ocr_job_bootstrap.toml](chainlink%2Fjobs%2Focr_job_bootstrap.toml).
+  This command creates a Chainlink job according to [ocr_job_bootstrap.toml](chainlink%2Fjobs%2Focr_job_bootstrap.toml).
 
   During the execution of the command, you will need to provide:
+  - `NODE_ID` - Chainlink node ID
   - `OFFCHAIN_AGGREGATOR_ADDRESS` - Offchain Aggregator contract address
 
 #### Create Chainlink OCR job
@@ -501,7 +502,9 @@ Some scripts have parameters that can be provided either with the command line (
   ```
   make create-ocr-jobs
   ```
-  This command creates a Chainlink job for each Chainlink node except the first one (bootstrap) in a cluster according to [ocr_job.toml](chainlink%2Fjobs%2Focr_job.toml).
+  This command creates:
+  - Chainlink job for the first node (bootstrap) in a cluster according to [ocr_job_bootstrap.toml](chainlink%2Fjobs%2Focr_job_bootstrap.toml).
+  - Chainlink jobs for each Chainlink node (oracles) except the first one (bootstrap) in a cluster according to [ocr_job.toml](chainlink%2Fjobs%2Focr_job.toml).
 
   During the execution of the command, you will need to provide:
   - `OFFCHAIN_AGGREGATOR_ADDRESS` - Offchain Aggregator contract address
@@ -830,10 +833,9 @@ Some scripts have parameters that can be provided either with the command line (
 1. [Deploy Offchain Aggregator contract](#deploy-offchain-aggregator-contract)
 2. [Set Offchain Aggregator payees](#set-payees)
 3. [Set Offchain Aggregator config](#set-config)
-4. [Create OCR Job for a bootstrap Chainlink node (first in a cluster)](#create-chainlink-ocr--bootstrap--job)
-5. [Create OCR Jobs for Chainlink nodes in a cluster except the first one (bootstrap)](#create-chainlink-ocr-jobs)
-6. [Request new OCR round in the Offchain Aggregator contract (optional)](#request-new-round)
-7. [Get the answer of the latest OCR round from the Offchain Aggregator contract](#get-ocr-latest-answer)
+4. [Create OCR Jobs for Chainlink nodes in a cluster (bootstrap and oracles)](#create-chainlink-ocr-jobs)
+5. [Request new OCR round in the Offchain Aggregator contract (optional)](#request-new-round)
+6. [Get the answer of the latest OCR round from the Offchain Aggregator contract](#get-ocr-latest-answer)
 
 #### Flux Job
 1. [Deploy Flux Aggregator contract](#deploy-flux-aggregator-contract)

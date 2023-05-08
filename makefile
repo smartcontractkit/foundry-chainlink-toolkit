@@ -390,10 +390,9 @@ create-keeper-jobs:
 	make create-keeper-job NODE_ID=4 REGISTRY_ADDRESS=$$registryAddress && \
 	make create-keeper-job NODE_ID=5 REGISTRY_ADDRESS=$$registryAddress;
 
-# Considering Chainlink Node with NODE_ID 1 is always a bootstrap node
 create-ocr-bootstrap-job:
-	nodeId=1; \
 	$(call check_set_parameter,OFFCHAIN_AGGREGATOR_ADDRESS,offchainAggregatorAddress) \
+	$(call check_set_parameter,NODE_ID,nodeId) \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
 	make login NODE_ID=$$nodeId >/dev/null 2>&1; \
 	$(call get_node_address,$$chainlinkContainerName,nodeAddress) \
@@ -419,17 +418,18 @@ create-ocr-job:
 	&& sed -e 's/OFFCHAIN_AGGREGATOR_ADDRESS/$$offchainAggregatorAddressFormatted/g' -e 's/BOOTSTRAP_P2P_KEY/$$bootstrapP2PKey/g' -e 's/PEER_ID/$$peerId/g' -e 's/OCR_KEY_ID/$$ocrKeyId/g' -e 's/NODE_ADDRESS/$$nodeAddress/g' ${ROOT}/jobs/ocr_job.toml > ${ROOT}/jobs/ocr_job_tmp.toml" && \
 	docker exec $$chainlinkContainerName bash -c "chainlink jobs create ${ROOT}/jobs/ocr_job_tmp.toml && rm ${ROOT}/jobs/ocr_job_tmp.toml"
 
+# Considering Chainlink Node with NODE_ID 1 is always a bootstrap node and the rest are Oracle nodes
 create-ocr-jobs:
-	nodeId=1; \
+	bootstrapNodeId=1; \
 	$(call check_set_parameter,OFFCHAIN_AGGREGATOR_ADDRESS,offchainAggregatorAddress) \
-	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
-	make login NODE_ID=$$nodeId >/dev/null 2>&1; \
-	$(call get_p2p_keys,$$chainlinkContainerName,peerId,_) \
-	$(call check_set_parameter,OFFCHAIN_AGGREGATOR_ADDRESS,offchainAggregatorAddress) \
-	make create-ocr-job NODE_ID=2 OFFCHAIN_AGGREGATOR_ADDRESS=$$offchainAggregatorAddress BOOTSTRAP_P2P_KEY=$$peerId && \
-	make create-ocr-job NODE_ID=3 OFFCHAIN_AGGREGATOR_ADDRESS=$$offchainAggregatorAddress BOOTSTRAP_P2P_KEY=$$peerId && \
-	make create-ocr-job NODE_ID=4 OFFCHAIN_AGGREGATOR_ADDRESS=$$offchainAggregatorAddress BOOTSTRAP_P2P_KEY=$$peerId && \
-	make create-ocr-job NODE_ID=5 OFFCHAIN_AGGREGATOR_ADDRESS=$$offchainAggregatorAddress BOOTSTRAP_P2P_KEY=$$peerId;
+	$(call get_chainlink_container_name,$$bootstrapNodeId,bootstrapChainlinkContainerName) \
+	make login NODE_ID=$$bootstrapNodeId >/dev/null 2>&1; \
+	$(call get_p2p_keys,$$bootstrapChainlinkContainerName,bootstrapPeerId,_) \
+	make create-ocr-bootstrap-job NODE_ID=1 OFFCHAIN_AGGREGATOR_ADDRESS=$$offchainAggregatorAddress && \
+	make create-ocr-job NODE_ID=2 OFFCHAIN_AGGREGATOR_ADDRESS=$$offchainAggregatorAddress BOOTSTRAP_P2P_KEY=$$bootstrapPeerId && \
+	make create-ocr-job NODE_ID=3 OFFCHAIN_AGGREGATOR_ADDRESS=$$offchainAggregatorAddress BOOTSTRAP_P2P_KEY=$$bootstrapPeerId && \
+	make create-ocr-job NODE_ID=4 OFFCHAIN_AGGREGATOR_ADDRESS=$$offchainAggregatorAddress BOOTSTRAP_P2P_KEY=$$bootstrapPeerId && \
+	make create-ocr-job NODE_ID=5 OFFCHAIN_AGGREGATOR_ADDRESS=$$offchainAggregatorAddress BOOTSTRAP_P2P_KEY=$$bootstrapPeerId;
 
 create-flux-job:
 	$(call check_set_parameter,FLUX_AGGREGATOR_ADDRESS,fluxAggregatorAddress) \

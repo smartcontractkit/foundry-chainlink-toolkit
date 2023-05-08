@@ -99,9 +99,6 @@ endif
 
 OCRHelperPathWildcard = "$(wildcard ${PWD}/${OCRHelperPath})"
 
-get-ocr-helper-wildcard:
-	printf "%s" $(OCRHelperPathWildcard)
-
 get-ocr-config:
 	$(call check_defined, NODE_ADDRESSES) \
 	$(call check_defined, OFFCHAIN_PUBLIC_KEYS) \
@@ -587,6 +584,7 @@ set-keepers:
 	$(call check_defined, RPC_URL) \
 	$(call check_set_parameter,REGISTRY_ADDRESS,registryAddress) \
 	$(call check_set_parameter,KEEPER_CONSUMER_ADDRESS,keeperConsumerAddress) \
+	printf "%s\n" "Setting Keepers in Registry. Please wait..."; \
 	nodeId=1; \
 	make login NODE_ID=$$nodeId >/dev/null 2>&1 && \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
@@ -607,7 +605,6 @@ set-keepers:
 	make login NODE_ID=$$nodeId >/dev/null 2>&1 && \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
 	$(call get_node_address,$$chainlinkContainerName,nodeAddress5) \
-	printf "%s\n" "Setting Keepers in Registry. Please wait..."; \
 	forge script ./script/Registry.s.sol --sig "setKeepers(address,address,address[])" $$registryAddress $$keeperConsumerAddress [$$nodeAddress1,$$nodeAddress2,$$nodeAddress3,$$nodeAddress4,$$nodeAddress5] --rpc-url ${RPC_URL} --broadcast
 
 fund-latest-upkeep:
@@ -615,7 +612,7 @@ fund-latest-upkeep:
 	$(call check_defined, RPC_URL) \
 	$(call check_set_parameter,REGISTRY_ADDRESS,registryAddress) \
 	$(call check_set_parameter,LINK_CONTRACT_ADDRESS,linkContractAddress) \
-	echo "Funding the latest upkeep in Registry contract. Please wait..."; \
+	printf "%s\n" "Funding the latest upkeep in Registry contract. Please wait..."; \
 	forge script ./script/Registry.s.sol --sig "fundLatestUpkeep(address,address,uint256)" $$registryAddress $$linkContractAddress 1000000000000000000 --rpc-url ${RPC_URL} --broadcast
 
 # Offchain Aggregator Solidity Scripts
@@ -624,6 +621,7 @@ set-payees:
 	$(call check_defined, PRIVATE_KEY) \
 	$(call check_defined, RPC_URL) \
 	$(call check_set_parameter,OFFCHAIN_AGGREGATOR_ADDRESS,offchainAggregatorAddress) \
+	printf "%s\n" "Setting Payees in the Offchain Aggregator contract. Please wait..."; \
 	nodeId=2; \
 	make login NODE_ID=$$nodeId >/dev/null 2>&1 && \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
@@ -640,7 +638,6 @@ set-payees:
 	make login NODE_ID=$$nodeId >/dev/null 2>&1 && \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
 	$(call get_node_address,$$chainlinkContainerName,nodeAddress5) \
-	printf "%s\n" "Setting Payees in the Offchain Aggregator contract. Please wait..."; \
 	forge script ./script/OffchainAggregator.s.sol --sig "setPayees(address,address[])" $$offchainAggregatorAddress [$$nodeAddress2,$$nodeAddress3,$$nodeAddress4,$$nodeAddress5] --rpc-url ${RPC_URL} --broadcast
 
 set-config:

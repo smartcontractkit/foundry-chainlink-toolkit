@@ -82,6 +82,9 @@ install:
 	forge install smartcontractkit/chainlink-testing-framework@v1.11.5 --no-git --no-commit; \
 	forge install OpenZeppelin/openzeppelin-contracts@v4.8.2 --no-git --no-commit
 
+anvil:
+	anvil --block-time 10 --chain-id 1337 -m 'test test test test test test test test test test test junk'
+
 # Build Chainlink contracts:
 # Forge can not build individual contracts in a directory, so,
 # During script execution, necessary contracts are copied to the `tmp` directory,

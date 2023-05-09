@@ -47,9 +47,90 @@ It can be easily integrated into an existing Foundry project.
 ## Overview
 The purpose of this project is to simplify the immersion in the development and testing of smart contracts using Chainlink oracles. This project is aimed primarily at those who use the Foundry toolchain.
 
+## Project Structure
+
+### Chainlink [*](chainlink)
+This directory contains configuration files, scripts and smart contracts source code.  
+
+#### Contracts [*](chainlink%2Fcontracts)
+- [ChainlinkConsumer.sol](chainlink%2Fcontracts%2FChainlinkConsumer.sol) - example consumer contract for [Chainlink Direct Request Job](https://docs.chain.link/chainlink-nodes/oracle-jobs/all-jobs/#direct-request-jobs)
+- [ChainlinkCronConsumer.sol](chainlink%2Fcontracts%2FChainlinkCronConsumer.sol) - example consumer contract for [Chainlink Cron Job](https://docs.chain.link/chainlink-nodes/oracle-jobs/all-jobs#solidity-cron-jobs)
+- [ChainlinkKeeperConsumer.sol](chainlink%2Fcontracts%2FChainlinkKeeperConsumer.sol) - example consumer contract for [Chainlink Keeper Job](https://docs.chain.link/chainlink-nodes/oracle-jobs/all-jobs#keeper-jobs)
+- [LinkToken.sol](chainlink%2Fcontracts%2FLinkToken.sol) - flattened [Link Token contract](https://github.com/smartcontractkit/LinkToken)
+
+#### Jobs [*](chainlink%2Fjobs)
+- [cron_job.toml](chainlink%2Fjobs%2Fcron_job.toml) - example configuration file for a Chainlink [Cron job](https://docs.chain.link/chainlink-nodes/oracle-jobs/all-jobs#solidity-cron-jobs)
+- [direct_request_job.toml](chainlink%2Fjobs%2Fdirect_request_job.toml) - example configuration file for a Chainlink [Direct Request job](https://docs.chain.link/chainlink-nodes/oracle-jobs/all-jobs#direct-request-jobs)
+- [flux_job.toml](chainlink%2Fjobs%2Fflux_job.toml) - example configuration file for a Chainlink [Flux job](https://docs.chain.link/chainlink-nodes/oracle-jobs/all-jobs#flux-monitor-jobs)
+- [keeper_job.toml](chainlink%2Fjobs%2Fkeeper_job.toml) - example configuration file for a Chainlink [Keeper job](https://docs.chain.link/chainlink-nodes/oracle-jobs/all-jobs#keeper-jobs)
+- [ocr_job.toml](chainlink%2Fjobs%2Focr_job.toml) - example configuration file for a Chainlink [OCR job](https://docs.chain.link/chainlink-nodes/oracle-jobs/all-jobs#off-chain-reporting-jobs)
+- [ocr_job_bootstrap.toml](chainlink%2Fjobs%2Focr_job_bootstrap.toml) - example configuration file for a Chainlink OCR (bootstrap) job
+- [webhook_job.toml](chainlink%2Fjobs%2Fwebhook_job.toml) - example configuration file for a Chainlink [Webhook job](https://docs.chain.link/chainlink-nodes/oracle-jobs/all-jobs/#webhook-jobs)
+
+> **Note**  
+> More info on Chainlink v2 Jobs, their types and configuration can be found here: [docs.chain.link/chainlink-nodes/oracle-jobs/jobs/](https://docs.chain.link/chainlink-nodes/oracle-jobs/jobs/).  
+> You can change these configuration according to your requirements.
+
+#### Setting [*](chainlink%2Fsettings)
+- [chainlink_api_credentials](chainlink%2Fsettings%2Fchainlink_api_credentials) - Chainlink API credentials
+- [chainlink_password](chainlink%2Fsettings%2Fchainlink_password) - Chainlink password
+
+> **Note**  
+> More info on authentication can be found here [github.com/smartcontractkit/chainlink/wiki/Authenticating-with-the-API](https://github.com/smartcontractkit/chainlink/wiki/Authenticating-with-the-API).  
+> You can specify any credentials there. Password provided must be 16 characters or more.
+
+#### SQL [*](chainlink%2Fsql)
+- [create_tables.sql](chainlink%2Fsql%2Fcreate_tables.sql) - sql script to create tables related to Chainlink nodes in a Postgres DB
+- [drop_tables.sql](chainlink%2Fsql%2Fdrop_tables.sql) - sql script to delete tables related to Chainlink nodes in a Postgres DB
+
+#### Chainlink nodes logs directories
+Once Chainlink nodes are started, log directories will be created for each of them.
+
+#### chainlink.env [*](chainlink%2Fchainlink.env)
+This file contains environment variables related to Chainlink node configuration. You can modify it according to your requirements.  
+More info on Chainlink environment variables can be found here: https://docs.chain.link/chainlink-nodes/v1/configuration.
+
+> **Note**  
+> Subdirectories: [jobs](chainlink%2Fjobs), [settings](chainlink%2Fsettings) and [sql](chainlink%2Fsql) are used as shared folders for running Chainlink nodes and Postgres DB containers.
+
+### External [*](external)
+This directory contains external libraries.
+
+#### OCRHelper [*](external%2FOCRHelper)
+This Go library is based on https://github.com/smartcontractkit/chainlink integration tests and is used to prepare configuration parameters for Offchain Aggregator contract.  
+It has pre-built binaries for platforms: darwin/amd64(x86_64), darwin/arm64, linux/amd64(x86_64), linux/arm,linux/arm64.  
+> **Note**  
+> If you use another platform, please run in advance:  
+> ```make build-ocr-helper```  
+> To build the external library for your platform.  
+> It requires Go (1.18 or higher) installed.
+
+### Script [*](script)
+This directory contains Solidity Scripts to deploy and interact with Solidity smart contracts:
+- Link Token
+- Oracle
+- Registry
+- Flux and Offchain aggregators
+- Chainlink Consumer contracts
+- Helper Solidity Scripts  
+
+You can run these scripts with the command: `forge script path/to/script [--args]`. Logs and artifacts dedicated to each script run, including a transaction hash and an address of a deployed smart contract, are stored in a corresponding subdirectory of the [broadcast](broadcast) folder (created automatically).  
+More info on Foundry Solidity Scripting can be found here: https://book.getfoundry.sh/tutorials/solidity-scripting?highlight=script#solidity-scripting.
+
+### Src [*](src)
+#### Interfaces [*](src%2Finterfaces)
+This directory contains interfaces to interact with Solidity contracts deployed using its pre-built artifacts ([build Chainlink contracts artifacts](#build-chainlink-contracts)). This is necessary in order to reduce dependence on a specific version of Solidity compiler.
+
+#### Mocks [*](src%2Fmocks)
+This directory contains mock Solidity contracts used for testing purposes:
+- [MockAccessController.sol](src%2Fmocks%2FMockAccessController.sol) - mock contract used during deployment of Offchain Aggregator contract
+- [MockAggregatorValidator.sol](src%2Fmocks%2FMockAggregatorValidator.sol) - mock contract used during deployment of Flux Aggregator contract
+- [MockEthFeed.sol](src%2Fmocks%2FMockEthFeed.sol) - mock contract used during deployment of Registry contract
+- [MockGasFeed.sol](src%2Fmocks%2FMockGasFeed.sol) - mock contract used during deployment of Registry contract
+
 ## Getting Started
 
-### Prerequisites
+### Prepare local environment
 1. Install Foundry toolchain. Reference the below commands or go to the [Foundry documentation](https://book.getfoundry.sh/getting-started/installation).
 
     - MacOS/Linux
@@ -61,15 +142,14 @@ The purpose of this project is to simplify the immersion in the development and 
       foundryup
       ```
       
-> **Note**  
-> Tested with forge 0.2.0 (e99cf83 2023-04-21T00:15:57.602861000Z).
-      > You may see the following error on MacOS: 
-      ```dyld: Library not loaded: /usr/local/opt/libusb/lib/libusb-1.0.0.dylib```.  
-      
-      > In order to fix this, you should install libusb: 
-      ```brew install libusb```.  
-      
-      > Reference: https://github.com/foundry-rs/foundry/blob/master/README.md#troubleshooting-installation
+    > **Note**  
+    Tested with forge 0.2.0 (e99cf83 2023-04-21T00:15:57.602861000Z).  
+    > ---
+    > You may see the following error on MacOS:  
+    ```dyld: Library not loaded: /usr/local/opt/libusb/lib/libusb-1.0.0.dylib```  
+    In order to fix this, you should install libusb:  
+    ```brew install libusb```   
+    Reference: https://github.com/foundry-rs/foundry/blob/master/README.md#troubleshooting-installation
 
 2. Install [GNU make](https://www.gnu.org/software/make/). The functionality of the project is wrapped in the [makefile](makefile). Reference the below commands based on your OS or go to [Make documentation](https://www.gnu.org/software/make/manual/make.html).
 
@@ -88,95 +168,47 @@ The purpose of this project is to simplify the immersion in the development and 
       yum install make
       ```
 
-      > **Note**  
-      > Tested with GNU Make 3.81.
+    > **Note**  
+      Tested with GNU Make 3.81.
 
 3. Install and run Docker; for convenience, the Chainlink nodes run in a container. Instructions: [docs.docker.com/get-docker](https://docs.docker.com/get-docker/).
 
-      > **Note**  
-      > Tested with Docker version 20.10.23, build 7155243.
+    > **Note**  
+    Tested with Docker version 20.10.23, build 7155243.
 
-### Chain RPC node
+### Set up chain RPC node
 In order for a Chainlink node to be able to interact with the blockchain, and to interact with the blockchain using the [Forge](https://book.getfoundry.sh/forge/), you have to know an RPC node http endpoint and web socket for a chosen network compatible with Chainlink.
 In addition to the networks listed in [this list](https://docs.chain.link/chainlink-automation/supported-networks/), Chainlink is compatible with any EVM-compatible networks.
 
-For local testing, we recommend using [Anvil](https://book.getfoundry.sh/anvil/), which is a part of the Foundry toolchain.
-
-Run Anvil using the following command:
+For local testing, we recommend using [Anvil](https://book.getfoundry.sh/anvil/), which is a part of the Foundry toolchain.  
+You can run it using the following command:
 ```
-anvil --block-time 10 --chain-id 1337
+make anvil
 ```
 
-By default, Anvil runs with the following options:
+This command runs Anvil with the following options:
 - http endpoint: http://localhost:8545
 - web socket: [ws://localhost:8545](ws://localhost:8545)
-- chain ID: 31337
+- chain ID: 1337
+- block period: 10s
+- mnemonic: test test test test test test test test test test test junk
 
-### Chainlink shared folders
-We use some subdirectories of the [chainlink](chainlink) folder as shared folders with Chainlink node containers and Postgres container.
-
-#### Settings
-- [chainlink_api_credentials](chainlink%2Fsettings%2Fchainlink_api_credentials) - Chainlink API credentials
-- [chainlink_password](chainlink%2Fsettings%2Fchainlink_password) - Chainlink password
-
-> **Note**  
-> More info on authentication can be found here [github.com/smartcontractkit/chainlink/wiki/Authenticating-with-the-API](https://github.com/smartcontractkit/chainlink/wiki/Authenticating-with-the-API).
-> You can specify any credentials there. Password provided must be 16 characters or more.
-
-#### Jobs
-- [cron_job.toml](chainlink%2Fjobs%2Fcron_job.toml) - example configuration file for a Chainlink [Cron job](https://docs.chain.link/chainlink-nodes/oracle-jobs/all-jobs#solidity-cron-jobs)
-- [direct_request_job.toml](chainlink%2Fjobs%2Fdirect_request_job.toml) - example configuration file for a Chainlink [Direct Request job](https://docs.chain.link/chainlink-nodes/oracle-jobs/all-jobs#direct-request-jobs)
-- [flux_job.toml](chainlink%2Fjobs%2Fflux_job.toml) - example configuration file for a Chainlink [Flux job](https://docs.chain.link/chainlink-nodes/oracle-jobs/all-jobs#flux-monitor-jobs)
-- [keeper_job.toml](chainlink%2Fjobs%2Fkeeper_job.toml) - example configuration file for a Chainlink [Keeper job](https://docs.chain.link/chainlink-nodes/oracle-jobs/all-jobs#keeper-jobs)
-- [ocr_job.toml](chainlink%2Fjobs%2Focr_job.toml) - example configuration file for a Chainlink [OCR job](https://docs.chain.link/chainlink-nodes/oracle-jobs/all-jobs#off-chain-reporting-jobs)
-- [ocr_job_bootstrap.toml](chainlink%2Fjobs%2Focr_job_bootstrap.toml) - example configuration file for a Chainlink OCR (bootstrap) job  
-- [webhook_job.toml](chainlink%2Fjobs%2Fwebhook_job.toml) - example configuration file for a Chainlink [Webhook job](https://docs.chain.link/chainlink-nodes/oracle-jobs/all-jobs/#webhook-jobs)
-
-> **Note**  
-> More info on Chainlink v2 Jobs, their types and configuration can be found here: [docs.chain.link/chainlink-nodes/oracle-jobs/jobs/](https://docs.chain.link/chainlink-nodes/oracle-jobs/jobs/).
-> You can change this configuration according to your requirements.
-
-#### SQL scripts
-- [create_tables.sql](chainlink%2Fsql%2Fcreate_tables.sql) - psql script to create tables related to Chainlink nodes in a Postgres DB
-- [drop_tables.sql](chainlink%2Fsql%2Fdrop_tables.sql) - psql script to delete tables related to Chainlink nodes in a Postgres DB
-
-#### Chainlink nodes logs directories
-Once a Chainlink cluster is started, log directories will be created for each Chainlink node.  
-Log directory name format: `${CHAINLINK_CONTAINER_NAME}${NODE_ID}`.
-
-### Environment variables
-Based on the [env.template](env.template) - create or update an `.env` file in the root directory of your project.  
+### Set up environment variables
+Based on the [env.template](env.template) - create or update an `.env` file in the root directory.  
 
 Below are comments on some environment variables:
 - `ETH_URL` - RPC node web socket used by the Chainlink node
 - `RPC_URL` - RPC node http endpoint used by Forge
-- `PRIVATE_KEY` - private key of an account used for deployment and interaction with smart contracts. Once Anvil is started, a set of private keys for local usage is provided. Use one of these for local development.
+- `PRIVATE_KEY` - private key of an account used for deployment and interaction with smart contracts. Once Anvil is started, a set of private keys for local usage is provided. Use one of these for local development
 - `ROOT` - root directory of the Chainlink node
 - `CHAINLINK_CONTAINER_NAME` - preferred name for the container of the Chainlink node for the possibility of automating communication with it
 - `FOUNDRY_PROFILE` - selected Foundry profile in [foundry.toml](foundry.toml), more on Foundry profiles: https://book.getfoundry.sh/reference/config/overview?highlight=profile#profiles
 
-Besides that, there is the [chainlink.env](chainlink%2Fchainlink.env) that contains environment variables related to a Chainlink node configuration.
-> **Note**  
-> More info on Chainlink node environment variables can be found here: [https://docs.chain.link/chainlink-nodes/v1/configuration](https://docs.chain.link/chainlink-nodes/v1/configuration).
-> You can specify any parameters according to your preferences.
-
 > **Note**  
 > If environment variables related to a Chainlink node, such as the Link Token contract address, were changed during your work you should run the ```make run-nodes``` command in order for them to be applied.
 
-### Chainlink Consumer Contracts
-The [contracts](chainlink%2Fcontracts) directory contains examples of Chainlink Consumer contracts:  
-- [ChainlinkConsumer.sol](chainlink%2Fcontracts%2FChainlinkConsumer.sol) - sample Consumer contract for a Chainlink [Direct Request job](https://docs.chain.link/chainlink-nodes/oracle-jobs/all-jobs#direct-request-jobs)
-- [ChainlinkCronConsumer.sol](chainlink%2Fcontracts%2FChainlinkCronConsumer.sol) - sample Consumer contract for a Chainlink [Cron job](https://docs.chain.link/chainlink-nodes/oracle-jobs/all-jobs#solidity-cron-jobs)
-- [ChainlinkKeeperConsumer.sol](chainlink%2Fcontracts%2FChainlinkKeeperConsumer.sol) - sample Consumer contract for a Chainlink [Keeper job](https://docs.chain.link/chainlink-nodes/oracle-jobs/all-jobs#keeper-jobs)
-
-### Solidity Scripting
-Functionality related to deployment and interaction with smart contracts is implemented using [Foundry Solidity Scripting](https://book.getfoundry.sh/tutorials/solidity-scripting?highlight=script#solidity-scripting).  
-
-The [script](script) directory contains scripts for the Link Token, Oracle, Registry, Chainlink Consumer contracts, Flux and Offchain aggregators as well as the transfer of ETH and Link tokens. 
-
-Scripts are run with the command: `forge script path/to/script [--args]`. Logs and artifacts dedicated to each script run, including a transaction hash and an address of deployed smart contract, are stored in a corresponding subdirectory of the [broadcast](broadcast) folder (created automatically).
-
-All necessary scripts are also included in the [makefile](makefile). In order to run these scripts, you first need to install the necessary dependencies:
+### Install Forge dependencies
+In order to install necessary Forge dependencies you need to run:
 ```
 make install
 ```
@@ -188,7 +220,60 @@ This command installs:
 - [Link Token Contract](https://github.com/smartcontractkit/LinkToken)
 - [Openzeppelin Contracts](https://github.com/OpenZeppelin/openzeppelin-contracts) [version:v4.8.2]
 
-## Usage
+### Perform the initial setup
+1. [Build Chainlink contracts artifacts](#build-chainlink-contracts)
+2. [Deploy Link Token contract](#deploy-link-token-contract)
+3. Set `LINK_TOKEN_CONTRACT` in `.env`
+4. [Spin up a Chainlink nodes cluster](#spin-up-a-chainlink-cluster)
+5. [Fund Chainlink nodes with ETH](#transfer-eth-to-chainlink-nodes)
+6. [Fund Chainlink nodes with Link tokens](#transfer-link-tokens-to-chainlink-nodes)
+
+### Chainlink Jobs setting up flows
+
+#### Direct Request Job
+1. [Deploy Oracle contract](#deploy-oracle-contract)
+2. [Deploy Consumer contract](#deploy-consumer-contract)
+3. [Fund Consumer contract with Link tokens](#transfer-link-tokens)
+4. [Create Direct Request Job](#create-chainlink-direct-request-job)
+5. [Request ETH price with Consumer contract, a corresponding job will be launched](#request-eth-price)
+6. [Get ETH price after completing a job](#get-eth-price)
+
+#### Cron Job
+1. [Deploy Cron Consumer contract](#deploy-cron-consumer-contract)
+2. [Create Cron Job](#create-chainlink-cron-job)
+3. [Get ETH price after completing a job](#get-eth-price--cron-)
+
+#### Webhook Job
+1. [Create Webhook Job](#create-chainlink-webhook-job)
+2. [Run Webhook Job](#run-chainlink-webhook-job)
+
+#### Keeper Job
+1. [Deploy Keeper Consumer contract](#deploy-keeper-consumer-contract)
+2. [Deploy Registry contract](#deploy-keeper-registry-contract)
+3. [Create Keeper Jobs for Chainlink nodes in a cluster](#create-chainlink-keeper-jobs)
+4. [Register Chainlink nodes as keepers in a Registry contract](#set-keepers)
+5. [Register Keeper Consumer as upkeep in a Registry contract](#register-keeper-consumer)
+6. [Fund the latest upkeep in a Registry contract](#fund-latest-upkeep)
+7. [Get value of `counter` variable in a Keeper contract](#get-keeper-counter)
+
+#### OCR Job
+1. [Deploy Offchain Aggregator contract](#deploy-chainlink-offchain-aggregator-contract)
+2. [Set Offchain Aggregator payees](#set-payees)
+3. [Set Offchain Aggregator config](#set-config)
+4. [Create OCR Job for a bootstrap Chainlink node (first in a cluster)](#create-chainlink-ocr--bootstrap--job)
+5. [Create OCR Jobs for Chainlink nodes in a cluster except the first one (bootstrap)](#create-chainlink-ocr-jobs)
+6. [Request new OCR round in the Offchain Aggregator contract (optional)](#request-new-round)
+7. [Get the answer of the latest OCR round from the Offchain Aggregator contract](#get-ocr-latest-answer)
+
+#### Flux Job
+1. [Deploy Flux Aggregator contract](#deploy-chainlink-flux-aggregator-contract)
+2. [Fund Flux Aggregator contract with Link tokens](#transfer-link-tokens)
+3. [Update Flux Aggregator available funds](#update-available-funds)
+4. [Set Flux Aggregator oracles](#set-oracles)
+5. [Create Flux Jobs for the first 3 Chainlink nodes in a cluster](#create-chainlink-flux-jobs)
+6. [Get the answer of the latest Flux round from the Flux Aggregator contract](#get-flux-latest-answer)
+
+## Makefile scripts
 Below are the scripts contained in the [makefile](makefile).  
 Some scripts have parameters that can be provided either with the command line (e.g. ```make target PARAM={value}```), in the `.env` file, or interactively in the command line.
 > **Note**  
@@ -207,8 +292,9 @@ Some scripts have parameters that can be provided either with the command line (
   ```
   This command builds Chainlink contracts artifacts.
   The contracts to be built:
-  - Contracts from external libraries: Link Token, Oracle, Registry related contracts, Flux and Offchain Aggregators
-  - Chainlink Consumer contracts, located in the [contracts](chainlink%2Fcontracts) directory
+  - Contracts from external libraries: Oracle, Registry related contracts, Flux and Offchain Aggregators
+  - Link Token contract located in the [contracts](chainlink%2Fcontracts) directory
+  - Chainlink Consumer contracts examples located in the [contracts](chainlink%2Fcontracts) directory
 
 #### Spin up a Chainlink cluster
   ```
@@ -631,11 +717,7 @@ Some scripts have parameters that can be provided either with the command line (
 
 > **Note**  
 > This package uses external Go library [OCRHelper](external%2FOCRHelper) to prepare an OCR configuration.  
-> This Go library is based on https://github.com/smartcontractkit/chainlink integration tests.  
-> It has pre-built binaries for platforms: darwin/amd64(x86_64), darwin/arm64, linux/amd64(x86_64), linux/arm,linux/arm64.  
-> If you use another platform, please run in advance:  
-> ```make build-ocr-helper```  
-> to build external library for your platform. It requires Go (1.18 or higher) installed.
+> 
 
 #### Request New Round
   ```
@@ -703,58 +785,6 @@ Some scripts have parameters that can be provided either with the command line (
   > 
   > Therefore, you can specify any supported version of Solidity compiler in [foundry.toml](foundry.toml).  
   > In case you find any problems when using other versions of the compiler from range `[>=0.6.2 <0.9.0]` you are welcome to open an issue.
-
-### Testing flows
-#### Initial setup
-1. [Build Chainlink contracts artifacts](#build-chainlink-contracts)
-2. [Deploy Link Token contract](#deploy-link-token-contract)
-3. Set `LINK_TOKEN_CONTRACT` in `.env`
-4. [Spin up a Chainlink nodes cluster](#spin-up-a-chainlink-cluster)
-5. [Fund Chainlink nodes with ETH](#transfer-eth-to-chainlink-nodes)
-6. [Fund Chainlink nodes with Link tokens](#transfer-link-tokens-to-chainlink-nodes)
-
-#### Direct Request Job
-1. [Deploy Oracle contract](#deploy-oracle-contract)
-2. [Deploy Consumer contract](#deploy-consumer-contract)
-3. [Fund Consumer contract with Link tokens](#transfer-link-tokens)
-4. [Create Direct Request Job](#create-chainlink-direct-request-job)
-5. [Request ETH price with Consumer contract, a corresponding job will be launched](#request-eth-price)
-6. [Get ETH price after completing a job](#get-eth-price)
-
-#### Cron Job
-1. [Deploy Cron Consumer contract](#deploy-cron-consumer-contract)
-2. [Create Cron Job](#create-chainlink-cron-job)
-3. [Get ETH price after completing a job](#get-eth-price--cron-)
-
-#### Webhook Job
-1. [Create Webhook Job](#create-chainlink-webhook-job)
-2. [Run Webhook Job](#run-chainlink-webhook-job)
-
-#### Keeper Job
-1. [Deploy Keeper Consumer contract](#deploy-keeper-consumer-contract)
-2. [Deploy Registry contract](#deploy-keeper-registry-contract)
-3. [Create Keeper Jobs for Chainlink nodes in a cluster](#create-chainlink-keeper-jobs)
-4. [Register Chainlink nodes as keepers in a Registry contract](#set-keepers)
-5. [Register Keeper Consumer as upkeep in a Registry contract](#register-keeper-consumer)
-6. [Fund the latest upkeep in a Registry contract](#fund-latest-upkeep)
-7. [Get value of `counter` variable in a Keeper contract](#get-keeper-counter)
-
-#### OCR Job
-1. [Deploy Offchain Aggregator contract](#deploy-chainlink-offchain-aggregator-contract)
-2. [Set Offchain Aggregator payees](#set-payees)
-3. [Set Offchain Aggregator config](#set-config)
-4. [Create OCR Job for a bootstrap Chainlink node (first in a cluster)](#create-chainlink-ocr--bootstrap--job)
-5. [Create OCR Jobs for Chainlink nodes in a cluster except the first one (bootstrap)](#create-chainlink-ocr-jobs)
-6. [Request new OCR round in the Offchain Aggregator contract (optional)](#request-new-round)
-7. [Get the answer of the latest OCR round from the Offchain Aggregator contract](#get-ocr-latest-answer)
-
-#### Flux Job
-1. [Deploy Flux Aggregator contract](#deploy-chainlink-flux-aggregator-contract)
-2. [Fund Flux Aggregator contract with Link tokens](#transfer-link-tokens) 
-3. [Update Flux Aggregator available funds](#update-available-funds)
-4. [Set Flux Aggregator oracles](#set-oracles)
-5. [Create Flux Jobs for the first 3 Chainlink nodes in a cluster](#create-chainlink-flux-jobs)
-6. [Get the answer of the latest Flux round from the Flux Aggregator contract](#get-flux-latest-answer)
 
 ## Acknowledgements
 This project based on https://github.com/protofire/hardhat-chainlink-plugin. 

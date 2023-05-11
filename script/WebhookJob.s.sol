@@ -13,6 +13,6 @@ contract WebhookJobScript is Script {
     string memory jobId = ffiScript.getLastWebhookJobId(nodeId);
     console.logString(Utils.append("Job ID: ", jobId));
 
-    ffiScript.runWebhookJob(nodeId);
+    ffiScript.runWebhookJob(nodeId, jobId);
   }
 }

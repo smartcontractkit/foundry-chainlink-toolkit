@@ -4,6 +4,16 @@
 broadcast/
 cache/
 lib/
-out/
+# forge artifacts
+out/*
+!out/ChainlinkConsumer.sol
+!out/ChainlinkCronConsumer.sol
+!out/ChainlinkKeeperConsumer.sol
+!out/FluxAggregator.sol
+!out/LinkToken.sol
+!out/KeeperRegistry1_3.sol
+!out/KeeperRegistryLogic1_3.sol
+!out/OffchainAggregator.sol
+!out/Oracle.sol
 # chainlink
 chainlink/foundry-chainlink-node*/

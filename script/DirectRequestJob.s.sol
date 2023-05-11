@@ -3,7 +3,7 @@ pragma solidity >=0.6.2 <0.9.0;
 
 import "forge-std/Script.sol";
 import "../script/Oracle.s.sol";
-import "../script/ChainlinkConsumer.s.sol";
+import "../script/ChainlinkDirectRequestConsumer.s.sol";
 import "../script/Helper.s.sol";
 import "../script/FFI.s.sol";
 
@@ -18,7 +18,7 @@ contract DirectRequestJobScript is Script {
     address oracle = oracleScript.deploy(linkTokenAddress, nodeAddress);
     console.logString(Utils.append("Oracle address: ", vm.toString(oracle)));
 
-    ChainlinkConsumerScript chainlinkConsumerScript = new ChainlinkConsumerScript();
+    ChainlinkDirectRequestConsumerScript chainlinkConsumerScript = new ChainlinkDirectRequestConsumerScript();
     address consumer = chainlinkConsumerScript.deploy(linkTokenAddress);
     console.logString(Utils.append("Consumer address: ", vm.toString(consumer)));
 

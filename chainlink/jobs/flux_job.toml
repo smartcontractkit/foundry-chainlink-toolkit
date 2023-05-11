@@ -14,11 +14,11 @@ idleTimerDisabled = true
 pollTimerDisabled = true
 
 drumbeatEnabled  = true
-drumbeatSchedule = "CRON_TZ=UTC @every 1m"
+drumbeatSchedule = "CRON_TZ=UTC @every 5m"
 
 observationSource = """
-   fetch        [type="http" method=GET url="https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD" allowUnrestrictedNetworkAccess="true"]
-   parse        [type="jsonparse" path="USD" data="$(fetch)"]
+   fetch        [type="http" method=GET url="https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd" allowUnrestrictedNetworkAccess="true"]
+   parse        [type="jsonparse" path="ethereum,usd" data="$(fetch)"]
    multiply     [type="multiply" input="$(parse)" times=100]
 
    fetch -> parse -> multiply

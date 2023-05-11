@@ -4,8 +4,8 @@ name = "Get > Uint256 (webhook)"
 # Optional External Job ID: Automatically generated if unspecified
 # externalJobID = "b1d42cd5-4a3a-4200-b1f7-25a68e48aad8"
 observationSource = """
-   fetch        [type="http" method=GET url="https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD" allowUnrestrictedNetworkAccess="true"]
-   parse        [type="jsonparse" path="USD" data="$(fetch)"]
+   fetch        [type="http" method=GET url="https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd" allowUnrestrictedNetworkAccess="true"]
+   parse        [type="jsonparse" path="ethereum,usd" data="$(fetch)"]
    multiply     [type="multiply" input="$(parse)" times=100]
 
    fetch -> parse -> multiply

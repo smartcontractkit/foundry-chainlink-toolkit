@@ -6,8 +6,8 @@ cache/
 lib/
 # forge artifacts
 out/*
-!out/ChainlinkConsumer.sol
 !out/ChainlinkCronConsumer.sol
+!out/ChainlinkDirectRequestConsumer.sol
 !out/ChainlinkKeeperConsumer.sol
 !out/FluxAggregator.sol
 !out/LinkToken.sol

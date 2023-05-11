@@ -42,12 +42,12 @@
   ],
   "bytecode": {
     "object": "0x608060405234801561001057600080fd5b5060e08061001f6000396000f3fe6080604052348015600f57600080fd5b506004361060325760003560e01c806313cd155b1460375780639d1b464a146048575b600080fd5b604660423660046092565b6062565b005b605060005481565b60405190815260200160405180910390f35b60405181907f2df183e8bf863f06ad900e4354edaabec6df47dacbf191b19a3ff3f23097aca490600090a2600055565b60006020828403121560a357600080fd5b503591905056fea2646970667358221220eddd45fb1f5adbc49d2dea1315f2912785cf0908656342f8f3cb11b078c40a9a64736f6c634300080c0033",
-    "sourceMap": "243:251:18:-:0;;;;;;;;;;;;;;;;;;;",
+    "sourceMap": "243:251:17:-:0;;;;;;;;;;;;;;;;;;;",
     "linkReferences": {}
   },
   "deployedBytecode": {
     "object": "0x6080604052348015600f57600080fd5b506004361060325760003560e01c806313cd155b1460375780639d1b464a146048575b600080fd5b604660423660046092565b6062565b005b605060005481565b60405190815260200160405180910390f35b60405181907f2df183e8bf863f06ad900e4354edaabec6df47dacbf191b19a3ff3f23097aca490600090a2600055565b60006020828403121560a357600080fd5b503591905056fea2646970667358221220eddd45fb1f5adbc49d2dea1315f2912785cf0908656342f8f3cb11b078c40a9a64736f6c634300080c0033",
-    "sourceMap": "243:251:18:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;366:126;;;;;;:::i;:::-;;:::i;:::-;;278:27;;;;;;;;;345:25:20;;;333:2;318:18;278:27:18;;;;;;;366:126;430:30;;453:6;;430:30;;;;;466:12;:21;366:126::o;14:180:20:-;73:6;126:2;114:9;105:7;101:23;97:32;94:52;;;142:1;139;132:12;94:52;-1:-1:-1;165:23:20;;14:180;-1:-1:-1;14:180:20:o",
+    "sourceMap": "243:251:17:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;366:126;;;;;;:::i;:::-;;:::i;:::-;;278:27;;;;;;;;;345:25:20;;;333:2;318:18;278:27:17;;;;;;;366:126;430:30;;453:6;;430:30;;;;;466:12;:21;366:126::o;14:180:20:-;73:6;126:2;114:9;105:7;101:23;97:32;94:52;;;142:1;139;132:12;94:52;-1:-1:-1;165:23:20;;14:180;-1:-1:-1;14:180:20:o",
     "linkReferences": {}
   },
   "methodIdentifiers": {
@@ -151,19 +151,19 @@
   },
   "ast": {
     "absolutePath": "tmp/ChainlinkCronConsumer.sol",
-    "id": 2853,
+    "id": 2456,
     "exportedSymbols": {
       "ChainlinkCronConsumer": [
-        2852
+        2455
       ]
     },
     "nodeType": "SourceUnit",
-    "src": "33:462:18",
+    "src": "33:462:17",
     "nodes": [
       {
-        "id": 2830,
+        "id": 2433,
         "nodeType": "PragmaDirective",
-        "src": "33:31:18",
+        "src": "33:31:17",
         "nodes": [],
         "literals": [
           "solidity",
@@ -176,21 +176,21 @@
         ]
       },
       {
-        "id": 2852,
+        "id": 2455,
         "nodeType": "ContractDefinition",
-        "src": "243:251:18",
+        "src": "243:251:17",
         "nodes": [
           {
-            "id": 2833,
+            "id": 2436,
             "nodeType": "VariableDeclaration",
-            "src": "278:27:18",
+            "src": "278:27:17",
             "nodes": [],
             "constant": false,
             "functionSelector": "9d1b464a",
             "mutability": "mutable",
             "name": "currentPrice",
-            "nameLocation": "293:12:18",
-            "scope": 2852,
+            "nameLocation": "293:12:17",
+            "scope": 2455,
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -198,10 +198,10 @@
               "typeString": "uint256"
             },
             "typeName": {
-              "id": 2832,
+              "id": 2435,
               "name": "uint256",
               "nodeType": "ElementaryTypeName",
-              "src": "278:7:18",
+              "src": "278:7:17",
               "typeDescriptions": {
                 "typeIdentifier": "t_uint256",
                 "typeString": "uint256"
@@ -210,27 +210,27 @@
             "visibility": "public"
           },
           {
-            "id": 2837,
+            "id": 2440,
             "nodeType": "EventDefinition",
-            "src": "310:52:18",
+            "src": "310:52:17",
             "nodes": [],
             "anonymous": false,
             "name": "EthereumPriceFulfilled",
-            "nameLocation": "316:22:18",
+            "nameLocation": "316:22:17",
             "parameters": {
-              "id": 2836,
+              "id": 2439,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2835,
+                  "id": 2438,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "price",
-                  "nameLocation": "355:5:18",
+                  "nameLocation": "355:5:17",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2837,
-                  "src": "339:21:18",
+                  "scope": 2440,
+                  "src": "339:21:17",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -238,10 +238,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 2834,
+                    "id": 2437,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "339:7:18",
+                    "src": "339:7:17",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -250,30 +250,30 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "338:23:18"
+              "src": "338:23:17"
             }
           },
           {
-            "id": 2851,
+            "id": 2454,
             "nodeType": "FunctionDefinition",
-            "src": "366:126:18",
+            "src": "366:126:17",
             "nodes": [],
             "body": {
-              "id": 2850,
+              "id": 2453,
               "nodeType": "Block",
-              "src": "419:73:18",
+              "src": "419:73:17",
               "nodes": [],
               "statements": [
                 {
                   "eventCall": {
                     "arguments": [
                       {
-                        "id": 2843,
+                        "id": 2446,
                         "name": "_price",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 2839,
-                        "src": "453:6:18",
+                        "referencedDeclaration": 2442,
+                        "src": "453:6:17",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
@@ -287,18 +287,18 @@
                           "typeString": "uint256"
                         }
                       ],
-                      "id": 2842,
+                      "id": 2445,
                       "name": "EthereumPriceFulfilled",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 2837,
-                      "src": "430:22:18",
+                      "referencedDeclaration": 2440,
+                      "src": "430:22:17",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_event_nonpayable$_t_uint256_$returns$__$",
                         "typeString": "function (uint256)"
                       }
                     },
-                    "id": 2844,
+                    "id": 2447,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -306,31 +306,31 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "430:30:18",
+                    "src": "430:30:17",
                     "tryCall": false,
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 2845,
+                  "id": 2448,
                   "nodeType": "EmitStatement",
-                  "src": "425:35:18"
+                  "src": "425:35:17"
                 },
                 {
                   "expression": {
-                    "id": 2848,
+                    "id": 2451,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
-                      "id": 2846,
+                      "id": 2449,
                       "name": "currentPrice",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 2833,
-                      "src": "466:12:18",
+                      "referencedDeclaration": 2436,
+                      "src": "466:12:17",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -339,26 +339,26 @@
                     "nodeType": "Assignment",
                     "operator": "=",
                     "rightHandSide": {
-                      "id": 2847,
+                      "id": 2450,
                       "name": "_price",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 2839,
-                      "src": "481:6:18",
+                      "referencedDeclaration": 2442,
+                      "src": "481:6:17",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
                       }
                     },
-                    "src": "466:21:18",
+                    "src": "466:21:17",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "id": 2849,
+                  "id": 2452,
                   "nodeType": "ExpressionStatement",
-                  "src": "466:21:18"
+                  "src": "466:21:17"
                 }
               ]
             },
@@ -367,20 +367,20 @@
             "kind": "function",
             "modifiers": [],
             "name": "fulfillEthereumPrice",
-            "nameLocation": "375:20:18",
+            "nameLocation": "375:20:17",
             "parameters": {
-              "id": 2840,
+              "id": 2443,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2839,
+                  "id": 2442,
                   "mutability": "mutable",
                   "name": "_price",
-                  "nameLocation": "404:6:18",
+                  "nameLocation": "404:6:17",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2851,
-                  "src": "396:14:18",
+                  "scope": 2454,
+                  "src": "396:14:17",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -388,10 +388,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 2838,
+                    "id": 2441,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "396:7:18",
+                    "src": "396:7:17",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -400,15 +400,15 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "395:16:18"
+              "src": "395:16:17"
             },
             "returnParameters": {
-              "id": 2841,
+              "id": 2444,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "419:0:18"
+              "src": "419:0:17"
             },
-            "scope": 2852,
+            "scope": 2455,
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "public"
@@ -420,21 +420,21 @@
         "contractDependencies": [],
         "contractKind": "contract",
         "documentation": {
-          "id": 2831,
+          "id": 2434,
           "nodeType": "StructuredDocumentation",
-          "src": "66:175:18",
+          "src": "66:175:17",
           "text": " THIS IS AN EXAMPLE CONTRACT THAT USES HARDCODED VALUES FOR CLARITY.\n THIS IS AN EXAMPLE CONTRACT THAT USES UN-AUDITED CODE.\n DO NOT USE THIS CODE IN PRODUCTION."
         },
         "fullyImplemented": true,
         "linearizedBaseContracts": [
-          2852
+          2455
         ],
         "name": "ChainlinkCronConsumer",
-        "nameLocation": "252:21:18",
-        "scope": 2853,
+        "nameLocation": "252:21:17",
+        "scope": 2456,
         "usedErrors": []
       }
     ]
   },
-  "id": 18
+  "id": 17
 }

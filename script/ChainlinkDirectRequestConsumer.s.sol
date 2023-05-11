@@ -2,9 +2,9 @@
 pragma solidity >=0.6.2 <0.9.0;
 
 import "forge-std/Script.sol";
-import "../src/interfaces/ChainlinkConsumerInterface.sol";
+import "../src/interfaces/ChainlinkDirectRequestConsumerInterface.sol";
 
-contract ChainlinkConsumerScript is Script {
+contract ChainlinkDirectRequestConsumerScript is Script {
   function run() external view {
     console.log("Please run deploy() method.");
   }
@@ -13,7 +13,7 @@ contract ChainlinkConsumerScript is Script {
     uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
     vm.startBroadcast(deployerPrivateKey);
 
-    address chainlinkConsumer = deployCode("ChainlinkConsumer.sol:ChainlinkConsumer", abi.encode(linkTokenAddress));
+    address chainlinkConsumer = deployCode("ChainlinkDirectRequestConsumer.sol:ChainlinkDirectRequestConsumer", abi.encode(linkTokenAddress));
 
     vm.stopBroadcast();
 
@@ -24,14 +24,14 @@ contract ChainlinkConsumerScript is Script {
     uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
     vm.startBroadcast(deployerPrivateKey);
 
-    ChainlinkConsumerInterface chainlinkConsumer = ChainlinkConsumerInterface(consumerAddress);
+    ChainlinkDirectRequestConsumerInterface chainlinkConsumer = ChainlinkDirectRequestConsumerInterface(consumerAddress);
     chainlinkConsumer.requestEthereumPrice(oracleAddress, jobId);
 
     vm.stopBroadcast();
   }
 
   function getEthereumPrice(address consumerAddress) external view returns(uint256) {
-    ChainlinkConsumerInterface chainlinkConsumer = ChainlinkConsumerInterface(consumerAddress);
+    ChainlinkDirectRequestConsumerInterface chainlinkConsumer = ChainlinkDirectRequestConsumerInterface(consumerAddress);
     return chainlinkConsumer.currentPrice();
   }
 }

@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity >=0.6.2 <0.9.0;
 
-import "forge-std/Script.sol";
 import "../interfaces/AggregatorV3Interface.sol";
 
 contract MockEthFeed is AggregatorV3Interface {

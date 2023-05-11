@@ -70,21 +70,21 @@ contract OCRJobScript is Script {
     console.logString("");
 
     string memory bootstrapNodeId = "1";
-    string memory jobId = ffiScript.getJobId(bootstrapNodeId, offchainAggregator);
+    string memory bootstrapJobId = ffiScript.getJobId(bootstrapNodeId, offchainAggregator);
 
-    if (bytes(jobId).length != 0) {
-      ffiScript.deleteJob(bootstrapNodeId, jobId);
+    if (bytes(bootstrapJobId).length != 0) {
+      ffiScript.deleteJob(bootstrapNodeId, bootstrapJobId);
     }
 
     ffiScript.createOcrBootstrapJob(bootstrapNodeId, offchainAggregator);
 
     console.logString(Utils.append("Node ID: ", "1"));
 
-    jobId = ffiScript.getJobId(bootstrapNodeId, offchainAggregator);
-    console.logString(Utils.append("Job ID: ", jobId));
+    bootstrapJobId = ffiScript.getJobId(bootstrapNodeId, offchainAggregator);
+    console.logString(Utils.append("Job ID: ", bootstrapJobId));
 
-    string memory externalJobId = ffiScript.getExternalJobId(bootstrapNodeId, offchainAggregator);
-    console.logString(Utils.append("External Job ID: ", externalJobId));
+    string memory bootstrapExternalJobId = ffiScript.getExternalJobId(bootstrapNodeId, offchainAggregator);
+    console.logString(Utils.append("External Job ID: ", bootstrapExternalJobId));
     console.logString("");
 
     // Getting configurations of bootstrap node

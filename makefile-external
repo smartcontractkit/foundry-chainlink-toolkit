@@ -330,21 +330,25 @@ fct-create-ocr-jobs:     ## Create OCR Jobs: first node in a Chainlink cluster i
 .PHONY: fct-get-job-info fct-get-job-info-select fct-get-job-id fct-get-external-job-id fct-get-last-webhook-job-id
 
 ## ----------------------------------------------------------------------
-## Chainlink Jobs management scripts:
-fct-get-job-info:     ## Get Chainlink Job info
+## Chainlink Jobs helper scripts:
+fct-job-helper:     ## Manage Chainlink Jobs
 	res=$$(bash ${FCT_PLUGIN_PATH}/utils/select-option.sh \
-		"Select a Chainlink Job info to show: " \
-		"Job ID" "External Job ID" "Latest Webhook Job ID" \
+		"Select what you'd like to do: " \
+		"Get a Job ID" "Get an external Job ID" "Get the latest Webhook Job ID" "Run an existing Webhook Job" "Delete an existing Chainlink Job" \
 	); \
-	make fct-get-job-info-select SELECTED_OPTION="$$res";
+	make fct-job-helper-select SELECTED_OPTION="$$res";
 
-fct-get-job-info-select:
-ifeq ("$(SELECTED_OPTION)","Job ID")
+fct-job-helper-select:
+ifeq ("$(SELECTED_OPTION)","Get a Job ID")
 	make fct-get-job-id;
-else ifeq ("$(SELECTED_OPTION)","External Job ID")
+else ifeq ("$(SELECTED_OPTION)","Get an external Job ID")
 	make fct-get-external-job-id;
-else ifeq ("$(SELECTED_OPTION)","Latest Webhook Job ID")
+else ifeq ("$(SELECTED_OPTION)","Get the latest Webhook Job ID")
 	make fct-get-last-webhook-job-id;
+else ifeq ("$(SELECTED_OPTION)","Run an existing Webhook Job")
+	make fct-run-webhook-job;
+else ifeq ("$(SELECTED_OPTION)","Delete an existing Chainlink Job")
+	make fct-delete-job;
 else
 	echo "$(SELECTED_OPTION)";
 endif
@@ -374,7 +378,7 @@ fct-get-last-webhook-job-id:
 	$(call get_last_webhook_job_id,$$chainlinkContainerName,jobId) \
 	printf "%s" "${PREFIX}$$jobId"
 
-fct-run-webhook-job:  ## Run an existing Webhook Job
+fct-run-webhook-job:
 	$(call check_set_parameter,NODE_ID,nodeId) \
 	$(call check_set_parameter,WEBHOOK_JOB_ID,webhookJobId) \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
@@ -389,7 +393,7 @@ fct-run-webhook-job:  ## Run an existing Webhook Job
 	printf "%s\n" "Outputs: $$outputs"; \
 	printf "%s\n" "Errors: $$errors";
 
-fct-delete-job:       ## Delete an existing Chainlink Job
+fct-delete-job:
 	$(call check_set_parameter,NODE_ID,nodeId) \
 	$(call check_set_parameter,JOB_ID,jobId) \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \

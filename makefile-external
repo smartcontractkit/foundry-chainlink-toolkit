@@ -12,7 +12,7 @@ FCT_PLUGIN_PATH ?= .
 
 include ${FCT_PLUGIN_PATH}/makefile-utility
 
-.PHONY: fct-help fct-anvil
+.PHONY: fct-help fct-anvil fct-init
 
 ## ----------------------------------------------------------------------
 ## Foundry-Chainlink Toolkit.
@@ -24,6 +24,18 @@ fct-help:   ## Show help
 
 fct-anvil:  ## Run anvil
 	anvil --block-time 10 --chain-id 1337 -m 'test test test test test test test test test test test junk'
+
+fct-init:   ## Init testing environment
+	printf "%s\n" "Deploying Link Token contract. Please wait..."; \
+	res=$$(make fct-deploy-link-token); \
+	printf "%s\n" "Done"; \
+    linkTokenAddress=$$(echo $$res | grep -m1 -o '== Return == [^=]*' | cut -d' ' -f6 | cut -d',' -f1); \
+	echo "LINK_CONTRACT_ADDRESS=$$linkTokenAddress" >> .env; \
+	make fct-run-nodes; \
+	printf "%s\n" "Waiting for nodes to spin up..."; \
+	bash ${FCT_PLUGIN_PATH}/utils/wait-for-http-200.sh; \
+	make fct-transfer-eth-to-nodes; \
+	make fct-transfer-link-to-nodes;
 
 .PHONY: fct-run-nodes fct-restart-nodes fct-get-node-info fct-get-node-info-select fct-get-node-eth-keys fct-get-node-ocr-keys fct-get-node-p2p-keys fct-get-node-address fct-get-node-config
 
@@ -37,6 +49,7 @@ fct-run-nodes:      ## Spin up a Chainlink cluster of 5 Chainlink nodes
 	$(call check_defined, POSTGRES_USER) \
 	$(call check_defined, POSTGRES_PASSWORD) \
 	$(call check_defined, LINK_CONTRACT_ADDRESS) \
+	printf "%s\n" "Spinning up Chainlink cluster. Please wait..."; \
 	docker compose -f ${FCT_PLUGIN_PATH}/docker-compose.yaml --env-file ./.env up -d
 
 fct-restart-nodes:  ## Clean restart of a Chainlink cluster
@@ -47,6 +60,7 @@ fct-restart-nodes:  ## Clean restart of a Chainlink cluster
 	$(call check_defined, POSTGRES_USER) \
 	$(call check_defined, POSTGRES_PASSWORD) \
 	$(call check_defined, LINK_CONTRACT_ADDRESS) \
+	printf "%s\n" "Restarting Chainlink cluster. Please wait..."; \
 	docker compose down; \
 	docker volume rm ${COMPOSE_PROJECT_NAME}_prometheus_data; \
 	rm -rf ${FCT_PLUGIN_PATH}/chainlink/foundry-chainlink-node*; \

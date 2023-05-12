@@ -53,11 +53,11 @@ define get_last_webhook_job_id
 endef
 
 define get_cookie
-	$2=$$(cat ./chainlink/$1/cookie | grep "clsession");
+	$2=$$(cat ${FCT_PLUGIN_PATH}/chainlink/$1/cookie | grep "clsession");
 endef
 
 define format_eip55_address
-	$2=$$(forge script ./script/Helper.s.sol --sig "formatAddress(address)" $1 | tail -c 43);
+	$2=$$(forge script ${FCT_PLUGIN_PATH}/script/Helper.s.sol --sig "formatAddress(address)" $1 | tail -c 43);
 endef
 
 # Set OCRHelperPath variable

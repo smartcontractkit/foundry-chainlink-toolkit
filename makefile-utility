@@ -114,4 +114,4 @@ fct-prepare-ocr-config:
 
 fct-check-docker-network:
 	$(call check_defined, COMPOSE_PROJECT_NAME) \
-	bash ${FCT_PLUGIN_PATH}/chainlink/check-docker-network.sh "${COMPOSE_PROJECT_NAME}_default" $(CONTAINERS_COUNT);
+	bash ${FCT_PLUGIN_PATH}/utils/check-docker-network.sh "${COMPOSE_PROJECT_NAME}_default" $(CONTAINERS_COUNT);

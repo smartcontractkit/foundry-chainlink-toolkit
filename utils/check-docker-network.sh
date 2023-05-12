@@ -23,13 +23,13 @@ if [ -z "$expected_count" ]; then
 fi
 
 # Check if the network exists
-if ! docker network inspect $network_name >/dev/null 2>&1; then
+if ! docker network inspect "$network_name" >/dev/null 2>&1; then
   echo "No such network: '$network_name'"
   exit 1
 fi
 
 # Get the actual number of containers in the network
-actual_count=$(docker network inspect $network_name --format='{{range $container := .Containers}}{{$container.Name}} {{end}}' | wc -w)
+actual_count=$(docker network inspect "$network_name" --format='{{range $container := .Containers}}{{$container.Name}} {{end}}' | wc -w)
 
 # Compare the actual count with the expected count
 if [ "$actual_count" -ne "$expected_count" ]; then
@@ -38,15 +38,14 @@ if [ "$actual_count" -ne "$expected_count" ]; then
 fi
 
 # Get the list of container names in the network
-container_names=$(docker network inspect $network_name --format '{{range $container := .Containers}}{{$container.Name}} {{end}}')
+container_names=$(docker network inspect "$network_name" --format '{{range $container := .Containers}}{{$container.Name}} {{end}}')
 
 # Check if any container is not running
 for container_name in $container_names; do
-  if ! docker container inspect -f '{{.State.Running}}' $container_name > /dev/null 2>&1; then
+  if ! docker container inspect -f '{{.State.Running}}' "$container_name" > /dev/null 2>&1; then
     echo "Container '$container_name' in network '$network_name' is not running"
     exit 1
   fi
 done
 
-echo "Docker is running and all containers in network $network_name are running"
 exit 0

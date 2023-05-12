@@ -13,13 +13,22 @@ FCT_PLUGIN_PATH ?= .
 
 .PHONY: fct-help fct-anvil
 
-fct-anvil:
+## ----------------------------------------------------------------------
+## Foundry-Chainlink Toolkit.
+## See the DOCUMENTATION.md file for more information.
+## ----------------------------------------------------------------------
+## Utility scripts:
+fct-help:   ## Show help
+	@sed -ne '/@sed/!s/## //p' $(MAKEFILE_LIST)
+
+fct-anvil:  ## Run anvil
 	anvil --block-time 10 --chain-id 1337 -m 'test test test test test test test test test test test junk'
 
-.PHONY: fct-run-nodes fct-restart-nodes fct-get-node-eth-keys fct-get-node-ocr-keys fct-get-node-p2p-keys fct-get-node-address fct-get-node-config fct-get-job-id fct-get-external-job-id fct-get-last-webhook-job-id
+.PHONY: fct-run-nodes fct-restart-nodes fct-get-node-info fct-get-node-info-select fct-get-node-eth-keys fct-get-node-ocr-keys fct-get-node-p2p-keys fct-get-node-address fct-get-node-config
 
-# Chainlink Nodes Management Scripts
-fct-run-nodes:
+## ----------------------------------------------------------------------
+## Chainlink Nodes management scripts:
+fct-run-nodes:      ## Spin up a Chainlink cluster of 5 Chainlink nodes
 	$(call check_defined, ROOT) \
 	$(call check_defined, ETH_CHAIN_ID) \
 	$(call check_defined, ETH_URL) \
@@ -29,7 +38,7 @@ fct-run-nodes:
 	$(call check_defined, LINK_CONTRACT_ADDRESS) \
 	docker compose -f ${FCT_PLUGIN_PATH}/docker-compose.yaml --env-file ./.env up -d
 
-fct-restart-nodes:
+fct-restart-nodes:  ## Clean restart of a Chainlink cluster
 	$(call check_defined, ROOT) \
 	$(call check_defined, ETH_CHAIN_ID) \
 	$(call check_defined, ETH_URL) \
@@ -41,6 +50,28 @@ fct-restart-nodes:
 	docker volume rm ${COMPOSE_PROJECT_NAME}_prometheus_data; \
 	rm -rf ${FCT_PLUGIN_PATH}/chainlink/foundry-chainlink-node*; \
 	docker compose -f ${FCT_PLUGIN_PATH}/docker-compose.yaml --env-file ./.env up -d
+
+fct-get-node-info:  ## Get a Chainlink node info
+	res=$$(bash ${FCT_PLUGIN_PATH}/utils/select-option.sh \
+		"Select a Chainlink node info to show: " \
+		"Address" "ETH keys" "OCR keys" "P2P keys" "Config"  \
+	); \
+	make fct-get-node-info-select SELECTED_OPTION="$$res";
+
+fct-get-node-info-select:
+ifeq ("$(SELECTED_OPTION)","Address")
+	make fct-get-node-address;
+else ifeq ("$(SELECTED_OPTION)","ETH keys")
+	make fct-get-node-eth-keys;
+else ifeq ("$(SELECTED_OPTION)","OCR keys")
+	make fct-get-node-ocr-keys;
+else ifeq ("$(SELECTED_OPTION)","P2P keys")
+	make fct-get-node-p2p-keys;
+else ifeq ("$(SELECTED_OPTION)","Config")
+	make fct-get-node-config;
+else
+	echo "$(SELECTED_OPTION)";
+endif
 
 fct-get-node-eth-keys:
 	$(call check_set_parameter,NODE_ID,nodeId) \
@@ -76,34 +107,119 @@ fct-get-node-config:
 	$(call get_p2p_keys,$$chainlinkContainerName,peerId,_) \
 	printf "%s" "$$nodeAddress,$$onChainSigningAddress,$$offChainPublicKey,$$configPublicKey,$$peerId"
 
-fct-get-job-id:
-	$(call check_set_parameter,NODE_ID,nodeId) \
-	$(call check_set_parameter,CONTRACT_ADDRESS,contractAddress) \
-	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
-	make fct-login-node NODE_ID=$$nodeId >/dev/null 2>&1; \
-	$(call format_eip55_address,$$contractAddress,contractAddressFormatted) \
-	$(call get_job_id,$$chainlinkContainerName,$$contractAddressFormatted,jobId) \
-	printf "%s" "${PREFIX}$$jobId"
+.PHONY: fct-setup-job fct-setup-job-select fct-setup-direct-request-job fct-setup-cron-job fct-setup-webhook-job fct-setup-keeper-job fct-setup-ocr-job fct-setup-flux-job
 
-fct-get-external-job-id:
-	$(call check_set_parameter,NODE_ID,nodeId) \
-	$(call check_set_parameter,CONTRACT_ADDRESS,contractAddress) \
-	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
-	make fct-login-node NODE_ID=$$nodeId >/dev/null 2>&1; \
-	$(call format_eip55_address,$$contractAddress,contractAddressFormatted) \
-	$(call get_external_job_id,$$chainlinkContainerName,$$contractAddressFormatted,externalJobId) \
-	printf "%s" $$externalJobId
+## ----------------------------------------------------------------------
+## Chainlink Jobs automatic setup scripts:
+fct-setup-job: ## Set up a Chainlink Job
+	res=$$(bash ${FCT_PLUGIN_PATH}/utils/select-option.sh \
+		"Select a Chainlink Job type to be set up: " \
+		"Direct Request" "Cron" "Webhook" "Keeper" "Flux" "OCR" \
+	); \
+	make fct-setup-job-select SELECTED_OPTION="$$res";
 
-fct-get-last-webhook-job-id:
+fct-setup-job-select:
+ifeq ("$(SELECTED_OPTION)","Direct Request")
+	make fct-setup-direct-request-job;
+else ifeq ("$(SELECTED_OPTION)","Cron")
+	make fct-setup-cron-job;
+else ifeq ("$(SELECTED_OPTION)","Webhook")
+	make fct-setup-webhook-job;
+else ifeq ("$(SELECTED_OPTION)","Keeper")
+	make fct-setup-keeper-job;
+else ifeq ("$(SELECTED_OPTION)","Flux")
+	make fct-setup-flux-job;
+else ifeq ("$(SELECTED_OPTION)","OCR")
+	make fct-setup-ocr-job;
+else
+	echo "$(SELECTED_OPTION)";
+endif
+
+fct-setup-direct-request-job: fct-check-docker-network
+	$(call check_defined, RPC_URL) \
+	$(call check_defined, PRIVATE_KEY) \
+	$(call check_defined, LINK_CONTRACT_ADDRESS) \
 	$(call check_set_parameter,NODE_ID,nodeId) \
-	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
-	make fct-login-node NODE_ID=$$nodeId >/dev/null 2>&1; \
-	$(call get_last_webhook_job_id,$$chainlinkContainerName,jobId) \
-	printf "%s" "${PREFIX}$$jobId"
+	printf "%s\n" "Setting up Direct Request Job on Chainlink node $$nodeId. Please wait..."; \
+	forge script ${FCT_PLUGIN_PATH}/script/DirectRequestJob.s.sol --sig "run(string)" $$nodeId --ffi --rpc-url ${RPC_URL} --broadcast --out ${FCT_PLUGIN_PATH}/out
+
+fct-setup-cron-job: fct-check-docker-network
+	$(call check_defined, RPC_URL) \
+	$(call check_defined, PRIVATE_KEY) \
+	$(call check_defined, LINK_CONTRACT_ADDRESS) \
+	$(call check_set_parameter,NODE_ID,nodeId) \
+	printf "%s\n" "Setting up Cron Job on Chainlink node $$nodeId. Please wait..."; \
+	forge script ${FCT_PLUGIN_PATH}/script/CronJob.s.sol --sig "run(string)" $$nodeId --ffi --rpc-url ${RPC_URL} --broadcast --out ${FCT_PLUGIN_PATH}/out
+
+fct-setup-webhook-job: fct-check-docker-network
+	$(call check_defined, RPC_URL) \
+	$(call check_defined, PRIVATE_KEY) \
+	$(call check_set_parameter,NODE_ID,nodeId) \
+	printf "%s\n" "Setting up Webhook Job on Chainlink node $$nodeId. Please wait..."; \
+	forge script ${FCT_PLUGIN_PATH}/script/WebhookJob.s.sol --sig "run(string)" $$nodeId --ffi --rpc-url ${RPC_URL} --broadcast --out ${FCT_PLUGIN_PATH}/out
+
+fct-setup-keeper-job: fct-check-docker-network
+	$(call check_defined, RPC_URL) \
+	$(call check_defined, PRIVATE_KEY) \
+	printf "%s\n" "Setting up Keeper Job. Please wait..."; \
+	res=$$(forge script ${FCT_PLUGIN_PATH}/script/KeeperJob.s.sol --ffi --rpc-url ${RPC_URL} --broadcast -vv --out ${FCT_PLUGIN_PATH}/out); \
+    registryAddress=$$(echo $$res | grep -m1 -o '== Logs == [^ ]*' | cut -d' ' -f4 | cut -d',' -f1); \
+	keeperConsumerAddress=$$(echo $$res | grep -m1 -o '== Logs == [^ ]*' | cut -d' ' -f4 | cut -d',' -f2); \
+	forge script ${FCT_PLUGIN_PATH}/script/KeeperJob.s.sol --sig "finalize(address,address)" $$registryAddress $$keeperConsumerAddress --ffi --rpc-url ${RPC_URL} --broadcast --private-key ${PRIVATE_KEY} --out ${FCT_PLUGIN_PATH}/out
+
+fct-setup-flux-job: fct-check-docker-network
+	$(call check_defined, RPC_URL) \
+	$(call check_defined, PRIVATE_KEY) \
+	printf "%s\n" "Setting up Flux Job. Please wait..."; \
+	res=$$(forge script ${FCT_PLUGIN_PATH}/script/FluxJob.s.sol --ffi --rpc-url ${RPC_URL} --broadcast -vv --out ${FCT_PLUGIN_PATH}/out); \
+    fluxAggregatorAddress=$$(echo $$res | grep -m1 -o '== Logs == [^ ]*' | cut -d' ' -f4); \
+	forge script ${FCT_PLUGIN_PATH}/script/FluxJob.s.sol --sig "finalize(address)" $$fluxAggregatorAddress --ffi --rpc-url ${RPC_URL} --broadcast --private-key ${PRIVATE_KEY} --out ${FCT_PLUGIN_PATH}/out
+
+fct-setup-ocr-job: fct-check-docker-network
+ifeq ($(OCRHelperPathWildcard),"")
+	printf ">  %s\n>  %s\n>  %s\n" \
+		"Binary file \"$(OCRHelperPath)\" does not exist." \
+		"Please run: 'make fct-build-ocr-helper' in the root directory of the plugin to build OS dependent OCR Helper external library." \
+		"Find more information in the README file."
+else
+	$(call check_defined, RPC_URL) \
+	$(call check_defined, PRIVATE_KEY) \
+	printf "%s\n" "Setting up OCR Job. Please wait..."; \
+	res=$$(forge script ${FCT_PLUGIN_PATH}/script/OCRJob.s.sol --ffi --rpc-url ${RPC_URL} --broadcast -vv --out ${FCT_PLUGIN_PATH}/out); \
+    offchainAggregatorAddress=$$(echo $$res | grep -m1 -o '== Logs == [^ ]*' | cut -d' ' -f4); \
+	forge script ${FCT_PLUGIN_PATH}/script/OCRJob.s.sol --sig "finalize(address)" $$offchainAggregatorAddress --ffi --rpc-url ${RPC_URL} --broadcast --private-key ${PRIVATE_KEY} --out ${FCT_PLUGIN_PATH}/out
+endif
 
 .PHONY: fct-create-direct-request-job fct-create-cron-job fct-create-webhook-job fct-create-keeper-job fct-create-keeper-jobs fct-create-ocr-bootstrap-job fct-create-ocr-job fct-create-ocr-jobs fct-create-flux-job fct-create-flux-jobs fct-run-webhook-job fct-delete-job
 
-# Chainlink Jobs Scripts
+## ----------------------------------------------------------------------
+## Chainlink Jobs creation scripts:
+fct-create-job:          ## Create a Chainlink Job
+	res=$$(bash ${FCT_PLUGIN_PATH}/utils/select-option.sh \
+		"Select a Chainlink Job type to be created: " \
+		"Direct Request" "Cron" "Webhook" "Keeper" "Flux" "OCR" "OCR (bootstrap)" \
+	); \
+	make fct-create-job-select SELECTED_OPTION="$$res";
+
+fct-create-job-select:
+ifeq ("$(SELECTED_OPTION)","Direct Request")
+	make fct-create-direct-request-job;
+else ifeq ("$(SELECTED_OPTION)","Cron")
+	make fct-create-cron-job;
+else ifeq ("$(SELECTED_OPTION)","Webhook")
+	make fct-create-webhook-job;
+else ifeq ("$(SELECTED_OPTION)","Keeper")
+	make fct-create-keeper-job;
+else ifeq ("$(SELECTED_OPTION)","Flux")
+	make fct-create-flux-job;
+else ifeq ("$(SELECTED_OPTION)","OCR")
+	make fct-create-ocr-job;
+else ifeq ("$(SELECTED_OPTION)","OCR (bootstrap)")
+	make fct-create-ocr-bootstrap-job;
+else
+	echo "$(SELECTED_OPTION)";
+endif
+
 fct-create-direct-request-job:
 	$(call check_set_parameter,ORACLE_ADDRESS,oracleAddress) \
 	$(call check_set_parameter,NODE_ID,nodeId) \
@@ -145,13 +261,16 @@ fct-create-keeper-job:
 	&& sed -e 's/REGISTRY_ADDRESS/$$registryAddressFormatted/g' -e 's/NODE_ADDRESS/$$nodeAddress/g' ${ROOT}/jobs/keeper_job.toml > ${ROOT}/jobs/keeper_job_tmp.toml" && \
 	docker exec $$chainlinkContainerName bash -c "chainlink jobs create ${ROOT}/jobs/keeper_job_tmp.toml && rm ${ROOT}/jobs/keeper_job_tmp.toml"
 
-fct-create-keeper-jobs:
-	$(call check_set_parameter,REGISTRY_ADDRESS,registryAddress) \
-	make fct-create-keeper-job NODE_ID=1 REGISTRY_ADDRESS=$$registryAddress && \
-	make fct-create-keeper-job NODE_ID=2 REGISTRY_ADDRESS=$$registryAddress && \
-	make fct-create-keeper-job NODE_ID=3 REGISTRY_ADDRESS=$$registryAddress && \
-	make fct-create-keeper-job NODE_ID=4 REGISTRY_ADDRESS=$$registryAddress && \
-	make fct-create-keeper-job NODE_ID=5 REGISTRY_ADDRESS=$$registryAddress;
+fct-create-flux-job:
+	$(call check_set_parameter,FLUX_AGGREGATOR_ADDRESS,fluxAggregatorAddress) \
+	$(call check_set_parameter,NODE_ID,nodeId) \
+	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
+	make fct-login-node NODE_ID=$$nodeId >/dev/null 2>&1; \
+	$(call format_eip55_address,$$fluxAggregatorAddress,fluxAggregatorAddressFormatted) \
+	printf "%s\n" "Creating Flux Job on Chainlink node $$nodeId. Please wait..."; \
+	docker exec $$chainlinkContainerName bash -c "touch ${ROOT}/jobs/flux_job_tmp.toml \
+	&& sed -e 's/FLUX_AGGREGATOR_ADDRESS/$$fluxAggregatorAddressFormatted/g' ${ROOT}/jobs/flux_job.toml > ${ROOT}/jobs/flux_job_tmp.toml" && \
+	docker exec $$chainlinkContainerName bash -c "chainlink jobs create ${ROOT}/jobs/flux_job_tmp.toml && rm ${ROOT}/jobs/flux_job_tmp.toml"
 
 fct-create-ocr-bootstrap-job:
 	$(call check_set_parameter,OFFCHAIN_AGGREGATOR_ADDRESS,offchainAggregatorAddress) \
@@ -181,8 +300,21 @@ fct-create-ocr-job:
 	&& sed -e 's/OFFCHAIN_AGGREGATOR_ADDRESS/$$offchainAggregatorAddressFormatted/g' -e 's/BOOTSTRAP_P2P_KEY/$$bootstrapP2PKey/g' -e 's/PEER_ID/$$peerId/g' -e 's/OCR_KEY_ID/$$ocrKeyId/g' -e 's/NODE_ADDRESS/$$nodeAddress/g' ${ROOT}/jobs/ocr_job.toml > ${ROOT}/jobs/ocr_job_tmp.toml" && \
 	docker exec $$chainlinkContainerName bash -c "chainlink jobs create ${ROOT}/jobs/ocr_job_tmp.toml && rm ${ROOT}/jobs/ocr_job_tmp.toml"
 
-# Considering Chainlink Node with NODE_ID 1 is always a bootstrap node and the rest are Oracle nodes
-fct-create-ocr-jobs:
+fct-create-keeper-jobs:  ## Create a Keeper Job for all 5 Chainlink cluster nodes
+	$(call check_set_parameter,REGISTRY_ADDRESS,registryAddress) \
+	make fct-create-keeper-job NODE_ID=1 REGISTRY_ADDRESS=$$registryAddress && \
+	make fct-create-keeper-job NODE_ID=2 REGISTRY_ADDRESS=$$registryAddress && \
+	make fct-create-keeper-job NODE_ID=3 REGISTRY_ADDRESS=$$registryAddress && \
+	make fct-create-keeper-job NODE_ID=4 REGISTRY_ADDRESS=$$registryAddress && \
+	make fct-create-keeper-job NODE_ID=5 REGISTRY_ADDRESS=$$registryAddress;
+
+fct-create-flux-jobs:    ## Create a Flux Job for the first 3 Chainlink cluster nodes
+	$(call check_set_parameter,FLUX_AGGREGATOR_ADDRESS,fluxAggregatorAddress) \
+	make fct-create-flux-job NODE_ID=1 FLUX_AGGREGATOR_ADDRESS=$$fluxAggregatorAddress && \
+	make fct-create-flux-job NODE_ID=2 FLUX_AGGREGATOR_ADDRESS=$$fluxAggregatorAddress && \
+	make fct-create-flux-job NODE_ID=3 FLUX_AGGREGATOR_ADDRESS=$$fluxAggregatorAddress
+
+fct-create-ocr-jobs:     ## Create OCR Jobs: first node in a Chainlink cluster is a bootstrap and the rest nodes are Oracles
 	bootstrapNodeId=1; \
 	$(call check_set_parameter,OFFCHAIN_AGGREGATOR_ADDRESS,offchainAggregatorAddress) \
 	$(call get_chainlink_container_name,$$bootstrapNodeId,bootstrapChainlinkContainerName) \
@@ -194,25 +326,54 @@ fct-create-ocr-jobs:
 	make fct-create-ocr-job NODE_ID=4 OFFCHAIN_AGGREGATOR_ADDRESS=$$offchainAggregatorAddress BOOTSTRAP_P2P_KEY=$$bootstrapPeerId && \
 	make fct-create-ocr-job NODE_ID=5 OFFCHAIN_AGGREGATOR_ADDRESS=$$offchainAggregatorAddress BOOTSTRAP_P2P_KEY=$$bootstrapPeerId;
 
-fct-create-flux-job:
-	$(call check_set_parameter,FLUX_AGGREGATOR_ADDRESS,fluxAggregatorAddress) \
+.PHONY: fct-get-job-info fct-get-job-info-select fct-get-job-id fct-get-external-job-id fct-get-last-webhook-job-id
+
+## ----------------------------------------------------------------------
+## Chainlink Jobs management scripts:
+fct-get-job-info:     ## Get Chainlink Job info
+	res=$$(bash ${FCT_PLUGIN_PATH}/utils/select-option.sh \
+		"Select a Chainlink Job info to show: " \
+		"Job ID" "External Job ID" "Latest Webhook Job ID" \
+	); \
+	make fct-get-job-info-select SELECTED_OPTION="$$res";
+
+fct-get-job-info-select:
+ifeq ("$(SELECTED_OPTION)","Job ID")
+	make fct-get-job-id;
+else ifeq ("$(SELECTED_OPTION)","External Job ID")
+	make fct-get-external-job-id;
+else ifeq ("$(SELECTED_OPTION)","Latest Webhook Job ID")
+	make fct-get-last-webhook-job-id;
+else
+	echo "$(SELECTED_OPTION)";
+endif
+
+fct-get-job-id:
+	$(call check_set_parameter,NODE_ID,nodeId) \
+	$(call check_set_parameter,CONTRACT_ADDRESS,contractAddress) \
+	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
+	make fct-login-node NODE_ID=$$nodeId >/dev/null 2>&1; \
+	$(call format_eip55_address,$$contractAddress,contractAddressFormatted) \
+	$(call get_job_id,$$chainlinkContainerName,$$contractAddressFormatted,jobId) \
+	printf "%s" "${PREFIX}$$jobId"
+
+fct-get-external-job-id:
+	$(call check_set_parameter,NODE_ID,nodeId) \
+	$(call check_set_parameter,CONTRACT_ADDRESS,contractAddress) \
+	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
+	make fct-login-node NODE_ID=$$nodeId >/dev/null 2>&1; \
+	$(call format_eip55_address,$$contractAddress,contractAddressFormatted) \
+	$(call get_external_job_id,$$chainlinkContainerName,$$contractAddressFormatted,externalJobId) \
+	printf "%s" $$externalJobId
+
+fct-get-last-webhook-job-id:
 	$(call check_set_parameter,NODE_ID,nodeId) \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
 	make fct-login-node NODE_ID=$$nodeId >/dev/null 2>&1; \
-	$(call format_eip55_address,$$fluxAggregatorAddress,fluxAggregatorAddressFormatted) \
-	printf "%s\n" "Creating Flux Job on Chainlink node $$nodeId. Please wait..."; \
-	docker exec $$chainlinkContainerName bash -c "touch ${ROOT}/jobs/flux_job_tmp.toml \
-	&& sed -e 's/FLUX_AGGREGATOR_ADDRESS/$$fluxAggregatorAddressFormatted/g' ${ROOT}/jobs/flux_job.toml > ${ROOT}/jobs/flux_job_tmp.toml" && \
-	docker exec $$chainlinkContainerName bash -c "chainlink jobs create ${ROOT}/jobs/flux_job_tmp.toml && rm ${ROOT}/jobs/flux_job_tmp.toml"
+	$(call get_last_webhook_job_id,$$chainlinkContainerName,jobId) \
+	printf "%s" "${PREFIX}$$jobId"
 
-# Create a Flux Job for the first 3 nodes of a Chainlink cluster
-fct-create-flux-jobs:
-	$(call check_set_parameter,FLUX_AGGREGATOR_ADDRESS,fluxAggregatorAddress) \
-	make fct-create-flux-job NODE_ID=1 FLUX_AGGREGATOR_ADDRESS=$$fluxAggregatorAddress && \
-	make fct-create-flux-job NODE_ID=2 FLUX_AGGREGATOR_ADDRESS=$$fluxAggregatorAddress && \
-	make fct-create-flux-job NODE_ID=3 FLUX_AGGREGATOR_ADDRESS=$$fluxAggregatorAddress
-
-fct-run-webhook-job:
+fct-run-webhook-job:  ## Run an existing Webhook Job
 	$(call check_set_parameter,NODE_ID,nodeId) \
 	$(call check_set_parameter,WEBHOOK_JOB_ID,webhookJobId) \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
@@ -227,7 +388,7 @@ fct-run-webhook-job:
 	printf "%s\n" "Outputs: $$outputs"; \
 	printf "%s\n" "Errors: $$errors";
 
-fct-delete-job:
+fct-delete-job:       ## Delete an existing Chainlink Job
 	$(call check_set_parameter,NODE_ID,nodeId) \
 	$(call check_set_parameter,JOB_ID,jobId) \
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
@@ -235,9 +396,36 @@ fct-delete-job:
 	printf "%s\n" "Deleting Job with ID $$jobId on Chainlink node $$nodeId. Please wait..."; \
 	docker exec $$chainlinkContainerName chainlink -j jobs delete $$jobId;
 
-.PHONY: fct-deploy-link-token fct-deploy-oracle fct-deploy-direct-request-consumer fct-deploy-cron-consumer fct-deploy-keeper-consumer fct-deploy-keeper-registry fct-deploy-offchain-aggregator fct-deploy-flux-aggregator
+.PHONY: fct-deploy fct-deploy-select fct-deploy-link-token fct-deploy-oracle fct-deploy-direct-request-consumer fct-deploy-cron-consumer fct-deploy-keeper-consumer fct-deploy-registry fct-deploy-offchain-aggregator fct-deploy-flux-aggregator
 
-# Smart Contracts Deployment Scripts
+## ----------------------------------------------------------------------
+## Chainlink Smart Contracts deployment scripts:
+fct-deploy-contract:  ## Deploy a Chainlink Smart Contract
+	res=$$(bash ${FCT_PLUGIN_PATH}/utils/select-option.sh \
+		"Select a Smart Contract to be deployed: " \
+		"Link Token" "Oracle" "Direct Request Consumer" "Cron Consumer" "Keeper Consumer" "Flux Aggregator" "Offchain Aggregator" \
+	); \
+	make fct-deploy-contract-select SELECTED_OPTION="$$res";
+
+fct-deploy-contract-select:
+ifeq ("$(SELECTED_OPTION)","Link Token")
+	make fct-deploy-link-token;
+else ifeq ("$(SELECTED_OPTION)","Oracle")
+	make fct-deploy-oracle;
+else ifeq ("$(SELECTED_OPTION)","Direct Request Consumer")
+	make fct-deploy-direct-request-consumer;
+else ifeq ("$(SELECTED_OPTION)","Cron Consumer")
+	make fct-deploy-cron-consumer;
+else ifeq ("$(SELECTED_OPTION)","Keeper Consumer")
+	make fct-deploy-keeper-consumer;
+else ifeq ("$(SELECTED_OPTION)","Flux Aggregator")
+	make fct-deploy-flux-aggregator;
+else ifeq ("$(SELECTED_OPTION)","Offchain Aggregator")
+	make fct-deploy-offchain-aggregator;
+else
+	echo "$(SELECTED_OPTION)";
+endif
+
 fct-deploy-link-token:
 	$(call check_defined, PRIVATE_KEY) \
 	$(call check_defined, RPC_URL) \
@@ -252,7 +440,7 @@ fct-deploy-oracle:
 	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
 	make fct-login-node NODE_ID=$$nodeId >/dev/null 2>&1; \
 	$(call get_node_address,$$chainlinkContainerName,nodeAddress) \
-	printf "%s\n" "Deploying Oracle contract. Please wait..."; \
+	printf "%s\n" "Deploying Chainlink Oracle contract. Please wait..."; \
 	forge script ${FCT_PLUGIN_PATH}/script/Oracle.s.sol --sig "deploy(address, address)" $$linkContractAddress $$nodeAddress --rpc-url ${RPC_URL} --broadcast --out ${FCT_PLUGIN_PATH}/out
 
 fct-deploy-direct-request-consumer:
@@ -274,19 +462,12 @@ fct-deploy-keeper-consumer:
 	printf "%s\n" "Deploying Chainlink Keeper Consumer. Please wait..."; \
 	forge script ${FCT_PLUGIN_PATH}/script/ChainlinkKeeperConsumer.s.sol --sig "deploy()" --rpc-url ${RPC_URL} --broadcast --out ${FCT_PLUGIN_PATH}/out
 
-fct-deploy-keeper-registry:
+fct-deploy-registry:
 	$(call check_defined, PRIVATE_KEY) \
 	$(call check_defined, RPC_URL) \
 	$(call check_set_parameter,LINK_CONTRACT_ADDRESS,linkContractAddress) \
 	printf "%s\n" "Deploying Chainlink Registry. Please wait..."; \
 	forge script ${FCT_PLUGIN_PATH}/script/Registry.s.sol --sig "deploy(address)" $$linkContractAddress --rpc-url ${RPC_URL} --broadcast --out ${FCT_PLUGIN_PATH}/out
-
-fct-deploy-offchain-aggregator:
-	$(call check_defined, PRIVATE_KEY) \
-	$(call check_defined, RPC_URL) \
-	$(call check_set_parameter,LINK_CONTRACT_ADDRESS,linkContractAddress) \
-	printf "%s\n" "Deploying Chainlink OffChain Aggregator. Please wait..."; \
-	forge script ${FCT_PLUGIN_PATH}/script/OffchainAggregator.s.sol --sig "deploy(address)" $$linkContractAddress --rpc-url ${RPC_URL} --broadcast --out ${FCT_PLUGIN_PATH}/out
 
 fct-deploy-flux-aggregator:
 	$(call check_defined, PRIVATE_KEY) \
@@ -295,12 +476,120 @@ fct-deploy-flux-aggregator:
 	printf "%s\n" "Deploying Chainlink Flux Aggregator. Please wait..."; \
 	forge script ${FCT_PLUGIN_PATH}/script/FluxAggregator.s.sol --sig "deploy(address)" $$linkContractAddress --rpc-url ${RPC_URL} --broadcast --out ${FCT_PLUGIN_PATH}/out
 
-# Solidity Scripts
+fct-deploy-offchain-aggregator:
+	$(call check_defined, PRIVATE_KEY) \
+	$(call check_defined, RPC_URL) \
+	$(call check_set_parameter,LINK_CONTRACT_ADDRESS,linkContractAddress) \
+	printf "%s\n" "Deploying Chainlink OffChain Aggregator. Please wait..."; \
+	forge script ${FCT_PLUGIN_PATH}/script/OffchainAggregator.s.sol --sig "deploy(address)" $$linkContractAddress --rpc-url ${RPC_URL} --broadcast --out ${FCT_PLUGIN_PATH}/out
 
-.PHONY: fct-dr-consumer-request-eth-price-by-oracle fct-dr-consumer-request-eth-price fct-dr-consumer-get-eth-price fct-cron-consumer-get-eth-price fct-keeper-consumer-get-counter
+.PHONY: fct-funds-helper fct-funds-helper-select fct-transfer-eth fct-transfer-eth-to-node fct-transfer-eth-to-nodes fct-transfer-link fct-transfer-link-to-node fct-transfer-link-to-nodes fct-get-eth-balance fct-get-link-balance
 
-# Chainlink Direct Request Consumer
-fct-dr-consumer-request-eth-price-by-oracle:
+## ----------------------------------------------------------------------
+## ETH and Link Token helper scripts:
+fct-funds-helper: ## Manage ETH and Link Tokens
+	res=$$(bash ${FCT_PLUGIN_PATH}/utils/select-option.sh \
+		"Select what you'd like to do: " \
+		"Transfer ETH" "Transfer ETH to a Chainlink node" "Transfer ETH to all Chainlink nodes" \
+		"Transfer Link Token" "Transfer Link Token to a Chainlink node" "Transfer Link Token to all Chainlink nodes" \
+		"Get ETH balance" "Get Link Token balance" \
+	); \
+	make fct-funds-helper-select SELECTED_OPTION="$$res";
+
+fct-funds-helper-select:
+ifeq ("$(SELECTED_OPTION)","Transfer ETH")
+	make fct-transfer-eth;
+else ifeq ("$(SELECTED_OPTION)","Transfer ETH to a Chainlink node")
+	make fct-transfer-eth-to-node;
+else ifeq ("$(SELECTED_OPTION)","Transfer ETH to all Chainlink nodes")
+	make fct-transfer-eth-to-nodes;
+else ifeq ("$(SELECTED_OPTION)","Transfer Link Token")
+	make fct-transfer-link;
+else ifeq ("$(SELECTED_OPTION)","Transfer Link Token to a Chainlink node")
+	make fct-transfer-link-to-node;
+else ifeq ("$(SELECTED_OPTION)","Transfer Link Token to all Chainlink nodes")
+	make fct-transfer-link-to-nodes;
+else ifeq ("$(SELECTED_OPTION)","Get ETH balance")
+	make fct-get-eth-balance;
+else ifeq ("$(SELECTED_OPTION)","Get Link Token balance")
+	make fct-get-link-balance;
+else
+	echo "$(SELECTED_OPTION)";
+endif
+
+fct-transfer-eth:
+	$(call check_defined, PRIVATE_KEY) \
+	$(call check_defined, RPC_URL) \
+	$(call check_set_parameter,RECIPIENT,recipient) \
+	printf "%s\n" "Transferring 1 ETH to the $$recipient. Please wait..."; \
+	forge script ${FCT_PLUGIN_PATH}/script/Helper.s.sol --sig "transferEth(address, uint256)" $$recipient 1000000000000000000 --rpc-url ${RPC_URL} --broadcast --out ${FCT_PLUGIN_PATH}/out
+
+fct-transfer-eth-to-node:
+	$(call check_set_parameter,NODE_ID,nodeId) \
+	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
+	make fct-login-node NODE_ID=$$nodeId >/dev/null 2>&1; \
+	$(call get_node_address,$$chainlinkContainerName,nodeAddress) \
+	make fct-transfer-eth RECIPIENT=$$nodeAddress;
+
+fct-transfer-eth-to-nodes:
+	make fct-transfer-eth-to-node NODE_ID=1;
+	make fct-transfer-eth-to-node NODE_ID=2;
+	make fct-transfer-eth-to-node NODE_ID=3;
+	make fct-transfer-eth-to-node NODE_ID=4;
+	make fct-transfer-eth-to-node NODE_ID=5;
+
+fct-transfer-link:
+	$(call check_defined, PRIVATE_KEY) \
+	$(call check_defined, RPC_URL) \
+	$(call check_set_parameter,LINK_CONTRACT_ADDRESS,linkContractAddress) \
+	$(call check_set_parameter,RECIPIENT,recipient) \
+	printf "%s\n" "Transferring 100 Link Tokens to $$recipient. Please wait..."; \
+	forge script ${FCT_PLUGIN_PATH}/script/Helper.s.sol --sig "transferLink(address, address, uint256)" $$recipient $$linkContractAddress 100000000000000000000 --rpc-url ${RPC_URL} --broadcast --out ${FCT_PLUGIN_PATH}/out
+
+fct-transfer-link-to-node:
+	$(call check_set_parameter,NODE_ID,nodeId) \
+	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
+	make fct-login-node NODE_ID=$$nodeId >/dev/null 2>&1; \
+	$(call get_node_address,$$chainlinkContainerName,nodeAddress) \
+	make fct-transfer-link RECIPIENT=$$nodeAddress;
+
+fct-transfer-link-to-nodes:
+	make fct-transfer-link-to-node NODE_ID=1;
+	make fct-transfer-link-to-node NODE_ID=2;
+	make fct-transfer-link-to-node NODE_ID=3;
+	make fct-transfer-link-to-node NODE_ID=4;
+	make fct-transfer-link-to-node NODE_ID=5;
+
+fct-get-eth-balance:
+	$(call check_defined, PRIVATE_KEY) \
+	$(call check_defined, RPC_URL) \
+	$(call check_set_parameter,ACCOUNT,account) \
+	printf "%s\n" "Getting ETH balance for $$account. Please wait..."; \
+	forge script ${FCT_PLUGIN_PATH}/script/Helper.s.sol --sig "getEthBalance(address)" $$account --rpc-url ${RPC_URL} --broadcast --out ${FCT_PLUGIN_PATH}/out
+
+fct-get-link-balance:
+	$(call check_defined, PRIVATE_KEY) \
+	$(call check_defined, RPC_URL) \
+	$(call check_set_parameter,LINK_CONTRACT_ADDRESS,linkContractAddress) \
+	$(call check_set_parameter,ACCOUNT,account) \
+	printf "%s\n" "Getting Link Token balance for $$account. Please wait..."; \
+	forge script ${FCT_PLUGIN_PATH}/script/Helper.s.sol --sig "getLinkBalance(address,address)" $$linkContractAddress $$account --rpc-url ${RPC_URL} --broadcast --out ${FCT_PLUGIN_PATH}/out
+
+.PHONY: fct-dr-consumer-request-eth-price-by-oracle fct-dr-consumer-request-eth-price fct-dr-consumer-get-eth-price
+
+## ----------------------------------------------------------------------
+## Direct Request Consumer scripts:
+fct-dr-consumer-request-eth-price:            ## Send a request to update ETH price to Oracle
+	$(call check_defined, PRIVATE_KEY) \
+	$(call check_defined, RPC_URL) \
+	$(call check_set_parameter,DIRECT_REQUEST_CONSUMER_ADDRESS,consumerAddress) \
+	$(call check_set_parameter,ORACLE_ADDRESS,oracleAddress) \
+	$(call check_set_parameter,DIRECT_REQUEST_EXTERNAL_JOB_ID,directRequestExternalJobId) \
+	directRequestExternalJobId=$$(echo $$directRequestExternalJobId | tr -d '-'); \
+	printf "%s\n" "Requesting current ETH price. Please wait..."; \
+	forge script ${FCT_PLUGIN_PATH}/script/ChainlinkDirectRequestConsumer.s.sol --sig "requestEthereumPrice(address, address, string)" $$consumerAddress $$oracleAddress $$directRequestExternalJobId --rpc-url ${RPC_URL} --broadcast --out ${FCT_PLUGIN_PATH}/out
+
+fct-dr-consumer-request-eth-price-by-oracle:  ## Send a request to update ETH price to Oracle (external Job ID will be matched to Oracle address)
 	$(call check_defined, PRIVATE_KEY) \
 	$(call check_defined, RPC_URL) \
 	$(call check_set_parameter,NODE_ID,nodeId) \
@@ -313,33 +602,29 @@ fct-dr-consumer-request-eth-price-by-oracle:
 	printf "%s\n" "Requesting current ETH price. Please wait..."; \
 	forge script ${FCT_PLUGIN_PATH}/script/ChainlinkDirectRequestConsumer.s.sol --sig "requestEthereumPrice(address, address, string)" $$consumerAddress $$oracleAddress $$directRequestExternalJobId --rpc-url ${RPC_URL} --broadcast --out ${FCT_PLUGIN_PATH}/out
 
-fct-dr-consumer-request-eth-price:
-	$(call check_defined, PRIVATE_KEY) \
-	$(call check_defined, RPC_URL) \
-	$(call check_set_parameter,DIRECT_REQUEST_CONSUMER_ADDRESS,consumerAddress) \
-	$(call check_set_parameter,ORACLE_ADDRESS,oracleAddress) \
-	$(call check_set_parameter,DIRECT_REQUEST_EXTERNAL_JOB_ID,directRequestExternalJobId) \
-	directRequestExternalJobId=$$(echo $$directRequestExternalJobId | tr -d '-'); \
-	printf "%s\n" "Requesting current ETH price. Please wait..."; \
-	forge script ${FCT_PLUGIN_PATH}/script/ChainlinkDirectRequestConsumer.s.sol --sig "requestEthereumPrice(address, address, string)" $$consumerAddress $$oracleAddress $$directRequestExternalJobId --rpc-url ${RPC_URL} --broadcast --out ${FCT_PLUGIN_PATH}/out
-
-fct-dr-consumer-get-eth-price:
+fct-dr-consumer-get-eth-price:                ## Get current ETH price value
 	$(call check_defined, PRIVATE_KEY) \
 	$(call check_defined, RPC_URL) \
 	$(call check_set_parameter,DIRECT_REQUEST_CONSUMER_ADDRESS,consumerAddress) \
 	printf "%s\n" "Getting current ETH price. Please wait..."; \
 	forge script ${FCT_PLUGIN_PATH}/script/ChainlinkDirectRequestConsumer.s.sol --sig "getEthereumPrice(address)" $$consumerAddress --rpc-url ${RPC_URL} --broadcast --out ${FCT_PLUGIN_PATH}/out
 
-# Chainlink Cron Consumer
-fct-cron-consumer-get-eth-price:
+.PHONY: fct-cron-consumer-get-eth-price
+
+## ----------------------------------------------------------------------
+## Cron Consumer scripts:
+fct-cron-consumer-get-eth-price:  ## Get current ETH price value
 	$(call check_defined, PRIVATE_KEY) \
 	$(call check_defined, RPC_URL) \
 	$(call check_set_parameter,CRON_CONSUMER_ADDRESS,cronConsumerAddress) \
 	printf "%s\n" "Getting current ETH price. Please wait..."; \
 	forge script ${FCT_PLUGIN_PATH}/script/ChainlinkCronConsumer.s.sol --sig "getEthereumPrice(address)" $$cronConsumerAddress --rpc-url ${RPC_URL} --broadcast --out ${FCT_PLUGIN_PATH}/out
 
-# Chainlink Keeper Consumer
-fct-keeper-consumer-get-counter:
+.PHONY: fct-keeper-consumer-get-counter
+
+## ----------------------------------------------------------------------
+## Keeper Consumer scripts:
+fct-keeper-consumer-get-counter:  ## Get current counter value
 	$(call check_defined, PRIVATE_KEY) \
 	$(call check_defined, RPC_URL) \
 	$(call check_set_parameter,KEEPER_CONSUMER_ADDRESS,keeperConsumerAddress) \
@@ -348,8 +633,9 @@ fct-keeper-consumer-get-counter:
 
 .PHONY: fct-registry-register-upkeep fct-registry-set-keepers fct-registry-fund-latest-upkeep
 
-# Registry
-fct-registry-register-upkeep:
+## ----------------------------------------------------------------------
+## Registry scripts:
+fct-registry-register-upkeep:     ## Register Keeper Consumer as upkeep
 	$(call check_defined, PRIVATE_KEY) \
 	$(call check_defined, RPC_URL) \
 	$(call check_set_parameter,REGISTRY_ADDRESS,registryAddress) \
@@ -357,7 +643,7 @@ fct-registry-register-upkeep:
 	printf "%s\n" "Registering Upkeep in the Chainlink Registry. Please wait..."; \
 	forge script ${FCT_PLUGIN_PATH}/script/Registry.s.sol --sig "registerUpkeep(address,address)" $$registryAddress $$keeperConsumerAddress --rpc-url ${RPC_URL} --broadcast --out ${FCT_PLUGIN_PATH}/out
 
-fct-registry-set-keepers:
+fct-registry-set-keepers:         ## Set all Chainlink nodes in a Chainlink cluster as keepers
 	$(call check_defined, PRIVATE_KEY) \
 	$(call check_defined, RPC_URL) \
 	$(call check_set_parameter,REGISTRY_ADDRESS,registryAddress) \
@@ -385,7 +671,7 @@ fct-registry-set-keepers:
 	$(call get_node_address,$$chainlinkContainerName,nodeAddress5) \
 	forge script ${FCT_PLUGIN_PATH}/script/Registry.s.sol --sig "setKeepers(address,address,address[])" $$registryAddress $$keeperConsumerAddress [$$nodeAddress1,$$nodeAddress2,$$nodeAddress3,$$nodeAddress4,$$nodeAddress5] --rpc-url ${RPC_URL} --broadcast --out ${FCT_PLUGIN_PATH}/out
 
-fct-registry-fund-latest-upkeep:
+fct-registry-fund-latest-upkeep:  ## Fund the latest registered upkeep
 	$(call check_defined, PRIVATE_KEY) \
 	$(call check_defined, RPC_URL) \
 	$(call check_set_parameter,REGISTRY_ADDRESS,registryAddress) \
@@ -393,11 +679,55 @@ fct-registry-fund-latest-upkeep:
 	printf "%s\n" "Funding the latest upkeep in Registry contract. Please wait..."; \
 	forge script ${FCT_PLUGIN_PATH}/script/Registry.s.sol --sig "fundLatestUpkeep(address,address,uint256)" $$registryAddress $$linkContractAddress 1000000000000000000 --rpc-url ${RPC_URL} --broadcast --out ${FCT_PLUGIN_PATH}/out
 
+.PHONY: fct-flux-update-available-funds fct-flux-set-oracles fct-flux-get-oracles fct-flux-get-latest-answer
+
+## ----------------------------------------------------------------------
+## Chainlink Flux Aggregator scripts:
+fct-flux-update-available-funds:  ## Update available funds in the contract
+	$(call check_defined, PRIVATE_KEY) \
+	$(call check_defined, RPC_URL) \
+	$(call check_set_parameter,FLUX_AGGREGATOR_ADDRESS,fluxAggregatorAddress) \
+	printf "%s\n" "Updating available funds in the Flux Aggregator contract. Please wait..."; \
+	forge script ${FCT_PLUGIN_PATH}/script/FluxAggregator.s.sol --sig "updateAvailableFunds(address)" $$fluxAggregatorAddress --rpc-url ${RPC_URL} --broadcast --out ${FCT_PLUGIN_PATH}/out
+
+fct-flux-set-oracles:             ## Set the first 3 nodes of a Chainlink cluster as oracles
+	$(call check_defined, PRIVATE_KEY) \
+	$(call check_defined, RPC_URL) \
+	$(call check_set_parameter,FLUX_AGGREGATOR_ADDRESS,fluxAggregatorAddress) \
+	nodeId=1; \
+	make fct-login-node NODE_ID=$$nodeId >/dev/null 2>&1 && \
+	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
+	$(call get_node_address,$$chainlinkContainerName,nodeAddress1) \
+	nodeId=2; \
+	make fct-login-node NODE_ID=$$nodeId >/dev/null 2>&1 && \
+	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
+	$(call get_node_address,$$chainlinkContainerName,nodeAddress2) \
+	nodeId=3; \
+	make fct-login-node NODE_ID=$$nodeId >/dev/null 2>&1 && \
+	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
+	$(call get_node_address,$$chainlinkContainerName,nodeAddress3) \
+	printf "%s\n" "Setting Oracles in Flux Aggregator. Please wait..."; \
+	forge script ${FCT_PLUGIN_PATH}/script/FluxAggregator.s.sol --sig "setOracles(address,address[])" $$fluxAggregatorAddress [$$nodeAddress1,$$nodeAddress2,$$nodeAddress3] --rpc-url ${RPC_URL} --broadcast --out ${FCT_PLUGIN_PATH}/out
+
+fct-flux-get-oracles:             ## Get contract's oracles
+	$(call check_defined, PRIVATE_KEY) \
+	$(call check_defined, RPC_URL) \
+	$(call check_set_parameter,FLUX_AGGREGATOR_ADDRESS,fluxAggregatorAddress) \
+	printf "%s\n" "Getting oracles in the Flux Aggregator contract. Please wait..."; \
+	forge script ${FCT_PLUGIN_PATH}/script/FluxAggregator.s.sol --sig "getOracles(address)" $$fluxAggregatorAddress --rpc-url ${RPC_URL} --broadcast --out ${FCT_PLUGIN_PATH}/out
+
+fct-flux-get-latest-answer:       ## Get the latest aggregator answer
+	$(call check_defined, PRIVATE_KEY) \
+	$(call check_defined, RPC_URL) \
+	$(call check_set_parameter,FLUX_AGGREGATOR_ADDRESS,fluxAggregatorAddress) \
+	printf "%s\n" "Getting the latest answer in the Flux Aggregator contract. Please wait..."; \
+	forge script ${FCT_PLUGIN_PATH}/script/FluxAggregator.s.sol --sig "getLatestAnswer(address)" $$fluxAggregatorAddress --rpc-url ${RPC_URL} --broadcast --out ${FCT_PLUGIN_PATH}/out
+
 .PHONY: fct-ocr-set-payees fct-ocr-set-config fct-ocr-request-new-round fct-ocr-get-latest-answer
 
-# Offchain Aggregator
-# Setting payees excluding Node 1 as a bootstrap node
-fct-ocr-set-payees:
+## ----------------------------------------------------------------------
+## Chainlink Offchain Aggregator scripts:
+fct-ocr-set-payees:               ## Set Chainlink nodes 2-5 as payees
 	$(call check_defined, PRIVATE_KEY) \
 	$(call check_defined, RPC_URL) \
 	$(call check_set_parameter,OFFCHAIN_AGGREGATOR_ADDRESS,offchainAggregatorAddress) \
@@ -420,7 +750,7 @@ fct-ocr-set-payees:
 	$(call get_node_address,$$chainlinkContainerName,nodeAddress5) \
 	forge script ${FCT_PLUGIN_PATH}/script/OffchainAggregator.s.sol --sig "setPayees(address,address[])" $$offchainAggregatorAddress [$$nodeAddress2,$$nodeAddress3,$$nodeAddress4,$$nodeAddress5] --rpc-url ${RPC_URL} --broadcast --out ${FCT_PLUGIN_PATH}/out
 
-fct-ocr-set-config:
+fct-ocr-set-config:               ## Set offchain reporting protocol configuration. Participant oracles: Chainlink nodes 2-5
 ifeq ($(OCRHelperPathWildcard),"")
 	printf ">  %s\n>  %s\n>  %s\n" \
 		"Binary file \"$(OCRHelperPath)\" does not exist." \
@@ -465,181 +795,16 @@ else
 	forge script ${FCT_PLUGIN_PATH}/script/OffchainAggregator.s.sol --sig "setConfig(address,address[],address[],uint8,uint64,bytes)" $$offchainAggregatorAddress $$ocrConfig --rpc-url ${RPC_URL} --broadcast --out ${FCT_PLUGIN_PATH}/out
 endif
 
-fct-ocr-request-new-round:
+fct-ocr-request-new-round:        ## Request new OCR round
 	$(call check_defined, PRIVATE_KEY) \
 	$(call check_defined, RPC_URL) \
 	$(call check_set_parameter,OFFCHAIN_AGGREGATOR_ADDRESS,offchainAggregatorAddress) \
 	printf "%s\n" "Requesting new round in the Offchain Aggregator contract. Please wait..."; \
 	forge script ${FCT_PLUGIN_PATH}/script/OffchainAggregator.s.sol --sig "requestNewRound(address)" $$offchainAggregatorAddress --rpc-url ${RPC_URL} --broadcast --out ${FCT_PLUGIN_PATH}/out
 
-fct-ocr-get-latest-answer:
+fct-ocr-get-latest-answer:        ## Get the latest aggregator answer
 	$(call check_defined, PRIVATE_KEY) \
 	$(call check_defined, RPC_URL) \
 	$(call check_set_parameter,OFFCHAIN_AGGREGATOR_ADDRESS,offchainAggregatorAddress) \
 	printf "%s\n" "Getting the latest answer in the Offchain Aggregator contract. Please wait..."; \
 	forge script ${FCT_PLUGIN_PATH}/script/OffchainAggregator.s.sol --sig "latestAnswer(address)" $$offchainAggregatorAddress --rpc-url ${RPC_URL} --broadcast --out ${FCT_PLUGIN_PATH}/out
-
-.PHONY: fct-flux-update-available-funds fct-flux-set-oracles fct-flux-get-oracles fct-flux-get-latest-answer
-
-# Flux Aggregator
-fct-flux-update-available-funds:
-	$(call check_defined, PRIVATE_KEY) \
-	$(call check_defined, RPC_URL) \
-	$(call check_set_parameter,FLUX_AGGREGATOR_ADDRESS,fluxAggregatorAddress) \
-	printf "%s\n" "Updating available funds in the Flux Aggregator contract. Please wait..."; \
-	forge script ${FCT_PLUGIN_PATH}/script/FluxAggregator.s.sol --sig "updateAvailableFunds(address)" $$fluxAggregatorAddress --rpc-url ${RPC_URL} --broadcast --out ${FCT_PLUGIN_PATH}/out
-
-# For the Flux Aggregator, we use the first 3 nodes of a Chainlink cluster
-fct-flux-set-oracles:
-	$(call check_defined, PRIVATE_KEY) \
-	$(call check_defined, RPC_URL) \
-	$(call check_set_parameter,FLUX_AGGREGATOR_ADDRESS,fluxAggregatorAddress) \
-	nodeId=1; \
-	make fct-login-node NODE_ID=$$nodeId >/dev/null 2>&1 && \
-	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
-	$(call get_node_address,$$chainlinkContainerName,nodeAddress1) \
-	nodeId=2; \
-	make fct-login-node NODE_ID=$$nodeId >/dev/null 2>&1 && \
-	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
-	$(call get_node_address,$$chainlinkContainerName,nodeAddress2) \
-	nodeId=3; \
-	make fct-login-node NODE_ID=$$nodeId >/dev/null 2>&1 && \
-	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
-	$(call get_node_address,$$chainlinkContainerName,nodeAddress3) \
-	printf "%s\n" "Setting Oracles in Flux Aggregator. Please wait..."; \
-	forge script ${FCT_PLUGIN_PATH}/script/FluxAggregator.s.sol --sig "setOracles(address,address[])" $$fluxAggregatorAddress [$$nodeAddress1,$$nodeAddress2,$$nodeAddress3] --rpc-url ${RPC_URL} --broadcast --out ${FCT_PLUGIN_PATH}/out
-
-fct-flux-get-oracles:
-	$(call check_defined, PRIVATE_KEY) \
-	$(call check_defined, RPC_URL) \
-	$(call check_set_parameter,FLUX_AGGREGATOR_ADDRESS,fluxAggregatorAddress) \
-	printf "%s\n" "Getting oracles in the Flux Aggregator contract. Please wait..."; \
-	forge script ${FCT_PLUGIN_PATH}/script/FluxAggregator.s.sol --sig "getOracles(address)" $$fluxAggregatorAddress --rpc-url ${RPC_URL} --broadcast --out ${FCT_PLUGIN_PATH}/out
-
-fct-flux-get-latest-answer:
-	$(call check_defined, PRIVATE_KEY) \
-	$(call check_defined, RPC_URL) \
-	$(call check_set_parameter,FLUX_AGGREGATOR_ADDRESS,fluxAggregatorAddress) \
-	printf "%s\n" "Getting the latest answer in the Flux Aggregator contract. Please wait..."; \
-	forge script ${FCT_PLUGIN_PATH}/script/FluxAggregator.s.sol --sig "getLatestAnswer(address)" $$fluxAggregatorAddress --rpc-url ${RPC_URL} --broadcast --out ${FCT_PLUGIN_PATH}/out
-
-.PHONY: fct-transfer-eth fct-transfer-eth-to-node fct-transfer-eth-to-nodes fct-transfer-link fct-transfer-link-to-node fct-transfer-link-to-nodes
-
-# Helper
-fct-transfer-eth:
-	$(call check_defined, PRIVATE_KEY) \
-	$(call check_defined, RPC_URL) \
-	$(call check_set_parameter,RECIPIENT,recipient) \
-	printf "%s\n" "Transferring ETH to the $$recipient. Please wait..."; \
-	forge script ${FCT_PLUGIN_PATH}/script/Helper.s.sol --sig "transferEth(address, uint256)" $$recipient 1000000000000000000 --rpc-url ${RPC_URL} --broadcast --out ${FCT_PLUGIN_PATH}/out
-
-fct-transfer-eth-to-node:
-	$(call check_set_parameter,NODE_ID,nodeId) \
-	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
-	make fct-login-node NODE_ID=$$nodeId >/dev/null 2>&1; \
-	$(call get_node_address,$$chainlinkContainerName,nodeAddress) \
-	make fct-transfer-eth RECIPIENT=$$nodeAddress;
-
-fct-transfer-eth-to-nodes:
-	make fct-transfer-eth-to-node NODE_ID=1;
-	make fct-transfer-eth-to-node NODE_ID=2;
-	make fct-transfer-eth-to-node NODE_ID=3;
-	make fct-transfer-eth-to-node NODE_ID=4;
-	make fct-transfer-eth-to-node NODE_ID=5;
-
-fct-transfer-link:
-	$(call check_defined, PRIVATE_KEY) \
-	$(call check_defined, RPC_URL) \
-	$(call check_set_parameter,LINK_CONTRACT_ADDRESS,linkContractAddress) \
-	$(call check_set_parameter,RECIPIENT,recipient) \
-	printf "%s\n" "Transferring Link Tokens to $$recipient. Please wait..."; \
-	forge script ${FCT_PLUGIN_PATH}/script/Helper.s.sol --sig "transferLink(address, address, uint256)" $$recipient $$linkContractAddress 100000000000000000000 --rpc-url ${RPC_URL} --broadcast --out ${FCT_PLUGIN_PATH}/out
-
-fct-transfer-link-to-node:
-	$(call check_set_parameter,NODE_ID,nodeId) \
-	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
-	make fct-login-node NODE_ID=$$nodeId >/dev/null 2>&1; \
-	$(call get_node_address,$$chainlinkContainerName,nodeAddress) \
-	make fct-transfer-link RECIPIENT=$$nodeAddress;
-
-fct-transfer-link-to-nodes:
-	make fct-transfer-link-to-node NODE_ID=1;
-	make fct-transfer-link-to-node NODE_ID=2;
-	make fct-transfer-link-to-node NODE_ID=3;
-	make fct-transfer-link-to-node NODE_ID=4;
-	make fct-transfer-link-to-node NODE_ID=5;
-
-.PHONY: fct-get-link-balance
-
-# Link Token
-fct-get-link-balance:
-	$(call check_defined, PRIVATE_KEY) \
-	$(call check_defined, RPC_URL) \
-	$(call check_set_parameter,LINK_CONTRACT_ADDRESS,linkContractAddress) \
-	$(call check_set_parameter,ACCOUNT,account) \
-	printf "%s\n" "Getting Link Token balance for the account. Please wait..."; \
-	forge script ${FCT_PLUGIN_PATH}/script/LinkToken.s.sol --sig "getBalance(address,address)" $$linkContractAddress $$account --rpc-url ${RPC_URL} --broadcast --out ${FCT_PLUGIN_PATH}/out
-
-.PHONY: fct-setup-direct-request-job fct-setup-cron-job fct-setup-webhook-job fct-setup-keeper-job fct-setup-ocr-job fct-setup-flux-job
-
-# Automation [ON CHAIN]
-fct-setup-direct-request-job:
-	make fct-check-docker-network || sh -c 'exit 1'
-	$(call check_defined, RPC_URL) \
-	$(call check_defined, PRIVATE_KEY) \
-	$(call check_defined, LINK_CONTRACT_ADDRESS) \
-	$(call check_set_parameter,NODE_ID,nodeId) \
-	printf "%s\n" "Setting up Direct Request Job on Chainlink node $$nodeId. Please wait..."; \
-	forge script ${FCT_PLUGIN_PATH}/script/DirectRequestJob.s.sol --sig "run(string)" $$nodeId --ffi --rpc-url ${RPC_URL} --broadcast --out ${FCT_PLUGIN_PATH}/out
-
-fct-setup-cron-job:
-	make fct-check-docker-network || sh -c 'exit 1'
-	$(call check_defined, RPC_URL) \
-	$(call check_defined, PRIVATE_KEY) \
-	$(call check_defined, LINK_CONTRACT_ADDRESS) \
-	$(call check_set_parameter,NODE_ID,nodeId) \
-	printf "%s\n" "Setting up Cron Job on Chainlink node $$nodeId. Please wait..."; \
-	forge script ${FCT_PLUGIN_PATH}/script/CronJob.s.sol --sig "run(string)" $$nodeId --ffi --rpc-url ${RPC_URL} --broadcast --out ${FCT_PLUGIN_PATH}/out
-
-fct-setup-webhook-job:
-	make fct-check-docker-network || sh -c 'exit 1'
-	$(call check_defined, RPC_URL) \
-	$(call check_defined, PRIVATE_KEY) \
-	$(call check_set_parameter,NODE_ID,nodeId) \
-	printf "%s\n" "Setting up Webhook Job on Chainlink node $$nodeId. Please wait..."; \
-	forge script ${FCT_PLUGIN_PATH}/script/WebhookJob.s.sol --sig "run(string)" $$nodeId --ffi --rpc-url ${RPC_URL} --broadcast --out ${FCT_PLUGIN_PATH}/out
-
-fct-setup-keeper-job:
-	make fct-check-docker-network || sh -c 'exit 1'
-	$(call check_defined, RPC_URL) \
-	$(call check_defined, PRIVATE_KEY) \
-	printf "%s\n" "Setting up Keeper Job. Please wait..."; \
-	res=$$(forge script ${FCT_PLUGIN_PATH}/script/KeeperJob.s.sol --ffi --rpc-url ${RPC_URL} --broadcast -vv --out ${FCT_PLUGIN_PATH}/out); \
-    registryAddress=$$(echo $$res | grep -m1 -o '== Logs == [^ ]*' | cut -d' ' -f4 | cut -d',' -f1); \
-	keeperConsumerAddress=$$(echo $$res | grep -m1 -o '== Logs == [^ ]*' | cut -d' ' -f4 | cut -d',' -f2); \
-	forge script ${FCT_PLUGIN_PATH}/script/KeeperJob.s.sol --sig "finalize(address,address)" $$registryAddress $$keeperConsumerAddress --ffi --rpc-url ${RPC_URL} --broadcast --private-key ${PRIVATE_KEY} --out ${FCT_PLUGIN_PATH}/out
-
-fct-setup-ocr-job:
-ifeq ($(OCRHelperPathWildcard),"")
-	printf ">  %s\n>  %s\n>  %s\n" \
-		"Binary file \"$(OCRHelperPath)\" does not exist." \
-		"Please run: 'make fct-build-ocr-helper' in the root directory of the plugin to build OS dependent OCR Helper external library." \
-		"Find more information in the README file."
-else
-	make fct-check-docker-network || sh -c 'exit 1'
-	$(call check_defined, RPC_URL) \
-	$(call check_defined, PRIVATE_KEY) \
-	printf "%s\n" "Setting up OCR Job. Please wait..."; \
-	res=$$(forge script ${FCT_PLUGIN_PATH}/script/OCRJob.s.sol --ffi --rpc-url ${RPC_URL} --broadcast -vv --out ${FCT_PLUGIN_PATH}/out); \
-    offchainAggregatorAddress=$$(echo $$res | grep -m1 -o '== Logs == [^ ]*' | cut -d' ' -f4); \
-	forge script ${FCT_PLUGIN_PATH}/script/OCRJob.s.sol --sig "finalize(address)" $$offchainAggregatorAddress --ffi --rpc-url ${RPC_URL} --broadcast --private-key ${PRIVATE_KEY} --out ${FCT_PLUGIN_PATH}/out
-endif
-
-fct-setup-flux-job:
-	make fct-check-docker-network || sh -c 'exit 1'
-	$(call check_defined, RPC_URL) \
-	$(call check_defined, PRIVATE_KEY) \
-	printf "%s\n" "Setting up Flux Job. Please wait..."; \
-	res=$$(forge script ${FCT_PLUGIN_PATH}/script/FluxJob.s.sol --ffi --rpc-url ${RPC_URL} --broadcast -vv --out ${FCT_PLUGIN_PATH}/out); \
-    fluxAggregatorAddress=$$(echo $$res | grep -m1 -o '== Logs == [^ ]*' | cut -d' ' -f4); \
-	forge script ${FCT_PLUGIN_PATH}/script/FluxJob.s.sol --sig "finalize(address)" $$fluxAggregatorAddress --ffi --rpc-url ${RPC_URL} --broadcast --private-key ${PRIVATE_KEY} --out ${FCT_PLUGIN_PATH}/out

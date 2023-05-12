@@ -35,6 +35,16 @@ contract HelperScript is Script {
     return linkToken.balanceOf(recipientAddress);
   }
 
+  function getEthBalance(address account) external view returns(uint256){
+    return address(account).balance;
+  }
+
+  function getLinkBalance(address tokenAddress, address account) external view returns(uint256){
+    LinkTokenInterface linkToken = LinkTokenInterface(tokenAddress);
+    uint256 balance = linkToken.balanceOf(account);
+    return balance;
+  }
+
   function formatAddress(address a) external pure returns(address) {
     return a;
   }

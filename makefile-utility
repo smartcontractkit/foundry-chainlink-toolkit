@@ -64,29 +64,29 @@ endef
 ifeq ($(shell uname), Darwin)
 # Set variable for MacOS
 	ifeq ($(shell uname -m), amd64)
-	OCRHelperPath = external/OCRHelper/bin/ocr-helper-darwin-amd64
+	OCRHelperPath = ${FCT_PLUGIN_PATH}/external/OCRHelper/bin/ocr-helper-darwin-amd64
 	else ifeq ($(shell uname -m), x86_64)
-	OCRHelperPath = external/OCRHelper/bin/ocr-helper-darwin-amd64
+	OCRHelperPath = ${FCT_PLUGIN_PATH}/external/OCRHelper/bin/ocr-helper-darwin-amd64
 	else ifeq ($(shell uname -m), arm64)
-	OCRHelperPath = external/OCRHelper/bin/ocr-helper-darwin-arm64
+	OCRHelperPath = ${FCT_PLUGIN_PATH}/external/OCRHelper/bin/ocr-helper-darwin-arm64
 	endif
 else ifeq ($(shell uname), Linux)
 # Set variable for Linux
 	ifeq ($(shell uname -m), amd64)
-	OCRHelperPath = external/OCRHelper/bin/ocr-helper-linux-amd64
+	OCRHelperPath = ${FCT_PLUGIN_PATH}/external/OCRHelper/bin/ocr-helper-linux-amd64
 	else ifeq ($(shell uname -m), x86_64)
-	OCRHelperPath = external/OCRHelper/bin/ocr-helper-linux-amd64
+	OCRHelperPath = ${FCT_PLUGIN_PATH}/external/OCRHelper/bin/ocr-helper-linux-amd64
 	else ifeq ($(shell uname -m), arm)
-	OCRHelperPath = external/OCRHelper/bin/ocr-helper-linux-arm
+	OCRHelperPath = ${FCT_PLUGIN_PATH}/external/OCRHelper/bin/ocr-helper-linux-arm
 	else ifeq ($(shell uname -m), arm64)
-	OCRHelperPath = external/OCRHelper/bin/ocr-helper-linux-arm64
+	OCRHelperPath = ${FCT_PLUGIN_PATH}/external/OCRHelper/bin/ocr-helper-linux-arm64
 	endif
 else
 # Set variable for other operating systems, binary has to be built in advance
-	OCRHelperPath = external/OCRHelper/bin/ocr-helper
+	OCRHelperPath = ${FCT_PLUGIN_PATH}/external/OCRHelper/bin/ocr-helper
 endif
 
-OCRHelperPathWildcard = "$(wildcard ${PWD}/${FCT_PLUGIN_PATH}/${OCRHelperPath})"
+OCRHelperPathWildcard = "$(wildcard ${PWD}/${OCRHelperPath})"
 
 .PHONY: fct-login-node fct-prepare-ocr-config fct-check-docker-network
 

@@ -1,7 +1,6 @@
 # include .env file and export its env vars
 # (-include to ignore error if it does not exist)
 include .env
-include makefile-utility
 
 # exclude this .SILENT target to display all command lines
 .SILENT:
@@ -10,6 +9,8 @@ include makefile-utility
 # You can override it with .env or by passing it as a parameter to a target
 CONTAINERS_COUNT ?= 8
 FCT_PLUGIN_PATH ?= .
+
+include ${FCT_PLUGIN_PATH}/makefile-utility
 
 .PHONY: fct-help fct-anvil
 

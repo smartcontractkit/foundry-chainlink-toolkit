@@ -16,16 +16,16 @@ include ${FCT_PLUGIN_PATH}/makefile-utility
 
 ## ----------------------------------------------------------------------
 ## Foundry-Chainlink Toolkit.
-## See the DOCUMENTATION.md file for more information.
+## See the DOCUMENTATION.md for more information.
 ## ----------------------------------------------------------------------
 ## Utility scripts:
 fct-help:   ## Show help
 	@sed -ne '/@sed/!s/## //p' $(MAKEFILE_LIST)
 
-fct-anvil:  ## Run anvil
+fct-anvil:  ## Run Anvil
 	anvil --block-time 10 --chain-id 1337 -m 'test test test test test test test test test test test junk'
 
-fct-init:   ## Init testing environment
+fct-init:   ## Initialize testing environment
 	printf "%s\n" "Deploying Link Token contract. Please wait..."; \
 	res=$$(make fct-deploy-link-token); \
 	printf "%s\n" "Done"; \
@@ -126,7 +126,7 @@ fct-get-node-config:
 
 ## ----------------------------------------------------------------------
 ## Chainlink Jobs automatic setup scripts:
-fct-setup-job: ## Set up a Chainlink Job
+fct-setup-job:           ## Set up a Chainlink Job
 	res=$$(bash ${FCT_PLUGIN_PATH}/utils/select-option.sh \
 		"Select a Chainlink Job type to be set up: " \
 		"Direct Request" "Cron" "Webhook" "Keeper" "Flux" "OCR" \
@@ -345,7 +345,7 @@ fct-create-ocr-jobs:     ## Create OCR Jobs: first node in a Chainlink cluster i
 
 ## ----------------------------------------------------------------------
 ## Chainlink Jobs helper scripts:
-fct-job-helper:     ## Manage Chainlink Jobs
+fct-job-helper:          ## Manage Chainlink Jobs
 	res=$$(bash ${FCT_PLUGIN_PATH}/utils/select-option.sh \
 		"Select what you'd like to do: " \
 		"Get a Job ID" "Get an external Job ID" "Get the latest Webhook Job ID" "Run an existing Webhook Job" "Delete an existing Chainlink Job" \
@@ -419,7 +419,7 @@ fct-delete-job:
 
 ## ----------------------------------------------------------------------
 ## Chainlink Smart Contracts deployment scripts:
-fct-deploy-contract:  ## Deploy a Chainlink Smart Contract
+fct-deploy-contract:     ## Deploy a Chainlink Smart Contract
 	res=$$(bash ${FCT_PLUGIN_PATH}/utils/select-option.sh \
 		"Select a Smart Contract to be deployed: " \
 		"Link Token" "Oracle" "Direct Request Consumer" "Cron Consumer" "Keeper Consumer" "Flux Aggregator" "Offchain Aggregator" \
@@ -506,7 +506,7 @@ fct-deploy-offchain-aggregator:
 
 ## ----------------------------------------------------------------------
 ## ETH and Link Token helper scripts:
-fct-funds-helper: ## Manage ETH and Link Tokens
+fct-funds-helper:        ## Manage ETH and Link Tokens
 	res=$$(bash ${FCT_PLUGIN_PATH}/utils/select-option.sh \
 		"Select what you'd like to do: " \
 		"Transfer ETH" "Transfer ETH to a Chainlink node" "Transfer ETH to all Chainlink nodes" \

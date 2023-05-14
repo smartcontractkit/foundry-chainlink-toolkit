@@ -1,9 +1,14 @@
+.idea
+.vscode/
+.DS_Store
+src/.DS_Store
 # common
 .env
+external/OCRHelper/bin/ocr-helper
 # forge
+.gas-snapshot
 broadcast/
 cache/
-lib/
 # forge artifacts
 out/*
 !out/ChainlinkCronConsumer.sol

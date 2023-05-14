@@ -37,91 +37,6 @@ fct-init:   ## Initialize testing environment
 	make fct-transfer-eth-to-nodes; \
 	make fct-transfer-link-to-nodes;
 
-.PHONY: fct-run-nodes fct-restart-nodes fct-get-node-info fct-get-node-info-select fct-get-node-eth-keys fct-get-node-ocr-keys fct-get-node-p2p-keys fct-get-node-address fct-get-node-config
-
-## ----------------------------------------------------------------------
-## Chainlink Nodes management scripts:
-fct-run-nodes:      ## Spin up a Chainlink cluster of 5 Chainlink nodes
-	$(call check_defined, ROOT) \
-	$(call check_defined, ETH_CHAIN_ID) \
-	$(call check_defined, ETH_URL) \
-	$(call check_defined, CHAINLINK_CONTAINER_NAME) \
-	$(call check_defined, POSTGRES_USER) \
-	$(call check_defined, POSTGRES_PASSWORD) \
-	$(call check_defined, LINK_CONTRACT_ADDRESS) \
-	printf "%s\n" "Spinning up Chainlink cluster. Please wait..."; \
-	docker compose -f ${FCT_PLUGIN_PATH}/docker-compose.yaml --env-file ./.env up -d
-
-fct-restart-nodes:  ## Clean restart of a Chainlink cluster
-	$(call check_defined, ROOT) \
-	$(call check_defined, ETH_CHAIN_ID) \
-	$(call check_defined, ETH_URL) \
-	$(call check_defined, CHAINLINK_CONTAINER_NAME) \
-	$(call check_defined, POSTGRES_USER) \
-	$(call check_defined, POSTGRES_PASSWORD) \
-	$(call check_defined, LINK_CONTRACT_ADDRESS) \
-	printf "%s\n" "Restarting Chainlink cluster. Please wait..."; \
-	docker compose down; \
-	docker volume rm ${COMPOSE_PROJECT_NAME}_prometheus_data; \
-	rm -rf ${FCT_PLUGIN_PATH}/chainlink/foundry-chainlink-node*; \
-	docker compose -f ${FCT_PLUGIN_PATH}/docker-compose.yaml --env-file ./.env up -d
-
-fct-get-node-info:  ## Get a Chainlink node info
-	res=$$(bash ${FCT_PLUGIN_PATH}/utils/select-option.sh \
-		"Select a Chainlink node info to show: " \
-		"Address" "ETH keys" "OCR keys" "P2P keys" "Config"  \
-	); \
-	make fct-get-node-info-select SELECTED_OPTION="$$res";
-
-fct-get-node-info-select:
-ifeq ("$(SELECTED_OPTION)","Address")
-	make fct-get-node-address;
-else ifeq ("$(SELECTED_OPTION)","ETH keys")
-	make fct-get-node-eth-keys;
-else ifeq ("$(SELECTED_OPTION)","OCR keys")
-	make fct-get-node-ocr-keys;
-else ifeq ("$(SELECTED_OPTION)","P2P keys")
-	make fct-get-node-p2p-keys;
-else ifeq ("$(SELECTED_OPTION)","Config")
-	make fct-get-node-config;
-else
-	echo "$(SELECTED_OPTION)";
-endif
-
-fct-get-node-eth-keys:
-	$(call check_set_parameter,NODE_ID,nodeId) \
-	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
-	make fct-login-node NODE_ID=$$nodeId >/dev/null 2>&1; \
-	docker exec $$chainlinkContainerName chainlink -j keys eth list
-
-fct-get-node-ocr-keys:
-	$(call check_set_parameter,NODE_ID,nodeId) \
-	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
-	make fct-login-node NODE_ID=$$nodeId >/dev/null 2>&1; \
-	docker exec $$chainlinkContainerName chainlink -j keys ocr list
-
-fct-get-node-p2p-keys:
-	$(call check_set_parameter,NODE_ID,nodeId) \
-	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
-	make fct-login-node NODE_ID=$$nodeId >/dev/null 2>&1; \
-	docker exec $$chainlinkContainerName chainlink -j keys p2p list
-
-fct-get-node-address:
-	$(call check_set_parameter,NODE_ID,nodeId) \
-	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
-	make fct-login-node NODE_ID=$$nodeId >/dev/null 2>&1; \
-	$(call get_node_address,$$chainlinkContainerName,nodeAddress) \
-	printf "%s" $$nodeAddress
-
-fct-get-node-config:
-	$(call check_set_parameter,NODE_ID,nodeId) \
-	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
-	make fct-login-node NODE_ID=$$nodeId >/dev/null 2>&1; \
-	$(call get_node_address,$$chainlinkContainerName,nodeAddress) \
-	$(call get_ocr_keys,$$chainlinkContainerName,_,onChainSigningAddress,offChainPublicKey,configPublicKey) \
-	$(call get_p2p_keys,$$chainlinkContainerName,peerId,_) \
-	printf "%s" "$$nodeAddress,$$onChainSigningAddress,$$offChainPublicKey,$$configPublicKey,$$peerId"
-
 .PHONY: fct-setup-job fct-setup-job-select fct-setup-direct-request-job fct-setup-cron-job fct-setup-webhook-job fct-setup-keeper-job fct-setup-ocr-job fct-setup-flux-job
 
 ## ----------------------------------------------------------------------
@@ -204,6 +119,91 @@ else
     offchainAggregatorAddress=$$(echo $$res | grep -m1 -o '== Logs == [^ ]*' | cut -d' ' -f4); \
 	forge script ${FCT_PLUGIN_PATH}/script/OCRJob.s.sol --sig "finalize(address)" $$offchainAggregatorAddress --ffi --rpc-url ${RPC_URL} --broadcast --private-key ${PRIVATE_KEY} --out ${FCT_PLUGIN_PATH}/out
 endif
+
+.PHONY: fct-run-nodes fct-restart-nodes fct-get-node-info fct-get-node-info-select fct-get-node-eth-keys fct-get-node-ocr-keys fct-get-node-p2p-keys fct-get-node-address fct-get-node-config
+
+## ----------------------------------------------------------------------
+## Chainlink Nodes management scripts:
+fct-run-nodes:           ## Spin up a Chainlink cluster of 5 Chainlink nodes
+	$(call check_defined, ROOT) \
+	$(call check_defined, ETH_CHAIN_ID) \
+	$(call check_defined, ETH_URL) \
+	$(call check_defined, CHAINLINK_CONTAINER_NAME) \
+	$(call check_defined, POSTGRES_USER) \
+	$(call check_defined, POSTGRES_PASSWORD) \
+	$(call check_defined, LINK_CONTRACT_ADDRESS) \
+	printf "%s\n" "Spinning up Chainlink cluster. Please wait..."; \
+	docker compose -f ${FCT_PLUGIN_PATH}/docker-compose.yaml --env-file ./.env up -d
+
+fct-restart-nodes:       ## Clean restart of a Chainlink cluster
+	$(call check_defined, ROOT) \
+	$(call check_defined, ETH_CHAIN_ID) \
+	$(call check_defined, ETH_URL) \
+	$(call check_defined, CHAINLINK_CONTAINER_NAME) \
+	$(call check_defined, POSTGRES_USER) \
+	$(call check_defined, POSTGRES_PASSWORD) \
+	$(call check_defined, LINK_CONTRACT_ADDRESS) \
+	printf "%s\n" "Restarting Chainlink cluster. Please wait..."; \
+	docker compose down; \
+	docker volume rm ${COMPOSE_PROJECT_NAME}_prometheus_data; \
+	rm -rf ${FCT_PLUGIN_PATH}/chainlink/foundry-chainlink-node*; \
+	docker compose -f ${FCT_PLUGIN_PATH}/docker-compose.yaml --env-file ./.env up -d
+
+fct-get-node-info:       ## Get a Chainlink node info
+	res=$$(bash ${FCT_PLUGIN_PATH}/utils/select-option.sh \
+		"Select a Chainlink node info to show: " \
+		"Address" "ETH keys" "OCR keys" "P2P keys" "Config"  \
+	); \
+	make fct-get-node-info-select SELECTED_OPTION="$$res";
+
+fct-get-node-info-select:
+ifeq ("$(SELECTED_OPTION)","Address")
+	make fct-get-node-address;
+else ifeq ("$(SELECTED_OPTION)","ETH keys")
+	make fct-get-node-eth-keys;
+else ifeq ("$(SELECTED_OPTION)","OCR keys")
+	make fct-get-node-ocr-keys;
+else ifeq ("$(SELECTED_OPTION)","P2P keys")
+	make fct-get-node-p2p-keys;
+else ifeq ("$(SELECTED_OPTION)","Config")
+	make fct-get-node-config;
+else
+	echo "$(SELECTED_OPTION)";
+endif
+
+fct-get-node-eth-keys:
+	$(call check_set_parameter,NODE_ID,nodeId) \
+	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
+	make fct-login-node NODE_ID=$$nodeId >/dev/null 2>&1; \
+	docker exec $$chainlinkContainerName chainlink -j keys eth list
+
+fct-get-node-ocr-keys:
+	$(call check_set_parameter,NODE_ID,nodeId) \
+	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
+	make fct-login-node NODE_ID=$$nodeId >/dev/null 2>&1; \
+	docker exec $$chainlinkContainerName chainlink -j keys ocr list
+
+fct-get-node-p2p-keys:
+	$(call check_set_parameter,NODE_ID,nodeId) \
+	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
+	make fct-login-node NODE_ID=$$nodeId >/dev/null 2>&1; \
+	docker exec $$chainlinkContainerName chainlink -j keys p2p list
+
+fct-get-node-address:
+	$(call check_set_parameter,NODE_ID,nodeId) \
+	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
+	make fct-login-node NODE_ID=$$nodeId >/dev/null 2>&1; \
+	$(call get_node_address,$$chainlinkContainerName,nodeAddress) \
+	printf "%s" $$nodeAddress
+
+fct-get-node-config:
+	$(call check_set_parameter,NODE_ID,nodeId) \
+	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) \
+	make fct-login-node NODE_ID=$$nodeId >/dev/null 2>&1; \
+	$(call get_node_address,$$chainlinkContainerName,nodeAddress) \
+	$(call get_ocr_keys,$$chainlinkContainerName,_,onChainSigningAddress,offChainPublicKey,configPublicKey) \
+	$(call get_p2p_keys,$$chainlinkContainerName,peerId,_) \
+	printf "%s" "$$nodeAddress,$$onChainSigningAddress,$$offChainPublicKey,$$configPublicKey,$$peerId"
 
 .PHONY: fct-create-direct-request-job fct-create-cron-job fct-create-webhook-job fct-create-keeper-job fct-create-keeper-jobs fct-create-ocr-bootstrap-job fct-create-ocr-job fct-create-ocr-jobs fct-create-flux-job fct-create-flux-jobs fct-run-webhook-job fct-delete-job
 

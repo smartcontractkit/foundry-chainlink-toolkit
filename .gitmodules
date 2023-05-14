@@ -7,3 +7,6 @@
 [submodule "lib/chainlink-testing-framework"]
 	path = lib/chainlink-testing-framework
 	url = https://github.com/smartcontractkit/chainlink-testing-framework
+[submodule "lib/chainlink-brownie-contracts"]
+	path = lib/chainlink-brownie-contracts
+	url = https://github.com/smartcontractkit/chainlink-brownie-contracts

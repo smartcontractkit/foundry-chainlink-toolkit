@@ -95,7 +95,11 @@ forge install foundry-rs/forge-std
 ```
 
 > **Note**  
-In addition to being used as a plugin, this toolkit is ready to be used as a demo standalone application.
+> In addition to being used as a plugin, this toolkit is ready to be used as a demo standalone application.  
+> In this case, to install dependencies, run:
+> ```
+> git submodule update
+> ```
 
 ### Set up environment variables
 Based on the [env.template](env.template) - create or update an `.env` file in the root directory of your project.

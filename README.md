@@ -157,7 +157,7 @@ For a more detailed description of the available scripts, you can refer to [DOCU
 ```
 make fct-init
 ```
-[This command](DOCUMENTATION.md#initialize-test-environment) automatically initializes the test environment, in particular, it spins up a Chainlink cluster of 5 Chainlink nodes.
+[This command](DOCUMENTATION.md#initialize-test-environment) automatically initializes the test environment, in particular, it makes clean spin-up of a Chainlink cluster of 5 Chainlink nodes.
 
 Once Chainlink cluster is launched, a Chainlink nodes' Operator GUI will be available at:
 - http://127.0.0.1:6711 - Chainlink node 1

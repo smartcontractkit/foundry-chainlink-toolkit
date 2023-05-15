@@ -155,7 +155,7 @@ contract FFIScript is Script {
     cmds[0] = "make";
     cmds[1] = "fct-run-webhook-job";
     cmds[2] = Utils.append("NODE_ID=", nodeId);
-    cmds[2] = Utils.append("WEBHOOK_JOB_ID=", jobId);
+    cmds[3] = Utils.append("WEBHOOK_JOB_ID=", jobId);
     vm.ffi(cmds);
   }
 

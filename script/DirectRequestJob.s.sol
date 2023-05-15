@@ -20,7 +20,7 @@ contract DirectRequestJobScript is Script {
 
     ChainlinkDirectRequestConsumerScript chainlinkConsumerScript = new ChainlinkDirectRequestConsumerScript();
     address consumer = chainlinkConsumerScript.deploy(linkTokenAddress);
-    console.logString(Utils.append("Consumer address: ", vm.toString(consumer)));
+    console.logString(Utils.append("Direct Request Consumer address: ", vm.toString(consumer)));
 
     HelperScript helperScript = new HelperScript();
     helperScript.transferLink(consumer, linkTokenAddress, 100000000000000000000);

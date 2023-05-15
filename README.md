@@ -321,7 +321,7 @@ More info on Chainlink environment variables can be found here: https://docs.cha
 This directory contains external libraries.
 
 #### OCRHelper [*](external%2FOCRHelper)
-This Go library is based on https://github.com/smartcontractkit/chainlink integration tests and is used to prepare configuration parameters for Offchain Aggregator contract.  
+This Go library is based on https://github.com/smartcontractkit/chainlink-testing-framework integration tests and is used to prepare configuration parameters for Offchain Aggregator contract.  
 It has pre-built binaries for platforms: darwin/amd64(x86_64), darwin/arm64, linux/amd64(x86_64), linux/arm,linux/arm64.
 > **Note**  
 > If you use another platform, in the root of the project please run:  

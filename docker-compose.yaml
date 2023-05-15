@@ -2,7 +2,8 @@
 
 version: '3.8'
 volumes:
-  prometheus_data: {}
+  prometheus_data:
+  chainlink_db_data:
 services:
   prometheus:
     extends:

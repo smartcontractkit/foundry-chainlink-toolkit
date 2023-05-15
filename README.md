@@ -141,6 +141,9 @@ You can run it using the following command:
 make fct-anvil
 ```
 
+> **Note**  
+> In case the local Ethereum node has been restarted, you should also [re-initialize the Chainlink cluster](#initialize-testing-environment) or perform a [clean spin-up of the Chainlink nodes](DOCUMENTATION.md#restart-a-chainlink-cluster) to avoid possible synchronization errors.
+
 ## Usage
 Scripts for automating the initialization of the test environment and setting up Chainlink jobs will be described below.  
 

@@ -20,12 +20,13 @@ contract ChainlinkDirectRequestConsumerScript is Script {
     return chainlinkConsumer;
   }
 
-  function requestEthereumPrice(address consumerAddress, address oracleAddress, string memory jobId) public {
+  function requestEthereumPrice(address consumerAddress, address oracleAddress, string memory externalJobId) public {
+    require(bytes(externalJobId).length > 0, "External Job ID cannot be empty");
     uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
     vm.startBroadcast(deployerPrivateKey);
 
     ChainlinkDirectRequestConsumerInterface chainlinkConsumer = ChainlinkDirectRequestConsumerInterface(consumerAddress);
-    chainlinkConsumer.requestEthereumPrice(oracleAddress, jobId);
+    chainlinkConsumer.requestEthereumPrice(oracleAddress, externalJobId);
 
     vm.stopBroadcast();
   }

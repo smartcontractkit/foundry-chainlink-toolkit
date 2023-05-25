@@ -1,0 +1,126 @@
+# Helpers Scripts
+check_defined = \
+    $(strip $(foreach 1,$1, \
+    $(call __check_defined,$1,$(strip $(value 2)))))
+__check_defined = \
+    $(if $(value $1),, \
+    $(error Undefined env variable $1$(if $2, ($2))))
+
+define check_set_parameter
+	if [ -n "$($1)" ]; then \
+		$2=$($1); \
+	else \
+		$2=$$(read -p "Please enter a value for $1: " param && echo "$$param"); \
+	fi;
+endef
+
+define get_chainlink_container_name
+	$2=$(CHAINLINK_CONTAINER_NAME)$(strip $1)
+endef
+
+# Reading only the first eth key list
+define get_node_address
+	res=$$(docker exec $1 chainlink -j keys eth list) && \
+	$2=$$(echo "$$res" | grep -m1 -o '"address": "[^"]*"' | head -1 | cut -d'"' -f4)
+endef
+
+# Reading only the first ocr key list
+define get_ocr_keys
+	res=$$(docker exec $1 chainlink -j keys ocr list) && \
+	$2=$$(echo $$res | grep -m1 -o '"id": "[^"]*"' | head -1 | cut -d'"' -f4) && \
+	$3=$$(echo $$res | grep -m1 -o '"onChainSigningAddress": "[^"]*"' | head -1 | cut -d'"' -f4 | cut -d'_' -f2) && \
+	$4=$$(echo $$res | grep -m1 -o '"offChainPublicKey": "[^"]*"' | head -1 | cut -d'"' -f4 | cut -d'_' -f2) && \
+	$5=$$(echo $$res | grep -m1 -o '"configPublicKey": "[^"]*"' | head -1 | cut -d'"' -f4 | cut -d'_' -f2)
+endef
+
+# Reading only the first p2p key list
+define get_p2p_keys
+	res=$$(docker exec $1 chainlink -j keys p2p list) && \
+	$2=$$(echo $$res | grep -m 1 -o '"peerId": "[^"]*"' | head -1 | cut -d'"' -f4 | cut -d'_' -f2) && \
+	$3=$$(echo $$res | grep -m 1 -o '"publicKey": "[^"]*"' | head -1 | cut -d'"' -f4)
+endef
+
+# Reading only the first matched job id
+define get_job_id
+	res=$$(docker exec $1 chainlink -j jobs list) && \
+	$3=$$(echo "$$res" | grep -o -B 1 '"name": "[^"]*"' | grep -m 1 -B 1 -F "$2" | grep -o '"id": "[^"]*"' | cut -d'"' -f4)
+endef
+
+define get_external_job_id
+	res=$$(docker exec $1 chainlink -j jobs list) && \
+	$3=$$(echo "$$res" | grep -o -A 6 '"name": "[^"]*"' | grep -m 1 -A 6 -F "$2" | grep -o '"externalJobID": "[^"]*"' | cut -d'"' -f4 | tr -d '-')
+endef
+
+define get_last_webhook_job_id
+	res=$$(docker exec $1 chainlink -j jobs list) && \
+	$2=$$(echo "$$res" | grep -o -B 2 '"type": "[^"]*"' | grep -m 1 -B 2 -F "webhook" | grep -o '"id": "[^"]*"' | cut -d'"' -f4)
+endef
+
+define get_cookie
+	$2=$$(cat ${FCT_PLUGIN_PATH}/chainlink/$1/cookie)
+endef
+
+define format_eip55_address
+	res=$$(forge script ${FCT_PLUGIN_PATH}/script/Helper.s.sol --sig "formatAddress(address)" $1) && \
+	$2=$$(echo "$$res" | tail -c 43)
+endef
+
+# Set OCRHelperPath variable
+ifeq ($(shell uname), Darwin)
+# Set variable for MacOS
+	ifeq ($(shell uname -m), amd64)
+	OCRHelperPath = ${FCT_PLUGIN_PATH}/external/OCRHelper/bin/ocr-helper-darwin-amd64
+	else ifeq ($(shell uname -m), x86_64)
+	OCRHelperPath = ${FCT_PLUGIN_PATH}/external/OCRHelper/bin/ocr-helper-darwin-amd64
+	else ifeq ($(shell uname -m), arm64)
+	OCRHelperPath = ${FCT_PLUGIN_PATH}/external/OCRHelper/bin/ocr-helper-darwin-arm64
+	endif
+else ifeq ($(shell uname), Linux)
+# Set variable for Linux
+	ifeq ($(shell uname -m), amd64)
+	OCRHelperPath = ${FCT_PLUGIN_PATH}/external/OCRHelper/bin/ocr-helper-linux-amd64
+	else ifeq ($(shell uname -m), x86_64)
+	OCRHelperPath = ${FCT_PLUGIN_PATH}/external/OCRHelper/bin/ocr-helper-linux-amd64
+	else ifeq ($(shell uname -m), arm)
+	OCRHelperPath = ${FCT_PLUGIN_PATH}/external/OCRHelper/bin/ocr-helper-linux-arm
+	else ifeq ($(shell uname -m), arm64)
+	OCRHelperPath = ${FCT_PLUGIN_PATH}/external/OCRHelper/bin/ocr-helper-linux-arm64
+	endif
+else
+# Set variable for other operating systems, binary has to be built in advance
+	OCRHelperPath = ${FCT_PLUGIN_PATH}/external/OCRHelper/bin/ocr-helper
+endif
+
+OCRHelperPathWildcard = "$(wildcard ${PWD}/${OCRHelperPath})"
+
+.PHONY: fct-login-node fct-prepare-ocr-config fct-check-docker-network
+
+fct-login-node:
+	$(call check_defined, ROOT) \
+	$(call check_defined, CHAINLINK_CONTAINER_NAME) \
+	$(call check_set_parameter,NODE_ID,nodeId) \
+	$(call get_chainlink_container_name,$$nodeId,chainlinkContainerName) && \
+	printf "%s\n" "Logging in Chainlink Node $$nodeId..." && \
+	docker exec $$chainlinkContainerName bash -c 'chainlink admin login -f ${ROOT}/settings/chainlink_api_credentials 2> /dev/null'
+
+fct-prepare-ocr-config:
+	$(call check_defined, NODE_ADDRESSES) \
+	$(call check_defined, OFFCHAIN_PUBLIC_KEYS) \
+	$(call check_defined, CONFIG_PUBLIC_KEYS) \
+	$(call check_defined, ONCHAIN_SIGNING_ADDRESSES) \
+	$(call check_defined, PEER_IDS) \
+	$(eval OCR_CONFIG=$(shell $(OCRHelperPath) \
+		$(NODE_ADDRESSES) \
+		$(OFFCHAIN_PUBLIC_KEYS) \
+		$(CONFIG_PUBLIC_KEYS) \
+		$(ONCHAIN_SIGNING_ADDRESSES) \
+		$(PEER_IDS))) \
+	echo "$(OCR_CONFIG)"
+
+fct-check-docker-network:
+	$(call check_defined, COMPOSE_PROJECT_NAME) \
+	bash ${FCT_PLUGIN_PATH}/utils/check-docker-network.sh "${COMPOSE_PROJECT_NAME}_default" $(CONTAINERS_COUNT);
+
+fct-check-rpc-url:
+	$(call check_defined, RPC_URL) \
+	bash ${FCT_PLUGIN_PATH}/utils/check-rpc-endpoint.sh ${RPC_URL};

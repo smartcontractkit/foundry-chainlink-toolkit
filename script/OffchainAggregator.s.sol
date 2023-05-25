@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: UNLICENSED
+pragma experimental ABIEncoderV2;
 pragma solidity >=0.6.2 <0.9.0;
 
 import "forge-std/Script.sol";
@@ -14,7 +15,6 @@ contract OffchainAggregatorScript is Script {
 
   function deploy(address linkTokenAddress) external returns(address) {
     uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
-    uint256 deployerAddress = vm.envUint("DEPLOYER_ADDRESS");
 
     vm.startBroadcast(deployerPrivateKey);
 
@@ -42,9 +42,9 @@ contract OffchainAggregatorScript is Script {
     return offchainAggregator;
   }
 
-  function setPayees(address offchainAggregatorAddress, address[] calldata nodesArray) external {
+  function setPayees(address offchainAggregatorAddress, address[] memory nodesArray) public {
     uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
-    address deployerAddress = vm.envAddress("DEPLOYER_ADDRESS");
+    address deployerAddress = vm.addr(deployerPrivateKey);
 
     address[] memory payees = new address[](4);
     payees[0] = deployerAddress;
@@ -60,14 +60,22 @@ contract OffchainAggregatorScript is Script {
     vm.stopBroadcast();
   }
 
+  function setPayees(address offchainAggregatorAddress, string[] memory nodesArrayStr) public {
+    address[] memory nodesArray = new address[](nodesArrayStr.length);
+    for (uint i; i < nodesArrayStr.length; i++) {
+      nodesArray[i] = vm.parseAddress(nodesArrayStr[i]);
+    }
+    setPayees(offchainAggregatorAddress, nodesArray);
+  }
+
   function setConfig(
     address offchainAggregatorAddress,
-    address[] calldata signers,
-    address[] calldata transmitters,
+    address[] memory signers,
+    address[] memory transmitters,
     uint8 threshold,
     uint64 encodedConfigVersion,
-    bytes calldata encoded
-  ) external {
+    bytes memory encoded
+  ) public {
     uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
 
     vm.startBroadcast(deployerPrivateKey);

@@ -1,0 +1,56 @@
+.SILENT:
+.PHONY: fct-install-dependencies fct-build-artifacts fct-build-ocr-helper
+
+# Install Forge dependencies.
+fct-install-dependencies:
+	forge install foundry-rs/forge-std --no-git --no-commit; \
+	forge install smartcontractkit/chainlink-brownie-contracts@0.6.1 --no-git --no-commit; \
+	forge install smartcontractkit/chainlink-testing-framework@v1.11.5 --no-git --no-commit; \
+	forge install OpenZeppelin/openzeppelin-contracts@v4.8.2 --no-git --no-commit
+
+# Build Chainlink contracts artifacts.
+# Forge can not build individual contracts in a directory, so,
+# During script execution, necessary contracts are copied to the `tmp` directory,
+# Relative dependencies paths are being replaced with the new ones,
+# Contracts are compiled with the required compiler version.
+fct-build-artifacts:
+	printf "%s\n" "Building Chainlink contracts..."; \
+	mkdir -p tmp; \
+	touch ./tmp/Oracle.sol && \
+	touch ./tmp/FluxAggregator.sol && \
+	sed -e 's/import ".\//import "@chainlink\/v0.6\//g' ./lib/chainlink-brownie-contracts/contracts/src/v0.6/Oracle.sol > ./tmp/Oracle.sol; \
+	sed -e 's/import ".\//import "@chainlink-testing\/v0.6\/src\//g' ./lib/chainlink-testing-framework/contracts/ethereum/v0.6/src/FluxAggregator.sol > ./tmp/FluxAggregator.sol; \
+	forge build --contracts ./tmp/ --skip script test --names --use solc:0.6.6; \
+	rm ./tmp/Oracle.sol; \
+	rm ./tmp/FluxAggregator.sol; \
+	touch ./tmp/LinkToken.sol && \
+	cat ./chainlink/contracts/LinkToken.sol > ./tmp/LinkToken.sol; \
+	forge build --contracts ./tmp/ --skip script test --names --use solc:0.6.12; \
+	rm ./tmp/LinkToken.sol; \
+	touch ./tmp/OffchainAggregator.sol && \
+	sed -e 's/import ".\//import "@chainlink-testing\/v0.7\/src\//g' ./lib/chainlink-testing-framework/contracts/ethereum/v0.7/src/OffchainAggregator.sol > ./tmp/OffchainAggregator.sol; \
+	forge build --contracts ./tmp/ --skip script test --names --use solc:0.7.6; \
+	rm ./tmp/OffchainAggregator.sol; \
+	touch ./tmp/KeeperRegistry1_3.sol && \
+	touch ./tmp/KeeperRegistryLogic1_3.sol && \
+	sed -e 's/import ".\//import "@chainlink\/v0.8\//g' -e 's/from ".\//from "@chainlink\/v0.8\//g' ./lib/chainlink-brownie-contracts/contracts/src/v0.8/KeeperRegistry1_3.sol > ./tmp/KeeperRegistry1_3.sol; \
+	sed -e 's/import ".\//import "@chainlink\/v0.8\//g' -e 's/from ".\//from "@chainlink\/v0.8\//g' ./lib/chainlink-brownie-contracts/contracts/src/v0.8/KeeperRegistryLogic1_3.sol > ./tmp/KeeperRegistryLogic1_3.sol; \
+	forge build --contracts ./tmp/ --skip script test --names --use solc:0.8.6; \
+	rm ./tmp/KeeperRegistry1_3.sol; \
+	rm ./tmp/KeeperRegistryLogic1_3.sol; \
+	touch ./tmp/ChainlinkCronConsumer.sol && \
+	touch ./tmp/ChainlinkDirectRequestConsumer.sol && \
+	touch ./tmp/ChainlinkKeeperConsumer.sol && \
+	cat ./chainlink/contracts/ChainlinkCronConsumer.sol > ./tmp/ChainlinkCronConsumer.sol; \
+	cat ./chainlink/contracts/ChainlinkDirectRequestConsumer.sol > ./tmp/ChainlinkDirectRequestConsumer.sol; \
+	cat ./chainlink/contracts/ChainlinkKeeperConsumer.sol > ./tmp/ChainlinkKeeperConsumer.sol; \
+	forge build --contracts ./tmp/ --skip script test --names --use solc:0.8.12; \
+	rm ./tmp/ChainlinkCronConsumer.sol; \
+	rm ./tmp/ChainlinkDirectRequestConsumer.sol; \
+	rm ./tmp/ChainlinkKeeperConsumer.sol; \
+	rm -rf tmp; \
+	printf "%s\n" "Done";
+
+# Build external libraries
+fct-build-ocr-helper:
+	cd ./external/OCRHelper && go build -o bin/ocr-helper

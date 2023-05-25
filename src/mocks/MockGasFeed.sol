@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity >=0.6.2 <0.9.0;
 
-import "forge-std/Script.sol";
 import "../interfaces/AggregatorV3Interface.sol";
 
 contract MockGasFeed is AggregatorV3Interface {
@@ -31,16 +30,16 @@ contract MockGasFeed is AggregatorV3Interface {
     return 1;
   }
 
-  function getRoundData(uint80 _roundId)
+  function getRoundData(uint80)
   external
   override
   view
   returns (
-    uint80 roundId,
-    int256 answer,
-    uint256 startedAt,
-    uint256 updatedAt,
-    uint80 answeredInRound
+    uint80,
+    int256,
+    uint256,
+    uint256,
+    uint80
   ) {
     return (
       roundId,
@@ -56,11 +55,11 @@ contract MockGasFeed is AggregatorV3Interface {
   override
   view
   returns (
-    uint80 roundId,
-    int256 answer,
-    uint256 startedAt,
-    uint256 updatedAt,
-    uint80 answeredInRound
+    uint80,
+    int256,
+    uint256,
+    uint256,
+    uint80
   ) {
     return (
       roundId,

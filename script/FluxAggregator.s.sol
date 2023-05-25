@@ -19,7 +19,7 @@ contract FluxAggregatorScript is Script {
 
     address fluxAggregator = deployCode("FluxAggregator.sol:FluxAggregator", abi.encode(
       linkTokenAddress,
-      2000000, // uint128 linkTokenAddress
+      2000000, // uint128 paymentAmount
       30, // uint32 timeout,
       address(mockAggregatorValidator),
       0, // int256 minSubmissionValue
@@ -45,7 +45,7 @@ contract FluxAggregatorScript is Script {
     return fluxAggregator.availableFunds();
   }
 
-  function setOracles(address fluxAggregatorAddress, address[] calldata nodesArray) external {
+  function setOracles(address fluxAggregatorAddress, address[] memory nodesArray) public {
     uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
 
     address[] memory removedOracles;

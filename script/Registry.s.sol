@@ -62,7 +62,7 @@ contract RegistryScript is Script {
     return registry;
   }
 
-  function setKeepers(address registryAddress, address upkeepAddress, address[] calldata nodesArray) external {
+  function setKeepers(address registryAddress, address upkeepAddress, address[] memory nodesArray) public {
     address[] memory payees = new address[](5);
     payees[0] = upkeepAddress;
     payees[1] = upkeepAddress;
@@ -84,7 +84,7 @@ contract RegistryScript is Script {
 
   function registerUpkeep(address registryAddress, address upkeepAddress) external {
     uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
-    address deployerAddress = vm.envAddress("DEPLOYER_ADDRESS");
+    address deployerAddress = vm.addr(deployerPrivateKey);
 
     address payable registryAddressPayable = payable(registryAddress);
     KeeperRegistryInterface registry = KeeperRegistryInterface(registryAddressPayable);
@@ -92,7 +92,7 @@ contract RegistryScript is Script {
     vm.startBroadcast(deployerPrivateKey);
 
     bytes memory checkData = new bytes(0);
-    uint256 upkeepId = registry.registerUpkeep(upkeepAddress, 499999, deployerAddress, checkData);
+    registry.registerUpkeep(upkeepAddress, 499999, deployerAddress, checkData);
 
     vm.stopBroadcast();
   }

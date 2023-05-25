@@ -20,10 +20,4 @@ contract LinkTokenScript is Script {
 
     return linkToken;
   }
-
-  function getBalance(address tokenAddress, address account) external view returns(uint256){
-    LinkTokenInterface linkToken = LinkTokenInterface(tokenAddress);
-    uint256 balance = linkToken.balanceOf(account);
-    return balance;
-  }
 }

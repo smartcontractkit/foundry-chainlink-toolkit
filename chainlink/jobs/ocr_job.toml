@@ -1,0 +1,28 @@
+type               = "offchainreporting"
+schemaVersion      = 1
+name               = "Get > Uint256 OFFCHAIN_AGGREGATOR_ADDRESS (ocr)"
+# Optional External Job ID: Automatically generated if unspecified
+# externalJobID = "b1d42cd5-4a3a-4200-b1f7-25a68e48aad8"
+contractAddress    = "OFFCHAIN_AGGREGATOR_ADDRESS"
+blockchainTimeout  = "20s"
+contractConfigConfirmations = 3
+contractConfigTrackerPollInterval = "1m"
+contractConfigTrackerSubscribeInterval = "2m"
+p2pBootstrapPeers  = [
+    "/dns4/host.docker.internal/tcp/6690/p2p/BOOTSTRAP_P2P_KEY",
+]
+p2pPeerID          = "PEER_ID"
+isBootstrapPeer    = false
+forwardingAllowed  = false
+keyBundleID        = "OCR_KEY_ID"
+monitoringEndpoint = "chain.link:4321"
+transmitterAddress = "NODE_ADDRESS"
+observationTimeout = "10s"
+
+observationSource = """
+   fetch        [type="http" method=GET url="https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD" allowUnrestrictedNetworkAccess="true"]
+   parse        [type="jsonparse" path="USD" data="$(fetch)"]
+   multiply     [type="multiply" input="$(parse)" times=100]
+
+   fetch -> parse -> multiply
+"""

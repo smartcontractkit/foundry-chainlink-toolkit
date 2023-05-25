@@ -1,0 +1,7 @@
+type = "keeper"
+schemaVersion = 1
+name = "Get > Uint256 REGISTRY_ADDRESS (keeper)"
+# Optional External Job ID: Automatically generated if unspecified
+# externalJobID = "b1d42cd5-4a3a-4200-b1f7-25a68e48aad8"
+contractAddress = "REGISTRY_ADDRESS"
+fromAddress     = "NODE_ADDRESS"

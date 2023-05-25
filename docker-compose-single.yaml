@@ -1,0 +1,44 @@
+# Builds a chainlink single environment based on the specified published docker image version
+
+version: "3.8"
+services:
+  chainlink_db:
+    image: postgres:15
+    container_name: chainlink-db
+    ports:
+      - 5432:5432
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -q -d chainlink -U ${POSTGRES_USER}" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - /var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: chainlink
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    command: postgres -c 'max_connections=${PG_MAX_CONNECTIONS}'
+  chainlink_node:
+    platform: linux/x86_64
+    image: smartcontract/chainlink:1.12.0
+    container_name: ${CHAINLINK_CONTAINER_NAME}
+    ports:
+      - 6688:6688
+    volumes:
+      - ./chainlink:${ROOT}
+    depends_on:
+      chainlink_db:
+        condition: service_healthy
+    command: local node -p ${ROOT}/chainlink_password -a ${ROOT}/chainlink_api_credentials --vrfpassword=${ROOT}/chainlink_api_credentials
+    restart: on-failure
+    environment:
+      - ROOT=${ROOT}
+      - LOG_LEVEL=${LOG_LEVEL}
+      - ETH_CHAIN_ID=${ETH_CHAIN_ID}
+      - CHAINLINK_TLS_PORT=${CHAINLINK_TLS_PORT}
+      - SECURE_COOKIES=${SECURE_COOKIES}
+      - ALLOW_ORIGINS=${ALLOW_ORIGINS}
+      - ETH_URL=${ETH_URL}
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@chainlink_db:5432/chainlink?sslmode=disable
+      - LINK_CONTRACT_ADDRESS=${LINK_CONTRACT_ADDRESS}

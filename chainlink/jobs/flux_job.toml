@@ -1,0 +1,25 @@
+type               = "fluxmonitor"
+schemaVersion      = 1
+name               = "Get > Uint256 FLUX_AGGREGATOR_ADDRESS"
+# Optional External Job ID: Automatically generated if unspecified
+# externalJobID = "b1d42cd5-4a3a-4200-b1f7-25a68e48aad8"
+contractAddress    = "FLUX_AGGREGATOR_ADDRESS"
+
+precision = 0
+threshold = 0
+absoluteThreshold = 0
+
+idleTimerDisabled = true
+
+pollTimerDisabled = true
+
+drumbeatEnabled  = true
+drumbeatSchedule = "CRON_TZ=UTC @every 1m"
+
+observationSource = """
+   fetch        [type="http" method=GET url="https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD" allowUnrestrictedNetworkAccess="true"]
+   parse        [type="jsonparse" path="USD" data="$(fetch)"]
+   multiply     [type="multiply" input="$(parse)" times=100]
+
+   fetch -> parse -> multiply
+"""

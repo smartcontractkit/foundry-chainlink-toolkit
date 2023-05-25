@@ -1,0 +1,13 @@
+type               = "offchainreporting"
+schemaVersion      = 1
+name               = "Get > Uint256 OFFCHAIN_AGGREGATOR_ADDRESS (ocr_bootstrap)"
+# Optional External Job ID: Automatically generated if unspecified
+# externalJobID = "b1d42cd5-4a3a-4200-b1f7-25a68e48aad8"
+contractAddress    = "OFFCHAIN_AGGREGATOR_ADDRESS"
+blockchainTimeout  = "20s"
+contractConfigConfirmations = 3
+contractConfigTrackerPollInterval = "1m"
+contractConfigTrackerSubscribeInterval = "2m"
+p2pBootstrapPeers  = []
+p2pPeerID          = "PEER_ID"
+isBootstrapPeer    = true

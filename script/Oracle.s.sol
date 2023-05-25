@@ -1,21 +1,25 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity >=0.6.0 <0.7.0;
+pragma solidity >=0.6.2 <0.9.0;
 
 import "forge-std/Script.sol";
-import "../src/Oracle.sol";
+import "../src/interfaces/OracleInterface.sol";
 
-contract DeployOracle is Script {
-  function run() external {
+contract OracleScript is Script {
+  function run() external view {
     console.log("Please run deploy(address,address) method.");
   }
 
-  function deploy(address tokenAddress, address nodeAddress) external {
+  function deploy(address tokenAddress, address nodeAddress) external returns(address) {
     uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
+
     vm.startBroadcast(deployerPrivateKey);
 
-    Oracle oracle = new Oracle(tokenAddress);
+    address oracleAddress = deployCode("Oracle.sol:Oracle", abi.encode(tokenAddress));
+    OracleInterface oracle = OracleInterface(oracleAddress);
     oracle.setFulfillmentPermission(nodeAddress, true);
 
     vm.stopBroadcast();
+
+    return oracleAddress;
   }
 }

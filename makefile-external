@@ -31,7 +31,7 @@ fct-init:   ## Initialize testing environment
 	printf "%s\n" "Done" && \
     linkTokenAddress=$$(echo $$res | grep -m1 -o '== Return == [^=]*' | cut -d' ' -f6 | cut -d',' -f1) && \
 	$(call format_eip55_address,$$linkTokenAddress,linkTokenAddressFormatted) && \
-	cp .env temp.env && sed -i '' 's/^\(LINK_CONTRACT_ADDRESS=\)/#\1/' temp.env && mv temp.env .env && \
+	sed 's/^\(LINK_CONTRACT_ADDRESS=\)/#\1/' ".env" > "temp.env" && mv temp.env .env && \
 	echo "LINK_CONTRACT_ADDRESS=$$linkTokenAddressFormatted" >> .env && \
 	make fct-restart-nodes && \
 	printf "%s\n" "Waiting for the Chainlink cluster to spin up..." && \

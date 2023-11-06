@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma experimental ABIEncoderV2;
+
 pragma solidity >=0.6.2 <0.9.0;
+
+import "./TypeAndVersionInterface.sol";
 
 struct State {
   uint32 nonce;
@@ -14,6 +17,12 @@ enum MigrationPermission {
   OUTGOING,
   INCOMING,
   BIDIRECTIONAL
+}
+
+enum UpkeepFormat {
+  V1,
+  V2,
+  V3
 }
 
 struct Config {
@@ -31,7 +40,9 @@ struct Config {
   address registrar;
 }
 
-interface KeeperRegistryInterface {
+interface KeeperRegistryInterface is TypeAndVersionInterface {
+  function paused() external view returns(bool);
+  function upkeepTranscoderVersion() external view returns(UpkeepFormat);
   function registerUpkeep(address target, uint32 gasLimit, address admin, bytes calldata checkData) external returns (uint256 id);
   function checkUpkeep(uint256 id, address from) external returns (
     bytes memory performData,

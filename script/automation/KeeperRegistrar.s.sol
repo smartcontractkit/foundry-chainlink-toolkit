@@ -11,17 +11,17 @@ contract KeeperRegistrarScript is Script {
   function run() external {}
 
   function _registerUpkeep(
-    address keeperRegistrarAddress,
-    address linkTokenAddress,
+    address memory keeperRegistrarAddress,
+    address memory linkTokenAddress,
     uint256 amountInJuels,
     string calldata upkeepName,
     bytes calldata encryptedEmail,
     address upkeepContract,
     uint32 gasLimit,
-    address adminAddress,
+    address memory adminAddress,
     bytes calldata checkData,
     uint96 source,
-    address sender
+    address memory sender
   ) internal {
     LinkTokenInterface linkToken = LinkTokenInterface(linkTokenAddress);
     KeeperRegistrarInterface keeperRegistrar = KeeperRegistrarInterface(keeperRegistrarAddress);
@@ -44,17 +44,17 @@ contract KeeperRegistrarScript is Script {
   }
 
   function _registerUpkeep2_0(
-    address keeperRegistrarAddress,
-    address linkTokenAddress,
+    address memory keeperRegistrarAddress,
+    address memory linkTokenAddress,
     uint256 amountInJuels,
     string calldata upkeepName,
     bytes calldata encryptedEmail,
     address upkeepContract,
     uint32 gasLimit,
-    address adminAddress,
+    address memory adminAddress,
     bytes calldata checkData,
     uint96 source,
-    address sender
+    address memory sender
   ) internal {
     LinkTokenInterface linkToken = LinkTokenInterface(linkTokenAddress);
     KeeperRegistrarInterface keeperRegistrar = KeeperRegistrarInterface(keeperRegistrarAddress);
@@ -77,7 +77,7 @@ contract KeeperRegistrarScript is Script {
   }
 
   function getPendingRequest(
-    address keeperRegistrarAddress,
+    address memory keeperRegistrarAddress,
     bytes32 requestHash
   ) internal view returns (address adminAddress, uint256 balance) {
     KeeperRegistrarInterface keeperRegistrar = KeeperRegistrarInterface(keeperRegistrarAddress);
@@ -85,7 +85,7 @@ contract KeeperRegistrarScript is Script {
   }
 
   function cancelRequest(
-    address keeperRegistrarAddress,
+    address memory keeperRegistrarAddress,
     bytes32 requestHash
   ) internal {
     KeeperRegistrarInterface keeperRegistrar = KeeperRegistrarInterface(keeperRegistrarAddress);

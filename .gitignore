@@ -11,14 +11,24 @@ broadcast/
 cache/
 # forge artifacts
 out/*
+# Sandbox
 !out/ChainlinkCronConsumer.sol
 !out/ChainlinkDirectRequestConsumer.sol
 !out/ChainlinkKeeperConsumer.sol
 !out/FluxAggregator.sol
-!out/LinkToken.sol
-!out/KeeperRegistry1_3.sol
-!out/KeeperRegistryLogic1_3.sol
 !out/OffchainAggregator.sol
 !out/Oracle.sol
+!out/Operator.sol
+!out/LinkToken.sol
+# Functions
+!out/FunctionsRouter.sol
+# Automation
+!out/KeeperRegistry1_2.sol
+!out/KeeperRegistry1_3.sol
+!out/KeeperRegistry2_0.sol
+!out/KeeperRegistryLogic1_3.sol
+!out/KeeperRegistryLogic2_0.sol
+# VRF
+!out/VRFCoordinatorV2.sol
 # chainlink
 chainlink/foundry-chainlink-node*/

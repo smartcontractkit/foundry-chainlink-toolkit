@@ -2,7 +2,7 @@
 pragma solidity >=0.6.2 <0.9.0;
 
 import "forge-std/Script.sol";
-import "../src/interfaces/LinkTokenInterface.sol";
+import "src/interfaces/LinkTokenInterface.sol";
 
 contract HelperScript is Script {
   function run() external view {

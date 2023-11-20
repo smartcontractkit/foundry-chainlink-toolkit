@@ -2,8 +2,8 @@
 pragma solidity >=0.6.2 <0.9.0;
 
 import "forge-std/Script.sol";
-import "../script/ChainlinkCronConsumer.s.sol";
-import "../script/FFI.s.sol";
+import "./ChainlinkCronConsumer.s.sol";
+import "./FFI.s.sol";
 
 contract CronJobScript is Script {
   function run(string memory nodeId) public {

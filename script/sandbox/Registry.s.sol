@@ -3,10 +3,10 @@ pragma experimental ABIEncoderV2;
 pragma solidity >=0.6.2 <0.9.0;
 
 import "forge-std/Script.sol";
-import "../src/interfaces/LinkTokenInterface.sol";
-import { KeeperRegistryInterface, Config, State } from "../src/interfaces/KeeperRegistryInterface.sol";
-import "../src/mocks/MockEthFeed.sol";
-import "../src/mocks/MockGasFeed.sol";
+import "src/interfaces/LinkTokenInterface.sol";
+import { KeeperRegistryInterface, Config, State } from "src/interfaces/KeeperRegistryInterface.sol";
+import "src/mocks/MockEthFeed.sol";
+import "src/mocks/MockGasFeed.sol";
 
 contract RegistryScript is Script {
   address randomAddress = address(0x8A791620dd6260079BF849Dc5567aDC3F2FdC318);

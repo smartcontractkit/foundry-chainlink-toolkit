@@ -2,10 +2,10 @@
 pragma solidity >=0.6.2 <0.9.0;
 
 import "forge-std/Script.sol";
-import "../script/Oracle.s.sol";
-import "../script/ChainlinkDirectRequestConsumer.s.sol";
-import "../script/Helper.s.sol";
-import "../script/FFI.s.sol";
+import "./Oracle.s.sol";
+import "./ChainlinkDirectRequestConsumer.s.sol";
+import "./Helper.s.sol";
+import "./FFI.s.sol";
 
 contract DirectRequestJobScript is Script {
   function run(string memory nodeId) public {

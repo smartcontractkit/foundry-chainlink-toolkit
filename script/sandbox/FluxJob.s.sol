@@ -2,9 +2,9 @@
 pragma solidity >=0.6.2 <0.9.0;
 
 import "forge-std/Script.sol";
-import "../script/FluxAggregator.s.sol";
-import "../script/Helper.s.sol";
-import "../script/FFI.s.sol";
+import "./FluxAggregator.s.sol";
+import "./Helper.s.sol";
+import "./FFI.s.sol";
 
 contract FluxJobScript is Script {
   function run() public {

@@ -2,11 +2,10 @@
 pragma solidity >=0.6.2 <0.9.0;
 
 import "forge-std/Script.sol";
-import { AggregatorV2V3Interface } from "../src/interfaces/AggregatorV2V3Interface.sol";
+import { AggregatorV2V3Interface } from "src/interfaces/AggregatorV2V3Interface.sol";
+import "../helpers/BaseScript.s.sol";
 
-contract DataFeedsScript is Script {
-  function run() external {}
-
+contract DataFeedsScript is BaseScript {
   function getLatestRoundData(
     address dataFeedAddress
   ) external returns(

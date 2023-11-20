@@ -2,14 +2,13 @@
 pragma solidity >=0.6.2 <0.9.0;
 
 import "forge-std/Script.sol";
-import { AggregatorV2V3Interface } from "../src/interfaces/AggregatorV2V3Interface.sol";
+import { AggregatorV2V3Interface } from "src/interfaces/AggregatorV2V3Interface.sol";
+import "../helpers/BaseScript.s.sol";
 
-contract DataFeedsScript is Script {
-  function run() external {}
-
+contract DataFeedsScript is BaseScript {
   function getLatestRoundData(
     address dataFeedAddress
-  ) external returns(
+  ) external view returns(
     uint80 roundId,
     int256 answer,
     uint256 startedAt,
@@ -23,7 +22,7 @@ contract DataFeedsScript is Script {
   function getRoundData(
     address dataFeedAddress,
     uint80 _roundId
-  ) external returns(
+  ) external view returns(
     uint80 roundId,
     int256 answer,
     uint256 startedAt,
@@ -36,21 +35,21 @@ contract DataFeedsScript is Script {
 
   function getDecimals(
     address dataFeedAddress
-  ) external returns(uint8) {
+  ) external view returns(uint8) {
     AggregatorV2V3Interface dataFeed = AggregatorV2V3Interface(dataFeedAddress);
     return dataFeed.decimals();
   }
 
   function getDescription(
     address dataFeedAddress
-  ) external returns(string memory) {
+  ) external view returns(string memory) {
     AggregatorV2V3Interface dataFeed = AggregatorV2V3Interface(dataFeedAddress);
     return dataFeed.description();
   }
 
   function getVersion(
     address dataFeedAddress
-  ) external returns(uint256) {
+  ) external view returns(uint256) {
     AggregatorV2V3Interface dataFeed = AggregatorV2V3Interface(dataFeedAddress);
     return dataFeed.version();
   }

@@ -10,7 +10,6 @@ import "src/interfaces/LinkTokenInterface.sol";
 import "src/interfaces/AccessControllerInterface.sol";
 import "src/libraries/Utils.sol";
 import "../helpers/BaseScript.s.sol";
-import "../helpers/Library.sol";
 
 contract FunctionsScript is BaseScript {
   /// @notice MODIFIERS

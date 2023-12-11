@@ -7,13 +7,13 @@ pragma solidity >=0.6.0 <0.9.0;
  * DO NOT USE THIS CODE IN PRODUCTION.
  */
 
-contract ChainlinkCronConsumer {
-  uint256 public currentPrice;
+contract CronUpkeep {
+  uint256 public calledTimes = 0;
 
-  event EthereumPriceFulfilled(uint256 indexed price);
+  event CronUpkeepCalled(uint256 indexed calledTimes);
 
-  function fulfillEthereumPrice(uint256 _price) public {
-    emit EthereumPriceFulfilled(_price);
-    currentPrice = _price;
+  function callUpkeep() public {
+    calledTimes += 1;
+    emit CronUpkeepCalled(calledTimes);
   }
 }

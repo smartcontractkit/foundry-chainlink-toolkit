@@ -29,7 +29,7 @@ contract ChainlinkKeeperConsumer is AutomationCompatibleInterface {
   }
 
   function checkUpkeep(bytes calldata /* checkData */) external view override returns (bool upkeepNeeded, bytes memory performData) {
-    bytes memory performData = new bytes(0);
+    performData = new bytes(0);
     upkeepNeeded = (block.timestamp - lastTimeStamp) > interval;
 
     // We don't use the checkData in this example. The checkData is defined when the Upkeep was registered.

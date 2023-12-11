@@ -447,7 +447,13 @@ endif
 fct-deploy-link-token: fct-check-rpc-url
 	$(call check_defined, PRIVATE_KEY) \
 	printf "%s\n" "Deploying Link Token contract. Please wait..."; \
-	forge script ${FCT_PLUGIN_PATH}/script/LinkToken.s.sol --sig "deploy()" --rpc-url ${RPC_URL} --broadcast --out ${FCT_PLUGIN_PATH}/out
+	forge script ${FCT_PLUGIN_PATH}/script/sandbox/LinkToken.s.sol --sig "deploy()" --rpc-url ${RPC_URL} --broadcast --out ${FCT_PLUGIN_PATH}/out
+
+fct-deploy-functions-router: fct-check-rpc-url
+	$(call check_defined, PRIVATE_KEY) \
+	$(call check_set_parameter,LINK_CONTRACT_ADDRESS,linkContractAddress) \
+	printf "%s\n" "Deploying Functions Router contract. Please wait..."; \
+	forge script ${FCT_PLUGIN_PATH}/script/sandbox/FunctionsRouter.s.sol --sig "deploy(address)" $$linkContractAddress --rpc-url ${RPC_URL} --broadcast --out ${FCT_PLUGIN_PATH}/out
 
 fct-deploy-oracle: fct-check-rpc-url
 	$(call check_defined, PRIVATE_KEY) \

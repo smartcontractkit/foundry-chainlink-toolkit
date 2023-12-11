@@ -1,5 +1,5 @@
 ## Makefile External Scripts
-Below are the scripts available in the [makefile-external](makefile-external) of the Foundry-Chainlink Toolkit.  
+Below are the scripts available in the [makefile-external](makefile-sandbox) of the Foundry-Chainlink Toolkit.  
 
 All scripts are prefixed with `fct-` to avoid makefile collisions when integrating with other projects.  
 

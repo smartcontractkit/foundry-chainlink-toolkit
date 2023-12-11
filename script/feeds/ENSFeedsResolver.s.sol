@@ -10,7 +10,7 @@ contract ENSFeedResolverScript is BaseScript {
     address ensResolverAddress,
     string memory baseTick,
     string memory quoteTick
-  ) external returns(address) {
+  ) external view returns(address) {
     ENSResolverInterface ensResolver = ENSResolverInterface(ensResolverAddress);
 
     return ensResolver.addr(bytes32(abi.encodePacked(baseTick, "-", quoteTick, ".data.eth")));
@@ -27,9 +27,9 @@ contract ENSFeedResolverScript is BaseScript {
   ) {
     ENSResolverInterface ensResolver = ENSResolverInterface(ensResolverAddress);
 
-    address proxyAggregatorAddress = ensResolver.addr(bytes32(abi.encodePacked("proxy.", baseTick, "-", quoteTick, ".data.eth")));
-    address underlyingAggregatorAddress = ensResolver.addr(bytes32(abi.encodePacked("aggregator.", baseTick, "-", quoteTick, ".data.eth")));
-    address proposedAggregatorAddress = ensResolver.addr(bytes32(abi.encodePacked("proposed.", baseTick, "-", quoteTick, ".data.eth")));
+    proxyAggregatorAddress = ensResolver.addr(bytes32(abi.encodePacked("proxy.", baseTick, "-", quoteTick, ".data.eth")));
+    underlyingAggregatorAddress = ensResolver.addr(bytes32(abi.encodePacked("aggregator.", baseTick, "-", quoteTick, ".data.eth")));
+    proposedAggregatorAddress = ensResolver.addr(bytes32(abi.encodePacked("proposed.", baseTick, "-", quoteTick, ".data.eth")));
 
     return (
       proxyAggregatorAddress,

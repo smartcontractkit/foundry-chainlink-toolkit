@@ -22,7 +22,6 @@ contract VRFScript is BaseScript {
     address vrfCoordinatorAddress,
     uint64 subscriptionId,
     bytes32 keyHash,
-    uint64 subId,
     uint16 minimumRequestConfirmations,
     uint32 callbackGasLimit,
     uint32 numWords

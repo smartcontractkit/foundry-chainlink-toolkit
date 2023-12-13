@@ -20,7 +20,7 @@ contract ENSFeedResolverScript is BaseScript {
     address ensResolverAddress,
     string memory baseTick,
     string memory quoteTick
-  ) external returns(
+  ) external view returns(
     address proxyAggregatorAddress,
     address underlyingAggregatorAddress,
     address proposedAggregatorAddress

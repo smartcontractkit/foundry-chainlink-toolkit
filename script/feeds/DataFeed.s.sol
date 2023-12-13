@@ -6,9 +6,13 @@ import { AggregatorV2V3Interface } from "src/interfaces/AggregatorV2V3Interface.
 import "../helpers/BaseScript.s.sol";
 
 contract DataFeedsScript is BaseScript {
-  function getLatestRoundData(
-    address dataFeedAddress
-  ) external view returns(
+  address public dataFeedAddress;
+
+  constructor (address _dataFeedAddress) {
+    dataFeedAddress = _dataFeedAddress;
+  }
+
+  function getLatestRoundData() external view returns(
     uint80 roundId,
     int256 answer,
     uint256 startedAt,
@@ -20,7 +24,6 @@ contract DataFeedsScript is BaseScript {
   }
 
   function getRoundData(
-    address dataFeedAddress,
     uint80 _roundId
   ) external view returns(
     uint80 roundId,
@@ -33,23 +36,17 @@ contract DataFeedsScript is BaseScript {
     return dataFeed.getRoundData(_roundId);
   }
 
-  function getDecimals(
-    address dataFeedAddress
-  ) external view returns(uint8) {
+  function getDecimals() external view returns(uint8) {
     AggregatorV2V3Interface dataFeed = AggregatorV2V3Interface(dataFeedAddress);
     return dataFeed.decimals();
   }
 
-  function getDescription(
-    address dataFeedAddress
-  ) external view returns(string memory) {
+  function getDescription() external view returns(string memory) {
     AggregatorV2V3Interface dataFeed = AggregatorV2V3Interface(dataFeedAddress);
     return dataFeed.description();
   }
 
-  function getVersion(
-    address dataFeedAddress
-  ) external view returns(uint256) {
+  function getVersion() external view returns(uint256) {
     AggregatorV2V3Interface dataFeed = AggregatorV2V3Interface(dataFeedAddress);
     return dataFeed.version();
   }

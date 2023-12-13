@@ -10,11 +10,12 @@ import "src/interfaces/LinkTokenInterface.sol";
 import "src/interfaces/automation/CronUpkeepFactoryInterface.sol";
 import { KeeperRegistrar1_2Interface } from "src/interfaces/automation/KeeperRegistrar1_2Interface.sol";
 import { KeeperRegistrar2_0Interface } from "src/interfaces/automation/KeeperRegistrar2_0Interface.sol";
-import { AutomationRegistrar2_1Interface } from "src/interfaces/automation/AutomationRegistrar2_1Interface.sol";
+import { AutomationRegistrar2_1Interface, TriggerRegistrationStorage } from "src/interfaces/automation/AutomationRegistrar2_1Interface.sol";
 import "src/interfaces/automation/KeeperRegistryInterface.sol";
 import { KeeperRegistry1_3Interface, State as StateV1_0, Config as ConfigV1_0 } from "src/interfaces/automation/KeeperRegistry1_3Interface.sol";
-import { KeeperRegistry2_0Interface, State as StateV2_0, OnchainConfig as ConfigV2_0 } from "src/interfaces/automation/KeeperRegistry2_0Interface.sol";
-import { KeeperRegistry2_1Interface, State as StateV2_1, OnchainConfig as ConfigV2_1 } from "src/interfaces/automation/KeeperRegistry2_1Interface.sol";
+import { KeeperRegistry2_0Interface, State as StateV2_0, OnchainConfig as ConfigV2_0, UpkeepInfo as UpkeepInfoV2_0 } from "src/interfaces/automation/KeeperRegistry2_0Interface.sol";
+import { KeeperRegistry2_1Interface, State as StateV2_1, OnchainConfig as ConfigV2_1, UpkeepInfo as UpkeepInfoV2_1 } from "src/interfaces/automation/KeeperRegistry2_1Interface.sol";
+import "src/interfaces/automation/KeeperRegistrarInterface.sol";
 import "src/libraries/AutomationUtils.sol";
 import "src/libraries/TypesAndVersions.sol";
 import "src/libraries/Utils.sol";
@@ -141,7 +142,7 @@ contract AutomationScript is BaseScript, TypeAndVersionScript {
     address upkeepAddress,
     uint32 gasLimit,
     bytes calldata checkData
-  ) nestedScriptContext public {
+  ) nestedScriptContext public returns (bytes32 requestHash) {
 
     LinkTokenInterface linkToken = LinkTokenInterface(linkTokenAddress);
 
@@ -151,7 +152,7 @@ contract AutomationScript is BaseScript, TypeAndVersionScript {
     bytes memory offchainConfig = EMPTY_BYTES; // Leave as 0x, placeholder parameter for future use
 
     bytes memory additionalData;
-    if (Utils.compareStrings(keeperRegistrarTypeAndVersion, TypesAndVersions.KeeperRegistrar1_1)) {
+    if (Utils.compareStrings(keeperRegistrarTypeAndVersion, TypesAndVersions.KeeperRegistrar1_2)) {
       bytes4 registerSelector = KeeperRegistrar1_2Interface.register.selector;
       additionalData = abi.encodeWithSelector(
         registerSelector,
@@ -201,7 +202,11 @@ contract AutomationScript is BaseScript, TypeAndVersionScript {
       revert("Unsupported KeeperRegistrar typeAndVersion");
     }
 
+    vm.recordLogs();
     linkToken.transferAndCall(keeperRegistrarAddress, amountInJuels, additionalData);
+    Vm.Log[] memory logEntries = vm.getRecordedLogs();
+
+    return logEntries[2].topics[1];
   }
 
   /**
@@ -223,7 +228,7 @@ contract AutomationScript is BaseScript, TypeAndVersionScript {
     uint32 gasLimit,
     bytes calldata checkData,
     bytes memory triggerConfig
-  ) nestedScriptContext public {
+  ) nestedScriptContext public returns (bytes32 requestHash) {
     require(Utils.compareStrings(keeperRegistrarTypeAndVersion, TypesAndVersions.KeeperRegistrar2_1), "This function is only supported for KeeperRegistrar2_1");
 
     LinkTokenInterface linkToken = LinkTokenInterface(linkTokenAddress);
@@ -253,7 +258,11 @@ contract AutomationScript is BaseScript, TypeAndVersionScript {
       msg.sender
     );
 
+    vm.recordLogs();
     linkToken.transferAndCall(keeperRegistrarAddress, amountInJuels, additionalData);
+    Vm.Log[] memory logEntries = vm.getRecordedLogs();
+
+    return logEntries[2].topics[0];
   }
 
   /**
@@ -279,7 +288,7 @@ contract AutomationScript is BaseScript, TypeAndVersionScript {
     address cronUpkeepFactoryAddress,
     bytes4 upkeepFunctionSelector,
     string calldata cronString
-  ) nestedScriptContext public {
+  ) nestedScriptContext public returns (bytes32 requestHash) {
     require(Utils.compareStrings(keeperRegistrarTypeAndVersion, TypesAndVersions.KeeperRegistrar2_1), "This function is only supported for KeeperRegistrar2_1");
 
     LinkTokenInterface linkToken = LinkTokenInterface(linkTokenAddress);
@@ -300,11 +309,12 @@ contract AutomationScript is BaseScript, TypeAndVersionScript {
     bytes memory encodedJob = cronUpkeepFactory.encodeCronJob(upkeepAddress, abi.encodeWithSelector(upkeepFunctionSelector), cronString);
 
     // @dev: This is a workaround to get the address of the deployed CronUpkeep contract.
+    Vm.Log[] memory logEntries;
+
     vm.recordLogs();
     cronUpkeepFactory.newCronUpkeepWithJob(encodedJob);
-    Vm.Log[] memory entries = vm.getRecordedLogs();
-    address cronUpkeepAddress = entries[0].emitter;
-    console.log("Deployed Cron Upkeep address: ", cronUpkeepAddress);
+    logEntries = vm.getRecordedLogs();
+    address cronUpkeepAddress = logEntries[0].emitter;
 
     bytes memory additionalData = abi.encodeWithSelector(
       registerSelector,
@@ -321,7 +331,72 @@ contract AutomationScript is BaseScript, TypeAndVersionScript {
       msg.sender
     );
 
+    vm.recordLogs();
     linkToken.transferAndCall(keeperRegistrarAddress, amountInJuels, additionalData);
+    logEntries = vm.getRecordedLogs();
+
+    return logEntries[2].topics[0];
+  }
+
+  function getPendingRequest(
+    bytes32 requestHash
+  ) external view returns(address admin, uint96 balance) {
+    KeeperRegistrarInterface keeperRegistrar = KeeperRegistrarInterface(keeperRegistrarAddress);
+    return keeperRegistrar.getPendingRequest(requestHash);
+  }
+
+  function cancelRequest(
+    bytes32 requestHash
+  ) nestedScriptContext external {
+    KeeperRegistrarInterface keeperRegistrar = KeeperRegistrarInterface(keeperRegistrarAddress);
+    keeperRegistrar.cancel(requestHash);
+  }
+
+  function getRegistrationConfig() external view returns (
+    AutomationUtils.AutoApproveType autoApproveType,
+    uint32 autoApproveMaxAllowed,
+    uint32 approvedCount,
+    address keeperRegistry,
+    uint256 minLINKJuels
+  ) {
+    if (Utils.compareStrings(keeperRegistrarTypeAndVersion, TypesAndVersions.KeeperRegistrar2_1)) {
+      revert("'triggerType' must be provided for this typeAndVersion of the KeeperRegistrar");
+    }
+
+    if (Utils.compareStrings(keeperRegistrarTypeAndVersion, TypesAndVersions.KeeperRegistrar1_2)) {
+      KeeperRegistrar1_2Interface keeperRegistrar = KeeperRegistrar1_2Interface(keeperRegistrarAddress);
+      return keeperRegistrar.getRegistrationConfig();
+    } else if (Utils.compareStrings(keeperRegistrarTypeAndVersion, TypesAndVersions.KeeperRegistrar2_0)) {
+      KeeperRegistrar2_0Interface keeperRegistrar = KeeperRegistrar2_0Interface(keeperRegistrarAddress);
+      return keeperRegistrar.getRegistrationConfig();
+    } else {
+      revert("Unsupported KeeperRegistrar typeAndVersion");
+    }
+  }
+
+  function getRegistrationConfig(
+    AutomationUtils.Trigger triggerType
+  ) external view returns (
+    AutomationUtils.AutoApproveType autoApproveType,
+    uint32 autoApproveMaxAllowed,
+    uint32 approvedCount,
+    address keeperRegistry,
+    uint256 minLINKJuels
+  ) {
+    if (Utils.compareStrings(keeperRegistrarTypeAndVersion, TypesAndVersions.KeeperRegistrar2_1)) {
+      AutomationRegistrar2_1Interface keeperRegistrar = AutomationRegistrar2_1Interface(keeperRegistrarAddress);
+      TriggerRegistrationStorage memory triggerRegistrationStorage = keeperRegistrar.getTriggerRegistrationDetails(uint8(triggerType));
+      (keeperRegistry, minLINKJuels) = keeperRegistrar.getConfig();
+      return (
+        triggerRegistrationStorage.autoApproveType,
+        triggerRegistrationStorage.autoApproveMaxAllowed,
+        triggerRegistrationStorage.approvedCount,
+        keeperRegistry,
+        minLINKJuels
+      );
+    } else {
+      return this.getRegistrationConfig();
+    }
   }
 
   /**
@@ -354,73 +429,7 @@ contract AutomationScript is BaseScript, TypeAndVersionScript {
     return keeperRegistry.upkeepTranscoderVersion();
   }
 
-  function cancelRequest(
-    bytes32 requestHash
-  ) nestedScriptContext external {
-    KeeperRegistrar1_2Interface keeperRegistrar = KeeperRegistrar1_2Interface(keeperRegistrarAddress);
-    keeperRegistrar.cancel(requestHash);
-  }
-
-  function getPendingRequest(
-    address keeperRegistrarAddress,
-    bytes32 requestHash
-  ) external view returns (address adminAddress, uint256 balance) {
-    KeeperRegistrar2_0Interface keeperRegistrar = KeeperRegistrar2_0Interface(keeperRegistrarAddress);
-    (adminAddress, balance) = keeperRegistrar.getPendingRequest(requestHash);
-  }
-
-  function getRegistrationConfig(
-    address keeperRegistrarAddress
-  ) external view returns (
-    KeeperRegistrarInterface.AutoApproveType autoApproveConfigType,
-    uint32 autoApproveMaxAllowed,
-    uint32 approvedCount,
-    address keeperRegistry,
-    uint256 minLINKJuels
-  ) {
-    KeeperRegistrar2_0Interface keeperRegistrar = KeeperRegistrar2_0Interface(keeperRegistrarAddress);
-    return keeperRegistrar.getRegistrationConfig();
-  }
-
-  // @notice Keeper Registry functions
-
-  function fundUpkeep(
-    address keeperRegistryAddress,
-    uint256 upkeepId,
-    uint96 amountInJuels
-  ) nestedScriptContext external {
-    KeeperRegistryInterface keeperRegistry = KeeperRegistryInterface(keeperRegistryAddress);
-    keeperRegistry.addFunds(upkeepId, amountInJuels);
-  }
-
-  function cancelUpkeep(
-    address keeperRegistryAddress,
-    uint256 upkeepId
-  ) nestedScriptContext external {
-    KeeperRegistryInterface keeperRegistry = KeeperRegistryInterface(keeperRegistryAddress);
-    keeperRegistry.cancelUpkeep(upkeepId);
-  }
-
-  function withdrawFunds(
-    address keeperRegistryAddress,
-    uint256 upkeepId,
-    address receivingAddress
-  ) nestedScriptContext external {
-    KeeperRegistryInterface keeperRegistry = KeeperRegistryInterface(keeperRegistryAddress);
-    keeperRegistry.withdrawFunds(upkeepId, receivingAddress);
-  }
-
-  function migrateUpkeeps(
-    address keeperRegistryAddress,
-    uint256[] calldata upkeepIds,
-    address destination
-  ) nestedScriptContext external {
-    KeeperRegistryInterface keeperRegistry = KeeperRegistryInterface(keeperRegistryAddress);
-    keeperRegistry.migrateUpkeeps(upkeepIds, destination);
-  }
-
   function getActiveUpkeepIDs(
-    address keeperRegistryAddress,
     uint256 startIndex,
     uint256 maxCount
   ) external view returns (uint256[] memory) {
@@ -428,58 +437,190 @@ contract AutomationScript is BaseScript, TypeAndVersionScript {
     return keeperRegistry.getActiveUpkeepIDs(startIndex, maxCount);
   }
 
-  function getMaxPaymentForGas(
-    address keeperRegistryAddress,
-    uint256 gasLimit
-  ) external view returns (uint96) {
-    KeeperRegistryInterface keeperRegistry = KeeperRegistryInterface(keeperRegistryAddress);
-    return keeperRegistry.getMaxPaymentForGas(gasLimit);
-  }
-
   function getUpkeep(
-    address keeperRegistryAddress,
     uint256 upkeepId
   ) external view returns (
     address target,
     uint32 executeGas,
     bytes memory checkData,
     uint96 balance,
-    address lastKeeper,
     address admin,
     uint64 maxValidBlocknumber,
     uint96 amountSpent,
     bool paused
   ) {
-    KeeperRegistryInterface keeperRegistry = KeeperRegistryInterface(keeperRegistryAddress);
-    return keeperRegistry.getUpkeep(upkeepId);
+    address lastKeeper;
+    if (RegistryGeneration.isV1_0(keeperRegistryTypeAndVersion)) {
+      (
+        address target,
+        uint32 executeGas,
+        bytes memory checkData,
+        uint96 balance,
+        address lastKeeper,
+        address admin,
+        uint64 maxValidBlocknumber,
+        uint96 amountSpent,
+        bool paused
+      ) = KeeperRegistry1_3Interface(keeperRegistryAddress).getUpkeep(upkeepId);
+      return (
+        target,
+        executeGas,
+        checkData,
+        balance,
+        admin,
+        maxValidBlocknumber,
+        amountSpent,
+        paused
+      );
+    } else if (RegistryGeneration.isV2_0(keeperRegistryTypeAndVersion)) {
+      UpkeepInfoV2_0 memory upkeepInfo = KeeperRegistry2_0Interface(keeperRegistryAddress).getUpkeep(upkeepId);
+      return (
+        upkeepInfo.target,
+        upkeepInfo.executeGas,
+        upkeepInfo.checkData,
+        upkeepInfo.balance,
+        upkeepInfo.admin,
+        upkeepInfo.maxValidBlocknumber,
+        upkeepInfo.amountSpent,
+        upkeepInfo.paused
+      );
+    }  else if (RegistryGeneration.isV2_1(keeperRegistryTypeAndVersion)) {
+      UpkeepInfoV2_1 memory upkeepInfo = KeeperRegistry2_1Interface(keeperRegistryAddress).getUpkeep(upkeepId);
+      return (
+        upkeepInfo.target,
+        upkeepInfo.performGas,
+        upkeepInfo.checkData,
+        upkeepInfo.balance,
+        upkeepInfo.admin,
+        upkeepInfo.maxValidBlocknumber,
+        upkeepInfo.amountSpent,
+        upkeepInfo.paused
+      );
+    } else {
+      revert("Unsupported KeeperRegistry typeAndVersion");
+    }
   }
 
-  function getMinBalanceForUpkeep(
-    address keeperRegistryAddress,
-    uint256 upkeepId
-  ) external view returns (
-    uint96 minBalance
-  ) {
-    KeeperRegistryInterface keeperRegistry = KeeperRegistryInterface(keeperRegistryAddress);
-    return keeperRegistry.getMinBalanceForUpkeep(upkeepId);
-  }
+//
+//  function getPendingRequest(
+//    address keeperRegistrarAddress,
+//    bytes32 requestHash
+//  ) external view returns (address adminAddress, uint256 balance) {
+//    KeeperRegistrar2_0Interface keeperRegistrar = KeeperRegistrar2_0Interface(keeperRegistrarAddress);
+//    (adminAddress, balance) = keeperRegistrar.getPendingRequest(requestHash);
+//  }
+//
+//  function getRegistrationConfig(
+//    address keeperRegistrarAddress
+//  ) external view returns (
+//    KeeperRegistrarInterface.AutoApproveType autoApproveConfigType,
+//    uint32 autoApproveMaxAllowed,
+//    uint32 approvedCount,
+//    address keeperRegistry,
+//    uint256 minLINKJuels
+//  ) {
+//    KeeperRegistrar2_0Interface keeperRegistrar = KeeperRegistrar2_0Interface(keeperRegistrarAddress);
+//    return keeperRegistrar.getRegistrationConfig();
+//  }
 
-  function getKeeperInfo(
-    address keeperRegistryAddress,
-    address keeperAddress
-  ) external view returns (address payee, bool active, uint96 balance) {
-    KeeperRegistryInterface keeperRegistry = KeeperRegistryInterface(keeperRegistryAddress);
-    return keeperRegistry.getKeeperInfo(keeperAddress);
-  }
+  // @notice Keeper Registry functions
 
-
-
-  function isPaused(
-    address keeperRegistryAddress
-  ) external view returns (
-    bool paused
-  ) {
-    KeeperRegistryInterface keeperRegistry = KeeperRegistryInterface(keeperRegistryAddress);
-    return keeperRegistry.paused();
-  }
+//  function fundUpkeep(
+//    address keeperRegistryAddress,
+//    uint256 upkeepId,
+//    uint96 amountInJuels
+//  ) nestedScriptContext external {
+//    KeeperRegistryInterface keeperRegistry = KeeperRegistryInterface(keeperRegistryAddress);
+//    keeperRegistry.addFunds(upkeepId, amountInJuels);
+//  }
+//
+//  function cancelUpkeep(
+//    address keeperRegistryAddress,
+//    uint256 upkeepId
+//  ) nestedScriptContext external {
+//    KeeperRegistryInterface keeperRegistry = KeeperRegistryInterface(keeperRegistryAddress);
+//    keeperRegistry.cancelUpkeep(upkeepId);
+//  }
+//
+//  function withdrawFunds(
+//    address keeperRegistryAddress,
+//    uint256 upkeepId,
+//    address receivingAddress
+//  ) nestedScriptContext external {
+//    KeeperRegistryInterface keeperRegistry = KeeperRegistryInterface(keeperRegistryAddress);
+//    keeperRegistry.withdrawFunds(upkeepId, receivingAddress);
+//  }
+//
+//  function migrateUpkeeps(
+//    address keeperRegistryAddress,
+//    uint256[] calldata upkeepIds,
+//    address destination
+//  ) nestedScriptContext external {
+//    KeeperRegistryInterface keeperRegistry = KeeperRegistryInterface(keeperRegistryAddress);
+//    keeperRegistry.migrateUpkeeps(upkeepIds, destination);
+//  }
+//
+//  function getActiveUpkeepIDs(
+//    address keeperRegistryAddress,
+//    uint256 startIndex,
+//    uint256 maxCount
+//  ) external view returns (uint256[] memory) {
+//    KeeperRegistryInterface keeperRegistry = KeeperRegistryInterface(keeperRegistryAddress);
+//    return keeperRegistry.getActiveUpkeepIDs(startIndex, maxCount);
+//  }
+//
+//  function getMaxPaymentForGas(
+//    address keeperRegistryAddress,
+//    uint256 gasLimit
+//  ) external view returns (uint96) {
+//    KeeperRegistryInterface keeperRegistry = KeeperRegistryInterface(keeperRegistryAddress);
+//    return keeperRegistry.getMaxPaymentForGas(gasLimit);
+//  }
+//
+//  function getUpkeep(
+//    address keeperRegistryAddress,
+//    uint256 upkeepId
+//  ) external view returns (
+//    address target,
+//    uint32 executeGas,
+//    bytes memory checkData,
+//    uint96 balance,
+//    address lastKeeper,
+//    address admin,
+//    uint64 maxValidBlocknumber,
+//    uint96 amountSpent,
+//    bool paused
+//  ) {
+//    KeeperRegistryInterface keeperRegistry = KeeperRegistryInterface(keeperRegistryAddress);
+//    return keeperRegistry.getUpkeep(upkeepId);
+//  }
+//
+//  function getMinBalanceForUpkeep(
+//    address keeperRegistryAddress,
+//    uint256 upkeepId
+//  ) external view returns (
+//    uint96 minBalance
+//  ) {
+//    KeeperRegistryInterface keeperRegistry = KeeperRegistryInterface(keeperRegistryAddress);
+//    return keeperRegistry.getMinBalanceForUpkeep(upkeepId);
+//  }
+//
+//  function getKeeperInfo(
+//    address keeperRegistryAddress,
+//    address keeperAddress
+//  ) external view returns (address payee, bool active, uint96 balance) {
+//    KeeperRegistryInterface keeperRegistry = KeeperRegistryInterface(keeperRegistryAddress);
+//    return keeperRegistry.getKeeperInfo(keeperAddress);
+//  }
+//
+//
+//
+//  function isPaused(
+//    address keeperRegistryAddress
+//  ) external view returns (
+//    bool paused
+//  ) {
+//    KeeperRegistryInterface keeperRegistry = KeeperRegistryInterface(keeperRegistryAddress);
+//    return keeperRegistry.paused();
+//  }
 }

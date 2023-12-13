@@ -5,10 +5,11 @@ import "forge-std/Test.sol";
 import "forge-std/console.sol";
 
 import "./BaseTest.t.sol";
-import { RegistryState, AutomationScript } from "script/automation/Automation.s.sol";
-import "src/interfaces/automation/KeeperRegistrar1_2Interface.sol";
-import "src/libraries/AutomationUtils.sol";
+import { RegistryGeneration, RegistryState, AutomationScript } from "script/automation/Automation.s.sol";
 import { KeeperRegistry2_0Interface, OnchainConfig } from "src/interfaces/automation/KeeperRegistry2_0Interface.sol";
+import "src/interfaces/automation/KeeperRegistrar2_0Interface.sol";
+import "src/libraries/AutomationUtils.sol";
+import "src/libraries/Utils.sol";
 
 contract AutomationScriptV2_0Test is BaseTest {
   event RegistrationRequested(
@@ -21,6 +22,7 @@ contract AutomationScriptV2_0Test is BaseTest {
     bytes checkData,
     uint96 amount
   );
+  event RegistrationRejected(bytes32 indexed hash);
 
   uint8 public constant DECIMALS_LINK = 9;
   uint8 public constant DECIMALS_GAS = 0;
@@ -93,7 +95,6 @@ contract AutomationScriptV2_0Test is BaseTest {
         registrar: keeperRegistrarAddress
       })
     );
-    bytes memory offchainConfig = EMPTY_BYTES;
     address[] memory signers = new address[](4);
     signers[0] = OWNER_ADDRESS;
     signers[1] = STRANGER_ADDRESS;
@@ -135,7 +136,7 @@ contract AutomationScriptV2_0Test is BaseTest {
     );
 
     vm.broadcast(OWNER_ADDRESS);
-    automationScript.registerUpkeep(
+    bytes32 requestHash = automationScript.registerUpkeep(
       linkTokenAddress,
       LINK_JUELS_TO_FUND,
       NAME,
@@ -144,10 +145,113 @@ contract AutomationScriptV2_0Test is BaseTest {
       GAS_LIMIT,
       EMPTY_BYTES
     );
+
+    assertEq(hash, requestHash);
+  }
+
+  function test_GetState_Success() public {
+    RegistryState memory registryState = automationScript.getState();
+    assertEq(Utils.compareStrings(registryState.registryGeneration, RegistryGeneration.v2_0), true);
   }
 
   function test_GetUpkeepTranscoderVersion_Success() public {
     AutomationUtils.UpkeepFormat upkeepFormat = automationScript.getUpkeepTranscoderVersion();
     assertEq(upkeepFormat == AutomationUtils.UpkeepFormat.V1, true);
+  }
+
+  function test_GetAndCancelRequest_Success() public {
+    vm.broadcast(OWNER_ADDRESS);
+    KeeperRegistrar2_0Interface(keeperRegistrarAddress).setRegistrationConfig(
+      AutomationUtils.AutoApproveType.DISABLED,
+      AUTO_APPROVE_MAX_ALLOWED,
+      keeperRegistryAddress,
+      MIN_LINK_JUELS
+    );
+
+    vm.broadcast(OWNER_ADDRESS);
+    bytes32 requestHash = automationScript.registerUpkeep(
+      linkTokenAddress,
+      LINK_JUELS_TO_FUND,
+      "cancelledUpkeep",
+      EMAIL,
+      upkeepMockAddress,
+      GAS_LIMIT,
+      EMPTY_BYTES
+    );
+
+    (address admin, uint96 balance) = automationScript.getPendingRequest(requestHash);
+    assertEq(admin, OWNER_ADDRESS);
+    assertEq(balance, LINK_JUELS_TO_FUND);
+
+    vm.expectEmit(true, true, false, false);
+    emit RegistrationRejected(requestHash);
+
+    vm.broadcast(OWNER_ADDRESS);
+    automationScript.cancelRequest(requestHash);
+
+    vm.broadcast(OWNER_ADDRESS);
+    KeeperRegistrar2_0Interface(keeperRegistrarAddress).setRegistrationConfig(
+      AutomationUtils.AutoApproveType.ENABLED_ALL,
+      AUTO_APPROVE_MAX_ALLOWED,
+      keeperRegistryAddress,
+      MIN_LINK_JUELS
+    );
+  }
+
+  function test_GetRegistrationConfig_Success() public {
+    AutomationUtils.AutoApproveType autoApproveType;
+    uint32 autoApproveMaxAllowed;
+    uint32 approvedCount;
+    address keeperRegistry;
+    uint256 minLINKJuels;
+
+    (
+      autoApproveType,
+      autoApproveMaxAllowed,
+      approvedCount,
+      keeperRegistry,
+      minLINKJuels
+    ) = automationScript.getRegistrationConfig();
+
+    assertEq(uint8(autoApproveType), uint8(AutomationUtils.AutoApproveType.ENABLED_ALL));
+    assertEq(autoApproveMaxAllowed, AUTO_APPROVE_MAX_ALLOWED);
+    assertEq(approvedCount, 0);
+    assertEq(keeperRegistry, keeperRegistryAddress);
+    assertEq(minLINKJuels, MIN_LINK_JUELS);
+  }
+
+  function test_GetActiveUpkeepIDs_Success() public {
+    vm.broadcast(OWNER_ADDRESS);
+    bytes32 requestHash = automationScript.registerUpkeep(
+      linkTokenAddress,
+      LINK_JUELS_TO_FUND,
+      "activeUpkeep",
+      EMAIL,
+      upkeepMockAddress,
+      GAS_LIMIT,
+      EMPTY_BYTES
+    );
+
+    uint256[] memory activeUpkeepIDs = automationScript.getActiveUpkeepIDs(0, 0);
+    assertGt(activeUpkeepIDs.length, 0);
+
+    uint256 upkeepId = activeUpkeepIDs[activeUpkeepIDs.length - 1];
+    (
+      address target,
+      uint32 executeGas,
+      bytes memory checkData,
+      uint96 balance,
+      address admin,
+      ,
+      uint96 amountSpent,
+      bool paused
+    ) = automationScript.getUpkeep(upkeepId);
+    assertEq(target, upkeepMockAddress);
+    assertEq(executeGas, GAS_LIMIT);
+    assertEq(checkData, EMPTY_BYTES);
+    assertEq(balance, LINK_JUELS_TO_FUND);
+    assertEq(admin, OWNER_ADDRESS);
+    assertEq(amountSpent, 0);
+    assertEq(paused, false);
   }
 }

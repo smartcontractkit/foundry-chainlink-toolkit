@@ -4,7 +4,7 @@ pragma solidity >=0.6.2 <0.9.0;
 import "forge-std/Script.sol";
 
 import "../helpers/BaseScript.s.sol";
-import "src/interfaces/VRFCoordinatorV2Interface.sol";
+import "src/interfaces/vrf/VRFCoordinatorV2Interface.sol";
 import "src/interfaces/LinkTokenInterface.sol";
 
 contract VRFScript is BaseScript {

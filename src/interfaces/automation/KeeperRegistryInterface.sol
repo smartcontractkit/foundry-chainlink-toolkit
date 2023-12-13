@@ -7,17 +7,6 @@ import "../shared/TypeAndVersionInterface.sol";
 import "src/libraries/AutomationUtils.sol";
 
 interface KeeperRegistryInterface is TypeAndVersionInterface {
-  function getUpkeep(uint256 id) external view returns (
-    address target,
-    uint32 executeGas,
-    bytes memory checkData,
-    uint96 balance,
-    address lastKeeper,
-    address admin,
-    uint64 maxValidBlocknumber,
-    uint96 amountSpent,
-    bool paused
-  );
   function pauseUpkeep(uint256 id) external;
   function unpauseUpkeep(uint256 id) external;
   function cancelUpkeep(uint256 id) external;

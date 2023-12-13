@@ -4,7 +4,7 @@ pragma solidity >=0.6.2 <0.9.0;
 import "./KeeperRegistryInterface.sol";
 import "src/libraries/AutomationUtils.sol";
 
-  struct State {
+struct State {
   uint32 nonce;
   uint96 ownerLinkBalance;
   uint256 expectedLinkBalance;
@@ -46,11 +46,27 @@ interface KeeperRegistry1_3Interface is KeeperRegistryInterface {
     bytes calldata
     checkData
   ) external returns (uint256 id);
-  function getState() external view returns (State memory state, Config memory config, address[] memory keepers);
+  function getState() external view returns (
+    State memory state,
+    Config memory config,
+    address[] memory keepers
+  );
+  function getUpkeep(uint256 id) external view returns (
+    address target,
+    uint32 executeGas,
+    bytes memory checkData,
+    uint96 balance,
+    address lastKeeper,
+    address admin,
+    uint64 maxValidBlocknumber,
+    uint96 amountSpent,
+    bool paused
+  );
 
   function getMaxPaymentForGas(uint256 gasLimit) external view returns (uint96 maxPayment);
   function updateCheckData(uint256 id, bytes calldata newCheckData) external;
 
   // @notice admin functions
   function setConfig(Config memory config) external;
+  function setKeepers(address[] memory keepers, address[] memory payees) external;
 }

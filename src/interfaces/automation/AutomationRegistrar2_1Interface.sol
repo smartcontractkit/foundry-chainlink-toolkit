@@ -2,7 +2,7 @@
 pragma solidity >=0.6.2 <0.9.0;
 
 import "src/libraries/AutomationUtils.sol";
-import "../shared/TypeAndVersionInterface.sol";
+import "./KeeperRegistrarInterface.sol";
 
 struct InitialTriggerConfig {
   AutomationUtils.Trigger triggerType;
@@ -10,45 +10,20 @@ struct InitialTriggerConfig {
   uint32 autoApproveMaxAllowed;
 }
 
-interface AutomationRegistrar2_1Interface is TypeAndVersionInterface {
-  function approve(
-    string calldata name,
-    address upkeepContract,
-    uint32 gasLimit,
-    address adminAddress,
-    bytes calldata checkData,
-    bytes32 hash
-  ) external;
+struct TriggerRegistrationStorage {
+  AutomationUtils.AutoApproveType autoApproveType;
+  uint32 autoApproveMaxAllowed;
+  uint32 approvedCount;
+}
 
-  function cancel(bytes32 hash) external;
-
-  function setRegistrationConfig(
-    AutomationUtils.AutoApproveType autoApproveConfigType,
-    uint16 autoApproveMaxAllowed,
-    address keeperRegistry,
-    uint96 minLINKJuels
-  ) external;
-
-  function setAutoApproveAllowedSender(address senderAddress, bool allowed) external;
-
-  function getAutoApproveAllowedSender(address senderAddress) external view returns (bool);
-
-  function getRegistrationConfig() external view returns (
-    AutomationUtils.AutoApproveType autoApproveConfigType,
-    uint32 autoApproveMaxAllowed,
-    uint32 approvedCount,
+interface AutomationRegistrar2_1Interface is KeeperRegistrarInterface {
+  function getConfig() external view returns (
     address keeperRegistry,
     uint256 minLINKJuels
   );
-
-  function getPendingRequest(bytes32 hash) external view returns (address, uint96);
-
-  function onTokenTransfer(
-    address sender,
-    uint256 amount,
-    bytes calldata data
-  ) external;
-
+  function getTriggerRegistrationDetails(uint8 triggerType) external view returns (
+    TriggerRegistrationStorage memory
+  );
   function register(
     string memory name,
     bytes calldata encryptedEmail,
@@ -61,6 +36,13 @@ interface AutomationRegistrar2_1Interface is TypeAndVersionInterface {
     bytes memory offchainConfig,
     uint96 amount,
     address sender
+  ) external;
+
+  // For test purpose only
+  function setTriggerConfig(
+    uint8 triggerType,
+    AutomationUtils.AutoApproveType autoApproveType,
+    uint32 autoApproveMaxAllowed
   ) external;
 }
 

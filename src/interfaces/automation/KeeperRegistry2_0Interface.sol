@@ -55,6 +55,34 @@ struct OnchainConfig {
   address registrar;
 }
 
+/**
+ * @notice all information about an upkeep
+ * @dev only used in return values
+ * @dev this will likely be deprecated in a future version of the registry
+ * @member target the contract which needs to be serviced
+ * @member executeGas the gas limit of upkeep execution
+ * @member checkData the checkData bytes for this upkeep
+ * @member balance the balance of this upkeep
+ * @member admin for this upkeep
+ * @member maxValidBlocknumber until which block this upkeep is valid
+ * @member lastPerformedBlockNumber the last block number when this upkeep was performed
+ * @member amountSpent the amount this upkeep has spent
+ * @member paused if this upkeep has been paused
+ * @member offchainConfig the off-chain config of this upkeep
+ */
+struct UpkeepInfo {
+  address target;
+  uint32 executeGas;
+  bytes checkData;
+  uint96 balance;
+  address admin;
+  uint64 maxValidBlocknumber;
+  uint32 lastPerformedBlockNumber;
+  uint96 amountSpent;
+  bool paused;
+  bytes offchainConfig;
+}
+
 interface KeeperRegistry2_0Interface is KeeperRegistryInterface {
   // @notice we need only selector of this function
   function register(
@@ -75,6 +103,9 @@ interface KeeperRegistry2_0Interface is KeeperRegistryInterface {
     address[] memory signers,
     address[] memory transmitters,
     uint8 f
+  );
+  function getUpkeep(uint256 id) external view returns (
+    UpkeepInfo memory upkeepInfo
   );
 
   function getMaxPaymentForGas(uint256 gasLimit) external view returns (uint96 maxPayment);

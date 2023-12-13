@@ -8,6 +8,7 @@ import "./BaseTest.t.sol";
 import { RegistryGeneration, RegistryState, AutomationScript } from "script/automation/Automation.s.sol";
 import { KeeperRegistry2_0Interface, OnchainConfig } from "src/interfaces/automation/KeeperRegistry2_0Interface.sol";
 import "src/interfaces/automation/KeeperRegistrar2_0Interface.sol";
+import "src/interfaces/LinkTokenInterface.sol";
 import "src/libraries/AutomationUtils.sol";
 import "src/libraries/Utils.sol";
 
@@ -23,6 +24,14 @@ contract AutomationScriptV2_0Test is BaseTest {
     uint96 amount
   );
   event RegistrationRejected(bytes32 indexed hash);
+  event UpkeepPaused(uint256 indexed id);
+  event UpkeepUnpaused(uint256 indexed id);
+  event UpkeepCanceled(uint256 indexed id, uint64 indexed atBlockHeight);
+  event FundsWithdrawn(uint256 indexed id, uint256 amount, address to);
+  event UpkeepGasLimitSet(uint256 indexed id, uint96 gasLimit);
+  event FundsAdded(uint256 indexed id, address indexed from, uint96 amount);
+  event UpkeepAdminTransferRequested(uint256 indexed id, address indexed from, address indexed to);
+  event UpkeepAdminTransferred(uint256 indexed id, address indexed from, address indexed to);
 
   uint8 public constant DECIMALS_LINK = 9;
   uint8 public constant DECIMALS_GAS = 0;
@@ -32,8 +41,9 @@ contract AutomationScriptV2_0Test is BaseTest {
   uint32 public constant GAS_LIMIT = 500_000;
   uint16 public constant AUTO_APPROVE_MAX_ALLOWED = 10_000;
   uint96 public constant MIN_LINK_JUELS = 500000000000;
+  uint96 public constant MIN_UPKEEP_SPEND = 1000000000000000000;
   uint96 public constant LINK_JUELS_ALLOWANCE = 100000000000000000000;
-  uint96 public constant LINK_JUELS_TO_FUND = 100000000000000000;
+  uint96 public constant LINK_JUELS_TO_FUND = 2000000000000000000;
   string public constant EMAIL = "test";
   string public constant NAME = "test";
   bytes public constant EMPTY_BYTES = new bytes(0);
@@ -85,8 +95,8 @@ contract AutomationScriptV2_0Test is BaseTest {
         checkGasLimit: 500000,
         stalenessSeconds: 3600,
         gasCeilingMultiplier: 1,
-        minUpkeepSpend: 0,
-        maxPerformGas: 500000,
+        minUpkeepSpend: MIN_UPKEEP_SPEND,
+        maxPerformGas: 5000000,
         maxCheckDataSize: 10000,
         maxPerformDataSize: 10000,
         fallbackGasPrice: uint(INITIAL_ANSWER_GAS),
@@ -220,12 +230,12 @@ contract AutomationScriptV2_0Test is BaseTest {
     assertEq(minLINKJuels, MIN_LINK_JUELS);
   }
 
-  function test_GetActiveUpkeepIDs_Success() public {
+  function test_GetMinBalanceForUpkeep_Success() public {
     vm.broadcast(OWNER_ADDRESS);
-    bytes32 requestHash = automationScript.registerUpkeep(
+    automationScript.registerUpkeep(
       linkTokenAddress,
       LINK_JUELS_TO_FUND,
-      "activeUpkeep",
+      "dummyUpkeep",
       EMAIL,
       upkeepMockAddress,
       GAS_LIMIT,
@@ -236,6 +246,33 @@ contract AutomationScriptV2_0Test is BaseTest {
     assertGt(activeUpkeepIDs.length, 0);
 
     uint256 upkeepId = activeUpkeepIDs[activeUpkeepIDs.length - 1];
+
+    uint96 minBalance = automationScript.getMinBalanceForUpkeep(upkeepId);
+    assertGt(minBalance, 0);
+  }
+
+  function test_PauseUnpauseUpkeep_Success() public {
+    vm.broadcast(OWNER_ADDRESS);
+    automationScript.registerUpkeep(
+      linkTokenAddress,
+      LINK_JUELS_TO_FUND,
+      "pausedUpkeep",
+      EMAIL,
+      upkeepMockAddress,
+      GAS_LIMIT,
+      EMPTY_BYTES
+    );
+
+    uint256[] memory activeUpkeepIDs = automationScript.getActiveUpkeepIDs(0, 0);
+    assertGt(activeUpkeepIDs.length, 0);
+
+    uint256 upkeepId = activeUpkeepIDs[activeUpkeepIDs.length - 1];
+
+    vm.expectEmit(true, false, false, false);
+    emit UpkeepPaused(upkeepId);
+    vm.broadcast(OWNER_ADDRESS);
+    automationScript.pauseUpkeep(upkeepId);
+
     (
       address target,
       uint32 executeGas,
@@ -252,6 +289,135 @@ contract AutomationScriptV2_0Test is BaseTest {
     assertEq(balance, LINK_JUELS_TO_FUND);
     assertEq(admin, OWNER_ADDRESS);
     assertEq(amountSpent, 0);
+    assertEq(paused, true);
+
+    vm.expectEmit(true, false, false, false);
+    emit UpkeepUnpaused(upkeepId);
+    vm.broadcast(OWNER_ADDRESS);
+    automationScript.unpauseUpkeep(upkeepId);
+
+    (,,,,,,,paused) = automationScript.getUpkeep(upkeepId);
     assertEq(paused, false);
+  }
+
+  function test_CancelUpkeepAndWithdrawFunds_Success() public {
+    vm.broadcast(OWNER_ADDRESS);
+    automationScript.registerUpkeep(
+      linkTokenAddress,
+      LINK_JUELS_TO_FUND,
+      "cancelledUpkeep",
+      EMAIL,
+      upkeepMockAddress,
+      GAS_LIMIT,
+      EMPTY_BYTES
+    );
+
+    uint256[] memory activeUpkeepIDs = automationScript.getActiveUpkeepIDs(0, 0);
+    assertGt(activeUpkeepIDs.length, 0);
+
+    uint256 upkeepId = activeUpkeepIDs[activeUpkeepIDs.length - 1];
+
+    RegistryState memory registryState;
+    registryState = automationScript.getState();
+    uint256 numUpkeeps = registryState.stateV2_0.state.numUpkeeps;
+
+    vm.expectEmit(true, false, false, false);
+    emit UpkeepCanceled(upkeepId, 0);
+    vm.broadcast(OWNER_ADDRESS);
+    automationScript.cancelUpkeep(upkeepId);
+
+    registryState = automationScript.getState();
+    assertEq(registryState.stateV2_0.state.numUpkeeps, numUpkeeps - 1);
+
+    vm.expectEmit(true, true, false, true);
+    emit FundsWithdrawn(upkeepId, LINK_JUELS_TO_FUND - MIN_UPKEEP_SPEND, STRANGER2_ADDRESS);
+    vm.broadcast(OWNER_ADDRESS);
+    automationScript.withdrawFunds(upkeepId, STRANGER2_ADDRESS);
+
+    assertGt(LinkTokenInterface(linkTokenAddress).balanceOf(STRANGER2_ADDRESS), 0);
+  }
+
+  function test_SetGasLimit_Success() public {
+    vm.broadcast(OWNER_ADDRESS);
+    automationScript.registerUpkeep(
+      linkTokenAddress,
+      LINK_JUELS_TO_FUND,
+      "changedUpkeep",
+      EMAIL,
+      upkeepMockAddress,
+      GAS_LIMIT,
+      EMPTY_BYTES
+    );
+
+    uint256[] memory activeUpkeepIDs = automationScript.getActiveUpkeepIDs(0, 0);
+    assertGt(activeUpkeepIDs.length, 0);
+
+    uint256 upkeepId = activeUpkeepIDs[activeUpkeepIDs.length - 1];
+
+    vm.expectEmit(true, false, false, false);
+    emit UpkeepGasLimitSet(upkeepId, GAS_LIMIT + 1);
+    vm.broadcast(OWNER_ADDRESS);
+    automationScript.setUpkeepGasLimit(upkeepId, GAS_LIMIT + 1);
+    (,uint96 executeGas,,,,,,) = automationScript.getUpkeep(upkeepId);
+    assertEq(executeGas, GAS_LIMIT + 1);
+  }
+
+  function test_AddFunds_Success() public {
+    vm.broadcast(OWNER_ADDRESS);
+    automationScript.registerUpkeep(
+      linkTokenAddress,
+      LINK_JUELS_TO_FUND,
+      "fundedUpkeep",
+      EMAIL,
+      upkeepMockAddress,
+      GAS_LIMIT,
+      EMPTY_BYTES
+    );
+
+    uint256[] memory activeUpkeepIDs = automationScript.getActiveUpkeepIDs(0, 0);
+    assertGt(activeUpkeepIDs.length, 0);
+
+    uint256 upkeepId = activeUpkeepIDs[activeUpkeepIDs.length - 1];
+
+    vm.broadcast(OWNER_ADDRESS);
+    LinkTokenInterface(linkTokenAddress).approve(keeperRegistryAddress, LINK_JUELS_TO_FUND);
+
+    vm.expectEmit(true, true, false, false);
+    emit FundsAdded(upkeepId, OWNER_ADDRESS, LINK_JUELS_TO_FUND);
+    vm.broadcast(OWNER_ADDRESS);
+    automationScript.addFunds(upkeepId, LINK_JUELS_TO_FUND);
+    (,,,uint96 balance,,,,) = automationScript.getUpkeep(upkeepId);
+    assertEq(balance, 2*LINK_JUELS_TO_FUND);
+  }
+
+  function test_TransferUpkeepAdmin_Success() public {
+    vm.broadcast(OWNER_ADDRESS);
+    automationScript.registerUpkeep(
+      linkTokenAddress,
+      LINK_JUELS_TO_FUND,
+      "transferredUpkeep",
+      EMAIL,
+      upkeepMockAddress,
+      GAS_LIMIT,
+      EMPTY_BYTES
+    );
+
+    uint256[] memory activeUpkeepIDs = automationScript.getActiveUpkeepIDs(0, 0);
+    assertGt(activeUpkeepIDs.length, 0);
+
+    uint256 upkeepId = activeUpkeepIDs[activeUpkeepIDs.length - 1];
+
+    vm.expectEmit(true, true, true, false);
+    emit UpkeepAdminTransferRequested(upkeepId, OWNER_ADDRESS, STRANGER_ADDRESS);
+    vm.broadcast(OWNER_ADDRESS);
+    automationScript.transferUpkeepAdmin(upkeepId, STRANGER_ADDRESS);
+
+    vm.expectEmit(true, true, true, false);
+    emit UpkeepAdminTransferred(upkeepId, OWNER_ADDRESS, STRANGER_ADDRESS);
+    vm.broadcast(STRANGER_ADDRESS);
+    automationScript.acceptUpkeepAdmin(upkeepId);
+
+    (,,,,address admin,,,) = automationScript.getUpkeep(upkeepId);
+    assertEq(admin, STRANGER_ADDRESS);
   }
 }

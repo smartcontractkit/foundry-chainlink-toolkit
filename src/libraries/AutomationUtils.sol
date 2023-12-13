@@ -60,7 +60,7 @@ library AutomationUtils {
     bytes32 topic1,
     bytes32 topic2,
     bytes32 topic3
-  ) external view returns (bytes memory logTrigger) {
+  ) external pure returns (bytes memory logTrigger) {
     LogTriggerConfig memory cfg = LogTriggerConfig({
       contractAddress: addr,
       filterSelector: selector,

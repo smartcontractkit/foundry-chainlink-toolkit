@@ -403,6 +403,50 @@ contract AutomationScript is BaseScript, TypeAndVersionScript {
    * @notice Keeper Registry functions
    */
 
+  function addFunds(
+    uint256 upkeepId,
+    uint96 amountInJuels
+  ) nestedScriptContext external {
+    KeeperRegistryInterface keeperRegistry = KeeperRegistryInterface(keeperRegistryAddress);
+    keeperRegistry.addFunds(upkeepId, amountInJuels);
+  }
+
+  function pauseUpkeep(
+    uint256 upkeepId
+  ) nestedScriptContext external {
+    KeeperRegistryInterface keeperRegistry = KeeperRegistryInterface(keeperRegistryAddress);
+    keeperRegistry.pauseUpkeep(upkeepId);
+  }
+
+  function unpauseUpkeep(
+    uint256 upkeepId
+  ) nestedScriptContext external {
+    KeeperRegistryInterface keeperRegistry = KeeperRegistryInterface(keeperRegistryAddress);
+    keeperRegistry.unpauseUpkeep(upkeepId);
+  }
+
+  function cancelUpkeep(
+    uint256 upkeepId
+  ) nestedScriptContext external {
+    KeeperRegistryInterface keeperRegistry = KeeperRegistryInterface(keeperRegistryAddress);
+    keeperRegistry.cancelUpkeep(upkeepId);
+  }
+
+  function setUpkeepGasLimit(
+    uint256 upkeepId,
+    uint32 gasLimit
+  ) nestedScriptContext external {
+    KeeperRegistryInterface keeperRegistry = KeeperRegistryInterface(keeperRegistryAddress);
+    keeperRegistry.setUpkeepGasLimit(upkeepId, gasLimit);
+  }
+
+  function getMinBalanceForUpkeep(
+    uint256 upkeepId
+  ) external view returns (uint96 minBalance) {
+    KeeperRegistryInterface keeperRegistry = KeeperRegistryInterface(keeperRegistryAddress);
+    return keeperRegistry.getMinBalanceForUpkeep(upkeepId);
+  }
+
   function getState() external view returns (RegistryState memory registryState) {
     if (RegistryGeneration.isV1_0(keeperRegistryTypeAndVersion)) {
       (StateV1_0 memory state, ConfigV1_0 memory config, address[] memory keepers) = KeeperRegistry1_3Interface(keeperRegistryAddress).getState();
@@ -452,15 +496,15 @@ contract AutomationScript is BaseScript, TypeAndVersionScript {
     address lastKeeper;
     if (RegistryGeneration.isV1_0(keeperRegistryTypeAndVersion)) {
       (
-        address target,
-        uint32 executeGas,
-        bytes memory checkData,
-        uint96 balance,
-        address lastKeeper,
-        address admin,
-        uint64 maxValidBlocknumber,
-        uint96 amountSpent,
-        bool paused
+        target,
+        executeGas,
+        checkData,
+        balance,
+        lastKeeper,
+        admin,
+        maxValidBlocknumber,
+        amountSpent,
+        paused
       ) = KeeperRegistry1_3Interface(keeperRegistryAddress).getUpkeep(upkeepId);
       return (
         target,
@@ -501,126 +545,26 @@ contract AutomationScript is BaseScript, TypeAndVersionScript {
     }
   }
 
-//
-//  function getPendingRequest(
-//    address keeperRegistrarAddress,
-//    bytes32 requestHash
-//  ) external view returns (address adminAddress, uint256 balance) {
-//    KeeperRegistrar2_0Interface keeperRegistrar = KeeperRegistrar2_0Interface(keeperRegistrarAddress);
-//    (adminAddress, balance) = keeperRegistrar.getPendingRequest(requestHash);
-//  }
-//
-//  function getRegistrationConfig(
-//    address keeperRegistrarAddress
-//  ) external view returns (
-//    KeeperRegistrarInterface.AutoApproveType autoApproveConfigType,
-//    uint32 autoApproveMaxAllowed,
-//    uint32 approvedCount,
-//    address keeperRegistry,
-//    uint256 minLINKJuels
-//  ) {
-//    KeeperRegistrar2_0Interface keeperRegistrar = KeeperRegistrar2_0Interface(keeperRegistrarAddress);
-//    return keeperRegistrar.getRegistrationConfig();
-//  }
+  function withdrawFunds(
+    uint256 upkeepId,
+    address receivingAddress
+  ) nestedScriptContext external {
+    KeeperRegistryInterface keeperRegistry = KeeperRegistryInterface(keeperRegistryAddress);
+    keeperRegistry.withdrawFunds(upkeepId, receivingAddress);
+  }
 
-  // @notice Keeper Registry functions
+  function transferUpkeepAdmin(
+    uint256 upkeepId,
+    address proposedAdmin
+  ) nestedScriptContext external {
+    KeeperRegistryInterface keeperRegistry = KeeperRegistryInterface(keeperRegistryAddress);
+    keeperRegistry.transferUpkeepAdmin(upkeepId, proposedAdmin);
+  }
 
-//  function fundUpkeep(
-//    address keeperRegistryAddress,
-//    uint256 upkeepId,
-//    uint96 amountInJuels
-//  ) nestedScriptContext external {
-//    KeeperRegistryInterface keeperRegistry = KeeperRegistryInterface(keeperRegistryAddress);
-//    keeperRegistry.addFunds(upkeepId, amountInJuels);
-//  }
-//
-//  function cancelUpkeep(
-//    address keeperRegistryAddress,
-//    uint256 upkeepId
-//  ) nestedScriptContext external {
-//    KeeperRegistryInterface keeperRegistry = KeeperRegistryInterface(keeperRegistryAddress);
-//    keeperRegistry.cancelUpkeep(upkeepId);
-//  }
-//
-//  function withdrawFunds(
-//    address keeperRegistryAddress,
-//    uint256 upkeepId,
-//    address receivingAddress
-//  ) nestedScriptContext external {
-//    KeeperRegistryInterface keeperRegistry = KeeperRegistryInterface(keeperRegistryAddress);
-//    keeperRegistry.withdrawFunds(upkeepId, receivingAddress);
-//  }
-//
-//  function migrateUpkeeps(
-//    address keeperRegistryAddress,
-//    uint256[] calldata upkeepIds,
-//    address destination
-//  ) nestedScriptContext external {
-//    KeeperRegistryInterface keeperRegistry = KeeperRegistryInterface(keeperRegistryAddress);
-//    keeperRegistry.migrateUpkeeps(upkeepIds, destination);
-//  }
-//
-//  function getActiveUpkeepIDs(
-//    address keeperRegistryAddress,
-//    uint256 startIndex,
-//    uint256 maxCount
-//  ) external view returns (uint256[] memory) {
-//    KeeperRegistryInterface keeperRegistry = KeeperRegistryInterface(keeperRegistryAddress);
-//    return keeperRegistry.getActiveUpkeepIDs(startIndex, maxCount);
-//  }
-//
-//  function getMaxPaymentForGas(
-//    address keeperRegistryAddress,
-//    uint256 gasLimit
-//  ) external view returns (uint96) {
-//    KeeperRegistryInterface keeperRegistry = KeeperRegistryInterface(keeperRegistryAddress);
-//    return keeperRegistry.getMaxPaymentForGas(gasLimit);
-//  }
-//
-//  function getUpkeep(
-//    address keeperRegistryAddress,
-//    uint256 upkeepId
-//  ) external view returns (
-//    address target,
-//    uint32 executeGas,
-//    bytes memory checkData,
-//    uint96 balance,
-//    address lastKeeper,
-//    address admin,
-//    uint64 maxValidBlocknumber,
-//    uint96 amountSpent,
-//    bool paused
-//  ) {
-//    KeeperRegistryInterface keeperRegistry = KeeperRegistryInterface(keeperRegistryAddress);
-//    return keeperRegistry.getUpkeep(upkeepId);
-//  }
-//
-//  function getMinBalanceForUpkeep(
-//    address keeperRegistryAddress,
-//    uint256 upkeepId
-//  ) external view returns (
-//    uint96 minBalance
-//  ) {
-//    KeeperRegistryInterface keeperRegistry = KeeperRegistryInterface(keeperRegistryAddress);
-//    return keeperRegistry.getMinBalanceForUpkeep(upkeepId);
-//  }
-//
-//  function getKeeperInfo(
-//    address keeperRegistryAddress,
-//    address keeperAddress
-//  ) external view returns (address payee, bool active, uint96 balance) {
-//    KeeperRegistryInterface keeperRegistry = KeeperRegistryInterface(keeperRegistryAddress);
-//    return keeperRegistry.getKeeperInfo(keeperAddress);
-//  }
-//
-//
-//
-//  function isPaused(
-//    address keeperRegistryAddress
-//  ) external view returns (
-//    bool paused
-//  ) {
-//    KeeperRegistryInterface keeperRegistry = KeeperRegistryInterface(keeperRegistryAddress);
-//    return keeperRegistry.paused();
-//  }
+  function acceptUpkeepAdmin(
+    uint256 upkeepId
+  ) nestedScriptContext external {
+    KeeperRegistryInterface keeperRegistry = KeeperRegistryInterface(keeperRegistryAddress);
+    keeperRegistry.acceptUpkeepAdmin(upkeepId);
+  }
 }

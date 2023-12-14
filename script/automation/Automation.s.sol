@@ -6,7 +6,7 @@ import "forge-std/Vm.sol";
 
 import "../helpers/BaseScript.s.sol";
 import "../helpers/TypeAndVersion.s.sol";
-import "src/interfaces/LinkTokenInterface.sol";
+import "src/interfaces/shared/LinkTokenInterface.sol";
 import "src/interfaces/automation/CronUpkeepFactoryInterface.sol";
 import { KeeperRegistrar1_2Interface } from "src/interfaces/automation/KeeperRegistrar1_2Interface.sol";
 import { KeeperRegistrar2_0Interface } from "src/interfaces/automation/KeeperRegistrar2_0Interface.sol";
@@ -121,9 +121,7 @@ contract AutomationScript is BaseScript, TypeAndVersionScript {
     keeperRegistrarTypeAndVersion = TypeAndVersionInterface(keeperRegistrarAddress).typeAndVersion();
   }
 
-  /**
-   * @notice Keeper Registrar functions
-   */
+  /// @notice Keeper Registrar functions
 
   /**
    * @notice registerUpkeep function to register upkeep
@@ -399,9 +397,7 @@ contract AutomationScript is BaseScript, TypeAndVersionScript {
     }
   }
 
-  /**
-   * @notice Keeper Registry functions
-   */
+  /// @notice Keeper Registry functions
 
   function addFunds(
     uint256 upkeepId,

@@ -2,7 +2,7 @@
 pragma solidity >=0.6.2 <0.9.0;
 
 import "forge-std/Script.sol";
-import "src/interfaces/ChainlinkKeeperConsumerInterface.sol";
+import "src/interfaces/sandbox/ChainlinkKeeperConsumerInterface.sol";
 
 contract ChainlinkKeeperConsumerScript is Script {
   function run() external view {

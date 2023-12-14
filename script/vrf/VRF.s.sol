@@ -5,21 +5,23 @@ import "forge-std/Script.sol";
 
 import "../helpers/BaseScript.s.sol";
 import "src/interfaces/vrf/VRFCoordinatorV2Interface.sol";
-import "src/interfaces/LinkTokenInterface.sol";
+import "src/interfaces/shared/LinkTokenInterface.sol";
 
 contract VRFScript is BaseScript {
-  function run(string memory nodeId) public {}
+  address public vrfCoordinatorAddress;
 
-  /// @notice WRAPPER FUNCTIONS
-  function getRequestConfig(
-    address vrfCoordinatorAddress
-  ) external view returns(uint16, uint32, bytes32[] memory) {
+  constructor (address _vrfCoordinatorAddress) {
+    vrfCoordinatorAddress = _vrfCoordinatorAddress;
+  }
+
+  /// @notice VRF Coordinator functions
+
+  function getRequestConfig() external view returns(uint16, uint32, bytes32[] memory) {
     VRFCoordinatorV2Interface vrfCoordinator = VRFCoordinatorV2Interface(vrfCoordinatorAddress);
     return vrfCoordinator.getRequestConfig();
   }
 
   function requestRandomWords(
-    address vrfCoordinatorAddress,
     uint64 subscriptionId,
     bytes32 keyHash,
     uint16 minimumRequestConfirmations,
@@ -31,9 +33,7 @@ contract VRFScript is BaseScript {
     console.log("Requested random words for subscription ID:", subscriptionId);
   }
 
-  function createSubscription(
-    address vrfCoordinatorAddress
-  ) nestedScriptContext external returns(uint64) {
+  function createSubscription() nestedScriptContext external returns(uint64) {
     VRFCoordinatorV2Interface vrfCoordinator = VRFCoordinatorV2Interface(vrfCoordinatorAddress);
     uint64 subscriptionId = vrfCoordinator.createSubscription();
     console.log("Created subscription with ID:", subscriptionId);
@@ -41,7 +41,6 @@ contract VRFScript is BaseScript {
   }
 
   function cancelSubscription(
-    address vrfCoordinatorAddress,
     uint64 subscriptionId,
     address receivingAddress
   ) nestedScriptContext external {
@@ -51,7 +50,6 @@ contract VRFScript is BaseScript {
   }
 
   function getSubscription(
-    address vrfCoordinatorAddress,
     uint64 subscriptionId
   ) external view returns(uint96 balance, uint64 reqCount, address owner, address[] memory consumers) {
     VRFCoordinatorV2Interface vrfCoordinator = VRFCoordinatorV2Interface(vrfCoordinatorAddress);
@@ -59,7 +57,6 @@ contract VRFScript is BaseScript {
   }
 
   function requestSubscriptionOwnerTransfer(
-    address vrfCoordinatorAddress,
     uint64 subscriptionId,
     address newOwner
   ) nestedScriptContext external {
@@ -69,7 +66,6 @@ contract VRFScript is BaseScript {
   }
 
   function acceptSubscriptionOwnerTransfer(
-    address vrfCoordinatorAddress,
     uint64 subscriptionId
   ) nestedScriptContext external {
     VRFCoordinatorV2Interface vrfCoordinator = VRFCoordinatorV2Interface(vrfCoordinatorAddress);
@@ -78,7 +74,6 @@ contract VRFScript is BaseScript {
   }
 
   function addConsumer(
-    address vrfCoordinatorAddress,
     uint64 subscriptionId,
     address consumer
   ) nestedScriptContext external {
@@ -88,7 +83,6 @@ contract VRFScript is BaseScript {
   }
 
   function removeConsumer(
-    address vrfCoordinatorAddress,
     uint64 subscriptionId,
     address consumer
   ) nestedScriptContext external {
@@ -98,16 +92,13 @@ contract VRFScript is BaseScript {
   }
 
   function isPendingRequestExists(
-    address vrfCoordinatorAddress,
     uint64 subscriptionId
   ) external view returns(bool) {
     VRFCoordinatorV2Interface vrfCoordinator = VRFCoordinatorV2Interface(vrfCoordinatorAddress);
     return vrfCoordinator.pendingRequestExists(subscriptionId);
   }
 
-  /// @notice SYNTHETIC FUNCTIONS
   function fundSubscription(
-    address vrfCoordinatorAddress,
     address linkTokenAddress,
     uint256 juelsAmount,
     uint64 subscriptionId

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity >=0.6.2 <0.9.0;
 
-import "../interfaces/AggregatorV3Interface.sol";
+import "src/interfaces/feeds/AggregatorV3Interface.sol";
 
 contract MockEthFeed is AggregatorV3Interface {
   uint80 private roundId;

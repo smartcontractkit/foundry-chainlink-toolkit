@@ -17,9 +17,6 @@ env:
 
 jobs:
   test-foundry-chainlink-toolkit:
-    strategy:
-      fail-fast: true
-
     runs-on: ubuntu-latest
 
     steps:
@@ -32,6 +29,9 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y make
+
+      - name: Create an empty .env file
+        run: touch .env
 
       - name: Install Foundry
         uses: foundry-rs/foundry-toolchain@v1

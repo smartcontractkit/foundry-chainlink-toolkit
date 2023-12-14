@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: main-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  FOUNDRY_PROFILE: default
+
+jobs:
+  test-foundry-chainlink-toolkit:
+    strategy:
+      fail-fast: true
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+
+      - name: Install make
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y make
+
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+
+      - name: Run Forge build
+        run: make fct-build-artifacts
+        id: build
+
+      - name: Run Forge tests
+        run: forge test -vvv --via-ir
+        id: test

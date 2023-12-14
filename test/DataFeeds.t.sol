@@ -6,8 +6,8 @@ import "forge-std/Test.sol";
 import "./BaseTest.t.sol";
 import "script/feeds/DataFeed.s.sol";
 import "script/feeds/ENSFeedsResolver.s.sol";
-import "src/interfaces/AggregatorV2V3Interface.sol";
-import "src/interfaces/MockV3AggregatorInterface.sol";
+import "src/interfaces/feeds/AggregatorV2V3Interface.sol";
+import "src/interfaces/test/MockV3AggregatorInterface.sol";
 
 contract DataFeedsScriptTest is BaseTest {
   uint8 public DECIMALS = 18;

@@ -5,8 +5,8 @@ import "forge-std/Test.sol";
 
 import "./BaseTest.t.sol";
 import "script/functions/Functions.s.sol";
-import "src/interfaces/IFunctionsRouter.sol";
-import "src/interfaces/IFunctionsSubscriptions.sol";
+import "src/interfaces/functions/IFunctionsRouter.sol";
+import "src/interfaces/functions/IFunctionsSubscriptions.sol";
 
 contract FunctionsRouterScriptTest is BaseTest {
   event SubscriptionCreated(uint64 indexed subscriptionId, address owner);
@@ -43,7 +43,7 @@ contract FunctionsRouterScriptTest is BaseTest {
     vm.startBroadcast(OWNER_ADDRESS);
     linkTokenAddress = deployCode("LinkToken.sol:LinkToken");
     functionsRouterAddress = deployCode("FunctionsRouter.sol:FunctionsRouter", abi.encode(linkTokenAddress, simulatedRouterConfig));
-    functionsScript = new FunctionsScript();
+    functionsScript = new FunctionsScript(functionsRouterAddress);
     vm.stopBroadcast();
   }
 
@@ -51,7 +51,7 @@ contract FunctionsRouterScriptTest is BaseTest {
     vm.expectEmit(true, false, false, false);
     emit SubscriptionCreated(1, OWNER_ADDRESS);
     vm.broadcast(OWNER_ADDRESS);
-    uint64 subscriptionId = functionsScript.createSubscription(functionsRouterAddress);
+    uint64 subscriptionId = functionsScript.createSubscription();
     assertEq(subscriptionId, 1);
   }
 
@@ -59,64 +59,64 @@ contract FunctionsRouterScriptTest is BaseTest {
     vm.expectEmit(true, false, false, false);
     emit SubscriptionCreated(1, OWNER_ADDRESS);
     vm.broadcast(OWNER_ADDRESS);
-    uint64 subscriptionId = functionsScript.createSubscriptionWithConsumer(functionsRouterAddress, STRANGER_ADDRESS);
+    uint64 subscriptionId = functionsScript.createSubscriptionWithConsumer(STRANGER_ADDRESS);
     assertEq(subscriptionId, 1);
   }
 
   function test_CancelSubscription_Success() public {
     uint96 expectedRefund = 1 * JUELS_PER_LINK;
     vm.broadcast(OWNER_ADDRESS);
-    uint64 subscriptionId = functionsScript.createSubscriptionWithConsumer(functionsRouterAddress, STRANGER_ADDRESS);
+    uint64 subscriptionId = functionsScript.createSubscriptionWithConsumer(STRANGER_ADDRESS);
     vm.broadcast(OWNER_ADDRESS);
-    functionsScript.fundSubscription(functionsRouterAddress, linkTokenAddress, expectedRefund, subscriptionId);
+    functionsScript.fundSubscription(linkTokenAddress, expectedRefund, subscriptionId);
     vm.expectEmit(true, false, false, false);
     emit SubscriptionCanceled(subscriptionId, OWNER_ADDRESS, expectedRefund);
     vm.broadcast(OWNER_ADDRESS);
-    functionsScript.cancelSubscription(functionsRouterAddress, subscriptionId, OWNER_ADDRESS);
+    functionsScript.cancelSubscription(subscriptionId, OWNER_ADDRESS);
   }
 
   function test_AddConsumer_Success() public {
     vm.broadcast(OWNER_ADDRESS);
-    uint64 subscriptionId = functionsScript.createSubscription(functionsRouterAddress);
+    uint64 subscriptionId = functionsScript.createSubscription();
     vm.expectEmit();
     emit SubscriptionConsumerAdded(subscriptionId, STRANGER_ADDRESS);
     vm.broadcast(OWNER_ADDRESS);
-    functionsScript.addConsumer(functionsRouterAddress, subscriptionId, STRANGER_ADDRESS);
+    functionsScript.addConsumer(subscriptionId, STRANGER_ADDRESS);
   }
 
   function test_RemoveConsumer_Success() public {
     vm.broadcast(OWNER_ADDRESS);
-    uint64 subscriptionId = functionsScript.createSubscription(functionsRouterAddress);
+    uint64 subscriptionId = functionsScript.createSubscription();
     vm.broadcast(OWNER_ADDRESS);
-    functionsScript.addConsumer(functionsRouterAddress, subscriptionId, STRANGER_ADDRESS);
+    functionsScript.addConsumer(subscriptionId, STRANGER_ADDRESS);
     vm.expectEmit();
     emit SubscriptionConsumerRemoved(subscriptionId, STRANGER_ADDRESS);
     vm.broadcast(OWNER_ADDRESS);
-    functionsScript.removeConsumer(functionsRouterAddress, subscriptionId, STRANGER_ADDRESS);
+    functionsScript.removeConsumer(subscriptionId, STRANGER_ADDRESS);
   }
 
   function test_TransferOwnership_Success() public {
     vm.broadcast(OWNER_ADDRESS);
-    uint64 subscriptionId = functionsScript.createSubscription(functionsRouterAddress);
+    uint64 subscriptionId = functionsScript.createSubscription();
     vm.expectEmit();
     emit SubscriptionOwnerTransferRequested(subscriptionId, OWNER_ADDRESS, STRANGER_ADDRESS);
     vm.broadcast(OWNER_ADDRESS);
-    functionsScript.proposeSubscriptionOwnerTransfer(functionsRouterAddress, subscriptionId, STRANGER_ADDRESS);
+    functionsScript.proposeSubscriptionOwnerTransfer(subscriptionId, STRANGER_ADDRESS);
     vm.expectEmit();
     emit SubscriptionOwnerTransferred(subscriptionId, OWNER_ADDRESS, STRANGER_ADDRESS);
     vm.broadcast(STRANGER_ADDRESS);
-    functionsScript.acceptSubscriptionOwnerTransfer(functionsRouterAddress, subscriptionId);
+    functionsScript.acceptSubscriptionOwnerTransfer(subscriptionId);
   }
 
   function test_FundSubscription_Success() public {
     uint96 funds = 1 * JUELS_PER_LINK;
     vm.broadcast(OWNER_ADDRESS);
-    uint64 subscriptionId = functionsScript.createSubscriptionWithConsumer(functionsRouterAddress, STRANGER_ADDRESS);
+    uint64 subscriptionId = functionsScript.createSubscriptionWithConsumer(STRANGER_ADDRESS);
     vm.expectEmit();
     emit SubscriptionFunded(subscriptionId, 0, funds);
     vm.broadcast(OWNER_ADDRESS);
-    functionsScript.fundSubscription(functionsRouterAddress, linkTokenAddress, funds, subscriptionId);
-    IFunctionsSubscriptions.Subscription memory subscription = functionsScript.getSubscription(functionsRouterAddress, subscriptionId);
+    functionsScript.fundSubscription(linkTokenAddress, funds, subscriptionId);
+    IFunctionsSubscriptions.Subscription memory subscription = functionsScript.getSubscription(subscriptionId);
     assertEq(subscription.balance, funds);
   }
 }

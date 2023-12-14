@@ -9,7 +9,7 @@ import { RegistryGeneration, RegistryState, AutomationScript } from "script/auto
 import { AutomationRegistrar2_1Interface, InitialTriggerConfig } from "src/interfaces/automation/AutomationRegistrar2_1Interface.sol";
 import "src/interfaces/automation/KeeperRegistry2_1Interface.sol" as KeeperRegistry2_1;
 import "src/interfaces/automation/CronUpkeepFactoryInterface.sol";
-import "src/interfaces/LinkTokenInterface.sol";
+import "src/interfaces/shared/LinkTokenInterface.sol";
 import "src/interfaces/test/CronUpkeepInterface.sol";
 import "src/libraries/AutomationUtils.sol";
 import "src/libraries/Utils.sol";

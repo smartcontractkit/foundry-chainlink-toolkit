@@ -8,7 +8,7 @@ import "./BaseTest.t.sol";
 import { RegistryGeneration, RegistryState, AutomationScript } from "script/automation/Automation.s.sol";
 import "src/interfaces/automation/KeeperRegistrar1_2Interface.sol";
 import { KeeperRegistry1_3Interface, Config, State } from "src/interfaces/automation/KeeperRegistry1_3Interface.sol";
-import "src/interfaces/LinkTokenInterface.sol";
+import "src/interfaces/shared/LinkTokenInterface.sol";
 import "src/libraries/AutomationUtils.sol";
 import "src/libraries/Utils.sol";
 

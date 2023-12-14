@@ -30,7 +30,7 @@ contract FunctionsRouterScriptTest is BaseTest {
     address blockhashStoreAddress = deployCode("BlockhashStore.sol:BlockhashStore");
     address dataFeedAddress = deployCode("MockV3Aggregator.sol:MockV3Aggregator", abi.encode(DECIMALS, INITIAL_ANSWER));
     vrfCoordinatorAddress = deployCode("VRFCoordinatorV2.sol:VRFCoordinatorV2", abi.encode(linkTokenAddress, dataFeedAddress, blockhashStoreAddress));
-    vrfScript = new VRFScript();
+    vrfScript = new VRFScript(vrfCoordinatorAddress);
     vm.stopBroadcast();
   }
 
@@ -38,61 +38,61 @@ contract FunctionsRouterScriptTest is BaseTest {
     vm.expectEmit(true, false, false, false);
     emit SubscriptionCreated(1, OWNER_ADDRESS);
     vm.broadcast(OWNER_ADDRESS);
-    uint64 subscriptionId = vrfScript.createSubscription(vrfCoordinatorAddress);
+    uint64 subscriptionId = vrfScript.createSubscription();
     assertEq(subscriptionId, 1);
   }
 
   function test_CancelSubscription_Success() public {
     vm.broadcast(OWNER_ADDRESS);
-    uint64 subscriptionId = vrfScript.createSubscription(vrfCoordinatorAddress);
+    uint64 subscriptionId = vrfScript.createSubscription();
     vm.expectEmit();
     emit SubscriptionCanceled(subscriptionId, OWNER_ADDRESS, 0);
     vm.broadcast(OWNER_ADDRESS);
-    vrfScript.cancelSubscription(vrfCoordinatorAddress, subscriptionId, OWNER_ADDRESS);
+    vrfScript.cancelSubscription(subscriptionId, OWNER_ADDRESS);
   }
 
   function test_AddConsumer_Success() public {
     vm.broadcast(OWNER_ADDRESS);
-    uint64 subscriptionId = vrfScript.createSubscription(vrfCoordinatorAddress);
+    uint64 subscriptionId = vrfScript.createSubscription();
     vm.expectEmit();
     emit SubscriptionConsumerAdded(subscriptionId, STRANGER_ADDRESS);
     vm.broadcast(OWNER_ADDRESS);
-    vrfScript.addConsumer(vrfCoordinatorAddress, subscriptionId, STRANGER_ADDRESS);
+    vrfScript.addConsumer(subscriptionId, STRANGER_ADDRESS);
   }
 
   function test_RemoveConsumer_Success() public {
     vm.broadcast(OWNER_ADDRESS);
-    uint64 subscriptionId = vrfScript.createSubscription(vrfCoordinatorAddress);
+    uint64 subscriptionId = vrfScript.createSubscription();
     vm.broadcast(OWNER_ADDRESS);
-    vrfScript.addConsumer(vrfCoordinatorAddress, subscriptionId, STRANGER_ADDRESS);
+    vrfScript.addConsumer(subscriptionId, STRANGER_ADDRESS);
     vm.expectEmit();
     emit SubscriptionConsumerRemoved(subscriptionId, STRANGER_ADDRESS);
     vm.broadcast(OWNER_ADDRESS);
-    vrfScript.removeConsumer(vrfCoordinatorAddress, subscriptionId, STRANGER_ADDRESS);
+    vrfScript.removeConsumer(subscriptionId, STRANGER_ADDRESS);
   }
 
   function test_TransferOwnership_Success() public {
     vm.broadcast(OWNER_ADDRESS);
-    uint64 subscriptionId = vrfScript.createSubscription(vrfCoordinatorAddress);
+    uint64 subscriptionId = vrfScript.createSubscription();
     vm.expectEmit();
     emit SubscriptionOwnerTransferRequested(subscriptionId, OWNER_ADDRESS, STRANGER_ADDRESS);
     vm.broadcast(OWNER_ADDRESS);
-    vrfScript.requestSubscriptionOwnerTransfer(vrfCoordinatorAddress, subscriptionId, STRANGER_ADDRESS);
+    vrfScript.requestSubscriptionOwnerTransfer(subscriptionId, STRANGER_ADDRESS);
     vm.expectEmit();
     emit SubscriptionOwnerTransferred(subscriptionId, OWNER_ADDRESS, STRANGER_ADDRESS);
     vm.broadcast(STRANGER_ADDRESS);
-    vrfScript.acceptSubscriptionOwnerTransfer(vrfCoordinatorAddress, subscriptionId);
+    vrfScript.acceptSubscriptionOwnerTransfer(subscriptionId);
   }
 
   function test_FundSubscription_Success() public {
     uint96 funds = 1 * JUELS_PER_LINK;
     vm.broadcast(OWNER_ADDRESS);
-    uint64 subscriptionId = vrfScript.createSubscription(vrfCoordinatorAddress);
+    uint64 subscriptionId = vrfScript.createSubscription();
     vm.expectEmit();
     emit SubscriptionFunded(subscriptionId, 0, funds);
     vm.broadcast(OWNER_ADDRESS);
-    vrfScript.fundSubscription(vrfCoordinatorAddress, linkTokenAddress, funds, subscriptionId);
-    (uint96 balance,,,) = vrfScript.getSubscription(vrfCoordinatorAddress, subscriptionId);
+    vrfScript.fundSubscription(linkTokenAddress, funds, subscriptionId);
+    (uint96 balance,,,) = vrfScript.getSubscription(subscriptionId);
     assertEq(balance, funds);
   }
 }

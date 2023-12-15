@@ -5,7 +5,6 @@ script = 'script'
 test = 'test'
 libs = ['lib']
 solc_version = '0.8.19'
-via_ir = true
 
 [profile.0_7_x]
 solc_version = '0.7.6'

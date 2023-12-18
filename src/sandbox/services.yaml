@@ -36,8 +36,8 @@ services:
     image: postgres:15
     command: postgres -c 'max_connections=${PG_MAX_CONNECTIONS}'
     volumes:
-      - ./chainlink/sql/drop_tables.sql:/docker-entrypoint-initdb.d/1-drop_tables.sql
-      - ./chainlink/sql/create_tables.sql:/docker-entrypoint-initdb.d/2-create_tables.sql
+      - ./clroot/sql/drop_tables.sql:/docker-entrypoint-initdb.d/1-drop_tables.sql
+      - ./clroot/sql/create_tables.sql:/docker-entrypoint-initdb.d/2-create_tables.sql
       - chainlink_db_data:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
@@ -56,8 +56,8 @@ services:
     command: local node -p ${ROOT}/settings/chainlink_password -a ${ROOT}/settings/chainlink_api_credentials --vrfpassword=${ROOT}/settings/chainlink_api_credentials
     restart: on-failure
     volumes:
-      - ./chainlink/settings/:${ROOT}/settings
-      - ./chainlink/jobs:${ROOT}/jobs
+      - ./clroot/settings/:${ROOT}/settings
+      - ./clroot/jobs:${ROOT}/jobs
     depends_on:
       chainlink_db:
         condition: service_healthy
@@ -72,4 +72,4 @@ services:
       - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@chainlink_db:5432/chainlink?sslmode=disable
       - LINK_CONTRACT_ADDRESS=${LINK_CONTRACT_ADDRESS}
     env_file:
-      - ./chainlink/chainlink.env
+      - clroot/chainlink.env

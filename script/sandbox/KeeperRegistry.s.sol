@@ -4,11 +4,11 @@ pragma solidity >=0.6.2 <0.9.0;
 
 import "forge-std/Script.sol";
 import "src/interfaces/shared/LinkTokenInterface.sol";
-import {KeeperRegistry1_3Interface, Config, State } from "src/interfaces/automation/KeeperRegistry1_3Interface.sol";
+import { KeeperRegistry1_3Interface, Config, State } from "src/interfaces/automation/KeeperRegistry1_3Interface.sol";
 import "src/mocks/MockEthFeed.sol";
 import "src/mocks/MockGasFeed.sol";
 
-contract RegistryScript is Script {
+contract KeeperRegistryScript is Script {
   address public randomAddress = address(0x8A791620dd6260079BF849Dc5567aDC3F2FdC318);
   enum PaymentModel {
     DEFAULT,

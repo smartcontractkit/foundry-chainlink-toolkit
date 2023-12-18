@@ -3,9 +3,10 @@ pragma solidity >=0.6.2 <0.9.0;
 
 import "forge-std/Script.sol";
 import "forge-std/Vm.sol";
-import "./Registry.s.sol";
-import "./ChainlinkKeeperConsumer.s.sol";
-import "./Helper.s.sol";
+
+import "../KeeperRegistry.s.sol";
+import "../ChainlinkKeeperConsumer.s.sol";
+import "../utils/Helper.s.sol";
 import "./FFI.s.sol";
 
 contract KeeperJobScript is Script {
@@ -14,7 +15,7 @@ contract KeeperJobScript is Script {
 
     address linkTokenAddress = vm.envAddress("LINK_CONTRACT_ADDRESS");
 
-    RegistryScript registryScript = new RegistryScript();
+    KeeperRegistryScript registryScript = new KeeperRegistryScript();
     address registry = registryScript.deploy(linkTokenAddress);
 
     ChainlinkKeeperConsumerScript chainlinkKeeperConsumerScript = new ChainlinkKeeperConsumerScript();
@@ -34,7 +35,7 @@ contract KeeperJobScript is Script {
 
   function finalize(address registry, address keeperConsumer) external {
     FFIScript ffiScript = new FFIScript();
-    RegistryScript registryScript = new RegistryScript();
+    KeeperRegistryScript registryScript = new KeeperRegistryScript();
 
     address linkTokenAddress = vm.envAddress("LINK_CONTRACT_ADDRESS");
 

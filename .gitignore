@@ -42,4 +42,4 @@ out/*
 # VRF
 !out/VRFCoordinatorV2.sol
 # chainlink
-chainlink/foundry-chainlink-node*/
+src/sandbox/clroot/foundry-chainlink-node*/

@@ -29,7 +29,7 @@ services:
       - 6061:6060
       - 6690:6690
     volumes:
-      - ./chainlink/${CHAINLINK_CONTAINER_NAME}1:${ROOT}
+      - ./clroot/${CHAINLINK_CONTAINER_NAME}1:${ROOT}
   chainlink_node2:
     extends:
       file: services.yaml
@@ -41,7 +41,7 @@ services:
       - 6722:6688
       - 6062:6060
     volumes:
-      - ./chainlink/${CHAINLINK_CONTAINER_NAME}2:${ROOT}
+      - ./clroot/${CHAINLINK_CONTAINER_NAME}2:${ROOT}
   chainlink_node3:
     extends:
       file: services.yaml
@@ -53,7 +53,7 @@ services:
       - 6733:6688
       - 6063:6060
     volumes:
-      - ./chainlink/${CHAINLINK_CONTAINER_NAME}3:${ROOT}
+      - ./clroot/${CHAINLINK_CONTAINER_NAME}3:${ROOT}
   chainlink_node4:
     extends:
       file: services.yaml
@@ -65,7 +65,7 @@ services:
       - 6744:6688
       - 6064:6060
     volumes:
-      - ./chainlink/${CHAINLINK_CONTAINER_NAME}4:${ROOT}
+      - ./clroot/${CHAINLINK_CONTAINER_NAME}4:${ROOT}
   chainlink_node5:
     extends:
       file: services.yaml
@@ -77,4 +77,4 @@ services:
       - 6755:6688
       - 6065:6060
     volumes:
-      - ./chainlink/${CHAINLINK_CONTAINER_NAME}5:${ROOT}
+      - ./clroot/${CHAINLINK_CONTAINER_NAME}5:${ROOT}

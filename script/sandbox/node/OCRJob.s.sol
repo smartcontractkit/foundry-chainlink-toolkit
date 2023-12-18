@@ -3,8 +3,8 @@ pragma experimental ABIEncoderV2;
 pragma solidity >=0.6.2 <0.9.0;
 
 import "forge-std/Script.sol";
-import "./OffchainAggregator.s.sol";
-import "./Helper.s.sol";
+import "../OffchainAggregator.s.sol";
+import "../utils/Helper.s.sol";
 import "./FFI.s.sol";
 
 contract OCRJobScript is Script {

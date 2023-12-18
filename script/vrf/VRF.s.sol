@@ -8,15 +8,21 @@ import "src/interfaces/vrf/VRFCoordinatorV2Interface.sol";
 import "src/interfaces/shared/LinkTokenInterface.sol";
 
 contract VRFScript is BaseScript {
+  address public linkTokenAddress;
   address public vrfCoordinatorAddress;
 
   constructor (address _vrfCoordinatorAddress) {
     vrfCoordinatorAddress = _vrfCoordinatorAddress;
+    linkTokenAddress = VRFCoordinatorV2Interface(vrfCoordinatorAddress).LINK();
   }
 
   /// @notice VRF Coordinator functions
 
-  function getRequestConfig() external view returns(uint16, uint32, bytes32[] memory) {
+  function getRequestConfig() external view returns(
+    uint16 minimumRequestConfirmations,
+    uint32 maxGasLimit,
+    bytes32[] memory s_provingKeyHashes
+  ) {
     VRFCoordinatorV2Interface vrfCoordinator = VRFCoordinatorV2Interface(vrfCoordinatorAddress);
     return vrfCoordinator.getRequestConfig();
   }
@@ -33,7 +39,7 @@ contract VRFScript is BaseScript {
     console.log("Requested random words for subscription ID:", subscriptionId);
   }
 
-  function createSubscription() nestedScriptContext external returns(uint64) {
+  function createSubscription() nestedScriptContext external returns(uint64 subId) {
     VRFCoordinatorV2Interface vrfCoordinator = VRFCoordinatorV2Interface(vrfCoordinatorAddress);
     uint64 subscriptionId = vrfCoordinator.createSubscription();
     console.log("Created subscription with ID:", subscriptionId);
@@ -99,7 +105,6 @@ contract VRFScript is BaseScript {
   }
 
   function fundSubscription(
-    address linkTokenAddress,
     uint256 juelsAmount,
     uint64 subscriptionId
   ) nestedScriptContext external {

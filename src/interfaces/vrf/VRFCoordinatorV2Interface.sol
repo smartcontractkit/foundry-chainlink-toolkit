@@ -109,4 +109,6 @@ interface VRFCoordinatorV2Interface {
    * otherwise.
    */
   function pendingRequestExists(uint64 subId) external view returns (bool);
+
+  function LINK() external view returns (address);
 }

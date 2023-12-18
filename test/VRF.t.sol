@@ -91,7 +91,7 @@ contract FunctionsRouterScriptTest is BaseTest {
     vm.expectEmit();
     emit SubscriptionFunded(subscriptionId, 0, funds);
     vm.broadcast(OWNER_ADDRESS);
-    vrfScript.fundSubscription(linkTokenAddress, funds, subscriptionId);
+    vrfScript.fundSubscription(funds, subscriptionId);
     (uint96 balance,,,) = vrfScript.getSubscription(subscriptionId);
     assertEq(balance, funds);
   }

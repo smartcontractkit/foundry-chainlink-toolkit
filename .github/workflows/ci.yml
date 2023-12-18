@@ -36,10 +36,14 @@ jobs:
       - name: Install Foundry
         uses: foundry-rs/foundry-toolchain@v1
 
+      - name: Install Dependencies
+        run: make fct-install-dependencies
+        id: install-dependencies
+
       - name: Run Forge build
         run: make fct-build-artifacts
         id: build
 
       - name: Run Forge tests
-        run: forge test -vvv --via-ir
+        run: make fct-run-tests
         id: test

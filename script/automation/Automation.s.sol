@@ -94,6 +94,7 @@ contract AutomationScript is BaseScript, TypeAndVersionScript {
   uint8 private constant REGISTRATION_SOURCE = 0;
   bytes private constant EMPTY_BYTES = new bytes(0);
 
+  address public linkTokenAddress;
   address public keeperRegistryAddress;
   address public keeperRegistrarAddress;
   string public keeperRegistryTypeAndVersion;
@@ -118,6 +119,7 @@ contract AutomationScript is BaseScript, TypeAndVersionScript {
     else {
       revert("Unsupported KeeperRegistry typeAndVersion");
     }
+    linkTokenAddress = KeeperRegistrarInterface(keeperRegistrarAddress).LINK();
     keeperRegistrarTypeAndVersion = TypeAndVersionInterface(keeperRegistrarAddress).typeAndVersion();
   }
 
@@ -125,7 +127,6 @@ contract AutomationScript is BaseScript, TypeAndVersionScript {
 
   /**
    * @notice registerUpkeep function to register upkeep
-   * @param linkTokenAddress address of the LINK token
    * @param amountInJuels quantity of LINK upkeep is funded with (specified in Juels)
    * @param upkeepName string of the upkeep to be registered
    * @param upkeepAddress address to perform upkeep on
@@ -133,7 +134,6 @@ contract AutomationScript is BaseScript, TypeAndVersionScript {
    * @param checkData data passed to the contract when checking for upkeep
    */
   function registerUpkeep(
-    address linkTokenAddress,
     uint96 amountInJuels,
     string calldata upkeepName,
     string calldata email,
@@ -141,7 +141,6 @@ contract AutomationScript is BaseScript, TypeAndVersionScript {
     uint32 gasLimit,
     bytes calldata checkData
   ) nestedScriptContext public returns (bytes32 requestHash) {
-
     LinkTokenInterface linkToken = LinkTokenInterface(linkTokenAddress);
 
     bytes memory encryptedEmail = bytes(email);
@@ -209,7 +208,6 @@ contract AutomationScript is BaseScript, TypeAndVersionScript {
 
   /**
    * @notice registerUpkeep_logTrigger function to register upkeep with Log Trigger
-   * @param linkTokenAddress address of the LINK token
    * @param amountInJuels quantity of LINK upkeep is funded with (specified in Juels)
    * @param upkeepName string of the upkeep to be registered
    * @param upkeepAddress address to perform upkeep on
@@ -218,7 +216,6 @@ contract AutomationScript is BaseScript, TypeAndVersionScript {
    * @param triggerConfig the config for the trigger
    */
   function registerUpkeep_logTrigger(
-    address linkTokenAddress,
     uint96 amountInJuels,
     string calldata upkeepName,
     string calldata email,
@@ -265,7 +262,6 @@ contract AutomationScript is BaseScript, TypeAndVersionScript {
 
   /**
    * @notice registerUpkeep_timeBased function to register upkeep with Time Based Trigger
-   * @param linkTokenAddress address of the LINK token
    * @param amountInJuels quantity of LINK upkeep is funded with (specified in Juels)
    * @param upkeepName string of the upkeep to be registered
    * @param upkeepAddress address to perform upkeep on
@@ -276,7 +272,6 @@ contract AutomationScript is BaseScript, TypeAndVersionScript {
    * @param cronString cron string to convert and encode
    */
   function registerUpkeep_timeBased(
-    address linkTokenAddress,
     uint96 amountInJuels,
     string calldata upkeepName,
     string calldata email,

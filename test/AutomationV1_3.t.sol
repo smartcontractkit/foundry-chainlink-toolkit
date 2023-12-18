@@ -131,7 +131,6 @@ contract AutomationScriptV1_3Test is BaseTest {
 
     vm.broadcast(OWNER_ADDRESS);
     bytes32 requestHash = automationScript.registerUpkeep(
-      linkTokenAddress,
       LINK_JUELS_TO_FUND,
       NAME,
       EMAIL,
@@ -163,7 +162,6 @@ contract AutomationScriptV1_3Test is BaseTest {
 
     vm.broadcast(OWNER_ADDRESS);
     bytes32 requestHash = automationScript.registerUpkeep(
-      linkTokenAddress,
       LINK_JUELS_TO_FUND,
       "cancelledUpkeep",
       EMAIL,
@@ -216,7 +214,6 @@ contract AutomationScriptV1_3Test is BaseTest {
   function test_GetMinBalanceForUpkeep_Success() public {
     vm.broadcast(OWNER_ADDRESS);
     automationScript.registerUpkeep(
-      linkTokenAddress,
       LINK_JUELS_TO_FUND,
       "dummyUpkeep",
       EMAIL,
@@ -237,7 +234,6 @@ contract AutomationScriptV1_3Test is BaseTest {
   function test_PauseUnpauseUpkeep_Success() public {
     vm.broadcast(OWNER_ADDRESS);
     automationScript.registerUpkeep(
-      linkTokenAddress,
       LINK_JUELS_TO_FUND,
       "pausedUpkeep",
       EMAIL,
@@ -286,7 +282,6 @@ contract AutomationScriptV1_3Test is BaseTest {
   function test_CancelUpkeepAndWithdrawFunds_Success() public {
     vm.broadcast(OWNER_ADDRESS);
     automationScript.registerUpkeep(
-      linkTokenAddress,
       LINK_JUELS_TO_FUND,
       "cancelledUpkeep",
       EMAIL,
@@ -323,7 +318,6 @@ contract AutomationScriptV1_3Test is BaseTest {
   function test_SetGasLimit_Success() public {
     vm.broadcast(OWNER_ADDRESS);
     automationScript.registerUpkeep(
-      linkTokenAddress,
       LINK_JUELS_TO_FUND,
       "changedUpkeep",
       EMAIL,
@@ -348,7 +342,6 @@ contract AutomationScriptV1_3Test is BaseTest {
   function test_AddFunds_Success() public {
     vm.broadcast(OWNER_ADDRESS);
     automationScript.registerUpkeep(
-      linkTokenAddress,
       LINK_JUELS_TO_FUND,
       "fundedUpkeep",
       EMAIL,
@@ -376,7 +369,6 @@ contract AutomationScriptV1_3Test is BaseTest {
   function test_TransferUpkeepAdmin_Success() public {
     vm.broadcast(OWNER_ADDRESS);
     automationScript.registerUpkeep(
-      linkTokenAddress,
       LINK_JUELS_TO_FUND,
       "transferredUpkeep",
       EMAIL,

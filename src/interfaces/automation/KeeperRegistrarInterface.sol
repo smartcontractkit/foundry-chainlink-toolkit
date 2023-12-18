@@ -8,5 +8,5 @@ interface KeeperRegistrarInterface is TypeAndVersionInterface {
   function cancel(bytes32 hash) external;
   function getAutoApproveAllowedSender(address senderAddress) external view returns(bool);
   function getPendingRequest(bytes32 hash) external view returns(address, uint96);
+  function LINK() external view returns(address);
 }
-

@@ -9,6 +9,8 @@ include .env
 # You can override it with .env or by passing it as a parameter to a target
 CONTAINERS_COUNT ?= 8
 FCT_PLUGIN_PATH ?= .
+HEALTH_CHECK_URL ?= http://localhost:6711
+HEALTH_CHECK_TIMEOUT ?= 600
 
 include ${FCT_PLUGIN_PATH}/makefile-utility
 
@@ -34,8 +36,8 @@ fct-init:   ## Initialize testing environment
 	sed 's/^\(LINK_CONTRACT_ADDRESS=\)/#\1/' ".env" > "temp.env" && mv temp.env .env && \
 	echo "LINK_CONTRACT_ADDRESS=$$linkTokenAddressFormatted" >> .env && \
 	make fct-restart-nodes && \
-	printf "%s\n" "Waiting for the Chainlink cluster to spin up..." && \
-	bash ${FCT_PLUGIN_PATH}/utils/wait-for-http-200.sh && \
+	printf "%s\n" "Waiting for the Chainlink cluster to spin up (${HEALTH_CHECK_TIMEOUT}s)..." && \
+	bash ${FCT_PLUGIN_PATH}/src/sandbox/utils/wait-for-http-200.sh ${HEALTH_CHECK_URL} ${HEALTH_CHECK_TIMEOUT} && \
 	make fct-transfer-eth-to-nodes && \
 	make fct-transfer-link-to-nodes
 

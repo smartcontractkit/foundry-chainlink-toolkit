@@ -1,22 +1,15 @@
-# include .env file and export its env vars
-# (-include to ignore error if it does not exist)
-include .env
-
 # Default values
-# You can override it with .env or by passing it as a parameter to a target
 CRON_LIBRARY_ADDRESS = 0xCccCCCCcccCCcCccccCC00000000000000000000
 
 .SILENT:
 .PHONY: fct-install-dependencies fct-build-artifacts fct-build-ocr-helper
 
 # Install Forge dependencies.
-fct-install-dependencies:
-	forge install foundry-rs/forge-std --no-git --no-commit; \
-	forge install smartcontractkit/chainlink-brownie-contracts --no-git --no-commit; \
-	forge install OpenZeppelin/openzeppelin-contracts@release-v4.8 --no-git --no-commit
+fct-install-dependencies: ## Install dependencies
+	forge update;
 
 # Build Chainlink contracts artifacts.
-fct-build-artifacts:
+fct-build-artifacts: ## Build artifacts
 	printf "%s\n" "Building Chainlink contracts..."; \
 	forge build --contracts ./contracts/v0.4.25 --skip script test --names --use solc:0.4.25; \
 	forge build --contracts ./contracts/v0.6.6 --skip script test --names --use solc:0.6.6; \

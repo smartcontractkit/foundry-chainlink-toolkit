@@ -11,6 +11,13 @@ broadcast/
 cache/
 # forge artifacts
 out/*
+# Test
+!out/AutomationForwarderLogic.sol
+!out/BlockhashStore.sol
+!out/CronLibrary.sol
+!out/MockV3Aggregator.sol
+!out/UpkeepMock.sol
+!out/UpkeepTranscoder.sol
 # Sandbox
 !out/ChainlinkCronConsumer.sol
 !out/ChainlinkDirectRequestConsumer.sol

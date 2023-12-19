@@ -5,7 +5,7 @@ import "forge-std/Test.sol";
 import "forge-std/console.sol";
 
 import "./BaseTest.t.sol";
-import { RegistryGeneration, RegistryState, AutomationScript } from "script/automation/Automation.s.sol";
+import { RegistryState, AutomationScript } from "script/automation/Automation.s.sol";
 import "src/interfaces/automation/KeeperRegistrar1_2Interface.sol";
 import { KeeperRegistry1_3Interface, Config, State } from "src/interfaces/automation/KeeperRegistry1_3Interface.sol";
 import "src/interfaces/shared/LinkTokenInterface.sol";
@@ -143,7 +143,11 @@ contract AutomationScriptV1_3Test is BaseTest {
 
   function test_GetState_Success() public {
     RegistryState memory registryState = automationScript.getState();
-    assertEq(Utils.compareStrings(registryState.registryGeneration, RegistryGeneration.v1_0), true);
+    assertGe(registryState.combinedState.numUpkeeps, 0);
+    assertEq(registryState.combinedConfig.transcoder, upkeepTranscoderAddress);
+    assertEq(registryState.signers.length, 0);
+    assertEq(registryState.transmitters.length, 0);
+    assertEq(registryState.f, 0);
   }
 
   function test_GetUpkeepTranscoderVersion_Success() public {
@@ -297,7 +301,7 @@ contract AutomationScriptV1_3Test is BaseTest {
 
     RegistryState memory registryState;
     registryState = automationScript.getState();
-    uint256 numUpkeeps = registryState.stateV1_0.state.numUpkeeps;
+    uint256 numUpkeeps = registryState.combinedState.numUpkeeps;
 
     vm.expectEmit(true, false, false, false);
     emit UpkeepCanceled(upkeepId, 0);
@@ -305,7 +309,7 @@ contract AutomationScriptV1_3Test is BaseTest {
     automationScript.cancelUpkeep(upkeepId);
 
     registryState = automationScript.getState();
-    assertEq(registryState.stateV1_0.state.numUpkeeps, numUpkeeps - 1);
+    assertEq(registryState.combinedState.numUpkeeps, numUpkeeps - 1);
 
     vm.expectEmit(true, true, false, true);
     emit FundsWithdrawn(upkeepId, LINK_JUELS_TO_FUND - MIN_UPKEEP_SPEND, STRANGER2_ADDRESS);

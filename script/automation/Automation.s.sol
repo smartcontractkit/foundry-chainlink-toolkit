@@ -16,76 +16,49 @@ import { KeeperRegistry1_3Interface, State as StateV1_0, Config as ConfigV1_0 } 
 import { KeeperRegistry2_0Interface, State as StateV2_0, OnchainConfig as ConfigV2_0, UpkeepInfo as UpkeepInfoV2_0 } from "src/interfaces/automation/KeeperRegistry2_0Interface.sol";
 import { KeeperRegistry2_1Interface, State as StateV2_1, OnchainConfig as ConfigV2_1, UpkeepInfo as UpkeepInfoV2_1 } from "src/interfaces/automation/KeeperRegistry2_1Interface.sol";
 import "src/interfaces/automation/KeeperRegistrarInterface.sol";
+import "src/libraries/AutomationGenerations.sol";
 import "src/libraries/AutomationUtils.sol";
 import "src/libraries/TypesAndVersions.sol";
 import "src/libraries/Utils.sol";
 
-library RegistryGeneration {
-  string public constant v1_0 = "v1_0";
-  string public constant v2_0 = "v2_0";
-  string public constant v2_1 = "v2_1";
+struct CombinedState {
+  uint32 nonce;
+  uint96 ownerLinkBalance;
+  uint256 expectedLinkBalance;
+  uint256 numUpkeeps;
+  uint96 totalPremium; // From the v2_0 and v2_1
+  uint32 configCount; // From the v2_0 and v2_1
+  uint32 latestConfigBlockNumber; // From the v2_0 and v2_1
+  bytes32 latestConfigDigest; // From the v2_0 and v2_1
+  uint32 latestEpoch; // From the v2_0 and v2_1
+  bool paused; // From the  v2_0 and v2_1
+}
 
-  // Pick registry generation based on typeAndVersion
-  function pickRegistryGeneration(string memory typeAndVersion) public pure returns (string memory) {
-    if (Utils.compareStrings(typeAndVersion, TypesAndVersions.KeeperRegistry1_0) ||
-    Utils.compareStrings(typeAndVersion, TypesAndVersions.KeeperRegistry1_1) ||
-    Utils.compareStrings(typeAndVersion, TypesAndVersions.KeeperRegistry1_2) ||
-      Utils.compareStrings(typeAndVersion, TypesAndVersions.KeeperRegistry1_3)) {
-      return v1_0;
-    } else if (Utils.compareStrings(typeAndVersion, TypesAndVersions.KeeperRegistry2_0) ||
-    Utils.compareStrings(typeAndVersion, TypesAndVersions.KeeperRegistry2_0_1) ||
-      Utils.compareStrings(typeAndVersion, TypesAndVersions.KeeperRegistry2_0_2)) {
-      return v2_0;
-    } else if (Utils.compareStrings(typeAndVersion, TypesAndVersions.KeeperRegistry2_1)) {
-      return v2_1;
-    } else {
-      revert("Unsupported KeeperRegistry typeAndVersion");
-    }
-  }
-
-  // check if registry generation is v1_0
-  function isV1_0(string memory typeAndVersion) public pure returns (bool) {
-    return Utils.compareStrings(pickRegistryGeneration(typeAndVersion), v1_0);
-  }
-
-  // check if registry generation is v2_0
-  function isV2_0(string memory typeAndVersion) public pure returns (bool) {
-    return Utils.compareStrings(pickRegistryGeneration(typeAndVersion), v2_0);
-  }
-
-  // check if registry generation is v2_1
-  function isV2_1(string memory typeAndVersion) public pure returns (bool) {
-    return Utils.compareStrings(pickRegistryGeneration(typeAndVersion), v2_1);
-  }
+struct CombinedConfig {
+  uint32 paymentPremiumPPB;
+  uint32 flatFeeMicroLink; // min 0.000001 LINK, max 4294 LINK
+  uint32 checkGasLimit;
+  uint24 stalenessSeconds;
+  uint16 gasCeilingMultiplier;
+  uint96 minUpkeepSpend;
+  uint32 maxPerformGas;
+  uint32 maxCheckDataSize; // From the v2_0 and v2_1
+  uint32 maxPerformDataSize; // From the v2_0 and v2_1
+  uint32 maxRevertDataSize; // From the v2_1
+  uint256 fallbackGasPrice;
+  uint256 fallbackLinkPrice;
+  address transcoder;
+  address[] registrars; // From the v2_1, v1_0 and v2_0 transformed to array
+  address upkeepPrivilegeManager; // From the v2_1
+  uint24 blockCountPerTurn; // From the v1_0
 }
 
 struct RegistryState {
-  string registryGeneration;
-  RegistryStateV1_0 stateV1_0;
-  RegistryStateV2_0 stateV2_0;
-  RegistryStateV2_1 stateV2_1;
-}
-
-struct RegistryStateV1_0 {
-  StateV1_0 state;
-  ConfigV1_0 config;
-  address[] keepers;
-}
-
-struct RegistryStateV2_0 {
-  StateV2_0 state;
-  ConfigV2_0 config;
-  address[] signers;
-  address[] transmitters;
-  uint8 f;
-}
-
-struct RegistryStateV2_1 {
-  StateV2_1 state;
-  ConfigV2_1 config;
-  address[] signers;
-  address[] transmitters;
-  uint8 f;
+  CombinedState combinedState;
+  CombinedConfig combinedConfig;
+  address[] signers; // From the v2_0 and v2_1, v1_0 keepers
+  address[] transmitters; // From the v2_0 and v2_1, v1_0 keepers
+  uint8 f; // From the v2_0 and v2_1
 }
 
 contract AutomationScript is BaseScript, TypeAndVersionScript {
@@ -104,15 +77,15 @@ contract AutomationScript is BaseScript, TypeAndVersionScript {
     keeperRegistryAddress = _keeperRegistryAddress;
     keeperRegistryTypeAndVersion = TypeAndVersionInterface(keeperRegistryAddress).typeAndVersion();
 
-    if (RegistryGeneration.isV1_0(keeperRegistryTypeAndVersion)) {
+    if (AutomationGenerations.isV1_0(keeperRegistryTypeAndVersion)) {
       (,ConfigV1_0 memory config,) = KeeperRegistry1_3Interface(keeperRegistryAddress).getState();
       keeperRegistrarAddress = config.registrar;
     }
-    else if (RegistryGeneration.isV2_0(keeperRegistryTypeAndVersion)) {
+    else if (AutomationGenerations.isV2_0(keeperRegistryTypeAndVersion)) {
       (,ConfigV2_0 memory config,,,) = KeeperRegistry2_0Interface(keeperRegistryAddress).getState();
       keeperRegistrarAddress = config.registrar;
     }
-    else if (RegistryGeneration.isV2_1(keeperRegistryTypeAndVersion)) {
+    else if (AutomationGenerations.isV2_1(keeperRegistryTypeAndVersion)) {
       (,ConfigV2_1 memory config,,,) = KeeperRegistry2_1Interface(keeperRegistryAddress).getState();
       keeperRegistrarAddress = config.registrars[0];
     }
@@ -439,24 +412,126 @@ contract AutomationScript is BaseScript, TypeAndVersionScript {
   }
 
   function getState() external view returns (RegistryState memory registryState) {
-    if (RegistryGeneration.isV1_0(keeperRegistryTypeAndVersion)) {
+    CombinedState memory combinedState;
+    CombinedConfig memory combinedConfig;
+
+    if (AutomationGenerations.isV1_0(keeperRegistryTypeAndVersion)) {
       (StateV1_0 memory state, ConfigV1_0 memory config, address[] memory keepers) = KeeperRegistry1_3Interface(keeperRegistryAddress).getState();
-      registryState.registryGeneration = RegistryGeneration.v1_0;
-      registryState.stateV1_0 = RegistryStateV1_0(state, config, keepers);
-      return registryState;
-    } else if (RegistryGeneration.isV2_0(keeperRegistryTypeAndVersion)) {
+      combinedState = CombinedState(
+        state.nonce,
+        state.ownerLinkBalance,
+        state.expectedLinkBalance,
+        state.numUpkeeps,
+        0,
+        0,
+        0,
+        0,
+        0,
+        false
+      );
+      address[] memory registrars = new address[](1);
+      registrars[0] = config.registrar;
+      combinedConfig = CombinedConfig(
+        config.paymentPremiumPPB,
+        config.flatFeeMicroLink,
+        config.checkGasLimit,
+        config.stalenessSeconds,
+        config.gasCeilingMultiplier,
+        config.minUpkeepSpend,
+        config.maxPerformGas,
+        0,
+        0,
+        0,
+        config.fallbackGasPrice,
+        config.fallbackLinkPrice,
+        config.transcoder,
+        registrars,
+        address(0),
+        config.blockCountPerTurn
+      );
+      registryState.signers = keepers;
+      registryState.transmitters = keepers;
+      registryState.f = 0;
+    } else if (AutomationGenerations.isV2_0(keeperRegistryTypeAndVersion)) {
       (StateV2_0 memory state, ConfigV2_0 memory config, address[] memory signers, address[] memory transmitters, uint8 f) = KeeperRegistry2_0Interface(keeperRegistryAddress).getState();
-      registryState.registryGeneration = RegistryGeneration.v2_0;
-      registryState.stateV2_0 = RegistryStateV2_0(state, config, signers, transmitters, f);
-      return registryState;
-    }  else if (RegistryGeneration.isV2_1(keeperRegistryTypeAndVersion)) {
+      combinedState = CombinedState(
+        state.nonce,
+        state.ownerLinkBalance,
+        state.expectedLinkBalance,
+        state.numUpkeeps,
+        state.totalPremium,
+        state.configCount,
+        state.latestConfigBlockNumber,
+        state.latestConfigDigest,
+        state.latestEpoch,
+        state.paused
+      );
+      address[] memory registrars = new address[](1);
+      registrars[0] = config.registrar;
+      combinedConfig = CombinedConfig(
+        config.paymentPremiumPPB,
+        config.flatFeeMicroLink,
+        config.checkGasLimit,
+        config.stalenessSeconds,
+        config.gasCeilingMultiplier,
+        config.minUpkeepSpend,
+        config.maxPerformGas,
+        config.maxCheckDataSize,
+        config.maxPerformDataSize,
+        0,
+        config.fallbackGasPrice,
+        config.fallbackLinkPrice,
+        config.transcoder,
+        registrars,
+        address(0),
+        0
+      );
+      registryState.signers = signers;
+      registryState.transmitters = transmitters;
+      registryState.f = f;
+    }  else if (AutomationGenerations.isV2_1(keeperRegistryTypeAndVersion)) {
       (StateV2_1 memory state, ConfigV2_1 memory config, address[] memory signers, address[] memory transmitters, uint8 f) = KeeperRegistry2_1Interface(keeperRegistryAddress).getState();
-      registryState.registryGeneration = RegistryGeneration.v2_1;
-      registryState.stateV2_1 = RegistryStateV2_1(state, config, signers, transmitters, f);
-      return registryState;
+      combinedState = CombinedState(
+        state.nonce,
+        state.ownerLinkBalance,
+        state.expectedLinkBalance,
+        state.numUpkeeps,
+        state.totalPremium,
+        state.configCount,
+        state.latestConfigBlockNumber,
+        state.latestConfigDigest,
+        state.latestEpoch,
+        state.paused
+      );
+      combinedConfig = CombinedConfig(
+        config.paymentPremiumPPB,
+        config.flatFeeMicroLink,
+        config.checkGasLimit,
+        config.stalenessSeconds,
+        config.gasCeilingMultiplier,
+        config.minUpkeepSpend,
+        config.maxPerformGas,
+        config.maxCheckDataSize,
+        config.maxPerformDataSize,
+        config.maxRevertDataSize,
+        config.fallbackGasPrice,
+        config.fallbackLinkPrice,
+        config.transcoder,
+        config.registrars,
+        config.upkeepPrivilegeManager,
+        0
+      );
+      registryState.signers = signers;
+      registryState.transmitters = transmitters;
+      registryState.f = f;
     } else {
       revert("Unsupported KeeperRegistry typeAndVersion");
     }
+
+    registryState.combinedState = combinedState;
+    registryState.combinedConfig = combinedConfig;
+
+    return registryState;
   }
 
   function getUpkeepTranscoderVersion() external view returns(AutomationUtils.UpkeepFormat) {
@@ -485,7 +560,7 @@ contract AutomationScript is BaseScript, TypeAndVersionScript {
     bool paused
   ) {
     address lastKeeper;
-    if (RegistryGeneration.isV1_0(keeperRegistryTypeAndVersion)) {
+    if (AutomationGenerations.isV1_0(keeperRegistryTypeAndVersion)) {
       (
         target,
         executeGas,
@@ -507,7 +582,7 @@ contract AutomationScript is BaseScript, TypeAndVersionScript {
         amountSpent,
         paused
       );
-    } else if (RegistryGeneration.isV2_0(keeperRegistryTypeAndVersion)) {
+    } else if (AutomationGenerations.isV2_0(keeperRegistryTypeAndVersion)) {
       UpkeepInfoV2_0 memory upkeepInfo = KeeperRegistry2_0Interface(keeperRegistryAddress).getUpkeep(upkeepId);
       return (
         upkeepInfo.target,
@@ -519,7 +594,7 @@ contract AutomationScript is BaseScript, TypeAndVersionScript {
         upkeepInfo.amountSpent,
         upkeepInfo.paused
       );
-    }  else if (RegistryGeneration.isV2_1(keeperRegistryTypeAndVersion)) {
+    }  else if (AutomationGenerations.isV2_1(keeperRegistryTypeAndVersion)) {
       UpkeepInfoV2_1 memory upkeepInfo = KeeperRegistry2_1Interface(keeperRegistryAddress).getUpkeep(upkeepId);
       return (
         upkeepInfo.target,

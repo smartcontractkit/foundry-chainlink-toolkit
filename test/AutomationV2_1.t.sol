@@ -5,7 +5,7 @@ import "forge-std/Test.sol";
 import "forge-std/console.sol";
 
 import "./BaseTest.t.sol";
-import { RegistryGeneration, RegistryState, AutomationScript } from "script/automation/Automation.s.sol";
+import { RegistryState, AutomationScript } from "script/automation/Automation.s.sol";
 import { AutomationRegistrar2_1Interface, InitialTriggerConfig } from "src/interfaces/automation/AutomationRegistrar2_1Interface.sol";
 import "src/interfaces/automation/KeeperRegistry2_1Interface.sol" as KeeperRegistry2_1;
 import "src/interfaces/automation/CronUpkeepFactoryInterface.sol";
@@ -289,7 +289,11 @@ contract AutomationScriptV2_1Test is BaseTest {
 
   function test_GetState_Success() public {
     RegistryState memory registryState = automationScript.getState();
-    assertEq(Utils.compareStrings(registryState.registryGeneration, RegistryGeneration.v2_1), true);
+    assertGe(registryState.combinedState.numUpkeeps, 0);
+    assertEq(registryState.combinedConfig.transcoder, upkeepTranscoderAddress);
+    assertEq(registryState.signers[0], OWNER_ADDRESS);
+    assertEq(registryState.transmitters[0], OWNER_ADDRESS);
+    assertEq(registryState.f, 1);
   }
 
   function test_GetUpkeepTranscoderVersion_Success() public {
@@ -441,7 +445,7 @@ contract AutomationScriptV2_1Test is BaseTest {
 
     RegistryState memory registryState;
     registryState = automationScript.getState();
-    uint256 numUpkeeps = registryState.stateV2_1.state.numUpkeeps;
+    uint256 numUpkeeps = registryState.combinedState.numUpkeeps;
 
     vm.expectEmit(true, false, false, false);
     emit UpkeepCanceled(upkeepId, 0);
@@ -449,7 +453,7 @@ contract AutomationScriptV2_1Test is BaseTest {
     automationScript.cancelUpkeep(upkeepId);
 
     registryState = automationScript.getState();
-    assertEq(registryState.stateV2_1.state.numUpkeeps, numUpkeeps - 1);
+    assertEq(registryState.combinedState.numUpkeeps, numUpkeeps - 1);
 
     vm.expectEmit(true, true, false, true);
     emit FundsWithdrawn(upkeepId, LINK_JUELS_TO_FUND - MIN_UPKEEP_SPEND, STRANGER2_ADDRESS);

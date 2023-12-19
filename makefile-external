@@ -1,0 +1,58 @@
+# include .env file and export its env vars
+# (-include to ignore error if it does not exist)
+include .env
+
+.SILENT:
+
+# Default values
+# You can override it with .env or by passing it as a parameter to a target
+FCT_PLUGIN_PATH ?= .
+
+include ${FCT_PLUGIN_PATH}/makefile-utility
+
+# Automation
+.PHONY: fct-automation-get-state
+
+fct-automation-get-state: fct-check-rpc-url
+	$(call check_defined, PRIVATE_KEY) \
+	$(call check_set_parameter,KEEPER_REGISTRY_ADDRESS,keeperRegistryAddress) \
+	forge script ${FCT_PLUGIN_PATH}/script/automation/Automation.CLI.s.sol --sig "getState(address)" $$keeperRegistryAddress --rpc-url ${RPC_URL} --broadcast --out ${FCT_PLUGIN_PATH}/out
+
+# Data Feeds
+.PHONY: fct-data-feeds-get-latest-round-data
+
+fct-data-feeds-get-latest-round-data: fct-check-rpc-url
+	$(call check_defined, PRIVATE_KEY) \
+	$(call check_set_parameter,DATA_FEED_ADDRESS,dataFeedAddress) \
+	forge script ${FCT_PLUGIN_PATH}/script/feeds/DataFeed.CLI.s.sol --sig "getLatestRoundData(address)" $$dataFeedAddress --rpc-url ${RPC_URL} --broadcast --out ${FCT_PLUGIN_PATH}/out
+
+# Functions
+.PHONY: fct-functions-create-subscription fct-functions-cancel-subscription
+
+fct-functions-create-subscription: fct-check-rpc-url
+	$(call check_defined, PRIVATE_KEY) \
+	$(call check_set_parameter,FUNCTIONS_ROUTER_ADDRESS,functionsRouterAddress) \
+	forge script ${FCT_PLUGIN_PATH}/script/functions/Functions.CLI.s.sol --sig "createSubscription(address)" $$functionsRouterAddress --rpc-url ${RPC_URL} --broadcast --out ${FCT_PLUGIN_PATH}/out
+
+fct-functions-cancel-subscription: fct-check-rpc-url
+	$(call check_defined, PRIVATE_KEY) \
+	$(call check_set_parameter,FUNCTIONS_ROUTER_ADDRESS,functionsRouterAddress) \
+	$(call check_set_parameter,FUNCTIONS_SUBSCRIPTION_ID,subId) \
+	$(call check_set_parameter,RECEIVING_ADDRESS,receivingAddress) \
+	forge script ${FCT_PLUGIN_PATH}/script/functions/Functions.CLI.s.sol --sig "cancelSubscription(address,uint64,address)" $$functionsRouterAddress $$subId $$receivingAddress --rpc-url ${RPC_URL} --broadcast --out ${FCT_PLUGIN_PATH}/out
+
+# VRF
+.PHONY: fct-vrf-create-subscription fct-vrf-cancel-subscription
+
+fct-vrf-create-subscription: fct-check-rpc-url
+	$(call check_defined, PRIVATE_KEY) \
+	$(call check_set_parameter,VRF_COORDINATOR_ADDRESS,vrfCoordinatorAddress) \
+	forge script ${FCT_PLUGIN_PATH}/script/vrf/VRF.CLI.s.sol --sig "createSubscription(address)" $$vrfCoordinatorAddress --rpc-url ${RPC_URL} --broadcast --out ${FCT_PLUGIN_PATH}/out
+
+fct-vrf-cancel-subscription: fct-check-rpc-url
+	$(call check_defined, PRIVATE_KEY) \
+	$(call check_set_parameter,VRF_COORDINATOR_ADDRESS,vrfCoordinatorAddress) \
+	$(call check_set_parameter,VRF_SUBSCRIPTION_ID,subId) \
+	$(call check_set_parameter,RECEIVING_ADDRESS,receivingAddress) \
+	forge script ${FCT_PLUGIN_PATH}/script/vrf/VRF.CLI.s.sol --sig "cancelSubscription(address,uint64,address)" $$functionsRouterAddress $$subId $$receivingAddress --rpc-url ${RPC_URL} --broadcast --out ${FCT_PLUGIN_PATH}/out
+

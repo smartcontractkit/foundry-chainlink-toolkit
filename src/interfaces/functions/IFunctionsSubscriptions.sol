@@ -72,24 +72,24 @@ interface IFunctionsSubscriptions {
   function recoverFunds(address to) external;
 
   /// @notice Create a new subscription.
-  /// @return subscriptionId - A unique subscription id.
+  /// @return subId - A unique subscription id.
   /// @dev You can manage the consumer set dynamically with addConsumer/removeConsumer.
   /// @dev Note to fund the subscription, use transferAndCall. For example
   /// @dev  LINKTOKEN.transferAndCall(
   /// @dev    address(ROUTER),
   /// @dev    amount,
   /// @dev    abi.encode(subscriptionId));
-  function createSubscription() external returns (uint64);
+  function createSubscription() external returns (uint64 subId);
 
   /// @notice Create a new subscription and add a consumer.
-  /// @return subscriptionId - A unique subscription id.
+  /// @return subId - A unique subscription id.
   /// @dev You can manage the consumer set dynamically with addConsumer/removeConsumer.
   /// @dev Note to fund the subscription, use transferAndCall. For example
   /// @dev  LINKTOKEN.transferAndCall(
   /// @dev    address(ROUTER),
   /// @dev    amount,
   /// @dev    abi.encode(subscriptionId));
-  function createSubscriptionWithConsumer(address consumer) external returns (uint64 subscriptionId);
+  function createSubscriptionWithConsumer(address consumer) external returns (uint64 subId);
 
   /// @notice Propose a new owner for a subscription.
   /// @dev Only callable by the Subscription's owner

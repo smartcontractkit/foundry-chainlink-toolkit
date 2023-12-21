@@ -2,10 +2,10 @@
 
 pragma solidity ^0.8.19;
 
-import "@chainlink/v0.8/ChainlinkClient.sol";
-import "@chainlink/v0.8/ConfirmedOwner.sol";
-import "@chainlink/v0.8/Chainlink.sol";
-import "@chainlink/v0.8/shared/interfaces/LinkTokenInterface.sol";
+import "@chainlink/contracts/v0.8/ChainlinkClient.sol";
+import "@chainlink/contracts/v0.8/ConfirmedOwner.sol";
+import "@chainlink/contracts/v0.8/Chainlink.sol";
+import "@chainlink/contracts/v0.8/shared/interfaces/LinkTokenInterface.sol";
 
 /**
  * THIS IS AN EXAMPLE CONTRACT THAT USES HARDCODED VALUES FOR CLARITY.

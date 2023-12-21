@@ -14,7 +14,7 @@ fct-build-artifacts: ## Build artifacts
 	forge build --contracts ./contracts/v0.4.25 --skip script test --names --use solc:0.4.25; \
 	forge build --contracts ./contracts/v0.6.6 --skip script test --names --use solc:0.6.6; \
 	forge build --contracts ./contracts/v0.7.6 --skip script test --names --use solc:0.7.6; \
-	forge build --contracts ./contracts/v0.8.6 --skip script test --names --use solc:0.8.6 --libraries "@chainlink/v0.8/automation/libraries/external/Cron.sol:Cron:$(CRON_LIBRARY_ADDRESS)"; \
+	forge build --contracts ./contracts/v0.8.6 --skip script test --names --use solc:0.8.6 --libraries "@chainlink/contracts/v0.8/automation/libraries/external/Cron.sol:Cron:$(CRON_LIBRARY_ADDRESS)"; \
 	forge build --contracts ./contracts/v0.8.16 --skip script test --names --use solc:0.8.16; \
 	forge build --contracts ./contracts/v0.8.19 --skip script test --names --use solc:0.8.19; \
 

@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.6.0 <0.9.0;
 
-import {Cron as CronInternal, Spec} from "@chainlink/v0.8/automation/libraries/internal/Cron.sol";
+import {Cron as CronInternal, Spec} from "@chainlink/contracts/v0.8/automation/libraries/internal/Cron.sol";
 
-// This is the copy of the Cron library from @chainlink/v0.8/automation/libraries
+// This is the copy of the Cron library from @chainlink/contracts/v0.8/automation/libraries
 
 /**
  * @title The Cron library

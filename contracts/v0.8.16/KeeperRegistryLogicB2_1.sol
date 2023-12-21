@@ -1,4 +1,4 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.8.16;
 
-import "@chainlink/v0.8/automation/v2_1/KeeperRegistryLogicB2_1.sol";
+import "@chainlink/contracts/v0.8/automation/v2_1/KeeperRegistryLogicB2_1.sol";

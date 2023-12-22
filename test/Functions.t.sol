@@ -116,7 +116,7 @@ contract FunctionsRouterScriptTest is BaseTest {
     emit SubscriptionFunded(subscriptionId, 0, funds);
     vm.broadcast(OWNER_ADDRESS);
     functionsScript.fundSubscription(linkTokenAddress, funds, subscriptionId);
-    IFunctionsSubscriptions.Subscription memory subscription = functionsScript.getSubscription(subscriptionId);
+    IFunctionsSubscriptions.Subscription memory subscription = functionsScript.getSubscriptionDetails(subscriptionId);
     assertEq(subscription.balance, funds);
   }
 }

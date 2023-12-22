@@ -92,7 +92,7 @@ contract FunctionsRouterScriptTest is BaseTest {
     emit SubscriptionFunded(subscriptionId, 0, funds);
     vm.broadcast(OWNER_ADDRESS);
     vrfScript.fundSubscription(funds, subscriptionId);
-    (uint96 balance,,,) = vrfScript.getSubscription(subscriptionId);
+    (uint96 balance,,,) = vrfScript.getSubscriptionDetails(subscriptionId);
     assertEq(balance, funds);
   }
 }

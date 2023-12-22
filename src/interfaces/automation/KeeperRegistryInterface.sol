@@ -7,7 +7,7 @@ import "../shared/TypeAndVersionInterface.sol";
 import "src/libraries/AutomationUtils.sol";
 
 interface KeeperRegistryInterface is TypeAndVersionInterface {
-  function getActiveUpkeepIDs(uint256 startIndex, uint256 maxCount) external view returns (uint256[] memory);
+  function getActiveUpkeepIDs(uint256 startIndex, uint256 maxCount) external view returns (uint256[] memory upkeepIDs);
   function addFunds(uint256 id, uint96 amount) external;
   function pauseUpkeep(uint256 id) external;
   function unpauseUpkeep(uint256 id) external;
@@ -17,5 +17,5 @@ interface KeeperRegistryInterface is TypeAndVersionInterface {
   function transferUpkeepAdmin(uint256 id, address proposed) external;
   function acceptUpkeepAdmin(uint256 id) external;
   function getMinBalanceForUpkeep(uint256 id) external view returns (uint96 minBalance);
-  function upkeepTranscoderVersion() external view returns(AutomationUtils.UpkeepFormat);
+  function upkeepTranscoderVersion() external view returns(AutomationUtils.UpkeepFormat upkeepFormat);
 }

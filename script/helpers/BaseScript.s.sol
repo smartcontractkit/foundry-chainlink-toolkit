@@ -32,5 +32,5 @@ contract BaseScript is Script {
     }
   }
 
-  function run() external {}
+  function run() external pure {}
 }

@@ -9,12 +9,12 @@ import "../helpers/BaseScript.s.sol";
 contract VRFCLIScript is BaseScript {
   function getRequestConfig(
     address vrfCoordinatorAddress
-  ) external view returns(
+  ) external returns(
     uint16 minimumRequestConfirmations,
     uint32 maxGasLimit,
     bytes32[] memory s_provingKeyHashes
   ) {
-    VRFScript vrfScript = VRFScript(vrfCoordinatorAddress);
+    VRFScript vrfScript = new VRFScript(vrfCoordinatorAddress);
     return vrfScript.getRequestConfig();
   }
 
@@ -26,7 +26,7 @@ contract VRFCLIScript is BaseScript {
     uint32 callbackGasLimit,
     uint32 numWords
   ) nestedScriptContext external {
-    VRFScript vrfScript = VRFScript(vrfCoordinatorAddress);
+    VRFScript vrfScript = new VRFScript(vrfCoordinatorAddress);
     return vrfScript.requestRandomWords(
       subscriptionId,
       keyHash,
@@ -39,7 +39,7 @@ contract VRFCLIScript is BaseScript {
   function createSubscription(
     address vrfCoordinatorAddress
   ) nestedScriptContext external returns(uint64 subId) {
-    VRFScript vrfScript = VRFScript(vrfCoordinatorAddress);
+    VRFScript vrfScript = new VRFScript(vrfCoordinatorAddress);
     return vrfScript.createSubscription();
   }
 
@@ -48,16 +48,16 @@ contract VRFCLIScript is BaseScript {
     uint64 subscriptionId,
     address receivingAddress
   ) nestedScriptContext external {
-    VRFScript vrfScript = VRFScript(vrfCoordinatorAddress);
+    VRFScript vrfScript = new VRFScript(vrfCoordinatorAddress);
     return vrfScript.cancelSubscription(subscriptionId, receivingAddress);
   }
 
-  function getSubscription(
+  function getSubscriptionDetails(
     address vrfCoordinatorAddress,
     uint64 subscriptionId
-  ) external view returns(uint96 balance, uint64 reqCount, address owner, address[] memory consumers) {
-    VRFScript vrfScript = VRFScript(vrfCoordinatorAddress);
-    return vrfScript.getSubscription(subscriptionId);
+  ) external returns(uint96 balance, uint64 reqCount, address owner, address[] memory consumers) {
+    VRFScript vrfScript = new VRFScript(vrfCoordinatorAddress);
+    return vrfScript.getSubscriptionDetails(subscriptionId);
   }
 
   function addConsumer(
@@ -65,7 +65,7 @@ contract VRFCLIScript is BaseScript {
     uint64 subscriptionId,
     address consumer
   ) nestedScriptContext external {
-    VRFScript vrfScript = VRFScript(vrfCoordinatorAddress);
+    VRFScript vrfScript = new VRFScript(vrfCoordinatorAddress);
     return vrfScript.addConsumer(subscriptionId, consumer);
   }
 
@@ -74,7 +74,7 @@ contract VRFCLIScript is BaseScript {
     uint64 subscriptionId,
     address consumer
   ) nestedScriptContext external {
-    VRFScript vrfScript = VRFScript(vrfCoordinatorAddress);
+    VRFScript vrfScript = new VRFScript(vrfCoordinatorAddress);
     return vrfScript.removeConsumer(subscriptionId, consumer);
   }
 
@@ -83,7 +83,7 @@ contract VRFCLIScript is BaseScript {
     uint256 juelsAmount,
     uint64 subscriptionId
   ) nestedScriptContext external {
-    VRFScript vrfScript = VRFScript(vrfCoordinatorAddress);
+    VRFScript vrfScript = new VRFScript(vrfCoordinatorAddress);
     return vrfScript.fundSubscription(juelsAmount, subscriptionId);
   }
 }

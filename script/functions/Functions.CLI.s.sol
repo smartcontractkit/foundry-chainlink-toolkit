@@ -10,7 +10,7 @@ contract FunctionsCLIScript is BaseScript {
   function createSubscription(
     address functionsRouterAddress
   ) nestedScriptContext external returns(uint64 subId) {
-    FunctionsScript functionsScript = FunctionsScript(functionsRouterAddress);
+    FunctionsScript functionsScript = new FunctionsScript(functionsRouterAddress);
     return functionsScript.createSubscription();
   }
 
@@ -18,7 +18,7 @@ contract FunctionsCLIScript is BaseScript {
     address functionsRouterAddress,
     address consumer
   ) nestedScriptContext external returns(uint64 subId) {
-    FunctionsScript functionsScript = FunctionsScript(functionsRouterAddress);
+    FunctionsScript functionsScript = new FunctionsScript(functionsRouterAddress);
     return functionsScript.createSubscriptionWithConsumer(consumer);
   }
 
@@ -27,16 +27,16 @@ contract FunctionsCLIScript is BaseScript {
     uint64 subId,
     address receivingAddress
   ) nestedScriptContext external {
-    FunctionsScript functionsScript = FunctionsScript(functionsRouterAddress);
+    FunctionsScript functionsScript = new FunctionsScript(functionsRouterAddress);
     return functionsScript.cancelSubscription(subId, receivingAddress);
   }
 
-  function getSubscription(
+  function getSubscriptionDetails(
     address functionsRouterAddress,
     uint64 subId
-  ) external view returns(IFunctionsSubscriptions.Subscription memory) {
-    FunctionsScript functionsScript = FunctionsScript(functionsRouterAddress);
-    return functionsScript.getSubscription(subId);
+  ) external returns(IFunctionsSubscriptions.Subscription memory) {
+    FunctionsScript functionsScript = new FunctionsScript(functionsRouterAddress);
+    return functionsScript.getSubscriptionDetails(subId);
   }
 
   function addConsumer(
@@ -44,7 +44,7 @@ contract FunctionsCLIScript is BaseScript {
     uint64 subId,
     address consumer
   ) nestedScriptContext external {
-    FunctionsScript functionsScript = FunctionsScript(functionsRouterAddress);
+    FunctionsScript functionsScript = new FunctionsScript(functionsRouterAddress);
     return functionsScript.addConsumer(subId, consumer);
   }
 
@@ -53,7 +53,7 @@ contract FunctionsCLIScript is BaseScript {
     uint64 subId,
     address consumer
   ) nestedScriptContext external {
-    FunctionsScript functionsScript = FunctionsScript(functionsRouterAddress);
+    FunctionsScript functionsScript = new FunctionsScript(functionsRouterAddress);
     return functionsScript.removeConsumer(subId, consumer);
   }
 
@@ -63,7 +63,7 @@ contract FunctionsCLIScript is BaseScript {
     uint256 juelsAmount,
     uint64 subId
   ) nestedScriptContext external {
-    FunctionsScript functionsScript = FunctionsScript(functionsRouterAddress);
+    FunctionsScript functionsScript = new FunctionsScript(functionsRouterAddress);
     return functionsScript.fundSubscription(linkTokenAddress, juelsAmount, subId);
   }
 
@@ -74,7 +74,7 @@ contract FunctionsCLIScript is BaseScript {
     uint32 callbackGasLimit,
     uint256 gasPriceWei
   ) nestedScriptContext external returns(uint96 estimatedCost) {
-    FunctionsScript functionsScript = FunctionsScript(functionsRouterAddress);
+    FunctionsScript functionsScript = new FunctionsScript(functionsRouterAddress);
     return functionsScript.estimateRequestCost(donId, subId, callbackGasLimit, gasPriceWei);
   }
 }

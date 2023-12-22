@@ -17,7 +17,7 @@ contract AutomationCLIScript is BaseScript {
     uint32 gasLimit,
     bytes calldata checkData
   ) nestedScriptContext public returns (bytes32 requestHash) {
-    AutomationScript automationScript = AutomationScript(keeperRegistryAddress);
+    AutomationScript automationScript = new AutomationScript(keeperRegistryAddress);
     return automationScript.registerUpkeep(
       amountInJuels,
       upkeepName,
@@ -38,7 +38,7 @@ contract AutomationCLIScript is BaseScript {
     bytes calldata checkData,
     bytes memory triggerConfig
   ) nestedScriptContext public returns (bytes32 requestHash) {
-    AutomationScript automationScript = AutomationScript(keeperRegistryAddress);
+    AutomationScript automationScript = new AutomationScript(keeperRegistryAddress);
     return automationScript.registerUpkeep_logTrigger(
       amountInJuels,
       upkeepName,
@@ -62,7 +62,7 @@ contract AutomationCLIScript is BaseScript {
     bytes4 upkeepFunctionSelector,
     string calldata cronString
   ) nestedScriptContext public returns (bytes32 requestHash) {
-    AutomationScript automationScript = AutomationScript(keeperRegistryAddress);
+    AutomationScript automationScript = new AutomationScript(keeperRegistryAddress);
     return automationScript.registerUpkeep_timeBased(
       amountInJuels,
       upkeepName,
@@ -79,8 +79,8 @@ contract AutomationCLIScript is BaseScript {
   function getPendingRequest(
     address keeperRegistryAddress,
     bytes32 requestHash
-  ) external view returns(address admin, uint96 balance) {
-    AutomationScript automationScript = AutomationScript(keeperRegistryAddress);
+  ) external returns(address admin, uint96 balance) {
+    AutomationScript automationScript = new AutomationScript(keeperRegistryAddress);
     return automationScript.getPendingRequest(requestHash);
   }
 
@@ -88,34 +88,34 @@ contract AutomationCLIScript is BaseScript {
     address keeperRegistryAddress,
     bytes32 requestHash
   ) nestedScriptContext external {
-    AutomationScript automationScript = AutomationScript(keeperRegistryAddress);
+    AutomationScript automationScript = new AutomationScript(keeperRegistryAddress);
     automationScript.cancelRequest(requestHash);
   }
 
   function getRegistrationConfig(
     address keeperRegistryAddress
-  ) external view returns (
+  ) external returns (
     AutomationUtils.AutoApproveType autoApproveType,
     uint32 autoApproveMaxAllowed,
     uint32 approvedCount,
     address keeperRegistry,
     uint256 minLINKJuels
   ) {
-    AutomationScript automationScript = AutomationScript(keeperRegistryAddress);
+    AutomationScript automationScript = new AutomationScript(keeperRegistryAddress);
     return automationScript.getRegistrationConfig();
   }
 
   function getRegistrationConfig(
     address keeperRegistryAddress,
     AutomationUtils.Trigger triggerType
-  ) external view returns (
+  ) external returns (
     AutomationUtils.AutoApproveType autoApproveType,
     uint32 autoApproveMaxAllowed,
     uint32 approvedCount,
     address keeperRegistry,
     uint256 minLINKJuels
   ) {
-    AutomationScript automationScript = AutomationScript(keeperRegistryAddress);
+    AutomationScript automationScript = new AutomationScript(keeperRegistryAddress);
     return automationScript.getRegistrationConfig(triggerType);
   }
 
@@ -124,7 +124,7 @@ contract AutomationCLIScript is BaseScript {
     uint256 upkeepId,
     uint96 amountInJuels
   ) nestedScriptContext external {
-    AutomationScript automationScript = AutomationScript(keeperRegistryAddress);
+    AutomationScript automationScript = new AutomationScript(keeperRegistryAddress);
     automationScript.addFunds(upkeepId, amountInJuels);
   }
 
@@ -132,7 +132,7 @@ contract AutomationCLIScript is BaseScript {
     address keeperRegistryAddress,
     uint256 upkeepId
   ) nestedScriptContext external {
-    AutomationScript automationScript = AutomationScript(keeperRegistryAddress);
+    AutomationScript automationScript = new AutomationScript(keeperRegistryAddress);
     automationScript.pauseUpkeep(upkeepId);
   }
 
@@ -140,7 +140,7 @@ contract AutomationCLIScript is BaseScript {
     address keeperRegistryAddress,
     uint256 upkeepId
   ) nestedScriptContext external {
-    AutomationScript automationScript = AutomationScript(keeperRegistryAddress);
+    AutomationScript automationScript = new AutomationScript(keeperRegistryAddress);
     automationScript.unpauseUpkeep(upkeepId);
   }
 
@@ -148,7 +148,7 @@ contract AutomationCLIScript is BaseScript {
     address keeperRegistryAddress,
     uint256 upkeepId
   ) nestedScriptContext external {
-    AutomationScript automationScript = AutomationScript(keeperRegistryAddress);
+    AutomationScript automationScript = new AutomationScript(keeperRegistryAddress);
     automationScript.cancelUpkeep(upkeepId);
   }
 
@@ -157,29 +157,29 @@ contract AutomationCLIScript is BaseScript {
     uint256 upkeepId,
     uint32 gasLimit
   ) nestedScriptContext external {
-    AutomationScript automationScript = AutomationScript(keeperRegistryAddress);
+    AutomationScript automationScript = new AutomationScript(keeperRegistryAddress);
     automationScript.setUpkeepGasLimit(upkeepId, gasLimit);
   }
 
   function getMinBalanceForUpkeep(
     address keeperRegistryAddress,
     uint256 upkeepId
-  ) external view returns (uint96 minBalance) {
-    AutomationScript automationScript = AutomationScript(keeperRegistryAddress);
+  ) external returns (uint96 minBalance) {
+    AutomationScript automationScript = new AutomationScript(keeperRegistryAddress);
     return automationScript.getMinBalanceForUpkeep(upkeepId);
   }
 
   function getState(
     address keeperRegistryAddress
-  ) external view returns (RegistryState memory registryState) {
-    AutomationScript automationScript = AutomationScript(keeperRegistryAddress);
+  ) external returns (RegistryState memory registryState) {
+    AutomationScript automationScript = new AutomationScript(keeperRegistryAddress);
     return automationScript.getState();
   }
 
   function getUpkeepTranscoderVersion(
     address keeperRegistryAddress
-  ) external view returns(AutomationUtils.UpkeepFormat) {
-    AutomationScript automationScript = AutomationScript(keeperRegistryAddress);
+  ) external returns(AutomationUtils.UpkeepFormat) {
+    AutomationScript automationScript = new AutomationScript(keeperRegistryAddress);
     return automationScript.getUpkeepTranscoderVersion();
   }
 
@@ -187,15 +187,15 @@ contract AutomationCLIScript is BaseScript {
     address keeperRegistryAddress,
     uint256 startIndex,
     uint256 maxCount
-  ) external view returns (uint256[] memory) {
-    AutomationScript automationScript = AutomationScript(keeperRegistryAddress);
+  ) external returns (uint256[] memory) {
+    AutomationScript automationScript = new AutomationScript(keeperRegistryAddress);
     return automationScript.getActiveUpkeepIDs(startIndex, maxCount);
   }
 
   function getUpkeep(
     address keeperRegistryAddress,
     uint256 upkeepId
-  ) external view returns (
+  ) external returns (
     address target,
     uint32 executeGas,
     bytes memory checkData,
@@ -205,7 +205,7 @@ contract AutomationCLIScript is BaseScript {
     uint96 amountSpent,
     bool paused
   ) {
-    AutomationScript automationScript = AutomationScript(keeperRegistryAddress);
+    AutomationScript automationScript = new AutomationScript(keeperRegistryAddress);
     return automationScript.getUpkeep(upkeepId);
   }
 
@@ -214,7 +214,7 @@ contract AutomationCLIScript is BaseScript {
     uint256 upkeepId,
     address receivingAddress
   ) nestedScriptContext external {
-    AutomationScript automationScript = AutomationScript(keeperRegistryAddress);
+    AutomationScript automationScript = new AutomationScript(keeperRegistryAddress);
     automationScript.withdrawFunds(upkeepId, receivingAddress);
   }
 
@@ -223,7 +223,7 @@ contract AutomationCLIScript is BaseScript {
     uint256 upkeepId,
     address proposedAdmin
   ) nestedScriptContext external {
-    AutomationScript automationScript = AutomationScript(keeperRegistryAddress);
+    AutomationScript automationScript = new AutomationScript(keeperRegistryAddress);
     automationScript.transferUpkeepAdmin(upkeepId, proposedAdmin);
   }
 
@@ -231,7 +231,7 @@ contract AutomationCLIScript is BaseScript {
     address keeperRegistryAddress,
     uint256 upkeepId
   ) nestedScriptContext external {
-    AutomationScript automationScript = AutomationScript(keeperRegistryAddress);
+    AutomationScript automationScript = new AutomationScript(keeperRegistryAddress);
     automationScript.acceptUpkeepAdmin(upkeepId);
   }
 }

@@ -1,758 +1,616 @@
-## Makefile External Scripts
-Below are the scripts available in the [makefile-external](makefile-sandbox) of the Foundry-Chainlink Toolkit.  
-
-All scripts are prefixed with `fct-` to avoid makefile collisions when integrating with other projects.  
-
-Some scripts accept arguments that can be provided either through the command line (e.g. ```make target PARAM={value}```), in the `.env` file, or interactively in the command line.  
-
-<!-- TOC -->
-  * [Makefile External Scripts](#makefile-external-scripts)
-    * [Utility Scripts](#utility-scripts)
-      * [Show Help](#show-help)
-      * [Run Anvil](#run-anvil)
-      * [Initialize Test Environment](#initialize-test-environment)
-    * [Chainlink Jobs Automatic Setup Scripts](#chainlink-jobs-automatic-setup-scripts)
-      * [Set Up a Chainlink Job](#set-up-a-chainlink-job)
-      * [Set Up Direct Request Job](#set-up-direct-request-job)
-      * [Set Up Cron Job](#set-up-cron-job)
-      * [Set Up Webhook Job](#set-up-webhook-job)
-      * [Set Up Keeper Job](#set-up-keeper-job)
-      * [Set Up Flux Job](#set-up-flux-job)
-      * [Set Up OCR Job](#set-up-ocr-job)
-    * [Chainlink Nodes Management Scripts](#chainlink-nodes-management-scripts)
-      * [Spin Up a Chainlink Cluster](#spin-up-a-chainlink-cluster)
-      * [Restart a Chainlink Cluster](#restart-a-chainlink-cluster)
-      * [Get a Chainlink Node Info](#get-a-chainlink-node-info)
-      * [Get Chainlink Node ETH Keys](#get-chainlink-node-eth-keys)
-      * [Get Chainlink Node OCR Keys](#get-chainlink-node-ocr-keys)
-      * [Get Chainlink Node P2P Keys](#get-chainlink-node-p2p-keys)
-      * [Get Chainlink Node Address](#get-chainlink-node-address)
-      * [Get Chainlink Node Configuration](#get-chainlink-node-configuration)
-    * [Chainlink Jobs creation Scripts](#chainlink-jobs-creation-scripts)
-      * [Create a Chainlink Job](#create-a-chainlink-job)
-      * [Create Chainlink Direct Request Job](#create-chainlink-direct-request-job)
-      * [Create Chainlink Cron Job](#create-chainlink-cron-job)
-      * [Create Chainlink Webhook Job](#create-chainlink-webhook-job)
-      * [Create Chainlink Keeper Job](#create-chainlink-keeper-job)
-      * [Create Chainlink Flux Job](#create-chainlink-flux-job)
-      * [Create Chainlink OCR (bootstrap) Job](#create-chainlink-ocr--bootstrap--job)
-      * [Create Chainlink OCR (oracle) Job](#create-chainlink-ocr--oracle--job)
-      * [Create Chainlink Keeper Jobs](#create-chainlink-keeper-jobs)
-      * [Create Chainlink Flux Jobs](#create-chainlink-flux-jobs)
-      * [Create Chainlink OCR Jobs](#create-chainlink-ocr-jobs)
-    * [Chainlink Jobs Helper Scripts](#chainlink-jobs-helper-scripts)
-      * [Chainlink Jobs Available Helpers](#chainlink-jobs-available-helpers)
-      * [Get Chainlink Job ID](#get-chainlink-job-id)
-      * [Get Chainlink External Job ID](#get-chainlink-external-job-id)
-      * [Get Chainlink Webhook Job Latest ID](#get-chainlink-webhook-job-latest-id)
-      * [Run Chainlink Webhook Job](#run-chainlink-webhook-job)
-      * [Delete Job](#delete-job)
-    * [Chainlink Smart Contracts Deployment Scripts](#chainlink-smart-contracts-deployment-scripts)
-      * [Deploy a Chainlink Smart Contract](#deploy-a-chainlink-smart-contract)
-      * [Deploy Link Token Contract](#deploy-link-token-contract)
-      * [Deploy Oracle Contract](#deploy-oracle-contract)
-      * [Deploy Direct Request Consumer Contract](#deploy-direct-request-consumer-contract)
-      * [Deploy Cron Consumer Contract](#deploy-cron-consumer-contract)
-      * [Deploy Keeper Consumer Contract](#deploy-keeper-consumer-contract)
-      * [Deploy Registry Contract](#deploy-registry-contract)
-      * [Deploy Flux Aggregator Contract](#deploy-flux-aggregator-contract)
-      * [Deploy Offchain Aggregator Contract](#deploy-offchain-aggregator-contract)
-    * [ETH and Link Token Helper Scripts](#eth-and-link-token-helper-scripts)
-      * [ETH and Link Token Available Helpers](#eth-and-link-token-available-helpers)
-      * [Transfer ETH](#transfer-eth)
-      * [Transfer ETH to Chainlink Node](#transfer-eth-to-chainlink-node)
-      * [Transfer ETH to Chainlink Nodes](#transfer-eth-to-chainlink-nodes)
-      * [Transfer Link Tokens](#transfer-link-tokens)
-      * [Transfer Link Tokens to Chainlink Node](#transfer-link-tokens-to-chainlink-node)
-      * [Transfer Link Tokens to Chainlink Nodes](#transfer-link-tokens-to-chainlink-nodes)
-      * [Get ETH Balance](#get-eth-balance)
-      * [Get Link Token Balance](#get-link-token-balance)
-    * [Direct Request Consumer Scripts](#direct-request-consumer-scripts)
-      * [Request ETH Price](#request-eth-price)
-      * [Request ETH Price (by Oracle)](#request-eth-price--by-oracle-)
-      * [Get ETH Price (Direct Request)](#get-eth-price--direct-request-)
-    * [Cron Consumer Scripts](#cron-consumer-scripts)
-      * [Get ETH Price (Cron)](#get-eth-price--cron-)
-    * [Keeper Consumer Scripts](#keeper-consumer-scripts)
-      * [Get Keeper Counter](#get-keeper-counter)
-    * [Registry Scripts](#registry-scripts)
-      * [Register Upkeep](#register-upkeep)
-      * [Set Keepers](#set-keepers)
-      * [Fund Latest Upkeep](#fund-latest-upkeep)
-    * [Flux Aggregator Scripts](#flux-aggregator-scripts)
-      * [Update Available Funds](#update-available-funds)
-      * [Set Oracles](#set-oracles)
-      * [Get Oracles](#get-oracles)
-      * [Get Flux Latest Answer](#get-flux-latest-answer)
-    * [Offchain Aggregator Scripts](#offchain-aggregator-scripts)
-      * [Set Payees](#set-payees)
-      * [Set Config](#set-config)
-      * [Request New Round](#request-new-round)
-      * [Get OCR Latest Answer](#get-ocr-latest-answer)
-<!-- TOC -->
-
-### Utility Scripts
-
-#### Show Help
-  ```
-  make fct-help
-  ```
-This command displays autogenerated help with a brief description of the most commonly used scripts.  
-For a more detailed description of the scripts, you can refer to current file.
-
-#### Run Anvil
-  ```
-  make fct-anvil
-  ```
-This command runs Anvil local Ethereum node with the following options:
-- http endpoint: http://localhost:8545
-- web socket: [ws://localhost:8545](ws://localhost:8545)
-- chain ID: 1337
-- block period: 10s
-- mnemonic: `test test test test test test test test test test test junk`
-
-#### Initialize Test Environment
-  ```
-  make fct-init
-  ```
-This command automatically initializes the test environment:
-- Deploys the Link Token contract and writes its address to .env
-- Spins up a Chainlink cluster
-- Funds Chainlink nodes with ETH and Link tokens
-
-### Chainlink Jobs Automatic Setup Scripts
-
-#### Set Up a Chainlink Job
-  ```
-  make fct-setup-job
-  ```
-This command displays a list of available Chainlink jobs and sets up the selected one.
-
-#### Set Up Direct Request Job
-  ```
-  make fct-setup-direct-request-job
-  ```
-This command automatically sets up a Direct Request job:
-- Deploys the Oracle and the Chainlink Direct Request Consumer contracts
-- Funds the Chainlink Direct Request Consumer with Link tokens
-- Creates a Direct Request job on a Chainlink node
-- Makes request to the Oracle contract to update ETH price value
-
-#### Set Up Cron Job
-  ```
-  make fct-setup-cron-job
-  ```
-This command automatically sets up a Cron job:
-- Deploys the Chainlink Cron Consumer contract
-- Creates a Cron job on a Chainlink node
-
-#### Set Up Webhook Job
-  ```
-  make fct-setup-webhook-job
-  ```
-This command automatically sets up a Webhook job:
-- Creates a Webhook job on a Chainlink node
-- Runs the most recently created Webhook job
-
-#### Set Up Keeper Job
-  ```
-  make fct-setup-keeper-job
-  ```
-This command automatically sets up a Keeper job:
-- Deploys the Registry and the Chainlink Keeper Consumer contracts
-- Register the Chainlink Keeper Consumer in the Registry contract as an upkeep
-- Sets Chainlink nodes as keepers in the Registry contract
-- Creates a Keeper job on each Chainlink node in a Chainlink cluster
-- Funds the latest registered upkeep in the Registry
-
-#### Set Up Flux Job
-  ```
-  make fct-setup-flux-job
-  ```
-This command automatically sets up a Flux job:
-- Deploys the Flux Aggregator contract
-- Funds the Flux Aggregator with Link tokens and updates its available funds
-- Sets Chainlink nodes 1-3 as oracles in the Flux Aggregator contract
-- Creates a Flux job on Chainlink nodes 1-3
-
-#### Set Up OCR Job
-  ```
-  make fct-setup-ocr-job
-  ```
-This command automatically sets up a OCR job:
-- Deploys the Offchain Aggregator contract
-- Sets Chainlink nodes 2-5 as payees in the Offchain Aggregator contract
-- Sets OCR configuration generated by Chainlink nodes 2-5 in the Offchain Aggregator contract
-- Creates an OCR (bootstrap) job on Chainlink node 1
-- Creates an OCR (oracle) job on Chainlink nodes 2-5
-
-### Chainlink Nodes Management Scripts
-
-#### Spin Up a Chainlink Cluster
-  ```
-  make fct-run-nodes
-  ```
-This command spins up a cluster of 5 Chainlink nodes (necessary to run OCR jobs). It fetches images, creates/recreates and starts containers according to the [docker-compose.yaml](docker-compose.yaml).
-
-#### Restart a Chainlink Cluster
-  ```
-  make fct-restart-nodes
-  ```
-This command performs a clean restart of a Chainlink cluster: stops and removes containers and network, deletes all related volumes and logs, and starts containers according to the [docker-compose.yaml](docker-compose.yaml).  
-
-#### Get a Chainlink Node Info
-  ```
-  make fct-get-node-info
-  ```
-This command displays a list of available Chainlink node information and shows the selected one.
-
-#### Get Chainlink Node ETH Keys
-  ```
-  make fct-get-node-eth-keys
-  ```
-This command returns data related to Chainlink node's EVM Chain Accounts, e.g.:
-- Account address (this is the address for a Chainlink node wallet)
-- Link token balance
-- ETH balance
-
-During the execution of the command, you will need to provide:
-- `NODE_ID` - Chainlink node ID
-
-#### Get Chainlink Node OCR Keys
-  ```
-  make fct-get-node-ocr-keys
-  ```
-This command returns Chainlink node's OCR keys.
-
-During the execution of the command, you will need to provide:
-- `NODE_ID` - Chainlink node ID
-
-#### Get Chainlink Node P2P Keys
-  ```
-  make fct-get-node-p2p-keys
-  ```
-This command returns Chainlink node's P2P keys.
-
-During the execution of the command, you will need to provide:
-- `NODE_ID` - Chainlink node ID
-
-#### Get Chainlink Node Address
-  ```
-  make fct-get-node-address
-  ```
-This command returns Chainlink node's account address.
-
-During the execution of the command, you will need to provide:
-- `NODE_ID` - Chainlink node ID
-
-> **Note**  
-> You also can find information on keys in the node Operator GUI under the Key Management configuration.
-
-#### Get Chainlink Node Configuration
-  ```
-  make fct-get-node-config
-  ```
-This command returns a Chainlink node configuration. The result contains comma-separated values, including:
-- `Node address`
-- `On-chain signing address`
-- `Off-chain public key`
-- `Config public key`
-- `Peer ID`
-
-During the execution of the command, you will need to provide:
-- `NODE_ID` - Chainlink node ID
-
-### Chainlink Jobs creation Scripts
-
-#### Create a Chainlink Job
-  ```
-  make fct-create-job
-  ```
-This command displays a list of available Chainlink jobs and creates the selected one.
-
-#### Create Chainlink Direct Request Job
-  ```
-  make fct-create-direct-request-job
-  ```
-This command creates a Chainlink job according to [direct_request_job.toml](chainlink%2Fjobs%2Fdirect_request_job.toml).
-
-During the execution of the command, you will need to provide:
-- `NODE_ID` - Chainlink node ID
-- `ORACLE_ADDRESS` - Oracle contract address
-
-#### Create Chainlink Cron Job
-  ```
-  make fct-create-cron-job
-  ```
-This command creates a Chainlink job according to [cron_job.toml](chainlink%2Fjobs%2Fcron_job.toml).
-
-During the execution of the command, you will need to provide:
-- `NODE_ID` - Chainlink node ID
-- `CRON_CONSUMER_ADDRESS` - Cron consumer contract address
-
-#### Create Chainlink Webhook Job
-  ```
-  make fct-create-webhook-job
-  ```
-This command creates a Chainlink job according to [webhook_job.toml](chainlink%2Fjobs%2Fwebhook_job.toml).
-
-During the execution of the command, you will need to provide:
-- `NODE_ID` - Chainlink node ID
-
-#### Create Chainlink Keeper Job
-  ```
-  make fct-create-keeper-job
-  ```
-This command creates a Chainlink job according to [keeper_job.toml](chainlink%2Fjobs%2Fkeeper_job.toml).
-
-During the execution of the command, you will need to provide:
-- `NODE_ID` - Chainlink node ID
-- `REGISTRY_ADDRESS` - Registry contract address
-
-> **Note**  
-> For the Chainlink Keeper Job it was noticed that Chainlink nodes require a current blockchain height to be approximately at least 100 blocks.
-
-#### Create Chainlink Flux Job
-  ```
-  make fct-create-flux-job
-  ```
-This command creates a Chainlink job according to [flux_job.toml](chainlink%2Fjobs%2Fflux_job.toml).
-
-During the execution of the command, you will need to provide:
-- `NODE_ID` - Chainlink node ID
-- `FLUX_AGGREGATOR_ADDRESS` - Flux Aggregator contract address
-
-#### Create Chainlink OCR (bootstrap) Job
-  ```
-  make fct-create-ocr-bootstrap-job
-  ```
-This command creates a Chainlink job according to [ocr_job_bootstrap.toml](chainlink%2Fjobs%2Focr_job_bootstrap.toml).
-
-During the execution of the command, you will need to provide:
-- `NODE_ID` - Chainlink node ID
-- `OFFCHAIN_AGGREGATOR_ADDRESS` - Offchain Aggregator contract address
-
-#### Create Chainlink OCR (oracle) Job
-  ```
-  make fct-create-ocr-job
-  ```
-This command creates a Chainlink job according to [ocr_job.toml](chainlink%2Fjobs%2Focr_job.toml).
-
-During the execution of the command, you will need to provide:
-- `NODE_ID` - Chainlink node ID
-- `OFFCHAIN_AGGREGATOR_ADDRESS` - Offchain Aggregator contract address
-- `BOOTSTRAP_P2P_KEY` - P2P key for an OCR bootstrap Chainlink node
-
-#### Create Chainlink Keeper Jobs
-  ```
-  make fct-create-keeper-jobs
-  ```
-This command creates a Chainlink job for each Chainlink node in a cluster according to [keeper_job.toml](chainlink%2Fjobs%2Fkeeper_job.toml).
-
-During the execution of the command, you will need to provide:
-- `REGISTRY_ADDRESS` - Registry contract address
-
-#### Create Chainlink Flux Jobs
-  ```
-  make fct-create-flux-jobs
-  ```
-This command creates a Chainlink job for the first 3 Chainlink nodes in a cluster according to [flux_job.toml](chainlink%2Fjobs%2Fflux_job.toml).
-
-During the execution of the command, you will need to provide:
-- `FLUX_AGGREGATOR_ADDRESS` - Flux Aggregator contract address
-
-#### Create Chainlink OCR Jobs
-  ```
-  make fct-create-ocr-jobs
-  ```
-This command creates:
-- Chainlink job for the first node (bootstrap) in a cluster according to [ocr_job_bootstrap.toml](chainlink%2Fjobs%2Focr_job_bootstrap.toml).
-- Chainlink jobs for each Chainlink node (oracles) except the first one (bootstrap) in a cluster according to [ocr_job.toml](chainlink%2Fjobs%2Focr_job.toml).
-
-During the execution of the command, you will need to provide:
-- `OFFCHAIN_AGGREGATOR_ADDRESS` - Offchain Aggregator contract address
-
-> **Note**  
-> You can check list of created jobs and manage them in the node Operator GUI under the Jobs tab.
-
-### Chainlink Jobs Helper Scripts
-
-#### Chainlink Jobs Available Helpers
-  ```
-  make fct-job-helper
-  ```
-This command displays a list of available helpers for Chainlink jobs and executes the selected one.
-
-#### Get Chainlink Job ID
-  ```
-  make fct-get-job-id
-  ```
-This command returns an ID of a Chainlink job whose name contains the specified contract address.
-
-During the execution of the command, you will need to provide:
-- `NODE_ID` - Chainlink node ID
-- `CONTRACT_ADDRESS` - Contract address identifying a Chainlink job
-
-#### Get Chainlink External Job ID
-  ```
-  make fct-get-external-job-id
-  ```
-This command returns an External ID of a Chainlink job whose name contains the specified contract address.
-
-During the execution of the command, you will need to provide:
-- `NODE_ID` - Chainlink node ID
-- `CONTRACT_ADDRESS` - Contract address identifying a Chainlink job
-
-#### Get Chainlink Webhook Job Latest ID
-  ```
-  make fct-get-last-webhook-job-id
-  ```
-This command returns a Job ID of the latest created Chainlink Webhook job.
-
-During the execution of the command, you will need to provide:
-- `NODE_ID` - Chainlink node ID
-
-#### Run Chainlink Webhook Job
-  ```
-  make fct-run-webhook-job
-  ```
-This command runs an existing Chainlink Webhook job.
-
-During the execution of the command, you will need to provide:
-- `NODE_ID` - Chainlink node ID
-- `WEBHOOK_JOB_ID` - Webhook job ID
-
-#### Delete Job
-  ```
-  make fct-delete-job
-  ```
-This command deletes a Chainlink job with a specified job ID.
-
-During the execution of the command, you will need to provide:
-- `NODE_ID` - Chainlink node ID
-- `JOB_ID` - Chainlink job ID
-
-> **Note**  
-> You also can find information on jobs in the node Operator GUI under the Jobs tab.
-
-### Chainlink Smart Contracts Deployment Scripts
-
-> **Note**  
-> All contracts are deployed on behalf of the account specified in [.env](.env).
-
-#### Deploy a Chainlink Smart Contract
-  ```
-  make fct-job-helper
-  ```
-This command displays a list of available Chainlink Smart Contracts and deploys the selected one.
-
-#### Deploy Link Token Contract
-  ```
-  make fct-deploy-link-token
-  ```
-This command deploys an instance of [LinkToken.sol](chainlink%2Fcontracts%2FLinkToken.sol) contract.
-
-#### Deploy Oracle Contract
-  ```
-  make fct-deploy-oracle
-  ```
-This command deploys an instance of [Oracle.sol](out%2FOracle.sol) contract and whitelists Chainlink node address in the deployed contract.
-
-During the execution of the command, you will need to provide:
-- `NODE_ID` - Chainlink node ID
-- `LINK_CONTRACT_ADDRESS` - Link Token contract address
-
-#### Deploy Direct Request Consumer Contract
-  ```
-  make fct-deploy-direct-request-consumer
-  ```
-This command deploys an instance of [ChainlinkDirectRequestConsumer.sol](chainlink%2Fcontracts%2FChainlinkDirectRequestConsumer.sol) contract.
-
-During the execution of the command, you will need to provide:
-- `LINK_CONTRACT_ADDRESS` - Link Token contract address
-
-#### Deploy Cron Consumer Contract
-  ```
-  make fct-deploy-cron-consumer
-  ```
-This command deploys an instance of [ChainlinkCronConsumer.sol](chainlink%2Fcontracts%2FChainlinkCronConsumer.sol) contract.
-
-#### Deploy Keeper Consumer Contract
-  ```
-  make fct-deploy-keeper-consumer
-  ```
-This command deploys an instance of [ChainlinkKeeperConsumer.sol](chainlink%2Fcontracts%2FChainlinkKeeperConsumer.sol) contract.
-
-#### Deploy Registry Contract
-  ```
-  make fct-deploy-registry
-  ```
-This command deploys an instance of [Registry.sol](out%2FKeeperRegistry1_3.sol) contract.
-
-During the execution of the command, you will need to provide:
-- `LINK_CONTRACT_ADDRESS` - Link Token contract address
-
-#### Deploy Flux Aggregator Contract
-  ```
-  make fct-deploy-flux-aggregator
-  ```
-This command deploys an instance of [FluxAggregator.sol](out%2FFluxAggregator.sol) contract.
-
-During the execution of the command, you will need to provide:
-- `LINK_CONTRACT_ADDRESS` - Link Token contract address
-
-#### Deploy Offchain Aggregator Contract
-  ```
-  make fct-deploy-offchain-aggregator
-  ```
-This command deploys an instance of Chainlink [OffchainAggregator.sol](out%2FOffchainAggregator.sol) contract.
-
-During the execution of the command, you will need to provide:
-- `LINK_CONTRACT_ADDRESS` - Link Token contract address
-
-### ETH and Link Token Helper Scripts
-
-#### ETH and Link Token Available Helpers
-  ```
-  make fct-funds-helper
-  ```
-This command displays a list of available helpers for ETH and Link Token and executes the selected one.
-
-#### Transfer ETH
-  ```
-  make fct-transfer-eth
-  ```
-With this command, you can send ETH to any specified recipient.
-
-During the execution of the command, you will need to provide:
-- `RECIPIENT` - Recipient address
-
-#### Transfer ETH to Chainlink Node
-  ```
-  make fct-transfer-eth-to-node
-  ```
-With this command, you can send ETH to any specified Chainlink node.
-
-During the execution of the command, you will need to provide:
-- `NODE_ID` - Chainlink node ID
-
-#### Transfer ETH to Chainlink Nodes
-  ```
-  make fct-transfer-eth-to-nodes
-  ```
-With this command, you can send ETH to all Chainlink nodes in a cluster.
-
-#### Transfer Link Tokens
-  ```
-  make fct-transfer-link
-  ```
-With this command, you can send Link tokens to any specified recipient.
-
-During the execution of the command, you will need to provide:
-- `LINK_CONTRACT_ADDRESS` - Link Token contract address
-- `RECIPIENT` - Recipient address
-
-#### Transfer Link Tokens to Chainlink Node
-  ```
-  make fct-transfer-link-to-node
-  ```
-With this command, you can send Link tokens to any specified Chainlink node.
-
-During the execution of the command, you will need to provide:
-- `NODE_ID` - Chainlink node ID
-- `LINK_CONTRACT_ADDRESS` - Link Token contract address
-
-#### Transfer Link Tokens to Chainlink Nodes
-  ```
-  make fct-transfer-link-to-nodes
-  ```
-With this command, you can send Link tokens to all Chainlink nodes in a cluster.
-
-During the execution of the command, you will need to provide:
-- `LINK_CONTRACT_ADDRESS` - Link Token contract address
-
-#### Get ETH Balance
-  ```
-  make fct-get-eth-balance
-  ```
-This command returns ETH balance of an account.
-
-During the execution of the command, you will need to provide:
-- `ACCOUNT` - Account
-
-#### Get Link Token Balance
-  ```
-  make fct-get-link-balance
-  ```
-This command returns Link Token balance of an account.
-
-During the execution of the command, you will need to provide:
-- `LINK_CONTRACT_ADDRESS` - Link Token contract address
-- `ACCOUNT` - Account
-
-### Direct Request Consumer Scripts
-
-#### Request ETH Price
-  ```
-  make fct-dr-consumer-request-eth-price
-  ```
-This command calls `requestEthereumPrice` method of the Consumer contract, which asks the node to retrieve data specified in a Job configuration.
-
-During the execution of the command, you will need to provide:
-- `DIRECT_REQUEST_CONSUMER_ADDRESS` - Direct Request Consumer contract address
-- `ORACLE_ADDRESS` - Oracle contract address
-- `DIRECT_REQUEST_EXTERNAL_JOB_ID` - Direct request External Job ID - you can get one with Chainlink Operator GUI on the Jobs tab
-
-#### Request ETH Price (by Oracle)
-  ```
-  make fct-dr-consumer-request-eth-price-by-oracle
-  ```
-This command calls `requestEthereumPrice` method of the Consumer contract, which asks the node to retrieve data specified in a Job configuration.  
-The respective Chainlink Direct Request job will be found using [get-external-job-id](#get-chainlink-external-job-id) script.
-
-During the execution of the command, you will need to provide:
-- `NODE_ID` - Chainlink node ID
-- `DIRECT_REQUEST_CONSUMER_ADDRESS` - Consumer contract address
-- `ORACLE_ADDRESS` - Oracle contract address
-
-#### Get ETH Price (Direct Request)
-  ```
-  make fct-dr-consumer-get-eth-price
-  ```
-This command returns current value of `currentPrice` variable specified in the Direct Request Consumer contract state.
-
-During the execution of the command, you will need to provide:
-- `DIRECT_REQUEST_CONSUMER_ADDRESS` - Direct Request Consumer contract address
-
-### Cron Consumer Scripts
-
-#### Get ETH Price (Cron)
-  ```
-  make fct-cron-consumer-get-eth-price
-  ```
-This command returns current value of `currentPrice` variable specified in the Cron Consumer contract state.
-
-During the execution of the command, you will need to provide:
-- `CRON_CONSUMER_ADDRESS` - Cron Consumer contract address
-
-### Keeper Consumer Scripts
-
-#### Get Keeper Counter
-  ```
-  make fct-keeper-consumer-get-counter
-  ```
-This command returns the latest value of the `counter` variable stored in the Keeper Consumer contract. This variable reflects the number of times the keepers performed the Keeper job.
-
-During the execution of the command, you will need to provide:
-- `KEEPER_CONSUMER_ADDRESS` - Keeper Consumer contract address
-
-### Registry Scripts
+# Foundry Chainlink Toolkit Documentation
+This document provides detailed information about each Chainlink service module and its related methods available in the Foundry Chainlink toolkit.
+
+To use these Solidity scripts, import the necessary one into your project and interact with its functions as part of your smart contract development and testing workflow.
+Ensure that your environment is configured according to the [README](README.md).
+
+## Data Feed Services
+
+Chainlink [Data Feeds](https://docs.chain.link/data-feeds) are decentralized oracles that provide reliable off-chain data to smart contracts on the blockchain.
+Using this service, developers can access the latest round answer and other relevant information from the Data Feeds,
+enabling them to fetch real-world data in their web3 projects.
+
+### Data Feeds script: [DataFeed.s.sol](script%2Ffeeds%2FDataFeed.s.sol)
+
+This section provides methods and functionalities designed to interact with the OffchainAggregator smart contract,
+which serves as the core component of Chainlink Data Feeds.
+
+### Methods
+
+#### Get Latest Round Data
+
+- **Method:** getLatestRoundData
+- **Description:** Get the latest round data for a data feed
+- **Returns:** `(uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)`
+    - `roundId`: Round ID of Data Feed
+    - `answer`: Latest round answer for a data feed
+    - `startedAt`: Timestamp of when the round started
+    - `updatedAt`: Timestamp of when the round was updated
+    - `answeredInRound`: Round ID of when the round was answered
+- **Usage:** `DataFeedScript.getLatestRoundData()`
+
+#### Get Round Data
+
+- **Method:** getRoundData
+- **Description:** Get the round data for a data feed
+- **Arguments:** `(uint80 roundId)`
+    - `roundId`: Round ID of Data Feed
+- **Returns:** `(uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)`
+    - `roundId`: Round ID of Data Feed
+    - `answer`: Latest round answer for a data feed
+    - `startedAt`: Timestamp of when the round started
+    - `updatedAt`: Timestamp of when the round was updated
+    - `answeredInRound`: Round ID of when the round was answered
+- **Usage:** `DataFeedScript.getRoundData(1)`
+
+#### Get Decimals
+
+- **Method:** getDecimals
+- **Description:** Get the decimals for a data feed
+- **Returns:** `decimals [uint8]`: Decimals for a data feed
+- **Usage:** `DataFeedScript.getDecimals()`
+
+#### Get Description
+
+- **Method:** getDescription
+- **Description:** Get the description for a data feed
+- **Returns:** `description [string]`: Description for a data feed
+- **Usage:** `DataFeedScript.getDescription()`
+
+#### Get Version
+
+- **Method:** getAggregatorVersion
+- **Description:** Get the version for a data feed
+- **Returns:** `version [uint256]`: Version for a data feed
+- **Usage:** `DataFeedScript.getAggregatorVersion()`
+
+### ENS script: [ENS.s.sol](script%2Ffeeds%2FENS.s.sol)
+
+This section provides methods and functionalities designed to interact with the [Chainlink ENS Resolver](https://docs.chain.link/data-feeds/ens).
+
+> **Note**
+>  Chainlink ENS is exclusively available on the Ethereum mainnet.
+
+### Methods
+
+#### Resolve Aggregator Address
+
+- **Method:** `resolveAggregatorAddress`
+- **Description:** Resolve Data Feed address for a token pair using the Chainlink ENS Resolver
+- **Arguments:** `(string memory baseTick, string memory quoteTick)`
+    - `baseTick`: Base tick of the token pair
+    - `quoteTick`: Quote tick of the token pair
+- **Returns:** `aggregatorAddress [address]`: Data Feed address for a token pair
+- **Usage:** `ENSFeedResolverScript.resolveAggregatorAddress("ETH", "USD")`
+
+#### Resolve Aggregator Address With Subdomains
+
+- **Method:** `resolveAggregatorAddressWithSubdomains`
+- **Description:** Resolve Data Feed address for a token pair using the Chainlink ENS Resolver with subdomains
+- **Arguments:** `(string memory baseTick, string memory quoteTick)`
+    - `baseTick`: Base tick of the token pair.
+    - `quoteTick`: Quote tick of the token pair.
+- **Returns:** (address proxyAggregatorAddress, address underlyingAggregatorAddress, address proposedAggregatorAddress)
+    - `proxyAggregatorAddress`: Proxy Data Feed address for a token pair
+    - `underlyingAggregatorAddress`: Underlying Data Feed address for a token pair
+    - `proposedAggregatorAddress`: Proposed Data Feed address for a token pair
+- **Usage:** `ENSFeedResolverScript.resolveAggregatorAddressWithSubdomains("ETH", "USD")`
+
+## VRF Service
+
+Chainlink [VRF](https://docs.chain.link/vrf/v2/introduction) (Verifiable Random Function) service is a critical component
+provided by Chainlink that enables smart contracts on the blockchain to securely and transparently access cryptographically secure and unpredictable randomness.
+
+### Service alias: `vrf`
+
+This section provides methods and functionalities designed to interact with the VRFCoordinator smart contract,
+which serves as the intermediary between smart contracts on the blockchain and the VRF service.
+
+### Methods
+
+#### Create Subscription
+
+- **Method:** createSubscription
+- **Description:** Create a new subscription to the VRF service
+- **Returns:** `subscriptionId [uint64]`: VRF Subscription ID
+- **Usage:** `VRFScript.createSubscription()`
+
+#### Fund Subscription
+
+- **Method:** fundSubscription
+- **Description:** Fund a subscription to the VRF service with LINK tokens
+- **Arguments:** `(uint256 amountInJuels, uint64 subscriptionId)`
+    - `amountInJuels`: Amount of LINK tokens to be sent (in Juels)
+    - `subscriptionId`: VRF Subscription ID
+- **Usage:** `VRFScript.fundSubscription(1000000000000000000, 1)`
+
+#### Cancel Subscription
+
+- **Method:** cancelSubscription
+- **Description:** Cancel a subscription to the VRF service and receive the remaining balance
+- **Arguments:** `(uint64 subscriptionId, address receivingAddress)`
+    - `subscriptionId`: VRF Subscription ID
+    - `receivingAddress`: Address to receive the balance of the subscription
+- **Usage:** `VRFScript.cancelSubscription(1, "0x0000000000000000000000000000000000000000")`
+
+#### Add Consumer
+
+- **Method:** addConsumer
+- **Description:** Add a new consumer to an existing VRF subscription
+- **Arguments:** `(uint64 subscriptionId, address consumerAddress)`
+    - `subscriptionId`: VRF Subscription ID
+    - `consumerAddress`: Address of the consumer
+- **Usage:** `VRFScript.addConsumer("0x0000000000000000000000000000000000000000", 1)`
+
+#### Remove Consumer
+
+- **Method:** removeConsumer
+- **Description:** Remove a consumer from an existing VRF subscription
+- **Arguments:** `(uint64 subscriptionId, address consumerAddress)`
+    - `subscriptionId`: VRF Subscription ID
+    - `consumerAddress`: Address of the consumer
+- **Usage:** `VRFScript.removeConsumer("0x0000000000000000000000000000000000000000", 1)`
+
+#### Get Subscription Details
+
+- **Method:** getSubscriptionDetails
+- **Description:** Get details of an existing VRF subscription
+- **Arguments:** `(uint64 subscriptionId)`
+    - `subscriptionId`: VRF Subscription ID
+- **Returns**: `(uint96 balance, uint64 reqCount, address owner, address[] memory consumers)`
+    - `balance`: LINK balance of the subscription in juels
+    - `reqCount`: Number of requests for the subscription, determines fee tier
+    - `owner`: Owner of the subscription
+    - `consumers`: List of consumers of the subscription
+- **Usage:** `VRFScript.getSubscriptionDetails(1)`
+
+#### Request Random Words
+
+- **Method:** requestRandomWords
+- **Description:** Request random words from the VRF service
+- **Arguments:** `(uint64 subscriptionId, bytes32 keyHash, uint16 minimumRequestConfirmations, uint32 callbackGasLimit, uint32 numWords)`
+    - `subscriptionId`: VRF Subscription ID. Must be funded with the minimum subscription balance required for the selected keyHash
+    - `keyHash`: Key hash related to maxGasPrice of a VRF. Different keyHashes have different gas prices
+    - `minimumRequestConfirmations`: How many blocks you'd like the oracle to wait before responding to the request
+    - `callbackGasLimit`: How much gas you allow for fulfillRandomWords callback
+    - `numWords`: The number of random values you'd like to receive in fulfillRandomWords callback
+- **Usage:** `VRFScript.requestRandomWords(1, "0x83250c5584ffa93feb6ee082981c5ebe484c865196750b39835ad4f13780435d", 10, 500000, 3)`
+
+#### Check Pending Request
+
+- **Method:** isPendingRequestExists
+- **Description:** Check if there is a pending request for an existing VRF subscription
+- **Arguments:** `(uint64 subscriptionId)`
+    - `subscriptionId`: VRF Subscription ID
+- **Returns:** `isPendingRequestExists [bool]`: True if there is a pending request for the subscription
+- **Usage:** `VRFScript.isPendingRequestExists(1)`
+
+#### Request Subscription Owner Transfer
+
+- **Method:** requestSubscriptionOwnerTransfer
+- **Description:** Request to transfer ownership of a VRF subscription to a new owner
+- **Arguments:** `(uint64 subscriptionId, address newOwnerAddress)`
+    - `subscriptionId`: VRF Subscription ID
+    - `newOwnerAddress`: Address of the new subscription owner
+- **Usage:** `VRFScript.requestSubscriptionOwnerTransfer(1, "0x0000000000000000000000000000000000000000")`
+
+#### Accept Subscription Owner Transfer
+
+- **Method:** acceptSubscriptionOwnerTransfer
+- **Description:** Accept the transfer of ownership of a VRF subscription
+- **Arguments:** `(uint64 subscriptionId)`
+    - `subscriptionId`: VRF Subscription ID
+- **Usage:** `VRFScript.acceptSubscriptionOwnerTransfer(1)`
+
+#### Get Request Configuration
+
+- **Method:** getRequestConfig
+- **Description:** Get the configuration details of VRF Coordinator requests
+- **Returns:** `(uint16 minimumRequestConfirmations, uint32 maxGasLimit, bytes32[] memory s_provingKeyHashes)`
+    - `minimumRequestConfirmations`: Global min for request confirmations
+    - `maxGasLimit`: Global max for request gas limit
+    - `s_provingKeyHashes`: List of registered key hashes
+- **Usage:** `VRFScript.getRequestConfig()`
+
+#### Get Type and Version
+
+- **Method:** getTypeAndVersion
+- **Description:** Get the type and version details of VRF Coordinator
+- **Returns:** `typeAndVersion [string memory]`: Type and Version of VRF Coordinator
+- **Usage:** `VRFScript.getTypeAndVersion()`
+
+## Automation Services
+
+Chainlink [Automation](https://docs.chain.link/vrf/v2/introduction) service enables conditional execution
+of your smart contracts functions through a hyper-reliable and decentralized automation platform.
+
+### Service alias: `automationRegistrar`
+
+This section provides methods and functionalities designed to interact with the KeeperRegistrar smart contract,
+which accepts requests for upkeep registrations.
+
+### Methods
 
 #### Register Upkeep
-  ```
-  make fct-registry-register-upkeep
-  ```
-This command registers Keeper Consumer in the Registry contract as upkeep.
 
-During the execution of the command, you will need to provide:
-- `REGISTRY_ADDRESS` - Registry contract address
-- `KEEPER_CONSUMER_ADDRESS` - Keeper Consumer contract address
+- **Method:** registerUpkeep
+- **Description:** Register an upkeep task for Chainlink Keepers to perform on a specified contract
+- **Arguments:**
+    - `keeperRegistrarAddress`: Address of Keeper Registrar
+    - `linkTokenAddress`: Address of Link Token
+    - `amountInJuels`: Amount of LINK in juels to fund the upkeep
+    - `upkeepName`: Upkeep name to be registered
+    - `encryptedEmail`: Encrypted email address of upkeep contact
+    - `upkeepContract`: Upkeep contract address to perform task on
+    - `gasLimit`: Limit of gas to provide the target contract when performing upkeep
+    - `adminAddress`: Address to cancel upkeep and withdraw remaining funds
+    - `checkData`: Data passed to the contract when checking upkeep
+    - `ocrConfig`: OffchainConfig for upkeep in bytes [Keeper Registrar v2_0 ONLY], default value: "0x"
+    - `source`: ID of the application sending this request [Keeper Registrar v1_1 ONLY], default value: "0"
+    - `sender`: Address of the sender making the request
 
-#### Set Keepers
-  ```
-  make fct-registry-set-keepers
-  ```
-This command sets Chainlink nodes in the cluster as keepers in the Registry contract.
+#### Get Pending Request
 
-During the execution of the command, you will need to provide:
-- `REGISTRY_ADDRESS` - Registry contract address
-- `KEEPER_CONSUMER_ADDRESS` - Keeper Consumer contract address
+- **Method:** getPendingRequest
+- **Description:** Get information about a pending registration request for an upkeep task
+- **Arguments:**
+    - `keeperRegistrarAddress`: Address of Keeper Registrar
+    - `requestHash`: Hash of the registration request
 
-#### Fund Latest Upkeep
-  ```
-  make fct-registry-fund-latest-upkeep
-  ```
-This command funds the most recent upkeep in the Registry contract.
+#### Cancel Request
 
-During the execution of the command, you will need to provide:
-- `REGISTRY_ADDRESS` - Registry contract address
-- `LINK_CONTRACT_ADDRESS` - Link Token contract address
+- **Method:** cancelRequest
+- **Description:** Cancel a pending registration request for an upkeep task
+- **Arguments:**
+    - `keeperRegistrarAddress`: Address of Keeper Registrar
+    - `requestHash`: Hash of the registration request
 
-### Flux Aggregator Scripts
+#### Get Registration Config
 
-#### Update Available Funds
-  ```
-  make fct-flux-update-available-funds
-  ```
-This command recalculate the amount of LINK available for payouts in the Flux Aggregator contract.
+- **Method:** getRegistrationConfig
+- **Description:** Get the registration configuration for upkeep tasks from the Keeper Registrar
+- **Arguments:**
+    - `keeperRegistrarAddress`: Address of Keeper Registrar
 
-During the execution of the command, you will need to provide:
-- `FLUX_AGGREGATOR_ADDRESS` - Flux Aggregator contract address
+#### Get Type And Version
 
-#### Set Oracles
-  ```
-  make fct-flux-set-oracles
-  ```
-This command adds new oracles as well as updates the round related parameters in the Flux Aggregator contract.
+- **Method:** getTypeAndVersion
+- **Description:** Get the type and version for the Keeper Registrar
+- **Arguments:**
+    - `keeperRegistrarAddress`: Address of Keeper Registrar
 
-During the execution of the command, you will need to provide:
-- `FLUX_AGGREGATOR_ADDRESS` - Flux Aggregator contract address
+### Automation script: [Automation.s.sol](script%2Fautomation%2FAutomation.s.sol)
 
-#### Get Oracles
-  ```
-  make fct-flux-get-oracles
-  ```
-This command returns an array of addresses containing the oracles of the Flux Aggregator contract.
+This section provides methods and functionalities designed to interact with the KeeperRegistry and KeeperRegistrar smart contracts.
+Supported versions of Keeper Registry are v1.2, v1.3, v2.0, and v2.1.
+Supported versions of Keeper Registrar are v1.2, v2.0, and v2.1.
 
-During the execution of the command, you will need to provide:
-- `FLUX_AGGREGATOR_ADDRESS` - Flux Aggregator contract address
+### Methods
 
-#### Get Flux Latest Answer
-  ```
-  make fct-flux-get-latest-answer
-  ```
-This command returns the answer of the latest Flux round.
+#### Register Upkeep
 
-During the execution of the command, you will need to provide:
-- `FLUX_AGGREGATOR_ADDRESS` - Flux Aggregator contract address
+- **Method:** registerUpkeep
+- **Description:** Register an upkeep task for Chainlink Automation to perform on a specified contract
+- **Arguments:** `(uint96 amountInJuels, string memory upkeepName, string memory email, address upkeepAddress, uint32 gasLimit, bytes memory checkData)`
+    - `amountInJuels`: Amount of LINK in juels to fund the upkeep
+    - `upkeepName`: Upkeep name to be registered
+    - `email`: Email address of upkeep contact owner
+    - `upkeepAddress`: Upkeep contract address to perform task on
+    - `gasLimit`: Limit of gas to provide the target contract when performing upkeep
+    - `checkData`: Data passed to the contract when checking upkeep
+- **Returns:** `requestHash [bytes32]`: Hash of the registration request
+- **Usage:** `AutomationScript.registerUpkeep(1000000000000000000, "upkeep", "email", "0x0000000000000000000000000000000000000000", 500000, "0x")`
 
-### Offchain Aggregator Scripts
+#### Register Upkeep (Log Trigger)
 
-#### Set Payees
-  ```
-  make fct-ocr-set-payees
-  ```
-This command sets Chainlink nodes 2-5 as `payees` in the Offchain Aggregator contract.
+- **Method:** registerUpkeep_logTrigger
+- **Description:** Register an upkeep task for Chainlink Automation to perform on a specified contract with a log trigger
+- **Arguments:** `(uint96 amountInJuels, string memory upkeepName, string memory email, address upkeepAddress, uint32 gasLimit, bytes memory checkData, bytes memory triggerConfig)`
+    - `amountInJuels`: Amount of LINK in juels to fund the upkeep
+    - `upkeepName`: Upkeep name to be registered
+    - `email`: Email address of upkeep contact owner
+    - `upkeepAddress`: Upkeep contract address to perform task on
+    - `gasLimit`: Limit of gas to provide the target contract when performing upkeep
+    - `checkData`: Data passed to the contract when checking upkeep
+    - `triggerConfig`: Encoded log trigger configuration, use Utils.getLogTriggerConfig method to generate
+- **Returns:** `requestHash [bytes32]`: Hash of the registration request
+- **Usage:** `AutomationScript.registerUpkeep_logTrigger(1000000000000000000, "upkeep", "email", "0x0000000000000000000000000000000000000000", 500000, "0x", "0x")`
 
-During the execution of the command, you will need to provide:
-- `OFFCHAIN_AGGREGATOR_ADDRESS` - Offchain Aggregator contract address
+#### Register Upkeep (Time Based)
 
-#### Set Config
-  ```
-  make fct-ocr-set-config
-  ```
-This command sets OCR configuration in the Offchain Aggregator contract.
+- **Method:** registerUpkeep_timeBased
+- **Description:** Register an upkeep task for Chainlink Automation to perform on a specified contract with a time based trigger
+- **Arguments:** `(uint96 amountInJuels, string memory upkeepName, string memory email, address upkeepAddress, uint32 gasLimit, bytes memory checkData, address cronUpkeepFactoryAddress, bytes4 upkeepFunctionSelector, string calldata cronString)`
+    - `amountInJuels`: Amount of LINK in juels to fund the upkeep
+    - `upkeepName`: Upkeep name to be registered
+    - `email`: Email address of upkeep contact owner
+    - `upkeepAddress`: Upkeep contract address to perform task on
+    - `gasLimit`: Limit of gas to provide the target contract when performing upkeep
+    - `checkData`: Data passed to the contract when checking upkeep
+    - `cronUpkeepFactoryAddress`: Address of CronUpkeepFactory contract
+    - `upkeepFunctionSelector`: Function selector of the upkeep function
+    - `cronString`: Cron string with a schedule for performing upkeep
+- **Returns:** `requestHash [bytes32]`: Hash of the registration request
+- **Usage:** `AutomationScript.registerUpkeep_timeBased(1000000000000000000, "upkeep", "email", "0x0000000000000000000000000000000000000000", 500000, "0x", "0xCccCCCCcccCCcCccccCC00000000000000000000", "0x00000000", "0 0 * * *")`
 
-During the execution of the command, you will need to provide:
-- `OFFCHAIN_AGGREGATOR_ADDRESS` - Offchain Aggregator contract address
+#### Get Pending Request
 
-> **Note**  
-> This package uses external Go library [OCRHelper](external%2FOCRHelper) to prepare an OCR configuration.
+- **Method:** getPendingRequest
+- **Description:** Get information about a pending registration request for an upkeep task
+- **Arguments:** `(bytes32 requestHash)`
+    - `requestHash`: Hash of the registration request
+- **Returns:** `(address admin, uint96 balance)`
+    - `admin`: Address of the admin of the upkeep task
+    - `balance`: LINK balance of the upkeep task in juels
+- **Usage:** `AutomationScript.getPendingRequest("0x0000000000000000000000000000000000000000000000000000000000000000")`
 
-#### Request New Round
-  ```
-  make fct-ocr-request-new-round
-  ```
-This command requests new OCR round immediately.
+#### Cancel Request
 
-During the execution of the command, you will need to provide:
-- `OFFCHAIN_AGGREGATOR_ADDRESS` - Offchain Aggregator contract address
+- **Method:** cancelRequest
+- **Description:** Cancel a pending registration request for an upkeep task
+- **Arguments:** `(bytes32 requestHash)`
+    - `requestHash`: Hash of the registration request
+- **Usage:** `AutomationScript.cancelRequest("0x0000000000000000000000000000000000000000000000000000000000000000")`
 
-#### Get OCR Latest Answer
-  ```
-  make fct-ocr-get-latest-answer
-  ```
-This command returns the answer of the latest OCR round.
+#### Get Registration Config (Keeper Registrar v1.2, v2.0)
 
-During the execution of the command, you will need to provide:
-- `OFFCHAIN_AGGREGATOR_ADDRESS` - Offchain Aggregator contract address
+- **Method:** getRegistrationConfig
+- **Description:** Get the registration configuration for upkeep tasks from the Keeper Registrar
+- **Returns:** `(AutomationUtils.AutoApproveType autoApproveType, uint32 autoApproveMaxAllowed, uint32 approvedCount, address keeperRegistry, uint256 minLINKJuels)`
+    - `autoApproveType`: Setting for auto-approve registrations
+    - `autoApproveMaxAllowed`: Max number of registrations that can be auto approved
+    - `approvedCount`: Number of approved registrations
+    - `keeperRegistry`: Keeper registry address
+    - `minLINKJuels`: Minimum LINK that new registrations should fund their upkeep with
+- **Usage:** `AutomationScript.getRegistrationConfig()`
+
+#### Get Registration Config (Keeper Registrar v2.1)
+
+- **Method:** getRegistrationConfig
+- **Description:** Get the registration configuration for upkeep tasks from the Keeper Registrar
+- **Arguments:** `(AutomationUtils.Trigger triggerType)`
+    - `triggerType`: Trigger type of the upkeep task
+- **Returns:** `(AutomationUtils.AutoApproveType autoApproveType, uint32 autoApproveMaxAllowed, uint32 approvedCount, address keeperRegistry, uint256 minLINKJuels)`
+    - `autoApproveType`: Setting for auto-approve registrations
+    - `autoApproveMaxAllowed`: Max number of registrations that can be auto approved
+    - `approvedCount`: Number of approved registrations
+    - `keeperRegistry`: Keeper registry address
+    - `minLINKJuels`: Minimum LINK that new registrations should fund their upkeep with
+- **Usage:** `AutomationScript.getRegistrationConfig(AutomationUtils.Trigger.CONDITION)`
+
+#### Add Funds
+
+- **Method:** addFunds
+- **Description:** Add funds to an upkeep task
+- **Arguments:** `(uint256 upkeepId, uint96 amountInJuels)`
+    - `upkeepId`: Upkeep ID
+    - `amountInJuels`: Amount of LINK in juels to fund the upkeep
+- **Usage:** `AutomationScript.addFunds(1, 1000000000000000000)`
+
+#### Pause Upkeep
+
+- **Method:** pauseUpkeep
+- **Description:** Pause an upkeep task
+- **Arguments:** `(uint256 upkeepId)`
+    - `upkeepId`: Upkeep ID
+- **Usage:** `AutomationScript.pauseUpkeep(1)`
+
+#### Unpause Upkeep
+
+- **Method:** unpauseUpkeep
+- **Description:** Unpause an upkeep task
+- **Arguments:** `(uint256 upkeepId)`
+    - `upkeepId`: Upkeep ID
+- **Usage:** `AutomationScript.unpauseUpkeep(1)`
+
+#### Cancel Upkeep
+
+- **Method:** cancelUpkeep
+- **Description:** Cancel an upkeep task
+- **Arguments:** `(uint256 upkeepId)`
+    - `upkeepId`: Upkeep ID
+- **Usage:** `AutomationScript.cancelUpkeep(1)`
+
+#### Set Upkeep Gas Limit
+
+- **Method:** setUpkeepGasLimit
+- **Description:** Set the gas limit for an upkeep task
+- **Arguments:** `(uint256 upkeepId, uint32 gasLimit)`
+    - `upkeepId`: Upkeep ID
+    - `gasLimit`: Limit of gas to provide the target contract when performing upkeep
+- **Usage:** `AutomationScript.setUpkeepGasLimit(1, 500000)`
+
+#### Get Min Balance For Upkeep
+
+- **Method:** getMinBalanceForUpkeep
+- **Description:** Get the minimum required balance for upkeep from the Keeper Registry
+- **Arguments:** `(uint256 upkeepId)`
+    - `upkeepId`: Upkeep ID
+- **Returns:** `minBalance [uint96]`: Minimum required balance for upkeep in juels
+- **Usage:** `AutomationScript.getMinBalanceForUpkeep(1)`
+
+#### Get State
+
+- **Method:** getState
+- **Description:** Get the state of an upkeep task
+- **Arguments:** `(uint256 upkeepId)`
+    - `upkeepId`: Upkeep ID
+- **Returns:** `registryState [RegistryState memory]`: State of the upkeep task (combined state structure of different versions of Keeper Registry)
+- **Usage:** `AutomationScript.getState(1)`
+
+#### Get Upkeep Transcoder Version
+
+- **Method:** getUpkeepTranscoderVersion
+- **Description:** Get the upkeep transcoder version from Keeper Registry
+- **Returns:** `upkeepFormat [AutomationUtils.UpkeepFormat]`: Upkeep transcoder version
+- **Usage:** `AutomationScript.getUpkeepTranscoderVersion()`
+
+#### Get Active Upkeep IDs
+
+- **Method:** getActiveUpkeepIDs
+- **Description:** Get the list of active upkeep IDs from Keeper Registry
+- **Arguments:** `(uint256 startIndex, uint256 maxCount)`
+    - `startIndex`: Start index of the list of active upkeep IDs
+    - `maxCount`: Max number of active upkeep IDs to return
+- **Returns:** `upkeepIDs [uint256[] memory]`: List of active upkeep IDs
+- **Usage:** `AutomationScript.getActiveUpkeepIDs(0, 10)`
+
+#### Get Upkeep
+
+- **Method:** getUpkeep
+- **Description:** Get the details of an upkeep task
+- **Arguments:** `(uint256 upkeepId)`
+    - `upkeepId`: Upkeep ID
+- **Returns:** `(address target, uint32 executeGas, bytes memory checkData, uint96 balance, address admin, uint64 maxValidBlocknumber, uint96 amountSpent, bool paused)`
+    - `target`: Target contract address of the upkeep task
+    - `executeGas`: Gas limit for the upkeep task
+    - `checkData`: Data passed to the contract when checking upkeep
+    - `balance`: LINK balance of the upkeep task in juels
+    - `admin`: Address of the admin of the upkeep task
+    - `maxValidBlocknumber`: Max valid block number for the upkeep task
+    - `amountSpent`: Amount spent on the upkeep task
+    - `paused`: True if the upkeep task is paused
+- **Usage:** `AutomationScript.getUpkeep(1)`
+
+#### Withdraw Funds
+
+- **Method:** withdrawFunds
+- **Description:** Withdraw funds from an upkeep task
+- **Arguments:** `(uint256 upkeepId, address receivingAddress)`
+    - `upkeepId`: Upkeep ID
+    - `receivingAddress`: Address to receive the withdrawn LINK
+- **Usage:** `AutomationScript.withdrawFunds(1, "0x0000000000000000000000000000000000000000")`
+
+#### Transfer Upkeep Admin
+
+- **Method:** transferUpkeepAdmin
+- **Description:** Transfer the admin of an upkeep task
+- **Arguments:** `(uint256 upkeepId, address proposedAdmin)`
+    - `upkeepId`: Upkeep ID
+    - `proposedAdmin`: Address of the new admin of the upkeep task
+- **Usage:** `AutomationScript.transferUpkeepAdmin(1, "0x0000000000000000000000000000000000000000")`
+
+#### Accept Upkeep Admin
+
+- **Method:** acceptUpkeepAdmin
+- **Description:** Accept the transfer of admin of an upkeep task
+- **Arguments:** `(uint256 upkeepId)`
+    - `upkeepId`: Upkeep ID
+- **Usage:** `AutomationScript.acceptUpkeepAdmin(1)`
+
+#### Get Type And Version
+
+- **Method:** getTypeAndVersion
+- **Description:** Get the type and version for Keeper Registry
+- **Returns:** `typeAndVersion [string memory]`: Type and Version of Keeper Registry
+- **Usage:** `AutomationScript.getTypeAndVersion()`
+
+## Functions Service
+
+Chainlink [Functions](https://docs.chain.link/chainlink-functions) service provides your smart contracts access to
+trust-minimized compute infrastructure, allowing you to fetch data from APIs and perform custom computation.
+
+### Functions script: [Functions.s.sol](script%2Ffunctions%2FFunctions.s.sol)
+
+This section provides methods and functionalities designed to interact with the Functions Router smart contract.
+
+### Methods
+
+#### Create subscription
+
+- **Method:** createSubscription
+- **Description:** Create Functions subscription
+- **Returns:** `subscriptionId [uint64]`: Functions Subscription ID
+- **Usage:** `FunctionsScript.createSubscription()`
+
+#### Create subscription with consumer
+
+- **Method:** createSubscriptionWithConsumer
+- **Description:** Create Functions subscription with consumer
+- **Arguments:** `(address consumerAddress)`
+  - `consumerAddress`: Address of Functions Consumer
+- **Returns:** `subscriptionId [uint64]`: Functions Subscription ID
+- **Usage:** `FunctionsScript.createSubscriptionWithConsumer("0x0000000000000000000000000000000000000000")`
+
+#### Fund subscription
+
+- **Method:** fundSubscription
+- **Description:** Fund Functions subscription
+- **Arguments:** `(address linkTokenAddress, uint256 amountInJuels, uint64 subscriptionId)`
+  - `linkTokenAddress`: Address of Link Token
+  - `amountInJuels`: Amount of LINK in Juels to fund Subscription
+  - `subscriptionId`: Subscription ID
+- **Usage:** `FunctionsScript.fundSubscription("0x0000000000000000000000000000000000000000", 1000000000000000000, 1)`
+
+#### Cancel subscription
+
+- **Method:** cancelSubscription
+- **Description:** Cancel Functions subscription
+- **Arguments:** `(uint64 subscriptionId, address receivingAddress)`
+  - `subscriptionId`: Subscription ID
+  - `receivingAddress`: Address to receive the balance of Subscription
+- **Usage:** `FunctionsScript.cancelSubscription(1, "0x0000000000000000000000000000000000000000")`
+
+#### Get subscription details
+
+- **Method:** getSubscriptionDetails
+- **Description:** Get subscription details
+- **Arguments:** `(uint64 subscriptionId)`
+  - `subscriptionId`: Subscription ID
+- **Returns:** `subscriptionDetails [IFunctionsSubscriptions.Subscription]`: Subscription details
+- **Usage:** `FunctionsScript.getSubscriptionDetails(1)`
+
+#### Add consumer
+
+- **Method:** addConsumer
+- **Description:** Add a new consumer to an existing Functions subscription
+- **Arguments:** `(uint64 subscriptionId, address consumerAddress)`
+  - `subscriptionId`: Subscription ID
+  - `consumerAddress`: Address of Functions Consumer
+- **Usage:** `FunctionsScript.addConsumer(1, "0x0000000000000000000000000000000000000000")`
+
+#### Remove consumer
+
+- **Method:** removeConsumer
+- **Description:** Remove a consumer from an existing Functions subscription
+- **Arguments:** `(uint64 subscriptionId, address consumerAddress)`
+  - `subscriptionId`: Subscription ID
+  - `consumerAddress`: Address of Functions Consumer
+- **Usage:** `FunctionsScript.removeConsumer(1, "0x0000000000000000000000000000000000000000")`
+
+#### Propose Subscription new owner
+
+- **Method:** proposeSubscriptionOwnerTransfer
+- **Description:** Propose subscription owner transfer
+- **Arguments:** `(uint64 subscriptionId, address newOwner)`
+  - `subscriptionId`: Subscription ID
+  - `newOwner`: Address of new owner of Subscription
+- **Usage:** `FunctionsScript.proposeSubscriptionOwnerTransfer(1, "0x0000000000000000000000000000000000000000")`
+
+#### Accept Subscription new owner
+
+- **Method:** acceptSubscriptionOwnerTransfer
+- **Description:** Accept subscription owner transfer
+- **Arguments:** `(uint64 subscriptionId)`
+  - `subscriptionId`: Subscription ID
+- **Usage:** `FunctionsScript.acceptSubscriptionOwnerTransfer(1)`
+
+#### Timeout Subscription requests
+
+- **Method:** timeoutRequests
+- **Description:** Timeout subscription requests
+- **Arguments:** `(FunctionsResponse.Commitment[] memory commitments)`
+  - `commitments`: Commitments to timeout
+- **Usage:** `FunctionsScript.timeoutRequests(commitments)`
+
+#### Estimate Functions request cost
+
+- **Method:** estimateRequestCost
+- **Description:** Estimate Functions request cost
+- **Arguments:** `(string memory donId, uint64 subscriptionId, uint32 callbackGasLimit, uint256 gasPriceWei)`
+  - `donId`: ID of the DON where Functions requests will be sent
+  - `subscriptionId`: Subscription ID
+  - `callbackGasLimit`: Callback gas limit
+  - `gasPriceWei`: Gas price in Wei
+- **Returns:** `estimatedCost [uint96]`: Estimated cost of Functions request
+- **Usage:** `FunctionsScript.estimateRequestCost("donId", 1, 500000, 100000000000)`

@@ -11,12 +11,12 @@ fct-install-dependencies: ## Install dependencies
 # Build Chainlink contracts artifacts.
 fct-build-artifacts: ## Build artifacts
 	printf "%s\n" "Building Chainlink contracts..."; \
-	forge build --contracts ./contracts/v0.4.25 --skip script test --names --use solc:0.4.25; \
-	forge build --contracts ./contracts/v0.6.6 --skip script test --names --use solc:0.6.6; \
-	forge build --contracts ./contracts/v0.7.6 --skip script test --names --use solc:0.7.6; \
-	forge build --contracts ./contracts/v0.8.6 --skip script test --names --use solc:0.8.6 --libraries "@chainlink/contracts/v0.8/automation/libraries/external/Cron.sol:Cron:$(CRON_LIBRARY_ADDRESS)"; \
-	forge build --contracts ./contracts/v0.8.16 --skip script test --names --use solc:0.8.16; \
-	forge build --contracts ./contracts/v0.8.19 --skip script test --names --use solc:0.8.19; \
+	FOUNDRY_PROFILE=build forge build --contracts ./contracts/v0.4.25 --skip script test --names --use solc:0.4.25; \
+	FOUNDRY_PROFILE=build forge build --contracts ./contracts/v0.6.6 --skip script test --names --use solc:0.6.6; \
+	FOUNDRY_PROFILE=build forge build --contracts ./contracts/v0.7.6 --skip script test --names --use solc:0.7.6; \
+	FOUNDRY_PROFILE=build forge build --contracts ./contracts/v0.8.6 --skip script test --names --use solc:0.8.6 --libraries "@chainlink/contracts/v0.8/automation/libraries/external/Cron.sol:Cron:$(CRON_LIBRARY_ADDRESS)"; \
+	FOUNDRY_PROFILE=build forge build --contracts ./contracts/v0.8.16 --skip script test --names --use solc:0.8.16; \
+	FOUNDRY_PROFILE=build forge build --contracts ./contracts/v0.8.19 --skip script test --names --use solc:0.8.19; \
 
 	printf "%s\n" "Done";
 
@@ -25,5 +25,5 @@ fct-build-ocr-helper:
 	cd ./external/OCRHelper && go build -o bin/ocr-helper
 
 fct-run-tests:   ## Run tests
-	forge test -vvv --via-ir
+	forge test -vvv
 

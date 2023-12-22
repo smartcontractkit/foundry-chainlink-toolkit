@@ -534,15 +534,15 @@ contract AutomationScript is BaseScript, TypeAndVersionScript {
     return registryState;
   }
 
-  function getUpkeepTranscoderVersion() external view returns(AutomationUtils.UpkeepFormat) {
-    KeeperRegistry1_3Interface keeperRegistry = KeeperRegistry1_3Interface(keeperRegistryAddress);
+  function getUpkeepTranscoderVersion() external view returns(AutomationUtils.UpkeepFormat upkeepFormat) {
+    KeeperRegistryInterface keeperRegistry = KeeperRegistryInterface(keeperRegistryAddress);
     return keeperRegistry.upkeepTranscoderVersion();
   }
 
   function getActiveUpkeepIDs(
     uint256 startIndex,
     uint256 maxCount
-  ) external view returns (uint256[] memory) {
+  ) external view returns (uint256[] memory upkeepIDs) {
     KeeperRegistryInterface keeperRegistry = KeeperRegistryInterface(keeperRegistryAddress);
     return keeperRegistry.getActiveUpkeepIDs(startIndex, maxCount);
   }

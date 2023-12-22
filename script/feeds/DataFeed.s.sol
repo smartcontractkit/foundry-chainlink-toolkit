@@ -36,17 +36,17 @@ contract DataFeedsScript is BaseScript {
     return dataFeed.getRoundData(_roundId);
   }
 
-  function getDecimals() external view returns(uint8) {
+  function getDecimals() external view returns(uint8 decimals) {
     AggregatorV2V3Interface dataFeed = AggregatorV2V3Interface(dataFeedAddress);
     return dataFeed.decimals();
   }
 
-  function getDescription() external view returns(string memory) {
+  function getDescription() external view returns(string memory description) {
     AggregatorV2V3Interface dataFeed = AggregatorV2V3Interface(dataFeedAddress);
     return dataFeed.description();
   }
 
-  function getVersion() external view returns(uint256) {
+  function getVersion() external view returns(uint256 version) {
     AggregatorV2V3Interface dataFeed = AggregatorV2V3Interface(dataFeedAddress);
     return dataFeed.version();
   }

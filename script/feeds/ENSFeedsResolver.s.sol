@@ -6,18 +6,22 @@ import { ENSResolverInterface } from "src/interfaces/feeds/ENSResolverInterface.
 import "../helpers/BaseScript.s.sol";
 
 contract ENSFeedResolverScript is BaseScript {
+  address public ensResolverAddress;
+
+  constructor (address _ensResolverAddress) {
+    ensResolverAddress = _ensResolverAddress;
+  }
+
   function resolveAggregatorAddress(
-    address ensResolverAddress,
     string memory baseTick,
     string memory quoteTick
-  ) external view returns(address) {
+  ) external view returns(address aggregatorAddress) {
     ENSResolverInterface ensResolver = ENSResolverInterface(ensResolverAddress);
 
     return ensResolver.addr(bytes32(abi.encodePacked(baseTick, "-", quoteTick, ".data.eth")));
   }
 
   function resolveAggregatorAddressWithSubdomains(
-    address ensResolverAddress,
     string memory baseTick,
     string memory quoteTick
   ) external view returns(

@@ -37,72 +37,93 @@ contract FunctionsScript is BaseScript {
 
   /// @notice Functions Router functions
 
-  function createSubscription() nestedScriptContext isAllowListed external returns(uint64 subId) {
+  function createSubscription() nestedScriptContext isAllowListed external returns(uint64 subscriptionId) {
     IFunctionsSubscriptions functionsRouter = IFunctionsSubscriptions(functionsRouterAddress);
-    subId = functionsRouter.createSubscription();
-    console.log("Created subscription with ID:", subId);
-    return subId;
+    subscriptionId = functionsRouter.createSubscription();
+    console.log("Created subscription with ID:", subscriptionId);
+    return subscriptionId;
   }
 
   function createSubscriptionWithConsumer(
-    address consumer
-  ) nestedScriptContext isAllowListed external returns(uint64 subId) {
+    address consumerAddress
+  ) nestedScriptContext isAllowListed external returns(uint64 subscriptionId) {
     IFunctionsSubscriptions functionsRouter = IFunctionsSubscriptions(functionsRouterAddress);
-    subId = functionsRouter.createSubscriptionWithConsumer(consumer);
-    // Additional logic can be added here
-    console.log("Created subscription with consumer with ID:", subId);
-    return subId;
+    subscriptionId = functionsRouter.createSubscriptionWithConsumer(consumerAddress);
+    console.log("Created subscription with consumer with ID:", subscriptionId);
+    return subscriptionId;
+  }
+
+  function fundSubscription(
+    address linkTokenAddress,
+    uint256 amountInJuels,
+    uint64 subscriptionId
+  ) nestedScriptContext isAllowListed external {
+    IFunctionsSubscriptions functionsRouter = IFunctionsSubscriptions(functionsRouterAddress);
+    LinkTokenInterface linkToken = LinkTokenInterface(linkTokenAddress);
+
+    require(amountInJuels > 0, "Juels funding amount must be greater than 0");
+
+    // Ensure the subscription exists
+    IFunctionsSubscriptions.Subscription memory subscription = functionsRouter.getSubscription(subscriptionId);
+    require (subscription.owner != address(0), "Subscription not found");
+
+    address signer = msg.sender; // The address executing the script
+    require(linkToken.balanceOf(signer) >= amountInJuels, "Insufficient LINK balance");
+
+    // Perform the transfer and call
+    linkToken.transferAndCall(functionsRouterAddress, amountInJuels, abi.encode(subscriptionId));
+    console.log("Funded subscription with ID:", subscriptionId);
   }
 
   function cancelSubscription(
-    uint64 subId,
+    uint64 subscriptionId,
     address receivingAddress
   ) nestedScriptContext isAllowListed external {
     IFunctionsSubscriptions functionsRouter = IFunctionsSubscriptions(functionsRouterAddress);
-    functionsRouter.cancelSubscription(subId, receivingAddress);
-    console.log("Cancelled subscription with ID:", subId);
+    functionsRouter.cancelSubscription(subscriptionId, receivingAddress);
+    console.log("Cancelled subscription with ID:", subscriptionId);
   }
 
-  function getSubscription(
-    uint64 subId
-  ) external view returns(IFunctionsSubscriptions.Subscription memory) {
+  function getSubscriptionDetails(
+    uint64 subscriptionId
+  ) external view returns(IFunctionsSubscriptions.Subscription memory subscriptionDetails) {
     IFunctionsSubscriptions functionsRouter = IFunctionsSubscriptions(functionsRouterAddress);
-    return functionsRouter.getSubscription(subId);
-  }
-
-  function proposeSubscriptionOwnerTransfer(
-    uint64 subId,
-    address newOwner
-  ) nestedScriptContext isAllowListed external {
-    IFunctionsSubscriptions functionsRouter = IFunctionsSubscriptions(functionsRouterAddress);
-    functionsRouter.proposeSubscriptionOwnerTransfer(subId, newOwner);
-    console.log("Proposed subscription owner transfer for ID:", subId);
-  }
-
-  function acceptSubscriptionOwnerTransfer(
-    uint64 subId
-  ) nestedScriptContext isAllowListed external {
-    IFunctionsSubscriptions functionsRouter = IFunctionsSubscriptions(functionsRouterAddress);
-    functionsRouter.acceptSubscriptionOwnerTransfer(subId);
-    console.log("Accepted subscription owner transfer for ID:", subId);
+    return functionsRouter.getSubscription(subscriptionId);
   }
 
   function addConsumer(
-    uint64 subId,
+    uint64 subscriptionId,
     address consumer
   ) nestedScriptContext isAllowListed external {
     IFunctionsSubscriptions functionsRouter = IFunctionsSubscriptions(functionsRouterAddress);
-    functionsRouter.addConsumer(subId, consumer);
-    console.log("Added consumer to subscription ID:", subId);
+    functionsRouter.addConsumer(subscriptionId, consumer);
+    console.log("Added consumer to subscription ID:", subscriptionId);
   }
 
   function removeConsumer(
-    uint64 subId,
+    uint64 subscriptionId,
     address consumer
   ) nestedScriptContext isAllowListed external {
     IFunctionsSubscriptions functionsRouter = IFunctionsSubscriptions(functionsRouterAddress);
-    functionsRouter.removeConsumer(subId, consumer);
-    console.log("Removed consumer from subscription ID:", subId);
+    functionsRouter.removeConsumer(subscriptionId, consumer);
+    console.log("Removed consumer from subscription ID:", subscriptionId);
+  }
+
+  function proposeSubscriptionOwnerTransfer(
+    uint64 subscriptionId,
+    address newOwner
+  ) nestedScriptContext isAllowListed external {
+    IFunctionsSubscriptions functionsRouter = IFunctionsSubscriptions(functionsRouterAddress);
+    functionsRouter.proposeSubscriptionOwnerTransfer(subscriptionId, newOwner);
+    console.log("Proposed subscription owner transfer for ID:", subscriptionId);
+  }
+
+  function acceptSubscriptionOwnerTransfer(
+    uint64 subscriptionId
+  ) nestedScriptContext isAllowListed external {
+    IFunctionsSubscriptions functionsRouter = IFunctionsSubscriptions(functionsRouterAddress);
+    functionsRouter.acceptSubscriptionOwnerTransfer(subscriptionId);
+    console.log("Accepted subscription owner transfer for ID:", subscriptionId);
   }
 
   function timeoutRequests(
@@ -114,31 +135,9 @@ contract FunctionsScript is BaseScript {
     console.log("Timed out requests");
   }
 
-  function fundSubscription(
-    address linkTokenAddress,
-    uint256 juelsAmount,
-    uint64 subId
-  ) nestedScriptContext isAllowListed external {
-    IFunctionsSubscriptions functionsRouter = IFunctionsSubscriptions(functionsRouterAddress);
-    LinkTokenInterface linkToken = LinkTokenInterface(linkTokenAddress);
-
-    require(juelsAmount > 0, "Juels funding amount must be greater than 0");
-
-    // Ensure the subscription exists
-    IFunctionsSubscriptions.Subscription memory subscription = functionsRouter.getSubscription(subId);
-    require (subscription.owner != address(0), "Subscription not found");
-
-    address signer = msg.sender; // The address executing the script
-    require(linkToken.balanceOf(signer) >= juelsAmount, "Insufficient LINK balance");
-
-    // Perform the transfer and call
-    linkToken.transferAndCall(functionsRouterAddress, juelsAmount, abi.encode(subId));
-    console.log("Funded subscription with ID:", subId);
-  }
-
   function estimateRequestCost(
     string memory donId,
-    uint64 subId,
+    uint64 subscriptionId,
     uint32 callbackGasLimit,
     uint256 gasPriceWei
   ) nestedScriptContext isAllowListed external returns(uint96 estimatedCost) {
@@ -155,7 +154,7 @@ contract FunctionsScript is BaseScript {
 
     bytes memory requestData = new bytes(0);
     estimatedCost = functionsCoordinator.estimateCost(
-      subId,
+      subscriptionId,
       requestData,
       callbackGasLimit,
       gasPriceWei

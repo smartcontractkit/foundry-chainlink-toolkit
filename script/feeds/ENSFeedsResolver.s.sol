@@ -5,7 +5,7 @@ import "forge-std/Script.sol";
 import { ENSResolverInterface } from "src/interfaces/feeds/ENSResolverInterface.sol";
 import "../helpers/BaseScript.s.sol";
 
-contract ENSFeedResolverScript is BaseScript {
+contract ENSFeedsResolverScript is BaseScript {
   address public ensResolverAddress;
 
   constructor (address _ensResolverAddress) {

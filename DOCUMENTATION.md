@@ -4,7 +4,71 @@ This document provides detailed information about each Chainlink service module 
 To use these Solidity scripts, import the necessary one into your project and interact with its functions as part of your smart contract development and testing workflow.
 Ensure that your environment is configured according to the [README](README.md).
 
-## Data Feed Services
+<!-- TOC -->
+* [Foundry Chainlink Toolkit Documentation](#foundry-chainlink-toolkit-documentation)
+  * [Data Feeds Services](#data-feeds-services)
+    * [Data Feeds script: DataFeed.s.sol](#data-feeds-script-datafeedssol)
+      * [Get Latest Round Data](#get-latest-round-data)
+      * [Get Round Data](#get-round-data)
+      * [Get Decimals](#get-decimals)
+      * [Get Description](#get-description)
+      * [Get Version](#get-version)
+    * [ENS script: ENSFeedsResolver.s.sol](#ens-script-ensfeedsresolverssol)
+      * [Resolve Aggregator Address](#resolve-aggregator-address)
+      * [Resolve Aggregator Address With Subdomains](#resolve-aggregator-address-with-subdomains)
+  * [VRF Service](#vrf-service)
+    * [VRF script: VRF.s.sol](#vrf-script-vrfssol)
+      * [Create Subscription](#create-subscription)
+      * [Fund Subscription](#fund-subscription)
+      * [Cancel Subscription](#cancel-subscription)
+      * [Add Consumer](#add-consumer)
+      * [Remove Consumer](#remove-consumer)
+      * [Get Subscription Details](#get-subscription-details)
+      * [Request Random Words](#request-random-words)
+      * [Check Pending Request](#check-pending-request)
+      * [Request Subscription Owner Transfer](#request-subscription-owner-transfer)
+      * [Accept Subscription Owner Transfer](#accept-subscription-owner-transfer)
+      * [Get Request Configuration](#get-request-configuration)
+      * [Get Type and Version](#get-type-and-version)
+  * [Automation Services](#automation-services)
+    * [Automation script: Automation.s.sol](#automation-script-automationssol)
+      * [Register Upkeep](#register-upkeep)
+      * [Register Upkeep (Log Trigger)](#register-upkeep-log-trigger)
+      * [Register Upkeep (Time Based)](#register-upkeep-time-based)
+      * [Get Pending Request](#get-pending-request)
+      * [Cancel Request](#cancel-request)
+      * [Get Registration Config (Keeper Registrar v1.2, v2.0)](#get-registration-config-keeper-registrar-v12-v20)
+      * [Get Registration Config (Keeper Registrar v2.1)](#get-registration-config-keeper-registrar-v21)
+      * [Add Funds](#add-funds)
+      * [Pause Upkeep](#pause-upkeep)
+      * [Unpause Upkeep](#unpause-upkeep)
+      * [Cancel Upkeep](#cancel-upkeep)
+      * [Set Upkeep Gas Limit](#set-upkeep-gas-limit)
+      * [Get Min Balance For Upkeep](#get-min-balance-for-upkeep)
+      * [Get State](#get-state)
+      * [Get Upkeep Transcoder Version](#get-upkeep-transcoder-version)
+      * [Get Active Upkeep IDs](#get-active-upkeep-ids)
+      * [Get Upkeep](#get-upkeep)
+      * [Withdraw Funds](#withdraw-funds)
+      * [Transfer Upkeep Admin](#transfer-upkeep-admin)
+      * [Accept Upkeep Admin](#accept-upkeep-admin)
+      * [Get Type And Version](#get-type-and-version-1)
+  * [Functions Services](#functions-services)
+    * [Functions script: Functions.s.sol](#functions-script-functionsssol)
+      * [Create subscription](#create-subscription-1)
+      * [Create subscription with consumer](#create-subscription-with-consumer)
+      * [Fund subscription](#fund-subscription-1)
+      * [Cancel subscription](#cancel-subscription-1)
+      * [Get subscription details](#get-subscription-details-1)
+      * [Add consumer](#add-consumer-1)
+      * [Remove consumer](#remove-consumer-1)
+      * [Propose Subscription new owner](#propose-subscription-new-owner)
+      * [Accept Subscription new owner](#accept-subscription-new-owner)
+      * [Timeout Subscription requests](#timeout-subscription-requests)
+      * [Estimate Functions request cost](#estimate-functions-request-cost)
+<!-- TOC -->
+
+## Data Feeds Services
 
 Chainlink [Data Feeds](https://docs.chain.link/data-feeds) are decentralized oracles that provide reliable off-chain data to smart contracts on the blockchain.
 Using this service, developers can access the latest round answer and other relevant information from the Data Feeds,
@@ -14,8 +78,6 @@ enabling them to fetch real-world data in their web3 projects.
 
 This section provides methods and functionalities designed to interact with the OffchainAggregator smart contract,
 which serves as the core component of Chainlink Data Feeds.
-
-### Methods
 
 #### Get Latest Round Data
 
@@ -64,14 +126,12 @@ which serves as the core component of Chainlink Data Feeds.
 - **Returns:** `version [uint256]`: Version for a data feed
 - **Usage:** `DataFeedScript.getAggregatorVersion()`
 
-### ENS script: [ENS.s.sol](script%2Ffeeds%2FENS.s.sol)
+### ENS script: [ENSFeedsResolver.s.sol](script%2Ffeeds%2FENSFeedsResolver.s.sol)
 
 This section provides methods and functionalities designed to interact with the [Chainlink ENS Resolver](https://docs.chain.link/data-feeds/ens).
 
 > **Note**
 >  Chainlink ENS is exclusively available on the Ethereum mainnet.
-
-### Methods
 
 #### Resolve Aggregator Address
 
@@ -101,12 +161,10 @@ This section provides methods and functionalities designed to interact with the 
 Chainlink [VRF](https://docs.chain.link/vrf/v2/introduction) (Verifiable Random Function) service is a critical component
 provided by Chainlink that enables smart contracts on the blockchain to securely and transparently access cryptographically secure and unpredictable randomness.
 
-### Service alias: `vrf`
+### VRF script: [VRF.s.sol](script%2Fvrf%2FVRF.s.sol)
 
 This section provides methods and functionalities designed to interact with the VRFCoordinator smart contract,
 which serves as the intermediary between smart contracts on the blockchain and the VRF service.
-
-### Methods
 
 #### Create Subscription
 
@@ -224,68 +282,11 @@ which serves as the intermediary between smart contracts on the blockchain and t
 Chainlink [Automation](https://docs.chain.link/vrf/v2/introduction) service enables conditional execution
 of your smart contracts functions through a hyper-reliable and decentralized automation platform.
 
-### Service alias: `automationRegistrar`
-
-This section provides methods and functionalities designed to interact with the KeeperRegistrar smart contract,
-which accepts requests for upkeep registrations.
-
-### Methods
-
-#### Register Upkeep
-
-- **Method:** registerUpkeep
-- **Description:** Register an upkeep task for Chainlink Keepers to perform on a specified contract
-- **Arguments:**
-    - `keeperRegistrarAddress`: Address of Keeper Registrar
-    - `linkTokenAddress`: Address of Link Token
-    - `amountInJuels`: Amount of LINK in juels to fund the upkeep
-    - `upkeepName`: Upkeep name to be registered
-    - `encryptedEmail`: Encrypted email address of upkeep contact
-    - `upkeepContract`: Upkeep contract address to perform task on
-    - `gasLimit`: Limit of gas to provide the target contract when performing upkeep
-    - `adminAddress`: Address to cancel upkeep and withdraw remaining funds
-    - `checkData`: Data passed to the contract when checking upkeep
-    - `ocrConfig`: OffchainConfig for upkeep in bytes [Keeper Registrar v2_0 ONLY], default value: "0x"
-    - `source`: ID of the application sending this request [Keeper Registrar v1_1 ONLY], default value: "0"
-    - `sender`: Address of the sender making the request
-
-#### Get Pending Request
-
-- **Method:** getPendingRequest
-- **Description:** Get information about a pending registration request for an upkeep task
-- **Arguments:**
-    - `keeperRegistrarAddress`: Address of Keeper Registrar
-    - `requestHash`: Hash of the registration request
-
-#### Cancel Request
-
-- **Method:** cancelRequest
-- **Description:** Cancel a pending registration request for an upkeep task
-- **Arguments:**
-    - `keeperRegistrarAddress`: Address of Keeper Registrar
-    - `requestHash`: Hash of the registration request
-
-#### Get Registration Config
-
-- **Method:** getRegistrationConfig
-- **Description:** Get the registration configuration for upkeep tasks from the Keeper Registrar
-- **Arguments:**
-    - `keeperRegistrarAddress`: Address of Keeper Registrar
-
-#### Get Type And Version
-
-- **Method:** getTypeAndVersion
-- **Description:** Get the type and version for the Keeper Registrar
-- **Arguments:**
-    - `keeperRegistrarAddress`: Address of Keeper Registrar
-
 ### Automation script: [Automation.s.sol](script%2Fautomation%2FAutomation.s.sol)
 
 This section provides methods and functionalities designed to interact with the KeeperRegistry and KeeperRegistrar smart contracts.
 Supported versions of Keeper Registry are v1.2, v1.3, v2.0, and v2.1.
 Supported versions of Keeper Registrar are v1.2, v2.0, and v2.1.
-
-### Methods
 
 #### Register Upkeep
 
@@ -505,7 +506,7 @@ Supported versions of Keeper Registrar are v1.2, v2.0, and v2.1.
 - **Returns:** `typeAndVersion [string memory]`: Type and Version of Keeper Registry
 - **Usage:** `AutomationScript.getTypeAndVersion()`
 
-## Functions Service
+## Functions Services
 
 Chainlink [Functions](https://docs.chain.link/chainlink-functions) service provides your smart contracts access to
 trust-minimized compute infrastructure, allowing you to fetch data from APIs and perform custom computation.
@@ -513,8 +514,6 @@ trust-minimized compute infrastructure, allowing you to fetch data from APIs and
 ### Functions script: [Functions.s.sol](script%2Ffunctions%2FFunctions.s.sol)
 
 This section provides methods and functionalities designed to interact with the Functions Router smart contract.
-
-### Methods
 
 #### Create subscription
 

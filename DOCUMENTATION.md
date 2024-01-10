@@ -82,10 +82,10 @@ which serves as the core component of Chainlink Data Feeds.
 #### Get Latest Round Data
 
 - **Method:** getLatestRoundData
-- **Description:** Get the latest round data for a data feed
+- **Description:** Get the latest round data for a Data Feed
 - **Returns:** `(uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)`
     - `roundId`: Round ID of Data Feed
-    - `answer`: Latest round answer for a data feed
+    - `answer`: Latest round answer for a Data Feed
     - `startedAt`: Timestamp of when the round started
     - `updatedAt`: Timestamp of when the round was updated
     - `answeredInRound`: Round ID of when the round was answered
@@ -94,12 +94,12 @@ which serves as the core component of Chainlink Data Feeds.
 #### Get Round Data
 
 - **Method:** getRoundData
-- **Description:** Get the round data for a data feed
+- **Description:** Get the round data for a Data Feed
 - **Arguments:** `(uint80 roundId)`
     - `roundId`: Round ID of Data Feed
 - **Returns:** `(uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)`
     - `roundId`: Round ID of Data Feed
-    - `answer`: Latest round answer for a data feed
+    - `answer`: Latest round answer for a Data Feed
     - `startedAt`: Timestamp of when the round started
     - `updatedAt`: Timestamp of when the round was updated
     - `answeredInRound`: Round ID of when the round was answered
@@ -108,22 +108,22 @@ which serves as the core component of Chainlink Data Feeds.
 #### Get Decimals
 
 - **Method:** getDecimals
-- **Description:** Get the decimals for a data feed
-- **Returns:** `decimals [uint8]`: Decimals for a data feed
+- **Description:** Get the decimals for a Data Feed
+- **Returns:** `decimals [uint8]`: Decimals for a Data Feed
 - **Usage:** `DataFeedScript.getDecimals()`
 
 #### Get Description
 
 - **Method:** getDescription
-- **Description:** Get the description for a data feed
-- **Returns:** `description [string]`: Description for a data feed
+- **Description:** Get the description for a Data Feed
+- **Returns:** `description [string]`: Description for a Data Feed
 - **Usage:** `DataFeedScript.getDescription()`
 
 #### Get Version
 
 - **Method:** getAggregatorVersion
-- **Description:** Get the version for a data feed
-- **Returns:** `version [uint256]`: Version for a data feed
+- **Description:** Get the version for a Data Feed
+- **Returns:** `version [uint256]`: Version for a Data Feed
 - **Usage:** `DataFeedScript.getAggregatorVersion()`
 
 ### ENS script: [ENSFeedsResolver.s.sol](script%2Ffeeds%2FENSFeedsResolver.s.sol)

@@ -91,6 +91,11 @@ Examples of shell scripts invoking Chainlink services can be found in the Make f
 > **Note**  
 > In order to run scripts properly, RPC node url and signer private key should be set either in the foundry.toml or through the [forge CLI parameters](https://book.getfoundry.sh/reference/forge/forge-script)
 
+## Registries
+The Foundry Chainlink toolkit provides registries that contain information about smart contracts related
+to various Chainlink services and other data. You can find them in the [registries](src%2Fregistries%2Fjson) directory.  
+"In order to use it in your Solidity scripts, please utilize the [Foundry Cheatcode to parse JSON files](https://book.getfoundry.sh/cheatcodes/parse-json?highlight=json#decoding-json-objects-into-solidity-structs).
+
 ## Sandbox
 > **Note**
 > Install [GNU make](https://www.gnu.org/software/make/) following the [Make documentation](https://www.gnu.org/software/make/manual/make.html).

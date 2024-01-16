@@ -1,0 +1,75 @@
+version: '3.8'
+volumes:
+  prometheus_data:
+  chainlink_db_data:
+services:
+  node_exporter:
+    image: prom/node-exporter:latest
+    container_name: chainlink-node_exporter
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+    command:
+      - '--path.rootfs=/host'
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
+    restart: always
+    ports:
+      - 9100:9100
+  prometheus:
+    image: prom/prometheus:main
+    container_name: chainlink-prometheus
+    volumes:
+      - ./prometheus.yaml:/etc/prometheus/prometheus.yaml
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yaml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    restart: always
+    ports:
+      - 9090:9090
+  chainlink_db:
+    container_name: chainlink-db
+    image: postgres:15
+    command: postgres -c 'max_connections=${PG_MAX_CONNECTIONS}'
+    volumes:
+      - ./clroot/sql/drop_tables.sql:/docker-entrypoint-initdb.d/1-drop_tables.sql
+      - ./clroot/sql/create_tables.sql:/docker-entrypoint-initdb.d/2-create_tables.sql
+      - chainlink_db_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - 5432:5432
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -q -U ${POSTGRES_USER}" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  chainlink_node:
+    container_name: ${CHAINLINK_CONTAINER_NAME}
+    platform: linux/x86_64
+    image: smartcontract/chainlink:1.12.0
+    command: local node -p ${ROOT}/settings/chainlink_password -a ${ROOT}/settings/chainlink_api_credentials --vrfpassword=${ROOT}/settings/chainlink_api_credentials
+    restart: on-failure
+    volumes:
+      - ./clroot/settings/:${ROOT}/settings
+      - ./clroot/jobs:${ROOT}/jobs
+    depends_on:
+      chainlink_db:
+        condition: service_healthy
+    environment:
+      - ROOT=${ROOT}
+      - LOG_LEVEL=${LOG_LEVEL}
+      - ETH_CHAIN_ID=${ETH_CHAIN_ID}
+      - CHAINLINK_TLS_PORT=${CHAINLINK_TLS_PORT}
+      - SECURE_COOKIES=${SECURE_COOKIES}
+      - ALLOW_ORIGINS=${ALLOW_ORIGINS}
+      - ETH_URL=${ETH_URL}
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@chainlink_db:5432/chainlink?sslmode=disable
+      - LINK_CONTRACT_ADDRESS=${LINK_CONTRACT_ADDRESS}
+    env_file:
+      - clroot/chainlink.env

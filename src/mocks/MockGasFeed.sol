@@ -1,14 +1,14 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity >=0.6.2 <0.9.0;
 
-import "../interfaces/AggregatorV3Interface.sol";
+import "src/interfaces/feeds/AggregatorV3Interface.sol";
 
 contract MockGasFeed is AggregatorV3Interface {
-  uint80 roundId;
-  int256 answer;
-  uint256 startedAt;
-  uint256 updatedAt;
-  uint80 answeredInRound;
+  uint80 private roundId;
+  int256 private answer;
+  uint256 private startedAt;
+  uint256 private updatedAt;
+  uint80 private answeredInRound;
 
   constructor () public {
     roundId = 0;
@@ -18,15 +18,15 @@ contract MockGasFeed is AggregatorV3Interface {
     answeredInRound = 0;
   }
 
-  function decimals() external override view returns (uint8) {
+  function decimals() external override pure returns (uint8) {
     return 18;
   }
 
-  function description() external override view returns (string memory) {
+  function description() external override pure returns (string memory) {
     return "mock fast Gas data feed";
   }
 
-  function version() external override view returns (uint256) {
+  function version() external override pure returns (uint256) {
     return 1;
   }
 

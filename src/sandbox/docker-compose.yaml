@@ -1,0 +1,80 @@
+# Builds a chainlink cluster environment based on the specified published docker image version
+
+version: '3.8'
+volumes:
+  prometheus_data:
+  chainlink_db_data:
+services:
+  prometheus:
+    extends:
+      file: services.yaml
+      service: prometheus
+  node_exporter:
+    extends:
+      file: services.yaml
+      service: node_exporter
+  chainlink_db:
+    extends:
+      file: services.yaml
+      service: chainlink_db
+  chainlink_node1:
+    extends:
+      file: services.yaml
+      service: chainlink_node
+    container_name: ${CHAINLINK_CONTAINER_NAME}1
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@chainlink_db:5432/chainlink1?sslmode=disable
+    ports:
+      - 6711:6688
+      - 6061:6060
+      - 6690:6690
+    volumes:
+      - ./clroot/${CHAINLINK_CONTAINER_NAME}1:${ROOT}
+  chainlink_node2:
+    extends:
+      file: services.yaml
+      service: chainlink_node
+    container_name: ${CHAINLINK_CONTAINER_NAME}2
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@chainlink_db:5432/chainlink2?sslmode=disable
+    ports:
+      - 6722:6688
+      - 6062:6060
+    volumes:
+      - ./clroot/${CHAINLINK_CONTAINER_NAME}2:${ROOT}
+  chainlink_node3:
+    extends:
+      file: services.yaml
+      service: chainlink_node
+    container_name: ${CHAINLINK_CONTAINER_NAME}3
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@chainlink_db:5432/chainlink3?sslmode=disable
+    ports:
+      - 6733:6688
+      - 6063:6060
+    volumes:
+      - ./clroot/${CHAINLINK_CONTAINER_NAME}3:${ROOT}
+  chainlink_node4:
+    extends:
+      file: services.yaml
+      service: chainlink_node
+    container_name: ${CHAINLINK_CONTAINER_NAME}4
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@chainlink_db:5432/chainlink4?sslmode=disable
+    ports:
+      - 6744:6688
+      - 6064:6060
+    volumes:
+      - ./clroot/${CHAINLINK_CONTAINER_NAME}4:${ROOT}
+  chainlink_node5:
+    extends:
+      file: services.yaml
+      service: chainlink_node
+    container_name: ${CHAINLINK_CONTAINER_NAME}5
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@chainlink_db:5432/chainlink5?sslmode=disable
+    ports:
+      - 6755:6688
+      - 6065:6060
+    volumes:
+      - ./clroot/${CHAINLINK_CONTAINER_NAME}5:${ROOT}

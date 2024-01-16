@@ -61,7 +61,7 @@ define get_cookie
 endef
 
 define format_eip55_address
-	res=$$(forge script ${FCT_PLUGIN_PATH}/script/Helper.s.sol --sig "formatAddress(address)" $1) && \
+	res=$$(forge script ${FCT_PLUGIN_PATH}/script/sandbox/utils/Helper.s.sol --sig "formatAddress(address)" $1) && \
 	$2=$$(echo "$$res" | tail -c 43)
 endef
 
@@ -119,8 +119,8 @@ fct-prepare-ocr-config:
 
 fct-check-docker-network:
 	$(call check_defined, COMPOSE_PROJECT_NAME) \
-	bash ${FCT_PLUGIN_PATH}/utils/check-docker-network.sh "${COMPOSE_PROJECT_NAME}_default" $(CONTAINERS_COUNT);
+	bash ${FCT_PLUGIN_PATH}/src/sandbox/utils/check-docker-network.sh "${COMPOSE_PROJECT_NAME}_default" $(CONTAINERS_COUNT);
 
 fct-check-rpc-url:
 	$(call check_defined, RPC_URL) \
-	bash ${FCT_PLUGIN_PATH}/utils/check-rpc-endpoint.sh ${RPC_URL};
+	bash ${FCT_PLUGIN_PATH}/src/sandbox/utils/check-rpc-endpoint.sh ${RPC_URL};

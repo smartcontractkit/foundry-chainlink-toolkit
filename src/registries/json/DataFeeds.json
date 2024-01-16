@@ -1,0 +1,6086 @@
+[
+  {
+    "proxyAddress": "0x5f4ec3df9cbd43714fe2740f5e3616155c5b8419",
+    "contractAddress": "0xE62B71cf983019BFf55bC83B48601ce8419650CC",
+    "multiply": "100000000",
+    "name": "ETH / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "eth-usd"
+  },
+  {
+    "proxyAddress": "0xf4030086522a5beea4988f8ca5b36dbc97bee88c",
+    "contractAddress": "0xdBe1941BFbe4410D6865b9b7078e0b49af144D2d",
+    "multiply": "100000000",
+    "name": "BTC / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "btc-usd"
+  },
+  {
+    "proxyAddress": "0xf9680d99d6c9589e2a93a78a04a279e509205945",
+    "contractAddress": "0x4dD6655Ad5ed7C06c882f496E3f42acE5766cb89",
+    "multiply": "100000000",
+    "name": "ETH / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "eth-usd"
+  },
+  {
+    "proxyAddress": "0xab594600376ec9fd91f8e885dadf0ce036862de0",
+    "contractAddress": "0x1278C74c3B2f8c3BcA0089b4E128fAf023615ECf",
+    "multiply": "100000000",
+    "name": "MATIC / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "matic-usd"
+  },
+  {
+    "proxyAddress": "0x0a77230d17318075983913bc2145db16c7366156",
+    "contractAddress": "0x9450A29eF091B625e976cE66f2A5818e20791999",
+    "multiply": "100000000",
+    "name": "AVAX / USD",
+    "chainId": "43114",
+    "categoryId": "crypto-usd",
+    "path": "avax-usd"
+  },
+  {
+    "proxyAddress": "0x0567f2323251f0aab15c8dfb1967e4e8a7d42aee",
+    "contractAddress": "0x137924D7C36816E0DcAF016eB617Cc2C92C05782",
+    "multiply": "100000000",
+    "name": "BNB / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "bnb-usd"
+  },
+  {
+    "proxyAddress": "0x2c1d072e956affc0d435cb7ac38ef18d24d9127c",
+    "contractAddress": "0x20807Cf61AD17c31837776fA39847A2Fa1839E81",
+    "multiply": "100000000",
+    "name": "LINK / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "link-usd"
+  },
+  {
+    "proxyAddress": "0x3e7d1eab13ad0104d2750b8863b489d65364e32d",
+    "contractAddress": "0xa964273552C1dBa201f5f000215F5BD5576e8f93",
+    "multiply": "100000000",
+    "name": "USDT / USD",
+    "chainId": "1",
+    "categoryId": "stablecoins",
+    "path": "usdt-usd"
+  },
+  {
+    "proxyAddress": "0xaed0c38402a5d19df6e4c03f4e2dced6e29c1ee9",
+    "contractAddress": "0x478238a1c8B862498c74D0647329Aef9ea6819Ed",
+    "multiply": "100000000",
+    "name": "DAI / USD",
+    "chainId": "1",
+    "categoryId": "stablecoins",
+    "path": "dai-usd"
+  },
+  {
+    "proxyAddress": "0xc907e116054ad103354f2d350fd2514433d57f6f",
+    "contractAddress": "0x9b489F7Fffa89EA450E3121603e79d9093a9396E",
+    "multiply": "100000000",
+    "name": "BTC / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "btc-usd"
+  },
+  {
+    "proxyAddress": "0x8fffffd4afb6115b954bd326cbe7b4ba576818f6",
+    "contractAddress": "0x789190466E21a8b78b8027866CBBDc151542A26C",
+    "multiply": "100000000",
+    "name": "USDC / USD",
+    "chainId": "1",
+    "categoryId": "stablecoins",
+    "path": "usdc-usd"
+  },
+  {
+    "proxyAddress": "0x773616e4d11a78f511299002da57a0a94577f1f4",
+    "contractAddress": "0x158228e08C52F3e2211Ccbc8ec275FA93f6033FC",
+    "multiply": "1000000000000000000",
+    "name": "DAI / ETH",
+    "chainId": "1",
+    "categoryId": "stablecoins",
+    "path": "dai-eth"
+  },
+  {
+    "proxyAddress": "0x264990fbd0a4796a3e3d8e37c4d5f87a3aca5ebf",
+    "contractAddress": "0x178bA789e24A1d51E9Ea3Cb1Db3B52917963D71D",
+    "multiply": "100000000",
+    "name": "BTC / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "btc-usd"
+  },
+  {
+    "proxyAddress": "0x976b3d034e162d8bd72d6b9c989d545b839003b0",
+    "contractAddress": "0xEfaa69f461E0aaf0be1798b01371Daf14AC55eA8",
+    "multiply": "100000000",
+    "name": "ETH / USD",
+    "chainId": "43114",
+    "categoryId": "crypto-usd",
+    "path": "eth-usd"
+  },
+  {
+    "proxyAddress": "0x9ef1b8c0e4f7dc8bf5719ea496883dc6401d5b2e",
+    "contractAddress": "0xfC3069296a691250fFDf21fe51340fdD415a76ed",
+    "multiply": "100000000",
+    "name": "ETH / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "eth-usd"
+  },
+  {
+    "proxyAddress": "0x986b5e1e1755e3c2440e960477f25201b0a8bbd4",
+    "contractAddress": "0xe5BbBdb2Bb953371841318E1Edfbf727447CeF2E",
+    "multiply": "1000000000000000000",
+    "name": "USDC / ETH",
+    "chainId": "1",
+    "categoryId": "stablecoins",
+    "path": "usdc-eth"
+  },
+  {
+    "proxyAddress": "0xee9f2375b4bdf6387aa8265dd4fb8f16512a1d46",
+    "contractAddress": "0x7De0d6fce0C128395C488cb4Df667cdbfb35d7DE",
+    "multiply": "1000000000000000000",
+    "name": "USDT / ETH",
+    "chainId": "1",
+    "categoryId": "stablecoins",
+    "path": "usdt-eth"
+  },
+  {
+    "proxyAddress": "0xdc530d9457755926550b59e8eccdae7624181557",
+    "contractAddress": "0xbba12740DE905707251525477bAD74985DeC46D2",
+    "multiply": "1000000000000000000",
+    "name": "LINK / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "link-eth"
+  },
+  {
+    "proxyAddress": "0x14e613ac84a31f709eadbdf89c6cc390fdc9540a",
+    "contractAddress": "0xC45eBD0F901bA6B2B8C7e70b717778f055eF5E6D",
+    "multiply": "100000000",
+    "name": "BNB / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "bnb-usd"
+  },
+  {
+    "proxyAddress": "0xfe4a8cc5b5b2366c1b58bea3858e81843581b2f7",
+    "contractAddress": "0xf9c53A834F60cBbE40E27702276fBc0819B3aFAD",
+    "multiply": "100000000",
+    "name": "USDC / USD",
+    "chainId": "137",
+    "categoryId": "stablecoins",
+    "path": "usdc-usd"
+  },
+  {
+    "proxyAddress": "0x6df09e975c830ecae5bd4ed9d90f3a95a4f88012",
+    "contractAddress": "0xdF0da6B3d19E4427852F2112D0a963d8A158e9c7",
+    "multiply": "1000000000000000000",
+    "name": "AAVE / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "aave-eth"
+  },
+  {
+    "proxyAddress": "0x547a514d5e3769680ce22b2361c10ea13619e8a9",
+    "contractAddress": "0x8116B273cD75d79C382aFacc706659DEd5E0a59d",
+    "multiply": "100000000",
+    "name": "AAVE / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "aave-usd"
+  },
+  {
+    "proxyAddress": "0x87ea38c9f24264ec1fff41b04ec94a97caf99941",
+    "contractAddress": "0x76303936B9DF69474A57352765faCEca2bf9C7Ef",
+    "multiply": "1000000000000000000",
+    "name": "BUSD / BNB",
+    "chainId": "56",
+    "categoryId": "crypto-bnb",
+    "path": "busd-bnb"
+  },
+  {
+    "proxyAddress": "0xf4766552d15ae4d256ad41b6cf2933482b0680dc",
+    "contractAddress": "0xd62d2aFe0196Ef7A80836F74f420B7E8976f46aE",
+    "multiply": "100000000",
+    "name": "FTM / USD",
+    "chainId": "250",
+    "categoryId": "crypto-usd",
+    "path": "ftm-usd"
+  },
+  {
+    "proxyAddress": "0xd9ffdb71ebe7496cc440152d43986aae0ab76665",
+    "contractAddress": "0xdbbf66711C9a0dff777797d82DDa7009B6c846dd",
+    "multiply": "100000000",
+    "name": "LINK / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "link-usd"
+  },
+  {
+    "proxyAddress": "0x553303d460ee0afb37edff9be42922d8ff63220e",
+    "contractAddress": "0x373BCe97bec13BfA8A5f07Cc578EC2D77f80c589",
+    "multiply": "100000000",
+    "name": "UNI / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "uni-usd"
+  },
+  {
+    "proxyAddress": "0xb97ad0e74fa7d920791e90258a6e2085088b4320",
+    "contractAddress": "0x2dc202b56A03667cC240B290c2BE2b8453E89eA1",
+    "multiply": "100000000",
+    "name": "USDT / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "usdt-usd"
+  },
+  {
+    "proxyAddress": "0x72484b12719e23115761d5da1646945632979bb6",
+    "contractAddress": "0xcAc8362649DaE2cc0a91e1d200A93E4CEf620be5",
+    "multiply": "100000000",
+    "name": "AAVE / USD",
+    "chainId": "137",
+    "categoryId": "crypto-eth",
+    "path": "aave-usd"
+  },
+  {
+    "proxyAddress": "0x2779d32d5166baaa2b2b658333ba7e6ec0c65743",
+    "contractAddress": "0x154baB1FC1D87fF641EeD0E9Bc0f8a50D880D2B6",
+    "multiply": "100000000",
+    "name": "BTC / USD",
+    "chainId": "43114",
+    "categoryId": "crypto-usd",
+    "path": "btc-usd"
+  },
+  {
+    "proxyAddress": "0x7bac85a8a13a4bcd8abb3eb7d6b4d632c5a57676",
+    "contractAddress": "0x4B35F7854e1fd8291f4EC714aC3EBB1DeA450585",
+    "multiply": "100000000",
+    "name": "MATIC / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "matic-usd"
+  },
+  {
+    "proxyAddress": "0x8e0b7e6062272b5ef4524250bfff8e5bd3497757",
+    "contractAddress": "0x45bb69B89D60878d1e42522342fFCa9F2077dD84",
+    "multiply": "1000000000000000000",
+    "name": "SUSD / ETH",
+    "chainId": "1",
+    "categoryId": "stablecoins",
+    "path": "susd-eth"
+  },
+  {
+    "proxyAddress": "0x3886ba987236181d98f2401c507fb8bea7871df2",
+    "contractAddress": "0x9534df8F2C9289bbDB0c736E9FeF402B20f1828E",
+    "multiply": "1000000000000000000",
+    "name": "TUSD / ETH",
+    "chainId": "1",
+    "categoryId": "stablecoins",
+    "path": "tusd-eth"
+  },
+  {
+    "proxyAddress": "0xdeb288f737066589598e9214e782fa5a8ed689e8",
+    "contractAddress": "0x81076d6Ff2620Ea9Dd7bA9c1015f0d09A3A732E6",
+    "multiply": "1000000000000000000",
+    "name": "BTC / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "btc-eth"
+  },
+  {
+    "proxyAddress": "0xb6064ed41d4f67e353768aa239ca86f4f73665a1",
+    "contractAddress": "0x7935a51aDDaB8550D346FEEf34e02F67C9330109",
+    "multiply": "100000000",
+    "name": "CAKE / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "cake-usd"
+  },
+  {
+    "proxyAddress": "0x4746dec9e833a82ec7c2c1356372ccf2cfcd2f3d",
+    "contractAddress": "0x62439095489Eb5dE4572de632248682c09a05Ad4",
+    "multiply": "100000000",
+    "name": "DAI / USD",
+    "chainId": "137",
+    "categoryId": "stablecoins",
+    "path": "dai-usd"
+  },
+  {
+    "proxyAddress": "0x1c07afb8e2b827c5a4739c6d59ae3a5035f28734",
+    "contractAddress": "0xbE4274DfB7801948e2cc2a913744e9498dDC8d20",
+    "multiply": "100000000",
+    "name": "DOT / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "dot-usd"
+  },
+  {
+    "proxyAddress": "0x11ddd3d147e5b83d01cee7070027092397d63658",
+    "contractAddress": "0x50f8339E5668F85Bcb4D8DF987C12b7Df4c99084",
+    "multiply": "100000000",
+    "name": "ETH / USD",
+    "chainId": "250",
+    "categoryId": "crypto-usd",
+    "path": "eth-usd"
+  },
+  {
+    "proxyAddress": "0x24551a8fb2a7211a25a17b1481f043a8a8adc7f2",
+    "contractAddress": "0xFFC14A3B26708545BcCf8e915e2e8348123f5460",
+    "multiply": "1000000000000000000",
+    "name": "MKR / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "mkr-eth"
+  },
+  {
+    "proxyAddress": "0x79291a9d692df95334b1a0b3b4ae6bc606782f8c",
+    "contractAddress": "0xBAFe3CB0E563E914806A99D547bdBF2Cfcf5fDF6",
+    "multiply": "1000000000000000000",
+    "name": "SNX / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "snx-eth"
+  },
+  {
+    "proxyAddress": "0x0a6513e40db6eb1b165753ad52e80663aea50545",
+    "contractAddress": "0x3011E9D73E9b01A593dA032F41626E6bbE9e408D",
+    "multiply": "100000000",
+    "name": "USDT / USD",
+    "chainId": "137",
+    "categoryId": "stablecoins",
+    "path": "usdt-usd"
+  },
+  {
+    "proxyAddress": "0xa027702dbb89fbd58938e4324ac03b58d812b0e1",
+    "contractAddress": "0xcac109af977AC94929A5dD37ed8Af763BAD78151",
+    "multiply": "100000000",
+    "name": "YFI / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "yfi-usd"
+  },
+  {
+    "proxyAddress": "0x2da4983a622a8498bb1a21fae9d8f6c664939962",
+    "contractAddress": "0x6B39588D2FC7990CC81544DFd4674C909E9EFeea",
+    "multiply": "1000000000000000000",
+    "name": "ZRX / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "zrx-eth"
+  },
+  {
+    "proxyAddress": "0x0d16d4528239e9ee52fa531af613acdb23d88c94",
+    "contractAddress": "0x821f24DAcA9Ad4910c1EdE316D2713fC923Da698",
+    "multiply": "1000000000000000000",
+    "name": "BAT / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "bat-eth"
+  },
+  {
+    "proxyAddress": "0x8e94c22142f4a64b99022ccdd994f4e9ec86e4b4",
+    "contractAddress": "0x472105bB154bD92580a9669AB2483864c3dE9974",
+    "multiply": "100000000",
+    "name": "BTC / USD",
+    "chainId": "250",
+    "categoryId": "crypto-usd",
+    "path": "btc-usd"
+  },
+  {
+    "proxyAddress": "0x6ce185860a4963106506c203335a2910413708e9",
+    "contractAddress": "0x942d00008D658dbB40745BBEc89A93c253f9B882",
+    "multiply": "100000000",
+    "name": "BTC / USD",
+    "chainId": "42161",
+    "categoryId": "crypto-usd",
+    "path": "btc-usd"
+  },
+  {
+    "proxyAddress": "0x614715d2af89e6ec99a233818275142ce88d1cfd",
+    "contractAddress": "0x5952c7F1Ab270D22d677762Be3dAd0BA9e5cd23d",
+    "multiply": "1000000000000000000",
+    "name": "BUSD / ETH",
+    "chainId": "1",
+    "categoryId": "stablecoins",
+    "path": "busd-eth"
+  },
+  {
+    "proxyAddress": "0xdbd020caef83efd542f4de03e3cf0c28a4428bd5",
+    "contractAddress": "0x64d2E1F01A19762dDEE27b1062CC092B66Ff9652",
+    "multiply": "100000000",
+    "name": "COMP / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "comp-usd"
+  },
+  {
+    "proxyAddress": "0x656c0544ef4c98a6a98491833a89204abb045d6b",
+    "contractAddress": "0xB3B1882C0A7eB5097F12547bCD20Dc6FAE7aC8a6",
+    "multiply": "1000000000000000000",
+    "name": "KNC / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "knc-eth"
+  },
+  {
+    "proxyAddress": "0xca236e327f629f9fc2c30a4e95775ebf0b89fac8",
+    "contractAddress": "0x0B67AD077Fa839F6737A1630c89eE1A1572989c6",
+    "multiply": "100000000",
+    "name": "LINK / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "link-usd"
+  },
+  {
+    "proxyAddress": "0x82a44d92d6c329826dc557c5e1be6ebec5d5feb9",
+    "contractAddress": "0x46b77070f9256523c2F31c333b72C3E102f8A8A7",
+    "multiply": "1000000000000000000",
+    "name": "MANA / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "mana-eth"
+  },
+  {
+    "proxyAddress": "0x2553f4eeb82d5a26427b8d1106c51499cba5d99c",
+    "contractAddress": "0x9C5a8b11CeE8c207753C313a566761526F2c7934",
+    "multiply": "100000000",
+    "name": "USDC / USD",
+    "chainId": "250",
+    "categoryId": "stablecoins",
+    "path": "usdc-usd"
+  },
+  {
+    "proxyAddress": "0xf096872672f44d6eba71458d74fe67f9a77a23b9",
+    "contractAddress": "0xfBd998938f8f7210eEC3D1e12E80A10972F02aEd",
+    "multiply": "100000000",
+    "name": "USDC / USD",
+    "chainId": "43114",
+    "categoryId": "stablecoins",
+    "path": "usdc-usd"
+  },
+  {
+    "proxyAddress": "0xebe676ee90fe1112671f19b6b7459bc678b67e8a",
+    "contractAddress": "0xb8AEB9160385fa2D1B63B5E88351238593ba0127",
+    "multiply": "100000000",
+    "name": "USDT / USD",
+    "chainId": "43114",
+    "categoryId": "stablecoins",
+    "path": "usdt-usd"
+  },
+  {
+    "proxyAddress": "0xcbb98864ef56e9042e7d2efef76141f15731b82f",
+    "contractAddress": "0x7A6BB3a3C0C99bA43564017D7523a74BA0f7cB5d",
+    "multiply": "100000000",
+    "name": "BUSD / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "busd-usd"
+  },
+  {
+    "proxyAddress": "0x91d5defaffe2854c7d02f50c80fa1fdc8a721e52",
+    "contractAddress": "0x15e682Ba1F3e68D507Eb8D21F2D2a90bA82559Ae",
+    "multiply": "100000000",
+    "name": "DAI / USD",
+    "chainId": "250",
+    "categoryId": "stablecoins",
+    "path": "dai-usd"
+  },
+  {
+    "proxyAddress": "0x51d7180eda2260cc4f6e4eebb82fef5c3c2b8300",
+    "contractAddress": "0xCC4633a1a85d553623bAC7945Bd87CFad6E6a8c8",
+    "multiply": "100000000",
+    "name": "DAI / USD",
+    "chainId": "43114",
+    "categoryId": "stablecoins",
+    "path": "dai-usd"
+  },
+  {
+    "proxyAddress": "0x2465cefd3b488be410b941b1d4b2767088e2a028",
+    "contractAddress": "0x33CCa8E7420114dB103d61bd39A72ff65E46352D",
+    "multiply": "100000000",
+    "name": "DOGE / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "doge-usd"
+  },
+  {
+    "proxyAddress": "0x639fe6ab55c921f74e7fac1ee960c0b6293ba612",
+    "contractAddress": "0x3607e46698d218B3a5Cae44bF381475C0a5e2ca7",
+    "multiply": "100000000",
+    "name": "ETH / USD",
+    "chainId": "42161",
+    "categoryId": "crypto-usd",
+    "path": "eth-usd"
+  },
+  {
+    "proxyAddress": "0xb49f677943bc038e9857d61e7d053caa2c1734c1",
+    "contractAddress": "0x02F878A94a1AE1B15705aCD65b5519A46fe3517e",
+    "multiply": "100000000",
+    "name": "EUR / USD",
+    "chainId": "1",
+    "categoryId": "fiat",
+    "path": "eur-usd"
+  },
+  {
+    "proxyAddress": "0x160ac928a16c93ed4895c2de6f81ecce9a7eb7b4",
+    "contractAddress": "0x9405e02996Aa6f2176E2748EEfbCedd405870cee",
+    "multiply": "1000000000000000000",
+    "name": "LRC / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "lrc-eth"
+  },
+  {
+    "proxyAddress": "0xec1d1b3b0443256cc3860e24a46f108e699484aa",
+    "contractAddress": "0x71Febc2F741F113af322e1B576eF005A4424574F",
+    "multiply": "100000000",
+    "name": "MKR / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "mkr-usd"
+  },
+  {
+    "proxyAddress": "0xdc3ea94cd0ac27d9a86c180091e7f78c683d3699",
+    "contractAddress": "0x06ce8Be8729B6bA18dD3416E3C223a5d4DB5e755",
+    "multiply": "100000000",
+    "name": "SNX / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "snx-usd"
+  },
+  {
+    "proxyAddress": "0xcc70f09a6cc17553b2e31954cd36e4a2d89501f7",
+    "contractAddress": "0x3CF055335b521863A62fB4374972560e3e55a193",
+    "multiply": "100000000",
+    "name": "SUSHI / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "sushi-usd"
+  },
+  {
+    "proxyAddress": "0xdf0fb4e4f928d2dcb76f438575fdd8682386e13c",
+    "contractAddress": "0x166816Cacb15f80badC5cd0cC24D64C8d1D1Cf61",
+    "multiply": "100000000",
+    "name": "UNI / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "uni-usd"
+  },
+  {
+    "proxyAddress": "0xf64b636c5dfe1d3555a847341cdc449f612307d0",
+    "contractAddress": "0x9Fe3826d53e76E877Ca6124ED2997A33b25896Ba",
+    "multiply": "100000000",
+    "name": "USDT / USD",
+    "chainId": "250",
+    "categoryId": "stablecoins",
+    "path": "usdt-usd"
+  },
+  {
+    "proxyAddress": "0xc929ad75b72593967de83e7f7cda0493458261d9",
+    "contractAddress": "0xd2bdD1E01fd2F8d7d42b209c111c7b32158b5a42",
+    "multiply": "100000000",
+    "name": "1INCH / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "1inch-usd"
+  },
+  {
+    "proxyAddress": "0xae48c91df1fe419994ffda27da09d5ac69c30f55",
+    "contractAddress": "0xbC3C868763b7C15d0ce527af455041919E9c07B1",
+    "multiply": "100000000",
+    "name": "ADA / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "ada-usd"
+  },
+  {
+    "proxyAddress": "0x77f9710e7d0a19669a13c055f62cd80d313df022",
+    "contractAddress": "0x7F7B323291C052De18926396176d384C4A8e19E2",
+    "multiply": "100000000",
+    "name": "AUD / USD",
+    "chainId": "1",
+    "categoryId": "fiat",
+    "path": "aud-usd"
+  },
+  {
+    "proxyAddress": "0x82a6c4af830caa6c97bb504425f6a66165c2c26e",
+    "contractAddress": "0xCd16dF514a501596a8E24fE1dC9c9be9c9091285",
+    "multiply": "100000000",
+    "name": "BNB / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "bnb-usd"
+  },
+  {
+    "proxyAddress": "0xd702dd976fb76fffc2d3963d037dfdae5b04e593",
+    "contractAddress": "0x0C1272d2aC652D10d03bb4dEB0D31F15ea3EAb2b",
+    "multiply": "100000000",
+    "name": "BTC / USD",
+    "chainId": "10",
+    "categoryId": "crypto-usd",
+    "path": "btc-usd"
+  },
+  {
+    "proxyAddress": "0xa34317db73e77d453b1b8d04550c44d10e981c8e",
+    "contractAddress": "0x549aE844Ab6B4a6Eb466F98dFFbc1FC9224e316d",
+    "multiply": "100000000",
+    "name": "CAD / USD",
+    "chainId": "1",
+    "categoryId": "fiat",
+    "path": "cad-usd"
+  },
+  {
+    "proxyAddress": "0x1b39ee86ec5979ba5c322b826b3ecb8c79991699",
+    "contractAddress": "0x9D6acD34D481512586844fD65328BD358d306752",
+    "multiply": "1000000000000000000",
+    "name": "COMP / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "comp-eth"
+  },
+  {
+    "proxyAddress": "0xcd627aa160a6fa45eb793d19ef54f5062f20f33f",
+    "contractAddress": "0xb4c4a493AB6356497713A78FFA6c60FB53517c63",
+    "multiply": "100000000",
+    "name": "CRV / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "crv-usd"
+  },
+  {
+    "proxyAddress": "0xc333eb0086309a16aa7c8308dfd32c8bba0a2592",
+    "contractAddress": "0xe978DaA50D3A8574F139c1e3Fe5D511dDb323BC5",
+    "multiply": "100000000",
+    "name": "DOT / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "dot-usd"
+  },
+  {
+    "proxyAddress": "0x49ccd9ca821efeab2b98c60dc60f518e765ede9a",
+    "contractAddress": "0xA2e5d3254F7d6E8C051Afb7F2aeea0dABf21F750",
+    "multiply": "100000000",
+    "name": "LINK / USD",
+    "chainId": "43114",
+    "categoryId": "crypto-usd",
+    "path": "link-usd"
+  },
+  {
+    "proxyAddress": "0x4ffc43a60e009b551865a93d232e33fce9f01507",
+    "contractAddress": "0xDf30249744A419891f822ea4a9E80cd76d7Fbd23",
+    "multiply": "100000000",
+    "name": "SOL / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "sol-usd"
+  },
+  {
+    "proxyAddress": "0xe572cef69f43c2e488b33924af04bdace19079cf",
+    "contractAddress": "0xd01BBB3Afed2cb5ca92Ca3834d441dc737F0Da70",
+    "multiply": "1000000000000000000",
+    "name": "SUSHI / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "sushi-eth"
+  },
+  {
+    "proxyAddress": "0x50834f3163758fcc1df9973b6e91f0f0f0434ad3",
+    "contractAddress": "0x2946220288DbBF77dF0030fCecc2a8348CbBE32C",
+    "multiply": "100000000",
+    "name": "USDC / USD",
+    "chainId": "42161",
+    "categoryId": "stablecoins",
+    "path": "usdc-usd"
+  },
+  {
+    "proxyAddress": "0x3f3f5df88dc9f13eac63df89ec16ef6e7e25dde7",
+    "contractAddress": "0xCb35fE6E53e71b30301Ec4a3948Da4Ad3c65ACe4",
+    "multiply": "100000000",
+    "name": "USDT / USD",
+    "chainId": "42161",
+    "categoryId": "stablecoins",
+    "path": "usdt-usd"
+  },
+  {
+    "proxyAddress": "0x214ed9da11d2fbe465a6fc601a91e62ebec1a0d6",
+    "contractAddress": "0xea5f70faa03f5C30B96029635C8d431d1A3cD1b8",
+    "multiply": "100000000",
+    "name": "XAU / USD",
+    "chainId": "1",
+    "categoryId": "commodities",
+    "path": "xau-usd"
+  },
+  {
+    "proxyAddress": "0xcfe54b5cd566ab89272946f602d76ea879cab4a8",
+    "contractAddress": "0xdA31bc2B08F22AE24aeD5F6EB1E71E96867BA196",
+    "multiply": "100000000",
+    "name": "stETH / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "steth-usd"
+  },
+  {
+    "proxyAddress": "0x3ca13391e9fb38a75330fb28f8cc2eb3d9ceceed",
+    "contractAddress": "0xcb7f6eF54bDc05B704a0aCf604A6A16C53d359e1",
+    "multiply": "100000000",
+    "name": "AAVE / USD",
+    "chainId": "43114",
+    "categoryId": "crypto-usd",
+    "path": "aave-usd"
+  },
+  {
+    "proxyAddress": "0x882554df528115a743c4537828da8d5b58e52544",
+    "contractAddress": "0xDe89D2aCf279D1478FF0557318B44A614846f737",
+    "multiply": "100000000",
+    "name": "ADA / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "ada-usd"
+  },
+  {
+    "proxyAddress": "0x89c7926c7c15fd5bfdb1edcff7e7fc8283b578f6",
+    "contractAddress": "0x71c8D42d35eD9276543FCa95d80Ae0858553Bf44",
+    "multiply": "1000000000000000000",
+    "name": "ALPHA / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "alpha-eth"
+  },
+  {
+    "proxyAddress": "0xc1438aa3823a6ba0c159cfa8d98df5a994ba120b",
+    "contractAddress": "0x2f2c0C1727Ce8C429A237DDFBBb87357893fBD5D",
+    "multiply": "1000000000000000000",
+    "name": "BAL / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "bal-eth"
+  },
+  {
+    "proxyAddress": "0xdd22a54e05410d8d1007c38b5c7a3ed74b855281",
+    "contractAddress": "0x5667eE03110045510897aDa33DC561cEfCBcC904",
+    "multiply": "1000000000000000000",
+    "name": "BOND / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "bond-eth"
+  },
+  {
+    "proxyAddress": "0x449d117117838ffa61263b61da6301aa2a88b13a",
+    "contractAddress": "0x7C8719f3683585A242a67c73F6f3C98362004Da4",
+    "multiply": "100000000",
+    "name": "CHF / USD",
+    "chainId": "1",
+    "categoryId": "fiat",
+    "path": "chf-usd"
+  },
+  {
+    "proxyAddress": "0x0db8945f9aef5651fa5bd52314c5aae78dfde540",
+    "contractAddress": "0x94069ff23E3a962646638b2Bb44d4d7F664DCCbD",
+    "multiply": "100000000",
+    "name": "COMP / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "comp-usd"
+  },
+  {
+    "proxyAddress": "0xc5c8e77b397e531b8ec06bfb0048328b30e9ecfb",
+    "contractAddress": "0xFc06bB03a9e1D8033f87eA6A682cbd65477A43b9",
+    "multiply": "100000000",
+    "name": "DAI / USD",
+    "chainId": "42161",
+    "categoryId": "stablecoins",
+    "path": "dai-usd"
+  },
+  {
+    "proxyAddress": "0x6063e1037b1afda2be5a3340757261e4d6a402ac",
+    "contractAddress": "0x112467A6A3433D70B3295723405234cE552E4337",
+    "multiply": "100000000",
+    "name": "DAI / USD",
+    "chainId": "1284",
+    "categoryId": "stablecoins",
+    "path": "dai-usd"
+  },
+  {
+    "proxyAddress": "0x13e3ee699d1909e989722e753853ae30b17e08c5",
+    "contractAddress": "0x02f5E9e9dcc66ba6392f6904D5Fcf8625d9B19C9",
+    "multiply": "100000000",
+    "name": "ETH / USD",
+    "chainId": "10",
+    "categoryId": "crypto-usd",
+    "path": "eth-usd"
+  },
+  {
+    "proxyAddress": "0x73366fe0aa0ded304479862808e02506fe556a98",
+    "contractAddress": "0x310990E8091b5cF083fA55F500F140CFBb959016",
+    "multiply": "100000000",
+    "name": "EUR / USD",
+    "chainId": "137",
+    "categoryId": "fiat",
+    "path": "eur-usd"
+  },
+  {
+    "proxyAddress": "0x6ebc52c8c1089be9eb3945c4350b68b8e4c2233f",
+    "contractAddress": "0x9d78092775DFE715dFe1b0d71aC1a4d6e3652559",
+    "multiply": "100000000",
+    "name": "FXS / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "fxs-usd"
+  },
+  {
+    "proxyAddress": "0x169e633a2d1e6c10dd91238ba11c4a708dfef37c",
+    "contractAddress": "0x785433d8b06D77D68dF6be63944742130A4530d1",
+    "multiply": "1",
+    "name": "Fast Gas / Gwei",
+    "chainId": "1",
+    "categoryId": "gas",
+    "path": "fast-gas-gwei"
+  },
+  {
+    "proxyAddress": "0x5c0ab2d9b5a7ed9f470386e82bb36a3613cdd4b5",
+    "contractAddress": "0x568B8FD03992F56bF240958D22f5a6fcf7Bd850b",
+    "multiply": "100000000",
+    "name": "GBP / USD",
+    "chainId": "1",
+    "categoryId": "fiat",
+    "path": "gbp-usd"
+  },
+  {
+    "proxyAddress": "0xbce206cae7f0ec07b545edde332a47c2f75bbeb3",
+    "contractAddress": "0x01A1F73b1f4726EB6EB189FFA5CBB91AF8E14025",
+    "multiply": "100000000",
+    "name": "JPY / USD",
+    "chainId": "1",
+    "categoryId": "fiat",
+    "path": "jpy-usd"
+  },
+  {
+    "proxyAddress": "0xf8ff43e991a81e6ec886a3d281a2c6cc19ae70fc",
+    "contractAddress": "0xbC60258F775683eA28048030806Ad3A80c4A33Ae",
+    "multiply": "100000000",
+    "name": "KNC / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "knc-usd"
+  },
+  {
+    "proxyAddress": "0xb38722f6a608646a538e882ee9972d15c86fc597",
+    "contractAddress": "0x678f2883BB67104273229463ddA15Ee841584b36",
+    "multiply": "1000000000000000000",
+    "name": "LINK / BNB",
+    "chainId": "56",
+    "categoryId": "crypto-bnb",
+    "path": "link-bnb"
+  },
+  {
+    "proxyAddress": "0x74e72f37a8c415c8f1a98ed42e78ff997435791d",
+    "contractAddress": "0xB92B265908775B59517eC1fC6C6635f7E1D60f1D",
+    "multiply": "100000000",
+    "name": "LTC / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "ltc-usd"
+  },
+  {
+    "proxyAddress": "0xa1cbf3fe43bc3501e3fc4b573e822c70e76a7512",
+    "contractAddress": "0x880F911Aea57967Ec22cD95D36E74327dAaB3b49",
+    "multiply": "100000000",
+    "name": "MANA / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "mana-usd"
+  },
+  {
+    "proxyAddress": "0x36e039e6391a5e7a7267650979fdf613f659be5d",
+    "contractAddress": "0x4bc3BeBb7eB60155f8b38771D9926d9A23dad5B5",
+    "multiply": "100000000",
+    "name": "QI / USD",
+    "chainId": "43114",
+    "categoryId": "crypto-usd",
+    "path": "qi-usd"
+  },
+  {
+    "proxyAddress": "0x3d49406edd4d52fb7ffd25485f32e073b529c924",
+    "contractAddress": "0x93aCA6B54475443CC95B58061cf6acfF7dd33db7",
+    "multiply": "100000000",
+    "name": "SAND / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "sand-usd"
+  },
+  {
+    "proxyAddress": "0xbf90a5d9b6ee9019028dbfc2a9e50056d5252894",
+    "contractAddress": "0x772251e809d72bD9aB82a51d5C407B8C22E6dECb",
+    "multiply": "100000000",
+    "name": "SNX / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "snx-usd"
+  },
+  {
+    "proxyAddress": "0xd6aa3d25116d8da79ea0246c4826eb951872e02e",
+    "contractAddress": "0xc1D1d0Da0fCf78157EA25D0E64e3BE679813a1F7",
+    "multiply": "1000000000000000000",
+    "name": "UNI / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "uni-eth"
+  },
+  {
+    "proxyAddress": "0x51597f405303c4377e36123cbc172b13269ea163",
+    "contractAddress": "0x7008fDEd94a8Ce68D01FEB633C4D81C2be7a1B20",
+    "multiply": "100000000",
+    "name": "USDC / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "usdc-usd"
+  },
+  {
+    "proxyAddress": "0x379589227b15f1a12195d3f2d90bbc9f31f95235",
+    "contractAddress": "0xdEb43523E2857b7ec29D078c77b73709D958c62F",
+    "multiply": "100000000",
+    "name": "XAG / USD",
+    "chainId": "1",
+    "categoryId": "commodities",
+    "path": "xag-usd"
+  },
+  {
+    "proxyAddress": "0xced2660c6dd1ffd856a5a82c67f3482d88c50b12",
+    "contractAddress": "0x4d839a486EC0B1C9b0D9e9D397993Ba5B150cB34",
+    "multiply": "100000000",
+    "name": "XRP / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "xrp-usd"
+  },
+  {
+    "proxyAddress": "0xa8357bf572460fc40f4b0acacbb2a6a61c89f475",
+    "contractAddress": "0x7457f14cE4773EBEb1352D2774Ec384a54c2F665",
+    "multiply": "100000000",
+    "name": "AAVE / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "aave-usd"
+  },
+  {
+    "proxyAddress": "0xff3eeb22b5e3de6e705b44749c2559d704923fd7",
+    "contractAddress": "0x0fC3657899693648bbA4dbd2d8b33b82E875105D",
+    "multiply": "100000000",
+    "name": "AVAX / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "avax-usd"
+  },
+  {
+    "proxyAddress": "0x58921ac140522867bf50b9e009599da0ca4a2379",
+    "contractAddress": "0x586524Ef790f7357c6cb8461b20d788Da14A636B",
+    "multiply": "1000000000000000000",
+    "name": "BADGER / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "badger-eth"
+  },
+  {
+    "proxyAddress": "0x43d80f616daf0b0b42a928eed32147dc59027d41",
+    "contractAddress": "0xF78feB6c096117Bfb9283aa1eAc304449E04d374",
+    "multiply": "100000000",
+    "name": "BCH / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "bch-usd"
+  },
+  {
+    "proxyAddress": "0x4f5cc6a2291c964dec4c7d6a50c0d89492d4d91b",
+    "contractAddress": "0xc7439cd23025a798913a027Fb46bc347021483Db",
+    "multiply": "100000000",
+    "name": "BIFI / USD",
+    "chainId": "250",
+    "categoryId": "crypto-usd",
+    "path": "bifi-usd"
+  },
+  {
+    "proxyAddress": "0x6de70f4791c4151e00ad02e969bd900dc961f92a",
+    "contractAddress": "0x5Cd752a9493630cFbb6F545c78D342D638E90Fe3",
+    "multiply": "100000000",
+    "name": "BNB / USD",
+    "chainId": "250",
+    "categoryId": "crypto-usd",
+    "path": "bnb-usd"
+  },
+  {
+    "proxyAddress": "0x1e6cf0d433de4fe882a437abc654f58e1e78548c",
+    "contractAddress": "0x82263275FBF3fa92c6eE81632725b6BFbE4B02Da",
+    "multiply": "100000000",
+    "name": "BNT / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "bnt-usd"
+  },
+  {
+    "proxyAddress": "0xc8c80c17f05930876ba7c1dd50d9186213496376",
+    "contractAddress": "0x755Dc32541B82eecE3F8aad681575f01985062C2",
+    "multiply": "100000000",
+    "name": "BOO / USD",
+    "chainId": "250",
+    "categoryId": "crypto-usd",
+    "path": "boo-usd"
+  },
+  {
+    "proxyAddress": "0xef8a4af35cd47424672e3c590abd37fbb7a7759a",
+    "contractAddress": "0xfe67209f6FE3BA6cE36d0941700085C194e958DF",
+    "multiply": "100000000",
+    "name": "CNY / USD",
+    "chainId": "1",
+    "categoryId": "fiat",
+    "path": "cny-usd"
+  },
+  {
+    "proxyAddress": "0x2a8758b7257102461bc958279054e372c2b1bde6",
+    "contractAddress": "0x3E2860bfCBc891E8AfD8c191A2A05C58eE7a818e",
+    "multiply": "100000000",
+    "name": "COMP / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "comp-usd"
+  },
+  {
+    "proxyAddress": "0x8a12be339b0cd1829b91adc01977caa5e9ac121e",
+    "contractAddress": "0x7f67Ca2ce5299a67acd83D52A064C5b8e41dDb80",
+    "multiply": "1000000000000000000",
+    "name": "CRV / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "crv-eth"
+  },
+  {
+    "proxyAddress": "0xa141d7e3b44594cc65142ae5f2c7844abea66d2b",
+    "contractAddress": "0xbfc6236cE03765739Db1393421C0d7675eeD8D7D",
+    "multiply": "100000000",
+    "name": "CRV / USD",
+    "chainId": "250",
+    "categoryId": "crypto-usd",
+    "path": "crv-usd"
+  },
+  {
+    "proxyAddress": "0x8dba75e83da73cc766a7e5a0ee71f656bab470d6",
+    "contractAddress": "0xbCe7579e241e5d676c2371Dc21891489dAcDA250",
+    "multiply": "100000000",
+    "name": "DAI / USD",
+    "chainId": "10",
+    "categoryId": "stablecoins",
+    "path": "dai-usd"
+  },
+  {
+    "proxyAddress": "0x3ab0a0d137d4f946fbb19eecc6e92e64660231c8",
+    "contractAddress": "0xd0A597FfC7075E1449eCE7fEaA9880488dDB34FD",
+    "multiply": "100000000",
+    "name": "DOGE / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "doge-usd"
+  },
+  {
+    "proxyAddress": "0xacb51f1a83922632ca02b25a8164c10748001bde",
+    "contractAddress": "0x02ACd64082A7EA28feb39d8dC2e44c1600F89976",
+    "multiply": "100000000",
+    "name": "DOT / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "dot-usd"
+  },
+  {
+    "proxyAddress": "0x24d9ab51950f3d62e9144fdc2f3135daa6ce8d1b",
+    "contractAddress": "0xdBd66e8D31F506e0cc8CB2f346De4C7FA3f655DE",
+    "multiply": "1000000000000000000",
+    "name": "ENJ / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "enj-eth"
+  },
+  {
+    "proxyAddress": "0xbac409d670d996ef852056f6d45eca41a8d57fbd",
+    "contractAddress": "0xc2bD6467d9567Cfaf2783d7DE5F337bf98Fe62C1",
+    "multiply": "100000000",
+    "name": "FRAX / USD",
+    "chainId": "250",
+    "categoryId": "stablecoins",
+    "path": "frax-usd"
+  },
+  {
+    "proxyAddress": "0xbba56ef1565354217a3353a466edb82e8f25b08e",
+    "contractAddress": "0x5eDC2538E11b67cf93ED145b04E5E457d9F9Cc0B",
+    "multiply": "100000000",
+    "name": "FRAX / USD",
+    "chainId": "43114",
+    "categoryId": "crypto-usd",
+    "path": "frax-usd"
+  },
+  {
+    "proxyAddress": "0xb9e1e3a9feff48998e45fa90847ed4d467e8bcfd",
+    "contractAddress": "0x61eB091ea16A32ea5B880d0b3D09d518c340D750",
+    "multiply": "100000000",
+    "name": "FRAX / USD",
+    "chainId": "1",
+    "categoryId": "stablecoins",
+    "path": "frax-usd"
+  },
+  {
+    "proxyAddress": "0x2de7e4a9488488e0058b95854cc2f7955b35dc9b",
+    "contractAddress": "0xbDb80D19dEA36EB7f63bdFD2bdD4033B2b7e8e4d",
+    "multiply": "1000000000000000000",
+    "name": "FTM / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "ftm-eth"
+  },
+  {
+    "proxyAddress": "0xf0985f7e2cabff22cecc5a71282a89582c382efe",
+    "contractAddress": "0x2006d56F8DDB210ad009cf8d71aEe4F6488cFA49",
+    "multiply": "1000000000000000000",
+    "name": "FTT / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "ftt-eth"
+  },
+  {
+    "proxyAddress": "0x099a2540848573e94fb1ca0fa420b00acbbc845a",
+    "contractAddress": "0x3F7f90e0f782E325401f6323BA93E717f519F382",
+    "multiply": "100000000",
+    "name": "GBP / USD",
+    "chainId": "137",
+    "categoryId": "fiat",
+    "path": "gbp-usd"
+  },
+  {
+    "proxyAddress": "0xd647a6fc9bc6402301583c91decc5989d8bc382d",
+    "contractAddress": "0xeaF35F06410014234BEe87980A902C21F78CB426",
+    "multiply": "100000000",
+    "name": "JPY / USD",
+    "chainId": "137",
+    "categoryId": "fiat",
+    "path": "jpy-usd"
+  },
+  {
+    "proxyAddress": "0x01435677fb11763550905594a16b645847c1d0f3",
+    "contractAddress": "0x86e345D4113E1105053A81240C75b56B437dA6Ef",
+    "multiply": "100000000",
+    "name": "KRW / USD",
+    "chainId": "1",
+    "categoryId": "fiat",
+    "path": "krw-usd"
+  },
+  {
+    "proxyAddress": "0x4e844125952d32acdf339be976c98e22f6f318db",
+    "contractAddress": "0x7898AcCC83587C3C55116c5230C17a6Cd9C71bad",
+    "multiply": "1000000000000000000",
+    "name": "LDO / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "ldo-eth"
+  },
+  {
+    "proxyAddress": "0xb77fa460604b9c6435a235d057f7d319ac83cb53",
+    "contractAddress": "0xD2AA3Fc2585999Ef9Ca66A1b6be18123b5774be7",
+    "multiply": "1000000000000000000",
+    "name": "LINK / ETH",
+    "chainId": "137",
+    "categoryId": "crypto-eth",
+    "path": "link-eth"
+  },
+  {
+    "proxyAddress": "0x86e53cf1b870786351da77a57575e79cb55812cb",
+    "contractAddress": "0x9b8DdcF800a7BfCdEbaD6D65514dE59160a2C9CC",
+    "multiply": "100000000",
+    "name": "LINK / USD",
+    "chainId": "42161",
+    "categoryId": "crypto-usd",
+    "path": "link-usd"
+  },
+  {
+    "proxyAddress": "0x221c773d8647bc3034e91a0c47062e26d20d97b4",
+    "contractAddress": "0xF13148424cc6fDfa793eAe323B081c130fF839F1",
+    "multiply": "100000000",
+    "name": "LINK / USD",
+    "chainId": "250",
+    "categoryId": "crypto-usd",
+    "path": "link-usd"
+  },
+  {
+    "proxyAddress": "0x6af09df7563c363b5763b9102712ebed3b9e859b",
+    "contractAddress": "0xFe3d09D8bAd5DA65E0160cF0cB53F6115Fb6EA8b",
+    "multiply": "100000000",
+    "name": "LTC / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "ltc-usd"
+  },
+  {
+    "proxyAddress": "0x7ca57b0ca6367191c94c8914d7df09a57655905f",
+    "contractAddress": "0xeC1Ca9c5Dd897F832CDe3D43BB041f5e01380757",
+    "multiply": "100000000",
+    "name": "MATIC / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "matic-usd"
+  },
+  {
+    "proxyAddress": "0xdaea8386611a157b08829ed4997a8a62b557014c",
+    "contractAddress": "0x751d87122c81f0eCe576338C400ebB978D039188",
+    "multiply": "1000000000000000000",
+    "name": "MLN / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "mln-eth"
+  },
+  {
+    "proxyAddress": "0x3977cfc9e4f29c184d4675f4eb8e0013236e5f3e",
+    "contractAddress": "0xd48aA1699f49760611D6E1Af7a4588998deD42bD",
+    "multiply": "100000000",
+    "name": "NZD / USD",
+    "chainId": "1",
+    "categoryId": "fiat",
+    "path": "nzd-usd"
+  },
+  {
+    "proxyAddress": "0x3b41d5571468904d4e53b6a8d93a6bac43f02dc9",
+    "contractAddress": "0xC4aA0d2237A823f99fe2Dc74F993eEbDf5524489",
+    "multiply": "1000000000000000000",
+    "name": "PERP / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "perp-eth"
+  },
+  {
+    "proxyAddress": "0xa058689f4bca95208bba3f265674ae95ded75b6d",
+    "contractAddress": "0x279108b32171D1D2eF2728d2AaE19b4e314687CC",
+    "multiply": "100000000",
+    "name": "QUICK / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "quick-usd"
+  },
+  {
+    "proxyAddress": "0x4ad7b025127e89263242ab68f0f9c4e5c033b489",
+    "contractAddress": "0x8d6d808eC1f8803b54e2286BD6992f5601fCF3a8",
+    "multiply": "1000000000000000000",
+    "name": "RAI / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "rai-eth"
+  },
+  {
+    "proxyAddress": "0x483d36f6a1d063d580c7a24f9a42b346f3a69fbb",
+    "contractAddress": "0x2Abfc56AaA39be7a946ec39aAC5d452e30614dF1",
+    "multiply": "100000000",
+    "name": "RAI / USD",
+    "chainId": "1",
+    "categoryId": "stablecoins",
+    "path": "rai-usd"
+  },
+  {
+    "proxyAddress": "0x3147d7203354dc06d9fd350c7a2437bca92387a4",
+    "contractAddress": "0xEe34b3Ce92A6B635450B9cC6FAa976F70a106BE7",
+    "multiply": "1000000000000000000",
+    "name": "REN / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "ren-eth"
+  },
+  {
+    "proxyAddress": "0x10c8264c0935b3b9870013e057f330ff3e9c56dc",
+    "contractAddress": "0x37b557Dd3d3552C4DAA4dA935cf5bf2f3d04c8bF",
+    "multiply": "100000000",
+    "name": "SOL / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "sol-usd"
+  },
+  {
+    "proxyAddress": "0xe188a9875af525d25334d75f3327863b2b8cd0f1",
+    "contractAddress": "0x5ba2B3A2a41141Aa55Fc72C40d6643aEE12BD0B6",
+    "multiply": "100000000",
+    "name": "SXP / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "sxp-usd"
+  },
+  {
+    "proxyAddress": "0xa3334a9762090e827413a7495afece76f41dfc06",
+    "contractAddress": "0x916aaDaCeb786351c7e810C6a4E8071cf00CEeC8",
+    "multiply": "100000000",
+    "name": "TUSD / USD",
+    "chainId": "56",
+    "categoryId": "stablecoins",
+    "path": "tusd-usd"
+  },
+  {
+    "proxyAddress": "0xf817b69ea583caff291e287cae00ea329d22765c",
+    "contractAddress": "0x68a371D12213a1EbDd5fa9a2EE5519E6B73F1E37",
+    "multiply": "1000000000000000000",
+    "name": "UMA / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "uma-eth"
+  },
+  {
+    "proxyAddress": "0x33d9b1baadcf4b26ab6f8e83e9cb8a611b2b3956",
+    "contractAddress": "0x1bca643694ba33cA4BceBebA2cb9Ad6D1ebCa169",
+    "multiply": "100000000",
+    "name": "UMA / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "uma-usd"
+  },
+  {
+    "proxyAddress": "0xb57f259e7c24e56a1da00f66b55a5640d9f9e7e4",
+    "contractAddress": "0x52Bd76d61D59a4F4B740FD31B97aFaD6217F960D",
+    "multiply": "100000000",
+    "name": "UNI / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "uni-usd"
+  },
+  {
+    "proxyAddress": "0x16a9fa2fda030272ce99b29cf780dfa30361e0f3",
+    "contractAddress": "0xd1Cb03cc31caa72D34dba7eBE21897D9580c4AF0",
+    "multiply": "100000000",
+    "name": "USDC / USD",
+    "chainId": "10",
+    "categoryId": "stablecoins",
+    "path": "usdc-usd"
+  },
+  {
+    "proxyAddress": "0x3a08ebbab125224b7b6474384ee39fbb247d2200",
+    "contractAddress": "0x8034d486Fc2620F87A9C32a1fB746D20Ed9BFB96",
+    "multiply": "1000000000000000000",
+    "name": "USDP / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "pax-eth"
+  },
+  {
+    "proxyAddress": "0xecef79e109e997bca29c1c0897ec9d7b03647f5e",
+    "contractAddress": "0xAc37790fF4aBf9483fAe2D1f62fC61fE6b8E4789",
+    "multiply": "100000000",
+    "name": "USDT / USD",
+    "chainId": "10",
+    "categoryId": "stablecoins",
+    "path": "usdt-usd"
+  },
+  {
+    "proxyAddress": "0xa338e0492b2f944e9f8c0653d3ad1484f2657a37",
+    "contractAddress": "0x921C2121Af8D68F397cb2D2A3d24ffC180BCdCB7",
+    "multiply": "1000000000000000000",
+    "name": "WBTC / ETH",
+    "chainId": "137",
+    "categoryId": "crypto-eth",
+    "path": "wbtc-eth"
+  },
+  {
+    "proxyAddress": "0x7c5d4f8345e66f68099581db340cd65b078c41f4",
+    "contractAddress": "0xAa5aa80e416f9d32ffE6C390e24410d02D203F70",
+    "multiply": "1000000000000000000",
+    "name": "YFI / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "yfi-eth"
+  },
+  {
+    "proxyAddress": "0xd7eaa5bf3013a96e3d515c055dbd98dbdc8c620d",
+    "contractAddress": "0xd29cFB96e80fCBA432713B7aE5086a6718d4E046",
+    "multiply": "100000000",
+    "name": "YFI / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "yfi-usd"
+  },
+  {
+    "proxyAddress": "0x72afaecf99c9d9c8215ff44c77b94b99c28741e8",
+    "contractAddress": "0xb2F68c82479928669B0487D1dAeD6Ef47b63411e",
+    "multiply": "1000000000000000000",
+    "name": "1INCH / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "1inch-eth"
+  },
+  {
+    "proxyAddress": "0x443c5116cdf663eb387e72c688d276e702135c87",
+    "contractAddress": "0x60A47cC34342bc43C308B67D5836D9116A797D6A",
+    "multiply": "100000000",
+    "name": "1INCH / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "1inch-usd"
+  },
+  {
+    "proxyAddress": "0xbe23a3aa13038cfc28afd0ece4fde379fe7fbfc4",
+    "contractAddress": "0x12528b3026cd252E8b4435E22f5615f7f3B8dA77",
+    "multiply": "1000000000000000000",
+    "name": "AAVE / ETH",
+    "chainId": "137",
+    "categoryId": "crypto-eth",
+    "path": "aave-eth"
+  },
+  {
+    "proxyAddress": "0xad1d5344aade45f43e596773bcc4c423eabdd034",
+    "contractAddress": "0x3c6AbdA21358c15601A3175D8dd66D0c572cc904",
+    "multiply": "100000000",
+    "name": "AAVE / USD",
+    "chainId": "42161",
+    "categoryId": "crypto-usd",
+    "path": "aave-usd"
+  },
+  {
+    "proxyAddress": "0x338ed6787f463394d24813b297401b9f05a8c9d1",
+    "contractAddress": "0x81cC0c227BF9bFB8088b14755DfcA65f7892203b",
+    "multiply": "100000000",
+    "name": "AAVE / USD",
+    "chainId": "10",
+    "categoryId": "crypto-usd",
+    "path": "aave-usd"
+  },
+  {
+    "proxyAddress": "0xe6ecf7d2361b6459cbb3b4fb065e0ef4b175fe74",
+    "contractAddress": "0xaDc59a292c274B438BD29de01897B07D40E9b408",
+    "multiply": "100000000",
+    "name": "AAVE / USD",
+    "chainId": "250",
+    "categoryId": "crypto-usd",
+    "path": "aave-usd"
+  },
+  {
+    "proxyAddress": "0x14c4c668e34c09e1fba823ad5db47f60aebdd4f7",
+    "contractAddress": "0x1a53159F3366c9FaED485B9D7D4078CCd1569D22",
+    "multiply": "1000000000000000000",
+    "name": "AAVE.e PoR",
+    "chainId": "43114",
+    "categoryId": "reserves",
+    "path": "aave.e-por"
+  },
+  {
+    "proxyAddress": "0x2d5fc41d1365ffe13d03d91e82e04ca878d69f4b",
+    "contractAddress": "0x50204D36C231CD4F0De67545Cd1E36C01336e46b",
+    "multiply": "1000000000000000000",
+    "name": "ADA / BNB",
+    "chainId": "56",
+    "categoryId": "crypto-bnb",
+    "path": "ada-bnb"
+  },
+  {
+    "proxyAddress": "0x231e764b44b2c1b7ca171fa8021a24ed520cde10",
+    "contractAddress": "0x910e014bBA427e9FCB48B4D314Dc81f840d7b6E3",
+    "multiply": "100000000",
+    "name": "ADX / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "adx-usd"
+  },
+  {
+    "proxyAddress": "0x194a9aaf2e0b67c35915cd01101585a33fe25caa",
+    "contractAddress": "0x64a119DCf78E7E3FcED89c429f6F47Bf0cd80250",
+    "multiply": "1000000000000000000",
+    "name": "ALCX / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "alcx-eth"
+  },
+  {
+    "proxyAddress": "0x03bc6d9efed65708d35fdaefb25e87631a0a3437",
+    "contractAddress": "0xb54D6F958C3940db47ccfD65125a2A31D9FCb756",
+    "multiply": "100000000",
+    "name": "ALGO / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "algo-usd"
+  },
+  {
+    "proxyAddress": "0x95d3fff86a754ab81a7c59fcab1468a2076f8c9b",
+    "contractAddress": "0xd867c068534Ad7d3BE0fE4f321AACddCe371DB1A",
+    "multiply": "100000000",
+    "name": "ALPACA / USD",
+    "chainId": "250",
+    "categoryId": "crypto-usd",
+    "path": "alpaca-usd"
+  },
+  {
+    "proxyAddress": "0x7bc032a7c19b1bdcb981d892854d090cfb0f238e",
+    "contractAddress": "0x9c0Ab19514D52196B09B04294937ECEC2Dc69950",
+    "multiply": "1000000000000000000",
+    "name": "ALPHA / BNB",
+    "chainId": "56",
+    "categoryId": "crypto-bnb",
+    "path": "alpha-bnb"
+  },
+  {
+    "proxyAddress": "0x32640253a3d0fc25597d8a784a839311ff404c83",
+    "contractAddress": "0x951704608E450D290f1D8deC2d9509fC22fa8086",
+    "multiply": "1000000000000000000",
+    "name": "AMKT PoR",
+    "chainId": "137",
+    "categoryId": "reserves",
+    "path": "amkt-por"
+  },
+  {
+    "proxyAddress": "0x492575fdd11a0fcf2c6c719867890a7648d526eb",
+    "contractAddress": "0xb92EE05E7514FfEDDDbcd76F5e3064691F6eC79e",
+    "multiply": "1000000000000000000",
+    "name": "AMPL / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "ampl-eth"
+  },
+  {
+    "proxyAddress": "0xe20ca8d7546932360e37e9d72c1a47334af57706",
+    "contractAddress": "0xd5090674b4653240cd94eE886484ca808c6E6694",
+    "multiply": "1000000000000000000",
+    "name": "AMPL / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "ampl-usd"
+  },
+  {
+    "proxyAddress": "0x8f83670260f8f7708143b836a2a6f11ef0abac01",
+    "contractAddress": "0x7b14dF2fb3e02215Fa5525aC8A5abdAaA6314aC0",
+    "multiply": "1000000000000000000",
+    "name": "ANT / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "ant-eth"
+  },
+  {
+    "proxyAddress": "0x4f152d143c97b5e8d2293bc5b2380600f274a5dd",
+    "contractAddress": "0x83c3aB39C7F5ee263619ac52c68599fE5aE30929",
+    "multiply": "100000000",
+    "name": "ATOM / USD",
+    "chainId": "1284",
+    "categoryId": "crypto-usd",
+    "path": "atom-usd"
+  },
+  {
+    "proxyAddress": "0x062df9c4efd2030e243ffcc398b652e8b8f95c6f",
+    "contractAddress": "0x0A9823C5cD84099fdE8566a1AdF0f2BB41Cc6e7D",
+    "multiply": "100000000",
+    "name": "AUD / USD",
+    "chainId": "137",
+    "categoryId": "fiat",
+    "path": "aud-usd"
+  },
+  {
+    "proxyAddress": "0x88e71e6520e5ac75f5338f5f0c9ded9d4f692cda",
+    "contractAddress": "0x5Ff27E78AE8fc4C329De7064ebe7FEbdE859af0A",
+    "multiply": "100000000",
+    "name": "AUTO / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "auto-usd"
+  },
+  {
+    "proxyAddress": "0x8b4fc5b68cd50eac1dd33f695901624a4a1a0a8b",
+    "contractAddress": "0x16423B2B6873225e26564b182b3318aFCdBFcade",
+    "multiply": "1000000000000000000",
+    "name": "AXS / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "axs-eth"
+  },
+  {
+    "proxyAddress": "0xa8b9a447c73191744d5b79bce864f343455e1150",
+    "contractAddress": "0xF0c3668756b9d9590B334768640FC5ACA02aE739",
+    "multiply": "1000000000000000000",
+    "name": "Azuki",
+    "chainId": "1",
+    "categoryId": "nft-floor-prices",
+    "path": "coinbase-azuki-floor-price-eth"
+  },
+  {
+    "proxyAddress": "0x66a47b7206130e6ff64854ef0e1edfa237e65339",
+    "contractAddress": "0x8093150EC164753994A1F65616E04Ae92a9Ef8c5",
+    "multiply": "100000000",
+    "name": "BADGER / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "badger-usd"
+  },
+  {
+    "proxyAddress": "0xdf2917806e30300537aeb49a7663062f4d1f2b5f",
+    "contractAddress": "0xbd9350a3a2fd6e3Ad0a053a567f2609a1bf6c505",
+    "multiply": "100000000",
+    "name": "BAL / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "bal-usd"
+  },
+  {
+    "proxyAddress": "0x3334bf7ec892ca03d1378b51769b7782eaf318c4",
+    "contractAddress": "0x3331b2d33E9a472f6b34C150D47017d75b4CD088",
+    "multiply": "1000000000000000000",
+    "name": "BAND / BNB",
+    "chainId": "56",
+    "categoryId": "crypto-bnb",
+    "path": "band-bnb"
+  },
+  {
+    "proxyAddress": "0x2346ce62bd732c62618944e51cbfa09d985d86d2",
+    "contractAddress": "0x6F1fd126cE7caF9598C3E6379e8274D5188e7fa0",
+    "multiply": "100000000",
+    "name": "BAT / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "bat-usd"
+  },
+  {
+    "proxyAddress": "0x2a548935a323bb7329a5e3f1667b979f16bc890b",
+    "contractAddress": "0x38d0f1dfE37Aac059aD06B2d30Ef60AA537f0b05",
+    "multiply": "1000000000000000000",
+    "name": "BCH / BNB",
+    "chainId": "56",
+    "categoryId": "crypto-bnb",
+    "path": "bch-bnb"
+  },
+  {
+    "proxyAddress": "0xc546d2d06144f9dd42815b8ba46ee7b8fcafa4a2",
+    "contractAddress": "0xF9Bf9ca442e15c607b2d4b6Fe01f7fa59a016554",
+    "multiply": "1000000000000000000",
+    "name": "BNB / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "bnb-eth"
+  },
+  {
+    "proxyAddress": "0x0147f2ad7f1e2bc51f998cc128a8355d5ae8c32d",
+    "contractAddress": "0x68ab41554F0733FE024c35145543f70d7e28ff7d",
+    "multiply": "100000000",
+    "name": "BNB / USD",
+    "chainId": "1284",
+    "categoryId": "crypto-usd",
+    "path": "bnb-usd"
+  },
+  {
+    "proxyAddress": "0xcf61d1841b178fe82c8895fe60c2edda08314416",
+    "contractAddress": "0x9A4458D02449eF9B42562205718679a8B4204962",
+    "multiply": "1000000000000000000",
+    "name": "BNT / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "bnt-eth"
+  },
+  {
+    "proxyAddress": "0x971e8f1b779a5f1c36e1cd7ef44ba1cc2f5eee0f",
+    "contractAddress": "0x0eBDc65E7e9132Cb41ac5cbD0101B799D7aDb475",
+    "multiply": "100000000",
+    "name": "BRL / USD",
+    "chainId": "1",
+    "categoryId": "fiat",
+    "path": "brl-usd"
+  },
+  {
+    "proxyAddress": "0x116eeb23384451c78ed366d4f67d5ad44ee771a0",
+    "contractAddress": "0x7E90d60D3207A96FAaBB895C9c7DeE2E2CaBa0Fd",
+    "multiply": "1000000000000000000",
+    "name": "BTC / BNB",
+    "chainId": "56",
+    "categoryId": "crypto-bnb",
+    "path": "btc-bnb"
+  },
+  {
+    "proxyAddress": "0xc5a90a6d7e4af242da238ffe279e9f2ba0c64b2e",
+    "contractAddress": "0x3c8F2d5af2e0F5Ef7C23A08DF6Ad168ece071D4b",
+    "multiply": "1000000000000000000",
+    "name": "BTC / ETH",
+    "chainId": "42161",
+    "categoryId": "crypto-eth",
+    "path": "btc-eth"
+  },
+  {
+    "proxyAddress": "0x8c4425e141979c66423a83be2ee59135864487eb",
+    "contractAddress": "0xe08F9B94B2a83105fde038d1A3dC3317f35273c3",
+    "multiply": "100000000",
+    "name": "BTC / USD",
+    "chainId": "1284",
+    "categoryId": "crypto-usd",
+    "path": "btc-usd"
+  },
+  {
+    "proxyAddress": "0x99311b4bf6d8e3d3b4b9fbdd09a1b0f4ad8e06e9",
+    "contractAddress": "0x4CDE5134F7DA75A71E3E46614B8E220d86802AD5",
+    "multiply": "100000000",
+    "name": "BTC.b",
+    "chainId": "43114",
+    "categoryId": "reserves",
+    "path": "btcb-por"
+  },
+  {
+    "proxyAddress": "0xf8f57321c2e3e202394b0c0401fd6392c3e7f465",
+    "contractAddress": "0xFD94D015B1a293f027dB73060b8e0F7c9E84DB59",
+    "multiply": "100000000",
+    "name": "BUSD / USD",
+    "chainId": "250",
+    "categoryId": "stablecoins",
+    "path": "busd-usd"
+  },
+  {
+    "proxyAddress": "0x352f2bc3039429fc2fe62004a1575ae74001cfce",
+    "contractAddress": "0x6DBD8100fBbfF754831Aa90A53c466d431651885",
+    "multiply": "1000000000000000000",
+    "name": "Bored Ape Yacht Club",
+    "chainId": "1",
+    "categoryId": "nft-floor-prices",
+    "path": "coinbase-bored-ape-yacht-club-floor-price-eth"
+  },
+  {
+    "proxyAddress": "0x5586bf404c7a22a4a4077401272ce5945f80189c",
+    "contractAddress": "0x6CeA38508B186DE36AAfd0f3B513E708691bc0C4",
+    "multiply": "100000000",
+    "name": "CACHE Gold Reserves",
+    "chainId": "1",
+    "categoryId": "reserves",
+    "path": "cachegold-por-usd"
+  },
+  {
+    "proxyAddress": "0x4e9fc7480c16f3fe5d956c0759ee6b4808d1f5d7",
+    "contractAddress": "0x586d26055914143a0100E26541e1dd47D570045b",
+    "multiply": "100000000",
+    "name": "CACHE Gold Reserves",
+    "chainId": "137",
+    "categoryId": "reserves",
+    "path": "cgt-por-eth"
+  },
+  {
+    "proxyAddress": "0xaca44abb8b04d07d883202f99fa5e3c53ed57fb5",
+    "contractAddress": "0x88B79bfcE730BbB74f23aB8940B37B86859CaA2E",
+    "multiply": "100000000",
+    "name": "CAD / USD",
+    "chainId": "137",
+    "categoryId": "fiat",
+    "path": "cad-usd"
+  },
+  {
+    "proxyAddress": "0xcb23da9ea243f53194cbc2380a6d4d9bc046161f",
+    "contractAddress": "0x370d7b33330d40c55e8e71aFD88eFB31E9Dcc620",
+    "multiply": "1000000000000000000",
+    "name": "CAKE / BNB",
+    "chainId": "56",
+    "categoryId": "crypto-bnb",
+    "path": "cake-bnb"
+  },
+  {
+    "proxyAddress": "0xeb0adf5c06861d6c07174288ce4d0a8128164003",
+    "contractAddress": "0x1C026C25271c1bFbA95B65c848F734a23eA62D4e",
+    "multiply": "100000000",
+    "name": "CAKE / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "cake-usd"
+  },
+  {
+    "proxyAddress": "0xe3ca2f3bad1d8327820f648c759f17162b5383ae",
+    "contractAddress": "0x3889e2FD71BB7a0600Da48D98CD579b2A1d39F51",
+    "multiply": "100000000",
+    "name": "CFX / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "cfx-usd"
+  },
+  {
+    "proxyAddress": "0xc76f762cedf0f78a439727861628e0fdfe1e70c2",
+    "contractAddress": "0x8123bEaCB5bca3AfA0C9ff71B28549d58cEc8176",
+    "multiply": "100000000",
+    "name": "CHF / USD",
+    "chainId": "137",
+    "categoryId": "fiat",
+    "path": "chf-usd"
+  },
+  {
+    "proxyAddress": "0x4be9c8fb4105380116c03fc2eeb9ea1e1a109d95",
+    "contractAddress": "0xfDB46212df397E25D96F646f9a2647dAEC3E3cCA",
+    "multiply": "100000000",
+    "name": "CHF / USD",
+    "chainId": "250",
+    "categoryId": "fiat",
+    "path": "chf-usd"
+  },
+  {
+    "proxyAddress": "0xcc3370bde6afe51e1205a5038947b9836371eccb",
+    "contractAddress": "0x1b9749e06817433a34D7efAaa0a7f6a94a41E432",
+    "multiply": "100000000",
+    "name": "CNY / USD",
+    "chainId": "42161",
+    "categoryId": "fiat",
+    "path": "cny-usd"
+  },
+  {
+    "proxyAddress": "0x6f55dfaf098a813d87bb4e6392275b502360bb9d",
+    "contractAddress": "0x4a2A603d64C807C6532053EF808117048ac9990a",
+    "multiply": "1000000000000000000",
+    "name": "CREAM / BNB",
+    "chainId": "56",
+    "categoryId": "crypto-bnb",
+    "path": "cream-bnb"
+  },
+  {
+    "proxyAddress": "0xd2ffccfa0934cafda647c5ff8e7918a10103c01c",
+    "contractAddress": "0x2946220288DbBF77dF0030fCecc2a8348CbBE32C",
+    "multiply": "100000000",
+    "name": "CREAM / USD",
+    "chainId": "250",
+    "categoryId": "crypto-usd",
+    "path": "cream-usd"
+  },
+  {
+    "proxyAddress": "0xbd92c6c284271c227a1e0bf1786f468b539f51d9",
+    "contractAddress": "0x7c56d3650f9aCD992b3Aa635C04A311c54Ad264c",
+    "multiply": "100000000",
+    "name": "CRV / USD",
+    "chainId": "10",
+    "categoryId": "crypto-usd",
+    "path": "crv-usd"
+  },
+  {
+    "proxyAddress": "0x7cf8a6090a9053b01f3df4d4e6cfedd8c90d9027",
+    "contractAddress": "0xFf6e2c3C9E9a174824a764dbb8222454f6A3ecb1",
+    "multiply": "100000000",
+    "name": "CRV / USD",
+    "chainId": "43114",
+    "categoryId": "crypto-usd",
+    "path": "crv-usd"
+  },
+  {
+    "proxyAddress": "0x0a1d1b9847d602e789be38b802246161ffa24930",
+    "contractAddress": "0x720192921a4b6fb026fA52bf03F991b65b740147",
+    "multiply": "1000000000000000000",
+    "name": "CTSI / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "ctsi-eth"
+  },
+  {
+    "proxyAddress": "0xc9cbf687f43176b302f03f5e58470b77d07c61c6",
+    "contractAddress": "0xf1F7F7BFCc5E9D6BB8D9617756beC06A5Cbe1a49",
+    "multiply": "1000000000000000000",
+    "name": "CVX / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "cvx-eth"
+  },
+  {
+    "proxyAddress": "0x1a8d750240cdf7b671805eec761e622f13781ceb",
+    "contractAddress": "0xE3932dd2b44931C10a3254AdBa01e7E291780CcD",
+    "multiply": "100000000",
+    "name": "CVX / USD",
+    "chainId": "250",
+    "categoryId": "crypto-usd",
+    "path": "cvx-usd"
+  },
+  {
+    "proxyAddress": "0x021264d59dabd26e7506ee7278407891bb8cdccc",
+    "contractAddress": "0xB187B5A5A4B0A2Ae32FaEDf0FE4845203E0B7b11",
+    "multiply": "1000000000000000000",
+    "name": "CloneX",
+    "chainId": "1",
+    "categoryId": "nft-floor-prices",
+    "path": "coinbase-clonex-floor-price"
+  },
+  {
+    "proxyAddress": "0xf49f8f5b931b0e4b4246e4cca7cd2083997aa83d",
+    "contractAddress": "0xaBd6dc0E14bdC628E62Cc946897C7fEfDCDdcD10",
+    "multiply": "1000000000000000000",
+    "name": "Cool Cats",
+    "chainId": "1",
+    "categoryId": "nft-floor-prices",
+    "path": "coinbase-coolcats-floor-price"
+  },
+  {
+    "proxyAddress": "0xfaa8f6073845dbe5627daa3208f78a3043f99bca",
+    "contractAddress": "0xc609c4fADdA31980769c9C6716F438f0a6059547",
+    "multiply": "1000000000000000000",
+    "name": "Cryptoadz",
+    "chainId": "1",
+    "categoryId": "nft-floor-prices",
+    "path": "coinbase-cryptoadz-floor-price"
+  },
+  {
+    "proxyAddress": "0x01b6710b01cf3dd8ae64243097d91afb03728fdd",
+    "contractAddress": "0xF0c85c0F7dC37e1605a0Db446a2A0e33Df7a3358",
+    "multiply": "1000000000000000000",
+    "name": "Cryptopunks",
+    "chainId": "1",
+    "categoryId": "nft-floor-prices",
+    "path": "coinbase-cryptopunks-floor-price-eth"
+  },
+  {
+    "proxyAddress": "0xfc539a559e170f848323e19dfd66007520510085",
+    "contractAddress": "0x5777Ca61f29cac50250a3b136b52328D05DBa8C9",
+    "multiply": "1000000000000000000",
+    "name": "DAI / ETH",
+    "chainId": "137",
+    "categoryId": "stablecoins",
+    "path": "dai-eth"
+  },
+  {
+    "proxyAddress": "0x976d7fac81a49fa71ef20694a3c56b9efb93c30b",
+    "contractAddress": "0x32d4055c609b63375427172db799b9dAfBb6cEEd",
+    "multiply": "1000000000000000000",
+    "name": "DAI.e PoR",
+    "chainId": "43114",
+    "categoryId": "reserves",
+    "path": "dai.e-por"
+  },
+  {
+    "proxyAddress": "0x9613a51ad59ee375e6d8fa12eeef0281f1448739",
+    "contractAddress": "0x3600713c848dE06c8346900E3deDd3CAc21c06ff",
+    "multiply": "100000000",
+    "name": "DODO / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "dodo-usd"
+  },
+  {
+    "proxyAddress": "0xbaf9327b6564454f4a3364c33efeef032b4b4444",
+    "contractAddress": "0x8BAdF35cF94251dc813B5D5c0Ac3f9B2De9E5358",
+    "multiply": "100000000",
+    "name": "DOGE / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "doge-usd"
+  },
+  {
+    "proxyAddress": "0xba8683e9c3b1455be6e18e7768e8cad95eb5ed49",
+    "contractAddress": "0x390B935CdB6fC4924D203a398DA160178efe7b8A",
+    "multiply": "1000000000000000000",
+    "name": "DOT / BNB",
+    "chainId": "56",
+    "categoryId": "crypto-bnb",
+    "path": "dot-bnb"
+  },
+  {
+    "proxyAddress": "0x027828052840a43cc2d0187bcfa6e3d6ace60336",
+    "contractAddress": "0x440C8fc45C7f00E09c2F437b95FC123888a3d951",
+    "multiply": "1000000000000000000",
+    "name": "Doodles",
+    "chainId": "1",
+    "categoryId": "nft-floor-prices",
+    "path": "coinbase-doodles-floor-price"
+  },
+  {
+    "proxyAddress": "0xed93f3764334788f2f6628b30e505fe1fc5d1d7b",
+    "contractAddress": "0x73D17dbB9d4d520Ca4D260c359994d8a2Aa4cDa3",
+    "multiply": "1000000000000000000",
+    "name": "EOS / BNB",
+    "chainId": "56",
+    "categoryId": "crypto-bnb",
+    "path": "eos-bnb"
+  },
+  {
+    "proxyAddress": "0xd5508c8ffdb8f15ce336e629fd4ca9adb48f50f0",
+    "contractAddress": "0x0C1A3fa6Cc1a91F751A9232cC5D6Be9700a93Fc7",
+    "multiply": "100000000",
+    "name": "EOS / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "eos-usd"
+  },
+  {
+    "proxyAddress": "0x10a43289895eaff840e8d45995bba89f9115ecee",
+    "contractAddress": "0xea7C55976844396f3bD4C89F66988b8b5Be5E96a",
+    "multiply": "100000000",
+    "name": "EOS / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "eos-usd"
+  },
+  {
+    "proxyAddress": "0xd6285f06203d938ab713fa6a315e7d23247dde95",
+    "contractAddress": "0x4ccB7A69f09ABe1a3dfE4FE3d43171107eD25bfc",
+    "multiply": "100000000",
+    "name": "EOS / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "eos-usd"
+  },
+  {
+    "proxyAddress": "0x63d407f32aa72e63c7209ce1c2f5da40b3aae726",
+    "contractAddress": "0x2813fAB00b38189AcB8D805A687222Ae1034D53a",
+    "multiply": "1000000000000000000",
+    "name": "ETH / BNB",
+    "chainId": "56",
+    "categoryId": "crypto-bnb",
+    "path": "eth-bnb"
+  },
+  {
+    "proxyAddress": "0xac559f25b1619171cbc396a50854a3240b6a4e99",
+    "contractAddress": "0x0f00392FcB466c0E4E4310d81b941e07B4d5a079",
+    "multiply": "100000000",
+    "name": "ETH / BTC",
+    "chainId": "1",
+    "categoryId": "crypto-other",
+    "path": "eth-btc"
+  },
+  {
+    "proxyAddress": "0x9ce2388a1696e22f870341c3fc1e89710c7569b5",
+    "contractAddress": "0xd4201c0D50c3C9A867BB9A7a1Cc6f7F66E41c530",
+    "multiply": "100000000",
+    "name": "ETH / USD",
+    "chainId": "1284",
+    "categoryId": "crypto-usd",
+    "path": "eth-usd"
+  },
+  {
+    "proxyAddress": "0xa14d53bc1f1c0f31b4aa3bd109344e5009051a84",
+    "contractAddress": "0x7AAeE6aD40a947A162DEAb5aFD0A1e12BE6FF871",
+    "multiply": "100000000",
+    "name": "EUR / USD",
+    "chainId": "42161",
+    "categoryId": "fiat",
+    "path": "eur-usd"
+  },
+  {
+    "proxyAddress": "0x3626369857a10ccc6cc3a6e4f5c2f5984a519f20",
+    "contractAddress": "0xAA75acE4575AbBE1D237D991a7461f497a56a8F0",
+    "multiply": "100000000",
+    "name": "EUR / USD",
+    "chainId": "10",
+    "categoryId": "fiat",
+    "path": "eur-usd"
+  },
+  {
+    "proxyAddress": "0x3e68e68ea2c3698400465e3104843597690ae0f7",
+    "contractAddress": "0x69aE9C103F8F39dF5D35Fc6BFCF346223A71BA48",
+    "multiply": "100000000",
+    "name": "EUR / USD",
+    "chainId": "250",
+    "categoryId": "fiat",
+    "path": "eur-usd"
+  },
+  {
+    "proxyAddress": "0x01d391a48f4f7339ac64ca2c83a07c22f95f587a",
+    "contractAddress": "0x920E5DC12E7500c6571C63D4Bba19c62e99d6883",
+    "multiply": "100000000",
+    "name": "EURt / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "eurt-usd"
+  },
+  {
+    "proxyAddress": "0xdfb138ba3a6cce675a6f5961323be31ee42e40ff",
+    "contractAddress": "0xF1ae47478Cf731788Be7D1444DFe351146BDE3ed",
+    "multiply": "100000000",
+    "name": "FARM / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "farm-usd"
+  },
+  {
+    "proxyAddress": "0xe5dbfd9003bff9df5feb2f4f445ca00fb121fb83",
+    "contractAddress": "0x8f8289E5CA9a4C867ec7A257b0E9Dd1132093E23",
+    "multiply": "100000000",
+    "name": "FIL / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "fil-usd"
+  },
+  {
+    "proxyAddress": "0xcca02ffeface21325befd6616cb4ba5fcb047480",
+    "contractAddress": "0x49F3C586Df22Fd6146c22E5831907919dcb80527",
+    "multiply": "100000000",
+    "name": "FOX / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "fox-usd"
+  },
+  {
+    "proxyAddress": "0x14d04fff8d21bd62987a5ce9ce543d2f1edf5d3e",
+    "contractAddress": "0x56f98706C14DF5C290b02Cec491bB4c20834Bb51",
+    "multiply": "1000000000000000000",
+    "name": "FRAX / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "frax-eth"
+  },
+  {
+    "proxyAddress": "0x36a121448d74fa81450c992a1a44b9b7377cd3a5",
+    "contractAddress": "0xf8C6DE435CF8d06897a4A66b21df623D06d2A761",
+    "multiply": "100000000",
+    "name": "FXS / USD",
+    "chainId": "42161",
+    "categoryId": "crypto-usd",
+    "path": "fxs-usd"
+  },
+  {
+    "proxyAddress": "0x6c0fe985d3cacbcde428b84fc9431792694d0f51",
+    "contractAddress": "0x478e736496E3B93AeAb113b42b430beE31200850",
+    "multiply": "100000000",
+    "name": "FXS / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "fxs-usd"
+  },
+  {
+    "proxyAddress": "0x12af94c3716bbf339aa26bfd927ddde63b27d50c",
+    "contractAddress": "0x92398CAF00D65e9A63b5d50D1CBD53223137A400",
+    "multiply": "100000000",
+    "name": "FXS / USD",
+    "chainId": "43114",
+    "categoryId": "crypto-usd",
+    "path": "fxs-usd"
+  },
+  {
+    "proxyAddress": "0x0809e3d38d1b4214958faf06d8b1b1a2b73f2ab8",
+    "contractAddress": "0x5D041081725468Aa43e72ff0445Fde2Ad1aDE775",
+    "multiply": "100000000",
+    "name": "Frax / USD",
+    "chainId": "42161",
+    "categoryId": "stablecoins",
+    "path": "frax-usd"
+  },
+  {
+    "proxyAddress": "0xf6f5b570ab6e39e55558afd8e1e30c5f20e6527e",
+    "contractAddress": "0x0a0aba8efAB65fDD3fa7e6afcb8128bCd6ffbdBF",
+    "multiply": "1000000000000000000",
+    "name": "GBPT PoR",
+    "chainId": "1",
+    "categoryId": "reserves",
+    "path": "gbpt-por"
+  },
+  {
+    "proxyAddress": "0xe638249af9642cda55a92245525268482ee4c67b",
+    "contractAddress": "0xeC35E6F084cE365A819E99bCd1F89319e519Fdf3",
+    "multiply": "1000000000000000000",
+    "name": "GHST / ETH",
+    "chainId": "137",
+    "categoryId": "crypto-eth",
+    "path": "ghst-eth"
+  },
+  {
+    "proxyAddress": "0x0a8cd0115b1ee87eba5b8e06a9a15ed93e230f7a",
+    "contractAddress": "0x6aa553CB870a54BD62bb54E11f0B2c919925E726",
+    "multiply": "1000000000000000000",
+    "name": "HBTC PoR",
+    "chainId": "1",
+    "categoryId": "reserves",
+    "path": "hbtc-por"
+  },
+  {
+    "proxyAddress": "0x84210d9013a30c6ab169e28840a6cc54b60fa042",
+    "contractAddress": "0xFB3e6157BA71C0d8853690C4Fd3ff88109A79103",
+    "multiply": "100000000",
+    "name": "ICP / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "icp-usd"
+  },
+  {
+    "proxyAddress": "0xf600984cca37cd562e74e3ee514289e3613ce8e4",
+    "contractAddress": "0xc1F2929b9449Ef97c5A75fd10fD0542984422f8b",
+    "multiply": "1000000000000000000",
+    "name": "ILV / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "ilv-eth"
+  },
+  {
+    "proxyAddress": "0xae2ebe3c4d20ce13ce47cbb49b6d7ee631cd816e",
+    "contractAddress": "0x1a4E4B344125E7ef78de22b55FCeF5a4bc45f605",
+    "multiply": "100000000",
+    "name": "INJ / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "inj-usd"
+  },
+  {
+    "proxyAddress": "0x90cc16f5493894eff84a5fedd1dce297d174feef",
+    "contractAddress": "0x73316EF731f3C7219482716682C063dBbd1602F2",
+    "multiply": "100000000",
+    "name": "INJ / USD",
+    "chainId": "10",
+    "categoryId": "crypto-usd",
+    "path": "inj-usd"
+  },
+  {
+    "proxyAddress": "0x02d35d3a8ac3e1626d3ee09a78dd87286f5e8e3a",
+    "contractAddress": "0x15811F91fAb76Bd240CAeC783a32f1BAAE41c513",
+    "multiply": "100000000",
+    "name": "JOE / USD",
+    "chainId": "43114",
+    "categoryId": "crypto-usd",
+    "path": "joe-usd"
+  },
+  {
+    "proxyAddress": "0x9df2195dc96e6ef983b1aac275649f3f28f82aa1",
+    "contractAddress": "0x5474cFC8E5Fa684728bAABBFC95B161134c32758",
+    "multiply": "100000000",
+    "name": "KNC / USD",
+    "chainId": "43114",
+    "categoryId": "crypto-usd",
+    "path": "knc-usd"
+  },
+  {
+    "proxyAddress": "0xcb24d22af35986ac1feb8874adbbdf68f6dc2e96",
+    "contractAddress": "0xe4391393205B6265585250E7A026103a0D1E168d",
+    "multiply": "100000000",
+    "name": "KNC / USD",
+    "chainId": "10",
+    "categoryId": "crypto-usd",
+    "path": "knc-usd"
+  },
+  {
+    "proxyAddress": "0xf2f8273f6b9fc22c90891dc802caf60eef805cdf",
+    "contractAddress": "0x982675D04D9c9fA074c702f5AcA3d84D04FE31D5",
+    "multiply": "100000000",
+    "name": "KNC / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "knc-usd"
+  },
+  {
+    "proxyAddress": "0xbf539d4c2106dd4d9ab6d56aed3d9023529db145",
+    "contractAddress": "0x20870D99455B6F9d7c0E6f2608245719d789ff53",
+    "multiply": "100000000",
+    "name": "KNC / USD",
+    "chainId": "42161",
+    "categoryId": "crypto-usd",
+    "path": "knc-usd"
+  },
+  {
+    "proxyAddress": "0x24b820870f726da9b0d83b0b28a93885061dbf50",
+    "contractAddress": "0xFd54f97A6C408561b5Df798c04ae08B27cA0d7F7",
+    "multiply": "100000000",
+    "name": "KRW / USD",
+    "chainId": "137",
+    "categoryId": "fiat",
+    "path": "krw-usd"
+  },
+  {
+    "proxyAddress": "0xcc232dcfaae6354ce191bd574108c1ad03f86450",
+    "contractAddress": "0x5d101824C693C70a68FFc3CDb0Cc394F3a4fb9Ec",
+    "multiply": "100000000",
+    "name": "LINK / USD",
+    "chainId": "10",
+    "categoryId": "crypto-usd",
+    "path": "link-usd"
+  },
+  {
+    "proxyAddress": "0xd61d7398b7734abe7c4b143fe57dc666d2fe83ad",
+    "contractAddress": "0x9a40cb08A030E6fa281Fdf9F3091a4E2839e4Aca",
+    "multiply": "100000000",
+    "name": "LINK / USD",
+    "chainId": "1284",
+    "categoryId": "crypto-usd",
+    "path": "link-usd"
+  },
+  {
+    "proxyAddress": "0x4e5a43a79f53c0a8e83489648ea7e429278f8b2d",
+    "contractAddress": "0x80519EcaD69B8E43C6690b73554379BfdF0eF79E",
+    "multiply": "1000000000000000000",
+    "name": "LTC / BNB",
+    "chainId": "56",
+    "categoryId": "crypto-bnb",
+    "path": "ltc-bnb"
+  },
+  {
+    "proxyAddress": "0xeb99f173cf7d9a6dc4d889c2ad7103e8383b6efa",
+    "contractAddress": "0x9D5feD875fd982Ae3538280e5f34C545beD14749",
+    "multiply": "100000000",
+    "name": "LTC / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "ltc-usd"
+  },
+  {
+    "proxyAddress": "0x943cef1b112ca9fd7edadc9a46477d3812a382b6",
+    "contractAddress": "0x5006C56a2967eF6c9d856704669d2421D3189Be4",
+    "multiply": "1000000000000000000",
+    "name": "Link.e PoR",
+    "chainId": "43114",
+    "categoryId": "reserves",
+    "path": "link.e-por"
+  },
+  {
+    "proxyAddress": "0x327e23a4855b6f663a28c5161541d69af8973302",
+    "contractAddress": "0xC6d82423C6F8b0c406c1C34Aee8e988b14D5f685",
+    "multiply": "1000000000000000000",
+    "name": "MATIC / ETH",
+    "chainId": "137",
+    "categoryId": "crypto-eth",
+    "path": "matic-eth"
+  },
+  {
+    "proxyAddress": "0x827863222c9c603960de6ff2c0dd58d457dcc363",
+    "contractAddress": "0x42A70DC2cfCa080Da3a2568a3EC3A51E6E76363F",
+    "multiply": "100000000",
+    "name": "MIMATIC / USD",
+    "chainId": "250",
+    "categoryId": "crypto-usd",
+    "path": "mimatic-usd"
+  },
+  {
+    "proxyAddress": "0xd8d483d813547cfb624b8dc33a00f2fcbcd2d428",
+    "contractAddress": "0x1c367A2D0a1E6c13dA55CAb82484D4CD8dc292e2",
+    "multiply": "100000000",
+    "name": "MIMATIC / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "mimatic-usd"
+  },
+  {
+    "proxyAddress": "0x807b59d12520830d1864286fa0271c27baa94197",
+    "contractAddress": "0xa5043AbEB607a370a16cdBd885Fb7Da6485A4e2C",
+    "multiply": "1000000000000000000",
+    "name": "MKR / ETH",
+    "chainId": "137",
+    "categoryId": "crypto-eth",
+    "path": "mkr-eth"
+  },
+  {
+    "proxyAddress": "0x1823c89715fe3fb96a24d11c917aca918894a090",
+    "contractAddress": "0xb17Eac46CF1B9C5fe2F707c8A47AFc4d208b3E83",
+    "multiply": "1000000000000000000",
+    "name": "Mutant Ape Yacht Club",
+    "chainId": "1",
+    "categoryId": "nft-floor-prices",
+    "path": "coinbase-mayc-floor-price"
+  },
+  {
+    "proxyAddress": "0xc12a6d1d827e23318266ef16ba6f397f2f91da9b",
+    "contractAddress": "0xd9701835dC47837B53D5Cfe95eB5a66f42B56901",
+    "multiply": "100000000",
+    "name": "NEAR / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "near-usd"
+  },
+  {
+    "proxyAddress": "0x8d0e319ebaa8df32e088e469062f85abf2ebe599",
+    "contractAddress": "0x1A8220ac22762F08bE1cD17eE3b6FFfFe96c921c",
+    "multiply": "100000000",
+    "name": "NFT Blue Chip Total Market Cap",
+    "chainId": "42161",
+    "categoryId": "indexes",
+    "path": "nft-blue-chip-usd"
+  },
+  {
+    "proxyAddress": "0x9cb2a01a7e64992d32a34db7ceea4c919c391f6a",
+    "contractAddress": "0x861334DEC28b3ba71DFFb1ABf4E57D4AD3964b5f",
+    "multiply": "1000000000000000000",
+    "name": "NMR / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "nmr-eth"
+  },
+  {
+    "proxyAddress": "0xcc445b35b3636bc7cc7051f4769d8982ed0d449a",
+    "contractAddress": "0xe4E345594375B54F395B54C41bD8b370A302bf69",
+    "multiply": "100000000",
+    "name": "NMR / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "nmr-usd"
+  },
+  {
+    "proxyAddress": "0x2c881b6f3f6b5ff6c975813f87a4dad0b241c15b",
+    "contractAddress": "0x51aa283a37771B33101e88658C440951ee0AE02d",
+    "multiply": "1000000000000000000",
+    "name": "OGN / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "ogn-eth"
+  },
+  {
+    "proxyAddress": "0x93ffee768f74208a7b9f2a4426f0f6bcbb1d09de",
+    "contractAddress": "0x6498C24083A4667aaA53bDE365BBC503EEF69828",
+    "multiply": "100000000",
+    "name": "OMG / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "omg-usd"
+  },
+  {
+    "proxyAddress": "0x7d476f061f8212a8c9317d5784e72b4212436e93",
+    "contractAddress": "0x34B41725Cf934866A4b89d65395F15af2Cb9aE89",
+    "multiply": "100000000",
+    "name": "OMG / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "omg-usd"
+  },
+  {
+    "proxyAddress": "0x887f177cbed2cf555a64e7bf125e1825eb69db82",
+    "contractAddress": "0x586E5572217D68643E1de6a0d40Cb37B0961A11a",
+    "multiply": "100000000",
+    "name": "ONT / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "ont-usd"
+  },
+  {
+    "proxyAddress": "0xcda3708c5c2907fcca52bb3f9d3e4c2028b89319",
+    "contractAddress": "0x8B1668905367a2EFB610e7aA1DC6F4F26d1f7268",
+    "multiply": "100000000",
+    "name": "ONT / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "ont-usd"
+  },
+  {
+    "proxyAddress": "0xba9b2a360eb8abdb677d6d7f27e12de11aa052ef",
+    "contractAddress": "0x782EE2B86316d04F226Ba416d5dF5358a2D6102f",
+    "multiply": "1000000000000000000",
+    "name": "ORN / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "orn-eth"
+  },
+  {
+    "proxyAddress": "0xd75aaae4af0c398ca13e2667be57af2cca8b5de6",
+    "contractAddress": "0x932354AeA65a17B265bf22D29f7132ECfE86747d",
+    "multiply": "100000000",
+    "name": "OXT / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "oxt-usd"
+  },
+  {
+    "proxyAddress": "0x9b97304ea12efed0fad976fbecaad46016bf269e",
+    "contractAddress": "0x66d35ccD808317870198793a96b88ab69dCAe53B",
+    "multiply": "1000000000000000000",
+    "name": "PAXG / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "paxg-eth"
+  },
+  {
+    "proxyAddress": "0x7f8cad4690a38ac28bda3d132ef83db1c17557df",
+    "contractAddress": "0x6FfA7c72cCd821A4dB68FD75Ee465dd09AA8C088",
+    "multiply": "100000000",
+    "name": "PAXG / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "paxg-usd"
+  },
+  {
+    "proxyAddress": "0x716bb8c60d409e54b8fb5c4f6abc50e794da048a",
+    "contractAddress": "0xC84E8CF8C30775d4639364C759fd0aBDb941Db9C",
+    "multiply": "100000000",
+    "name": "PAXG Reserves",
+    "chainId": "1",
+    "categoryId": "reserves",
+    "path": "paxg-reserves"
+  },
+  {
+    "proxyAddress": "0x836a579b39d22b2147c1c229920d27880c915578",
+    "contractAddress": "0x836faa493e68faC2dd6b9250Ace9666fd48c4f09",
+    "multiply": "1000000000000000000",
+    "name": "QUICK / ETH",
+    "chainId": "137",
+    "categoryId": "crypto-eth",
+    "path": "quick-eth"
+  },
+  {
+    "proxyAddress": "0x20d0fcab0ecfd078b036b6caf1fac69a6453b352",
+    "contractAddress": "0x94cD888Bea0dE39DD0b41396a9311c5212635EB7",
+    "multiply": "100000000",
+    "name": "RDNT / USD",
+    "chainId": "42161",
+    "categoryId": "crypto-usd",
+    "path": "rdnt-usd"
+  },
+  {
+    "proxyAddress": "0x4cba1e1fdc738d0fe8db3ee07728e2bc4da676c6",
+    "contractAddress": "0xd7Fc11b34D7BaE2E94B958C4ab06D950f0bD4C3E",
+    "multiply": "1000000000000000000",
+    "name": "RLC / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "rlc-eth"
+  },
+  {
+    "proxyAddress": "0x35e3f7e558c04ce7eee1629258ecbba03b36ec56",
+    "contractAddress": "0xDF627aa5B9C024818c6950fDAD7e4C16D93b10Ca",
+    "multiply": "100000000",
+    "name": "SAND / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "sand-usd"
+  },
+  {
+    "proxyAddress": "0x2fcf37343e916eaed1f1ddaaf84458a359b53877",
+    "contractAddress": "0x584F57911b6EEDab5503E202f8e193663c9bd3DB",
+    "multiply": "100000000",
+    "name": "SNX / USD",
+    "chainId": "10",
+    "categoryId": "crypto-usd",
+    "path": "snx-usd"
+  },
+  {
+    "proxyAddress": "0x2eb00cc9db7a7e0a013a49b3f6ac66008d1456f7",
+    "contractAddress": "0x1F0C026D3f87b0c69e3c8399A53b8Da4aA6304C2",
+    "multiply": "100000000",
+    "name": "SNX / USD",
+    "chainId": "250",
+    "categoryId": "crypto-usd",
+    "path": "snx-usd"
+  },
+  {
+    "proxyAddress": "0xc663315f7af904fbbb0f785c32046dfa03e85270",
+    "contractAddress": "0x92C9B9C512759f5D04563eFa3698FC4fbF735d59",
+    "multiply": "100000000",
+    "name": "SOL / USD",
+    "chainId": "10",
+    "categoryId": "crypto-usd",
+    "path": "sol-usd"
+  },
+  {
+    "proxyAddress": "0x0e8a53dd9c13589df6382f13da6b3ec8f919b323",
+    "contractAddress": "0x14E9D15c1EcD428606c443Ed715631b5C444a49e",
+    "multiply": "100000000",
+    "name": "SOL / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "sol-usd"
+  },
+  {
+    "proxyAddress": "0x02e48946849e0bfdd7bea5daa80af77195c7e24c",
+    "contractAddress": "0x421CfF3FF719b5101f9c8Da487445C39838A566c",
+    "multiply": "100000000",
+    "name": "SPELL / USD",
+    "chainId": "250",
+    "categoryId": "crypto-usd",
+    "path": "spell-usd"
+  },
+  {
+    "proxyAddress": "0x8c110b94c5f1d347facf5e1e938ab2db60e3c9a8",
+    "contractAddress": "0x070f15084600Aceace6D639CDDd0e341975D1e30",
+    "multiply": "100000000",
+    "name": "SPELL / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "spell-usd"
+  },
+  {
+    "proxyAddress": "0x49b0c695039243bbfeb8ecd054eb70061fd54aa0",
+    "contractAddress": "0xf3F28072f7FF2510843504c69ACD07C2C84B2d83",
+    "multiply": "100000000",
+    "name": "SUSHI / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "sushi-usd"
+  },
+  {
+    "proxyAddress": "0xccc059a1a17577676c8673952dc02070d29e5a66",
+    "contractAddress": "0x649F04a23eE3708331A949395b61F37b3Fd94847",
+    "multiply": "100000000",
+    "name": "SUSHI / USD",
+    "chainId": "250",
+    "categoryId": "crypto-usd",
+    "path": "sushi-usd"
+  },
+  {
+    "proxyAddress": "0xfb0cfd6c19e25db4a08d8a204a387cea48cc138f",
+    "contractAddress": "0xCFC1C64e721bC034ab894302B78149b3C7a1066d",
+    "multiply": "100000000",
+    "name": "SXP / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "sxp-usd"
+  },
+  {
+    "proxyAddress": "0x3d44925a8e9f9dfd90390e58e92ec16c996a331b",
+    "contractAddress": "0x20086D92838C475fc3aDE8B745EfB33213793080",
+    "multiply": "100000000",
+    "name": "TOMO / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "tomo-usd"
+  },
+  {
+    "proxyAddress": "0x84a24deca415acc0c395872a9e6a63e27d6225c8",
+    "contractAddress": "0xc1D757bee6BCDD45093979bFE60d341B833B2dB0",
+    "multiply": "1000000000000000000",
+    "name": "TRIBE / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "tribe-eth"
+  },
+  {
+    "proxyAddress": "0x26929b85fe284eeab939831002e1928183a10fb1",
+    "contractAddress": "0xAbA1EACE8627c15324890315E942A4FBD73b70E0",
+    "multiply": "100000000",
+    "name": "TRU / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "tru-usd"
+  },
+  {
+    "proxyAddress": "0xf4c5e535756d11994fcbb12ba8add0192d9b88be",
+    "contractAddress": "0xb7EE93d3E0586571D481F9d967d82383BB460B38",
+    "multiply": "100000000",
+    "name": "TRX / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "trx-usd"
+  },
+  {
+    "proxyAddress": "0x0e09921cf7801a5ad47b892c8727593275625a9f",
+    "contractAddress": "0x206A01D5b59B7D7315B6bC7B5866f62A6fdFF7bA",
+    "multiply": "100000000",
+    "name": "TRX / USD",
+    "chainId": "10",
+    "categoryId": "crypto-usd",
+    "path": "trx-usd"
+  },
+  {
+    "proxyAddress": "0xbe456fd14720c3accc30a2013bffd782c9cb75d5",
+    "contractAddress": "0xAC099D59755982757537F13c7c4Ae8c8d9F030B9",
+    "multiply": "1000000000000000000",
+    "name": "TUSD Reserves",
+    "chainId": "1",
+    "categoryId": "reserves",
+    "path": "tusd-por"
+  },
+  {
+    "proxyAddress": "0x7e728dfa6bca9023d9abee759fdf56beab8ac7ad",
+    "contractAddress": "0x8dbb48f934b02E891e19Ec09f76B54f3ED5f01Ee",
+    "multiply": "1000000000000000000",
+    "name": "TWT / BNB",
+    "chainId": "56",
+    "categoryId": "crypto-bnb",
+    "path": "twt-bnb"
+  },
+  {
+    "proxyAddress": "0xec8761a0a73c34329ca5b1d3dc7ed07f30e836e2",
+    "contractAddress": "0x9257D83A0DdA413cA24F66dD32A056Bc2eBAFd2e",
+    "multiply": "100000000",
+    "name": "Total Marketcap / USD",
+    "chainId": "1",
+    "categoryId": "indexes",
+    "path": "mcap-usd"
+  },
+  {
+    "proxyAddress": "0x11429ee838cc01071402f21c219870cbac0a59a0",
+    "contractAddress": "0x85A48ded8c35d82f8f29844e25dD51a70a23c93d",
+    "multiply": "100000000",
+    "name": "UNI / USD",
+    "chainId": "10",
+    "categoryId": "crypto-usd",
+    "path": "uni-usd"
+  },
+  {
+    "proxyAddress": "0xf623562437735e297c63b73c9e4417614147505c",
+    "contractAddress": "0xb6F94457113A091959E492Ef38bc3aE3cc475C63",
+    "multiply": "100000000",
+    "name": "US+ PoR (Fluent Finance)",
+    "chainId": "1",
+    "categoryId": "reserves",
+    "path": "fluent-us-por"
+  },
+  {
+    "proxyAddress": "0x45f86ca2a8bc9ebd757225b19a1a0d7051be46db",
+    "contractAddress": "0xc98fb42526666963d2b43a1ca5C3dc04fe744cdb",
+    "multiply": "1000000000000000000",
+    "name": "USDC / BNB",
+    "chainId": "56",
+    "categoryId": "crypto-bnb",
+    "path": "usdc-bnb"
+  },
+  {
+    "proxyAddress": "0xefb7e6be8356ccc6827799b6a7348ee674a80eae",
+    "contractAddress": "0xEc5dC23f4FA6AaC7FCBbcC2849571b04FcaCd75F",
+    "multiply": "1000000000000000000",
+    "name": "USDC / ETH",
+    "chainId": "137",
+    "categoryId": "stablecoins",
+    "path": "usdc-eth"
+  },
+  {
+    "proxyAddress": "0xa122591f60115d63421f66f752ef9f6e0bc73abc",
+    "contractAddress": "0x21d3145E1BD5D89B6EFfc7B736d8d0D878343B55",
+    "multiply": "100000000",
+    "name": "USDC / USD",
+    "chainId": "1284",
+    "categoryId": "stablecoins",
+    "path": "usdc-usd"
+  },
+  {
+    "proxyAddress": "0x63769951e4cfdbdc653dd9bbde63d2ce0746e5f2",
+    "contractAddress": "0xBe865442c3A0042f6d619027c697CA409513fFb4",
+    "multiply": "1000000",
+    "name": "USDC.e PoR",
+    "chainId": "43114",
+    "categoryId": "reserves",
+    "path": "usdc_e-por"
+  },
+  {
+    "proxyAddress": "0x4ee1f9ec1048979930ac832a3c1d18a0b4955a02",
+    "contractAddress": "0xd9fCb26FE3D4589c3e2ecD6A2A3af54EdDB67240",
+    "multiply": "100000000",
+    "name": "USDD / USD",
+    "chainId": "42161",
+    "categoryId": "stablecoins",
+    "path": "usdd-usd"
+  },
+  {
+    "proxyAddress": "0xf482ed35406933f321f293ac0e4c6c8f59a22fa5",
+    "contractAddress": "0xE7b27118b92d3a23afEa153953FeD8853dbFa8FA",
+    "multiply": "100000000",
+    "name": "USDP Reserves",
+    "chainId": "1",
+    "categoryId": "reserves",
+    "path": "pax-reserves"
+  },
+  {
+    "proxyAddress": "0xd5c40f5144848bd4ef08a9605d860e727b991513",
+    "contractAddress": "0xF1703b483822f12Bf0D84296F2266196Ca9C352b",
+    "multiply": "1000000000000000000",
+    "name": "USDT / BNB",
+    "chainId": "56",
+    "categoryId": "crypto-bnb",
+    "path": "usdt-bnb"
+  },
+  {
+    "proxyAddress": "0xf9d5aac6e5572aefa6bd64108ff86a222f69b64d",
+    "contractAddress": "0x40C9E6e3ba0324E58C0C88C78c8e733a93ac1b61",
+    "multiply": "1000000000000000000",
+    "name": "USDT / ETH",
+    "chainId": "137",
+    "categoryId": "stablecoins",
+    "path": "usdt-eth"
+  },
+  {
+    "proxyAddress": "0x94d8c2548018c27f1aa078a23c4158206be1cc72",
+    "contractAddress": "0x615049D0F6441b8bF09876A97A28B7719A951f46",
+    "multiply": "1000000",
+    "name": "USDT.e PoR",
+    "chainId": "43114",
+    "categoryId": "reserves",
+    "path": "usdt_e-por"
+  },
+  {
+    "proxyAddress": "0x35bf6767577091e7f04707c0290b3f889e968307",
+    "contractAddress": "0xe0552DC960366F67Da00CB3d9DF441F24B5C2AC1",
+    "multiply": "1000000000000000000",
+    "name": "VeeFriends",
+    "chainId": "1",
+    "categoryId": "nft-floor-prices",
+    "path": "coinbase-veefriends-floor-price"
+  },
+  {
+    "proxyAddress": "0x0017abac5b6f291f9164e35b1234ca1d697f9cf4",
+    "contractAddress": "0x1Cde96670e1e779b13dDfd6a5c6D19349cc6a642",
+    "multiply": "100000000",
+    "name": "WBTC / BTC",
+    "chainId": "42161",
+    "categoryId": "crypto-other",
+    "path": "wbtc-btc"
+  },
+  {
+    "proxyAddress": "0xde31f8bfbd8c84b5360cfacca3539b938dd78ae6",
+    "contractAddress": "0x13B25Ae82978D7d65302ED0B4EE0EE0a5cB3A70b",
+    "multiply": "100000000",
+    "name": "WBTC / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "wbtc-usd"
+  },
+  {
+    "proxyAddress": "0xa81fe04086865e63e12dd3776978e49deea2ea4e",
+    "contractAddress": "0xB622b7D6d9131cF6A1230EBa91E5da58dbea6F59",
+    "multiply": "100000000",
+    "name": "WBTC PoR",
+    "chainId": "1",
+    "categoryId": "reserves",
+    "path": "wbtc-por"
+  },
+  {
+    "proxyAddress": "0xebefeaa58636df9b20a4fad78fad8759e6a20e87",
+    "contractAddress": "0xAfde05b14dd17cA71bc484bcEf565746D7938eFE",
+    "multiply": "100000000",
+    "name": "WBTC.e PoR",
+    "chainId": "43114",
+    "categoryId": "reserves",
+    "path": "wbtc.e-por"
+  },
+  {
+    "proxyAddress": "0xddaf9290d057bfa12d7576e6dadc109421f31948",
+    "contractAddress": "0x1d29baE52280D3B49FA31aF7dFdb61f9dC5040Af",
+    "multiply": "1000000000000000000",
+    "name": "WETH.e PoR",
+    "chainId": "43114",
+    "categoryId": "reserves",
+    "path": "weth.e-por"
+  },
+  {
+    "proxyAddress": "0xf7e7c0ffcb11dac6eca1434c67fab9ae000e10a7",
+    "contractAddress": "0xf8Aa2505865E12b606438312FF572Bf8119E4A65",
+    "multiply": "100000000",
+    "name": "WING / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "wing-usd"
+  },
+  {
+    "proxyAddress": "0x134fe0a225fb8e6683617c13ceb6b3319fb4fb82",
+    "contractAddress": "0xc29d104A418a08407f9f2CDb614c1CDCf82986e0",
+    "multiply": "100000000",
+    "name": "WING / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "wing-usd"
+  },
+  {
+    "proxyAddress": "0xddf0b85c600daf9e308afed9f597aca212354764",
+    "contractAddress": "0x45B68d24Df514BF13a838d88bE4363F8011719de",
+    "multiply": "1000000000000000000",
+    "name": "World of Women",
+    "chainId": "1",
+    "categoryId": "nft-floor-prices",
+    "path": "coinbase-worldofwomen-floor-price"
+  },
+  {
+    "proxyAddress": "0x86896feb19d8a607c3b11f2af50a0f239bd71cd0",
+    "contractAddress": "0xc54645D805aca807E7f40b9308D159BB62939E3a",
+    "multiply": "100000000",
+    "name": "XAU / USD",
+    "chainId": "56",
+    "categoryId": "commodities",
+    "path": "xau-usd"
+  },
+  {
+    "proxyAddress": "0xeb988b77b94c186053282bfcd8b7ed55142d3cab",
+    "contractAddress": "0xD6A3a9Bb4bd49DdB2374CA58Edf47a8bB63Af3d2",
+    "multiply": "100000000",
+    "name": "XCN / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "xcn-usd"
+  },
+  {
+    "proxyAddress": "0x692ae5510ca9070095a496dbcfbcda99d4024cd9",
+    "contractAddress": "0x1083811A3Cee096BEad2A6Db67d1f145F4919fdb",
+    "multiply": "100000000",
+    "name": "XLM / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "xlm-usd"
+  },
+  {
+    "proxyAddress": "0x798a65d349b2b5e6645695912880b54dffd79074",
+    "contractAddress": "0x0877689c510f099FB968906223ab0a3F556d4f2B",
+    "multiply": "1000000000000000000",
+    "name": "XRP / BNB",
+    "chainId": "56",
+    "categoryId": "crypto-bnb",
+    "path": "xrp-bnb"
+  },
+  {
+    "proxyAddress": "0x785ba89291f676b5386652eb12b30cf361020694",
+    "contractAddress": "0xA3f4500AdD9484c42461A9d7d52F2c034169f49A",
+    "multiply": "100000000",
+    "name": "XRP / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "xrp-usd"
+  },
+  {
+    "proxyAddress": "0x93a67d414896a280bf8ffb3b389fe3686e014fda",
+    "contractAddress": "0x5C0F367A778857B36E88B553df132b232AC34901",
+    "multiply": "100000000",
+    "name": "XRP / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "xrp-usd"
+  },
+  {
+    "proxyAddress": "0x8264d6983b219be65c4d62f1c82b3a2999944cf2",
+    "contractAddress": "0x1255E2748A3A26b248d654B5194CdeFc4594b90A",
+    "multiply": "1000000000000000000",
+    "name": "XTZ / BNB",
+    "chainId": "56",
+    "categoryId": "crypto-bnb",
+    "path": "xtz-bnb"
+  },
+  {
+    "proxyAddress": "0x9a18137adcf7b05f033ad26968ed5a9cf0bf8e6b",
+    "contractAddress": "0x5CeefEC70Fb4819B9CE2dEaa6355c77E3243e640",
+    "multiply": "100000000",
+    "name": "XTZ / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "xtz-usd"
+  },
+  {
+    "proxyAddress": "0xbf63f430a79d4036a5900c19818aff1fa710f206",
+    "contractAddress": "0xD051e4050dAd55285EEDbC186095C0Ccb7054944",
+    "multiply": "100000000",
+    "name": "XVS / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "xvs-usd"
+  },
+  {
+    "proxyAddress": "0xf841761481df19831ccc851a54d8350ae6022583",
+    "contractAddress": "0xD2a2976cdf5098971DaA56878212Cdb24Ecb0CbB",
+    "multiply": "1000000000000000000",
+    "name": "YFI / BNB",
+    "chainId": "56",
+    "categoryId": "crypto-bnb",
+    "path": "yfi-bnb"
+  },
+  {
+    "proxyAddress": "0x745ab5b69e01e2be1104ca84937bb71f96f5fb21",
+    "contractAddress": "0x660e7aF290F540205A84dccC1F40D0269fC936F5",
+    "multiply": "100000000",
+    "name": "YFI / USD",
+    "chainId": "42161",
+    "categoryId": "crypto-usd",
+    "path": "yfi-usd"
+  },
+  {
+    "proxyAddress": "0x9d3a43c111e7b2c6601705d9fcf7a70c95b1dc55",
+    "contractAddress": "0x633c4dfD8e11008eB9e245ad4B84Cb76F197FD1b",
+    "multiply": "100000000",
+    "name": "YFI / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "yfi-usd"
+  },
+  {
+    "proxyAddress": "0xbc08c639e579a391c4228f20d0c29d0690092df0",
+    "contractAddress": "0x962355fC06e85A341E9f20C395F2fe70f25E793E",
+    "multiply": "100000000",
+    "name": "ZEC / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "zec-usd"
+  },
+  {
+    "proxyAddress": "0x2885d15b8af22648b98b122b22fdf4d2a56c6023",
+    "contractAddress": "0x4Dde220fF2690A350b0Ea9404F35C8f3Ad012584",
+    "multiply": "100000000",
+    "name": "ZRX / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "zrx-usd"
+  },
+  {
+    "proxyAddress": "0xf017fcb346a1885194689ba23eff2fe6fa5c483b",
+    "contractAddress": "0xd74FF3f1b565597E59D44320F53a5C5c8BA85f7b",
+    "multiply": "1000000000000000000",
+    "name": "cbETH / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "cbeth-eth"
+  },
+  {
+    "proxyAddress": "0x0a6a03cdf7d0b48d4e4ba8e362a4ffc3aac4f3c0",
+    "contractAddress": "0x508e317956cA8Cc9c824c1786c0c963699d99f75",
+    "multiply": "1000000000000000000",
+    "name": "cbETH / ETH",
+    "chainId": "137",
+    "categoryId": "crypto-eth",
+    "path": "cbeth-eth"
+  },
+  {
+    "proxyAddress": "0x8917800a6bdd8fa8b7c94e25ae2219db28050622",
+    "contractAddress": "0xD423C9A9AD8c21C97bdeE2E74F8098625aa4f329",
+    "multiply": "1000000000000000000",
+    "name": "eFIL Reserves",
+    "chainId": "1",
+    "categoryId": "reserves",
+    "path": "efil-por"
+  },
+  {
+    "proxyAddress": "0xad35bd71b9afe6e4bdc266b345c198eadef9ad94",
+    "contractAddress": "0x1187272A0E3A603eC4734CeC73a0880055eCC593",
+    "multiply": "100000000",
+    "name": "sUSD / USD",
+    "chainId": "1",
+    "categoryId": "stablecoins",
+    "path": "susd-usd"
+  },
+  {
+    "proxyAddress": "0x07c5b924399cc23c24a95c8743de4006a32b7f2a",
+    "contractAddress": "0xE5B5Be82015444c04B281CF4aFa6A99130ED83a2",
+    "multiply": "100000000",
+    "name": "stETH / USD",
+    "chainId": "42161",
+    "categoryId": "crypto-usd",
+    "path": "steth-usd"
+  },
+  {
+    "proxyAddress": "0xfdfd9c85ad200c506cf9e21f1fd8dd01932fbb23",
+    "contractAddress": "0xD7623f1d24b35c392862fB67C9716564A117C9DE",
+    "multiply": "100000000",
+    "name": "wBTC / BTC",
+    "chainId": "1",
+    "categoryId": "crypto-other",
+    "path": "wbtc-btc"
+  },
+  {
+    "proxyAddress": "0x9a177bb9f5b6083e962f9e62bd21d4b5660aeb03",
+    "contractAddress": "0xd690b2CF0D2bcBce51c4cE2dc46E02C508465c5c",
+    "multiply": "100000000",
+    "name": "1INCH / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "1inch-usd"
+  },
+  {
+    "proxyAddress": "0x1466b4bd0c4b6b8e1164991909961e0ee6a66d8c",
+    "contractAddress": "0xaE21867e103AA22D0790ABf980277e9215B053f9",
+    "multiply": "100000000",
+    "name": "1INCH / USD",
+    "chainId": "1285",
+    "categoryId": "crypto-usd",
+    "path": "1inch-usd"
+  },
+  {
+    "proxyAddress": "0x4bc735ef24bf286983024cad5d03f0738865aaef",
+    "contractAddress": "0xa64344ec6b4971d1FBDaf5550001ac5751EEd599",
+    "multiply": "100000000",
+    "name": "1INCH / USD",
+    "chainId": "42161",
+    "categoryId": "crypto-usd",
+    "path": "1inch-usd"
+  },
+  {
+    "proxyAddress": "0x54389e89a5ec1d4312d5b5c48055d6e56a177bf9",
+    "contractAddress": "0x420AF689F50b9F7B67fe506237c877b98bb24dDA",
+    "multiply": "100000000",
+    "name": "AAVE / USD",
+    "chainId": "1088",
+    "categoryId": "crypto-usd",
+    "path": "aave-usd"
+  },
+  {
+    "proxyAddress": "0x6ee1efcce688d5b79cb8a400870af471c5282992",
+    "contractAddress": "0x56c97c79ff04601f9E7E066b689c9472544ABA83",
+    "multiply": "100000000",
+    "name": "AAVE / USD",
+    "chainId": "1666600000",
+    "categoryId": "crypto-usd",
+    "path": "aave-usd"
+  },
+  {
+    "proxyAddress": "0x37f35ef6735c594e6e803bc81577bac759d8179c",
+    "contractAddress": "0x89f446d08222f3aF6751236AAD10533dbb18De63",
+    "multiply": "100000000",
+    "name": "AAVE / USD",
+    "chainId": "1285",
+    "categoryId": "crypto-usd",
+    "path": "aave-usd"
+  },
+  {
+    "proxyAddress": "0xd9f615a9b820225edba2d821c4a696a0924051c6",
+    "contractAddress": "0xeFBC6F8C9806B066fa0Da149349450Be60e5e136",
+    "multiply": "100000000",
+    "name": "ADA / USD",
+    "chainId": "42161",
+    "categoryId": "crypto-usd",
+    "path": "ada-usd"
+  },
+  {
+    "proxyAddress": "0x43dea17dee1ca50c6266acb59b32659e44d3ee5d",
+    "contractAddress": "0xC2262cA31b16AE1Cfe6F7612f49E79B821e31162",
+    "multiply": "100000000",
+    "name": "ADA / USD",
+    "chainId": "10",
+    "categoryId": "crypto-usd",
+    "path": "ada-usd"
+  },
+  {
+    "proxyAddress": "0x5db6e61b6159b20f068dc15a47df2e5931b14f29",
+    "contractAddress": "0xc4AF1C7744131BfE4Cf86ca2b1688d7F1f428Eaf",
+    "multiply": "100000000",
+    "name": "ALCX / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "alcx-usd"
+  },
+  {
+    "proxyAddress": "0xc355e4c0b3ff4ed0b49eaacd55fe29b311f42976",
+    "contractAddress": "0xb49322fF269d67A5aF0718C19463eC9EE7BF821E",
+    "multiply": "100000000",
+    "name": "ALCX / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "alcx-usd"
+  },
+  {
+    "proxyAddress": "0xe0073b60833249ffd1bb2af809112c2fbf221df6",
+    "contractAddress": "0x481E278Bf87281CF12342A4302e799Bf8515b985",
+    "multiply": "100000000",
+    "name": "ALPACA / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "alpaca-usd"
+  },
+  {
+    "proxyAddress": "0x7b0ca9a6d03fe0467a31ca850f5bca51e027b3af",
+    "contractAddress": "0x9C81461B6B821407E0a2968F9CEc23e3C7063F84",
+    "multiply": "100000000",
+    "name": "ALPHA / USD",
+    "chainId": "43114",
+    "categoryId": "crypto-usd",
+    "path": "alpha-usd"
+  },
+  {
+    "proxyAddress": "0x7eed379bf00005cfed29fed4009669de9bcc21ce",
+    "contractAddress": "0xBbC9Ab3F66d0b934089FdCceda3615a6bb879633",
+    "multiply": "100000000",
+    "name": "ANKR / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "ankr-usd"
+  },
+  {
+    "proxyAddress": "0x94ee35e8b9b1b4cd3bdb720242d6d1796b43c2ff",
+    "contractAddress": "0x3ba21bdc9502B3EEa66cE1a8270997DCC31cc468",
+    "multiply": "100000000",
+    "name": "ANKR / USD",
+    "chainId": "1285",
+    "categoryId": "crypto-usd",
+    "path": "ankr-usd"
+  },
+  {
+    "proxyAddress": "0x213b030e24c906ee3b98ec7538cc6d3d3c82af55",
+    "contractAddress": "0xfC8fb8Bd285FF358FEF481b45dbc7450C0F8f89d",
+    "multiply": "100000000",
+    "name": "ANT / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "ant-usd"
+  },
+  {
+    "proxyAddress": "0x2ac3f3bfac8fc9094bc3f0f9041a51375235b992",
+    "contractAddress": "0xB24ACd0C92014920Aa233F78331e47aEd3B5f204",
+    "multiply": "100000000",
+    "name": "APE / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "ape-usd"
+  },
+  {
+    "proxyAddress": "0xd10abbc76679a20055e167bb80a24ac851b37056",
+    "contractAddress": "0xa99999b1475F24037e8b6947aBBC7710676E77dd",
+    "multiply": "100000000",
+    "name": "APE / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "ape-usd"
+  },
+  {
+    "proxyAddress": "0x221912ce795669f628c51c69b7d0873eda9c03bb",
+    "contractAddress": "0x076577765a3e66db410eCc1372d0B0dB503A42C5",
+    "multiply": "100000000",
+    "name": "APE / USD",
+    "chainId": "42161",
+    "categoryId": "crypto-usd",
+    "path": "ape-usd"
+  },
+  {
+    "proxyAddress": "0xf0981a2bde30cf767080d80b93beca6204dcc54a",
+    "contractAddress": "0x3caF1C0C388384e87d170c00A781fc767Ac44C61",
+    "multiply": "100000000",
+    "name": "APE / USD",
+    "chainId": "43114",
+    "categoryId": "crypto-usd",
+    "path": "ape-usd"
+  },
+  {
+    "proxyAddress": "0x89178957e9bd07934d7792ffc0cf39f11c8c2b1f",
+    "contractAddress": "0x2Dd486F1FA76Fd1228a9c818C552c6A92F138453",
+    "multiply": "100000000",
+    "name": "APE / USD",
+    "chainId": "10",
+    "categoryId": "crypto-usd",
+    "path": "ape-usd"
+  },
+  {
+    "proxyAddress": "0x48f2ecf0bd180239aef474a9da945f2e2d41daa3",
+    "contractAddress": "0x3442bB3aD11957449D9Af5aCE9d17709240dcCe7",
+    "multiply": "100000000",
+    "name": "APT / USD",
+    "chainId": "10",
+    "categoryId": "crypto-usd",
+    "path": "apt-usd"
+  },
+  {
+    "proxyAddress": "0x8f14546d0b960793180ee355b73fa55041a4a356",
+    "contractAddress": "0x7E36B8C677D84556B4742F9d7791019bC7d408Db",
+    "multiply": "100000000",
+    "name": "ARB / USD",
+    "chainId": "10",
+    "categoryId": "crypto-usd",
+    "path": "arb-usd"
+  },
+  {
+    "proxyAddress": "0xb2a824043730fe05f3da2efafa1cbbe83fa548d6",
+    "contractAddress": "0x46de66F10343b59BAcc37dF9b3F67cD0CcC121A3",
+    "multiply": "100000000",
+    "name": "ARB / USD",
+    "chainId": "42161",
+    "categoryId": "crypto-usd",
+    "path": "arb-usd"
+  },
+  {
+    "proxyAddress": "0xb056b7c804297279a9a673289264c17e6dc6055d",
+    "contractAddress": "0x2e9c2B44D3f5702D2654c20260E8e010656D9777",
+    "multiply": "100000000",
+    "name": "ATOM / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "atom-usd"
+  },
+  {
+    "proxyAddress": "0xcda67618e51762235eaca373894f0c79256768fa",
+    "contractAddress": "0x77b911DBe147ED5b4554997860D6362A5652fC91",
+    "multiply": "100000000",
+    "name": "ATOM / USD",
+    "chainId": "42161",
+    "categoryId": "crypto-usd",
+    "path": "atom-usd"
+  },
+  {
+    "proxyAddress": "0x9854e9a850e7c354c1de177ea953a6b1fba8fc22",
+    "contractAddress": "0x4258e5D50d737CBBEA347f0115Ad166e234902D7",
+    "multiply": "100000000",
+    "name": "AUD / USD",
+    "chainId": "42161",
+    "categoryId": "fiat",
+    "path": "aud-usd"
+  },
+  {
+    "proxyAddress": "0x498f912b09b5df618c77fcc9e8da503304df92bf",
+    "contractAddress": "0x5C8c6c45dcF57aEae4D7Ba4F613B6FC38EF7d18B",
+    "multiply": "100000000",
+    "name": "AUD / USD",
+    "chainId": "56",
+    "categoryId": "fiat",
+    "path": "aud-usd"
+  },
+  {
+    "proxyAddress": "0x1af363c2fcb47dd57133ee400e3c32eed4d37f8f",
+    "contractAddress": "0x730860C1BE60D4bE5B65e887C829324ef196F06C",
+    "multiply": "100000000",
+    "name": "AUD / USD",
+    "chainId": "1666600000",
+    "categoryId": "fiat",
+    "path": "aud-usd"
+  },
+  {
+    "proxyAddress": "0x39be70e93d2d285c9e71be7f70fc5a45a7777b14",
+    "contractAddress": "0x6AA7cC6feA036Bd57f36E2b82878c15012c48771",
+    "multiply": "100000000",
+    "name": "AUD / USD",
+    "chainId": "10",
+    "categoryId": "fiat",
+    "path": "aud-usd"
+  },
+  {
+    "proxyAddress": "0xe01ea2fbd8d76ee323fbed03eb9a8625ec981a10",
+    "contractAddress": "0xE3a36141cb950eb56DEC7383F2d9234Bbdc69B6e",
+    "multiply": "100000000",
+    "name": "AVAX / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "avax-usd"
+  },
+  {
+    "proxyAddress": "0x992f9b8aa09b8e084acf4e3213d8b2da5d366d6a",
+    "contractAddress": "0xF8c08dd48Cc94FF742f18d64Fcb8626Ea824cF15",
+    "multiply": "100000000",
+    "name": "AVAX /USD",
+    "chainId": "1285",
+    "categoryId": "crypto-usd",
+    "path": "avax-usd"
+  },
+  {
+    "proxyAddress": "0x5b58aa6e0651ae311864876a55411f481ad86080",
+    "contractAddress": "0xA303a72d334e589122454e8e849E147BAd309E73",
+    "multiply": "100000000",
+    "name": "AXS / USD",
+    "chainId": "42161",
+    "categoryId": "crypto-usd",
+    "path": "axs-usd"
+  },
+  {
+    "proxyAddress": "0x805a61d54bb686e57f02d1ec96a1491c7af40893",
+    "contractAddress": "0x7A18889f137B593f4E03C0A698A4360f43d1731c",
+    "multiply": "100000000",
+    "name": "AXS / USD",
+    "chainId": "10",
+    "categoryId": "crypto-usd",
+    "path": "axs-usd"
+  },
+  {
+    "proxyAddress": "0x3a65ee7351b603f950cb44ea6c265d6b5289512d",
+    "contractAddress": "0xB12898088F42DFC7942e3617ccc15f896914CAc5",
+    "multiply": "100000000",
+    "name": "AXS / USD",
+    "chainId": "1666600000",
+    "categoryId": "crypto-usd",
+    "path": "axs-usd"
+  },
+  {
+    "proxyAddress": "0x9322cead48ba0c76fecc78e82499ce8a829eab89",
+    "contractAddress": "0x8C7B19Db32033C2734B7C371B4c1bB2f0ad6fc7D",
+    "multiply": "100000000",
+    "name": "AXS / USD",
+    "chainId": "1285",
+    "categoryId": "crypto-usd",
+    "path": "axs-usd"
+  },
+  {
+    "proxyAddress": "0xd106b538f2a868c28ca1ec7e298c3325e0251d66",
+    "contractAddress": "0xd0CCf213410578DF4EC5EB0157234120B30d2f81",
+    "multiply": "100000000",
+    "name": "BAL / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "bal-usd"
+  },
+  {
+    "proxyAddress": "0xbe5ea816870d11239c543f84b71439511d70b94f",
+    "contractAddress": "0x53368bC6a7eB4f4AF3d6974520FEba0295A5daAb",
+    "multiply": "100000000",
+    "name": "BAL / USD",
+    "chainId": "42161",
+    "categoryId": "crypto-usd",
+    "path": "bal-usd"
+  },
+  {
+    "proxyAddress": "0x0bdb051e10c9718d1c29efbad442e88d38958274",
+    "contractAddress": "0xDF9F750A94bF2Faea84Ab783927290FE5e0F7606",
+    "multiply": "1000000000000000000",
+    "name": "BAND / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "band-eth"
+  },
+  {
+    "proxyAddress": "0xe89b3ce86d25599d1e615c0f6a353b4572ff868d",
+    "contractAddress": "0x553BDc8a55569756Bd4bAB24e545752474A2Cd5a",
+    "multiply": "100000000",
+    "name": "BAT / USD",
+    "chainId": "43114",
+    "categoryId": "crypto-usd",
+    "path": "bat-usd"
+  },
+  {
+    "proxyAddress": "0x327d9822e9932996f55b39f557aec838313da8b7",
+    "contractAddress": "0xD4957F86CC075D769a77832d5ec3A375E247c45c",
+    "multiply": "100000000",
+    "name": "BCH / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "bch-usd"
+  },
+  {
+    "proxyAddress": "0x33e047119359161288bcb143e0c15467c7151d4c",
+    "contractAddress": "0x9c41500de0162Cc0bC4798982C867860C1601a60",
+    "multiply": "100000000",
+    "name": "BCH / USD",
+    "chainId": "10",
+    "categoryId": "crypto-usd",
+    "path": "bch-usd"
+  },
+  {
+    "proxyAddress": "0xa97477ab5ab6ed2f6a2b5cbe59d71e88ad334b90",
+    "contractAddress": "0x844962E9c0D7033a1EC9d5931bA8DC9dED265a2B",
+    "multiply": "1000000000000000000",
+    "name": "BEANZ OFFICIAL",
+    "chainId": "1",
+    "categoryId": "nft-floor-prices",
+    "path": "coinbase-beanz-official-floor-price"
+  },
+  {
+    "proxyAddress": "0x2a3796273d47c4ed363b361d3aefb7f7e2a13782",
+    "contractAddress": "0x4c935c5C9a6BADC0855AD3B5867BCFf90c8bD5eC",
+    "multiply": "100000000",
+    "name": "BETH / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "beth-usd"
+  },
+  {
+    "proxyAddress": "0xab827b69dacd586a37e80a7d552a4395d576e645",
+    "contractAddress": "0x43c70DB4018857eB6c4D6aA40880f144033AEAf5",
+    "multiply": "100000000",
+    "name": "BIFI / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "bifi-usd"
+  },
+  {
+    "proxyAddress": "0x7b33ebfa52f215a30fad5a71b3fee57a4831f1f0",
+    "contractAddress": "0x382db44bCfb92C398b93e5fF6Cc100FC321140c9",
+    "multiply": "100000000",
+    "name": "BIT / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "bit-usd"
+  },
+  {
+    "proxyAddress": "0x517c2557c29f7c53aa5f97a1dae465e0d5c174aa",
+    "contractAddress": "0xb785e9aa87cDB29cC11a3f2b8bd17E6279275A35",
+    "multiply": "100000000",
+    "name": "BLUR / USD",
+    "chainId": "10",
+    "categoryId": "crypto-usd",
+    "path": "blur-usd"
+  },
+  {
+    "proxyAddress": "0x6970460aabf80c5be983c6b74e5d06dedca95d4a",
+    "contractAddress": "0x9c65Bc9C18f754129bA00c5298B539e69A32102d",
+    "multiply": "100000000",
+    "name": "BNB / USD",
+    "chainId": "42161",
+    "categoryId": "crypto-usd",
+    "path": "bnb-usd"
+  },
+  {
+    "proxyAddress": "0xd38579f7cbd14c22cf1997575ea8ef7bfe62ca2c",
+    "contractAddress": "0x25dD1949cDb81f5fc38841a8abF342c4EF48dbfd",
+    "multiply": "100000000",
+    "name": "BNB / USD",
+    "chainId": "10",
+    "categoryId": "crypto-usd",
+    "path": "bnb-usd"
+  },
+  {
+    "proxyAddress": "0xd6b013a65c22c372f995864ccdae202d0194f9bf",
+    "contractAddress": "0x0192a7CA918CC005253008BE85dce18b164de437",
+    "multiply": "100000000",
+    "name": "BNB / USD",
+    "chainId": "1285",
+    "categoryId": "crypto-usd",
+    "path": "bnb-usd"
+  },
+  {
+    "proxyAddress": "0xf5724884b6e99257cc003375e6b844bc776183f9",
+    "contractAddress": "0x97A8130AC8d1125aE6cd53A05D27779A4704F786",
+    "multiply": "100000000",
+    "name": "BNT / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "bnt-usd"
+  },
+  {
+    "proxyAddress": "0x58527c2dcc755297bb81f9334b80b2b6032d8524",
+    "contractAddress": "0xDc98232d16f34e3d63F4c52050f8dFA44F7644E9",
+    "multiply": "100000000",
+    "name": "BOND / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "bond-usd"
+  },
+  {
+    "proxyAddress": "0x5cb1cb3ea5fb46de1ce1d0f3badb3212e8d8ef48",
+    "contractAddress": "0x2f92dc0711AdA3dc255e2197e7c15C8aDC6b6537",
+    "multiply": "100000000",
+    "name": "BRL / USD",
+    "chainId": "56",
+    "categoryId": "fiat",
+    "path": "brl-usd"
+  },
+  {
+    "proxyAddress": "0x609dddb75518aa4af84ac228b62261ae68e52989",
+    "contractAddress": "0x1F847C386D97B2a03625bC449Bc7ded815426000",
+    "multiply": "100000000",
+    "name": "BRL / USD",
+    "chainId": "43114",
+    "categoryId": "fiat",
+    "path": "brl-usd"
+  },
+  {
+    "proxyAddress": "0xb90da3ff54c3ed09115abf6fba0ff4645586af2c",
+    "contractAddress": "0x6DBd1be1a83005d26b582D61937b406300B05A8F",
+    "multiply": "100000000",
+    "name": "BRL / USD",
+    "chainId": "137",
+    "categoryId": "fiat",
+    "path": "brl-usd"
+  },
+  {
+    "proxyAddress": "0x6e9bc5f60c597aa4063640a4f426c29c23bc7034",
+    "contractAddress": "0x7703b96aD2130A992854389Aaaf079b01Cd81F69",
+    "multiply": "100000000",
+    "name": "BRL / USD",
+    "chainId": "1284",
+    "categoryId": "fiat",
+    "path": "brl-usd"
+  },
+  {
+    "proxyAddress": "0x04b7384473a2adf1903e3a98acac5d62ba8c2702",
+    "contractAddress": "0x5d750CC68ff61E2D68930003f77241f7346ADc84",
+    "multiply": "100000000",
+    "name": "BRL / USD",
+    "chainId": "42161",
+    "categoryId": "fiat",
+    "path": "brl-usd"
+  },
+  {
+    "proxyAddress": "0xb22900d4d0cea5db0b3bb08565a9f0f4a831d32c",
+    "contractAddress": "0xCa80A73840718826a7A8b6b7216Bd5fDa12c121A",
+    "multiply": "100000000",
+    "name": "BRL / USD",
+    "chainId": "10",
+    "categoryId": "fiat",
+    "path": "brl-usd"
+  },
+  {
+    "proxyAddress": "0x08e70777b982a58d23d05e3d7714f44837c06a21",
+    "contractAddress": "0xC430481d7f5b670623c70420643AC5EfA0D7c95d",
+    "multiply": "100000000",
+    "name": "BSW / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "bsw-usd"
+  },
+  {
+    "proxyAddress": "0xf1769eb4d1943af02ab1096d7893759f6177d6b8",
+    "contractAddress": "0x343FB6A2ED16509a934880Abc82d0251867B70f4",
+    "multiply": "1000000000000000000",
+    "name": "BTC / ETH",
+    "chainId": "56",
+    "categoryId": "crypto-eth",
+    "path": "btc-eth"
+  },
+  {
+    "proxyAddress": "0x3c41439eb1bf3ba3b2c3f8c921088b267f8d11f4",
+    "contractAddress": "0x86e0f80575dF39E46EdC49c26EB5FeCa382D6a5a",
+    "multiply": "100000000",
+    "name": "BTC / USD",
+    "chainId": "1666600000",
+    "categoryId": "crypto-usd",
+    "path": "btc-usd"
+  },
+  {
+    "proxyAddress": "0x51ed8fecf96813826f727cabdf01b3cf6a61373e",
+    "contractAddress": "0x0F13cfAE20B3df71EEEFd67a260ECf0CF15629fA",
+    "multiply": "100000000",
+    "name": "BTC / USD",
+    "chainId": "1088",
+    "categoryId": "crypto-usd",
+    "path": "btc-usd"
+  },
+  {
+    "proxyAddress": "0x1b5c6cf9df1cbf30387c24cc7db1787ccf65c797",
+    "contractAddress": "0xAD7799b5Dd5AFb2af782392C2523434772452f45",
+    "multiply": "100000000",
+    "name": "BTC / USD",
+    "chainId": "1285",
+    "categoryId": "crypto-usd",
+    "path": "btc-usd"
+  },
+  {
+    "proxyAddress": "0xe0dc07d5ed74741ceeda61284ee56a2a0f7a4cc9",
+    "contractAddress": "0xB2e3EEd25825E8c3946e403B8E8D943976E484E4",
+    "multiply": "100000000",
+    "name": "BUSD / USD",
+    "chainId": "137",
+    "categoryId": "stablecoins",
+    "path": "busd-usd"
+  },
+  {
+    "proxyAddress": "0x833d8eb16d306ed1fbb5d7a2e019e106b960965a",
+    "contractAddress": "0x73dc1b226f7DfAc353bdB41A27C4212213e6aF07",
+    "multiply": "100000000",
+    "name": "BUSD / USD",
+    "chainId": "1",
+    "categoryId": "stablecoins",
+    "path": "busd-usd"
+  },
+  {
+    "proxyAddress": "0x827f8a0dc5c943f7524dda178e2e7f275aad743f",
+    "contractAddress": "0x9Cb8E5EA1404d5012C0fc01B7B927AE6Aa09164f",
+    "multiply": "100000000",
+    "name": "BUSD / USD",
+    "chainId": "43114",
+    "categoryId": "stablecoins",
+    "path": "busd-usd"
+  },
+  {
+    "proxyAddress": "0x596129f6abcab2e6e81d19284b78ea73c176d170",
+    "contractAddress": "0xE884BEF1483953AB12D3BE567519343fa21f4Fd6",
+    "multiply": "100000000",
+    "name": "BUSD / USD",
+    "chainId": "1285",
+    "categoryId": "stablecoins",
+    "path": "busd-usd"
+  },
+  {
+    "proxyAddress": "0xd1add3dfac655cb1d2803439661eae5161eea76b",
+    "contractAddress": "0xc54EF9ea836b8D9AD8fA901386167793387D646E",
+    "multiply": "100000000",
+    "name": "BUSD / USD",
+    "chainId": "1666600000",
+    "categoryId": "stablecoins",
+    "path": "busd-usd"
+  },
+  {
+    "proxyAddress": "0xc1cb3b7cbb3e786ab85ea28489f332f4faed5bc4",
+    "contractAddress": "0xD24E1CdD2F9c0A070F73081B5f79BdD0d42EFA2f",
+    "multiply": "100000000",
+    "name": "BUSD / USD",
+    "chainId": "10",
+    "categoryId": "stablecoins",
+    "path": "busd-usd"
+  },
+  {
+    "proxyAddress": "0x2330fd83662bba3fc62bc48cc935ca58847a8957",
+    "contractAddress": "0xe1a812524908e7b6C436E3EBf095DEe7065E8037",
+    "multiply": "100000000",
+    "name": "BUSD / USD",
+    "chainId": "1284",
+    "categoryId": "stablecoins",
+    "path": "busd-usd"
+  },
+  {
+    "proxyAddress": "0x8fcb0f3715a82d83270777b3a5f3a7cf95ce8eec",
+    "contractAddress": "0x6c77960BEB512D955cCe2d5eaA1Ea20A388Ba9a2",
+    "multiply": "100000000",
+    "name": "BUSD / USD",
+    "chainId": "42161",
+    "categoryId": "crypto-usd",
+    "path": "busd-usd"
+  },
+  {
+    "proxyAddress": "0x889158e39628c0397dc54b84f6b1cbe0aaeb7ffc",
+    "contractAddress": "0xacBf98E423Bb8458397dF2d4Cc9eE031879Fd59F",
+    "multiply": "100000000",
+    "name": "C98 / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "c98-usd"
+  },
+  {
+    "proxyAddress": "0xf6da27749484843c4f02f5ad1378cee723dd61d4",
+    "contractAddress": "0x52716c109696C0229E18fDeadFf6f54B3b73784F",
+    "multiply": "100000000",
+    "name": "CAD / USD",
+    "chainId": "42161",
+    "categoryId": "fiat",
+    "path": "cad-usd"
+  },
+  {
+    "proxyAddress": "0xc056a53c210c72ba98d1062ef95b7a23c96ec552",
+    "contractAddress": "0x687786D04aeF1144FA0200205DE474Fdc3b60B19",
+    "multiply": "100000000",
+    "name": "CAD / USD",
+    "chainId": "1666600000",
+    "categoryId": "fiat",
+    "path": "cad-usd"
+  },
+  {
+    "proxyAddress": "0x6fd5e4a193459fc7dfcfc674357a123f655f6ef8",
+    "contractAddress": "0x615209a932768861908161cCCEfcCac9b582ACe8",
+    "multiply": "100000000",
+    "name": "CAD / USD",
+    "chainId": "10",
+    "categoryId": "crypto-usd",
+    "path": "cad-usd"
+  },
+  {
+    "proxyAddress": "0x79bd0edd79db586f22ff300b602e85a662fc1208",
+    "contractAddress": "0x0aCcDFd55026873CB12F75f66513b42fB4974245",
+    "multiply": "100000000",
+    "name": "CAKE / USD",
+    "chainId": "43114",
+    "categoryId": "crypto-usd",
+    "path": "cake-usd"
+  },
+  {
+    "proxyAddress": "0xc44ecd8c11fd1f281a3d6044ca65e649484b228c",
+    "contractAddress": "0xDE34d5d486ef3754225c8f80D17A874a973b0D96",
+    "multiply": "100000000",
+    "name": "CAKE / USD",
+    "chainId": "1285",
+    "categoryId": "crypto-usd",
+    "path": "cake-usd"
+  },
+  {
+    "proxyAddress": "0x6dd5ccbdbbb77a4827209104615db2333304f008",
+    "contractAddress": "0x71587B22a5a68f9fdf08eB15b8B2908758591A03",
+    "multiply": "100000000",
+    "name": "CAKE / USD",
+    "chainId": "1284",
+    "categoryId": "crypto-usd",
+    "path": "cake-usd"
+  },
+  {
+    "proxyAddress": "0x256654437f1ada8057684b18d742efd14034c400",
+    "contractAddress": "0x496000e12F6d5A2eC4512a6bE34Fe36ba84E6349",
+    "multiply": "100000000",
+    "name": "CAKE / USD",
+    "chainId": "42161",
+    "categoryId": "crypto-usd",
+    "path": "cake-usd"
+  },
+  {
+    "proxyAddress": "0xc9ecf45956f576681bdc01f79602a79bc2667b0c",
+    "contractAddress": "0x5e079671301375Be7AfC9bc0B9958F79426dE847",
+    "multiply": "100000000",
+    "name": "CEL / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "cel-usd"
+  },
+  {
+    "proxyAddress": "0xe32accc8c4ec03f6e75bd3621bfc9fbb234e1fc3",
+    "contractAddress": "0xF56e6cb49304c2AD4a7C416665b55a1424014B1F",
+    "multiply": "100000000",
+    "name": "CHF / USD",
+    "chainId": "42161",
+    "categoryId": "fiat",
+    "path": "chf-usd"
+  },
+  {
+    "proxyAddress": "0x964261740356cb4aad0c3d2003ce808a4176a46d",
+    "contractAddress": "0x6c9C9757F0478bC38Bf73ABdA27ac42864De0645",
+    "multiply": "100000000",
+    "name": "CHF / USD",
+    "chainId": "56",
+    "categoryId": "fiat",
+    "path": "chf-usd"
+  },
+  {
+    "proxyAddress": "0x3b37950485b450edf90cbb85d0cd27308af4ab9a",
+    "contractAddress": "0x55d0a1b961bB75c010970A380f32A94965c3A7E9",
+    "multiply": "100000000",
+    "name": "CHF / USD",
+    "chainId": "43114",
+    "categoryId": "fiat",
+    "path": "chf-usd"
+  },
+  {
+    "proxyAddress": "0x1039a288189680c9986841efa0688955b07af729",
+    "contractAddress": "0xc350a306E81a512EEa398B987C67902D1aC5bc3B",
+    "multiply": "100000000",
+    "name": "CHF / USD",
+    "chainId": "1666600000",
+    "categoryId": "fiat",
+    "path": "chf-usd"
+  },
+  {
+    "proxyAddress": "0x1f771b2b1f3c3db6c7a1d5f38961a49cecd116da",
+    "contractAddress": "0x9eBB8330dff88F3D9E743E8240177cdCD3292103",
+    "multiply": "100000000",
+    "name": "CHR / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "chr-usd"
+  },
+  {
+    "proxyAddress": "0x04bb437aa63e098236fa47365f0268547f6eab32",
+    "contractAddress": "0xF07eac7A48Eb772613479D6A8Fc42675f1BeFb47",
+    "multiply": "100000000",
+    "name": "CNY / USD",
+    "chainId": "137",
+    "categoryId": "fiat",
+    "path": "cny-usd"
+  },
+  {
+    "proxyAddress": "0x9d6aa0ac8c4818433bea7a74f49c73b57bcec4ec",
+    "contractAddress": "0x498A8B3E1B7582Ae3Ca3ae22AC544a02dB86D4c5",
+    "multiply": "100000000",
+    "name": "COMP / USD",
+    "chainId": "43114",
+    "categoryId": "crypto-usd",
+    "path": "comp-usd"
+  },
+  {
+    "proxyAddress": "0xe7c53ffd03eb6cef7d208bc4c13446c76d1e5884",
+    "contractAddress": "0x52df0481c6D2Ad7E50889AFd03C8ddd8413ac63d",
+    "multiply": "100000000",
+    "name": "COMP / USD",
+    "chainId": "42161",
+    "categoryId": "crypto-usd",
+    "path": "comp-usd"
+  },
+  {
+    "proxyAddress": "0x29710821d57a1fc46e2d9fdde65df2cf205bad2a",
+    "contractAddress": "0xbf32C03C4247D9bf198f5591e1878DF896aa68D8",
+    "multiply": "100000000",
+    "name": "COMP / USD",
+    "chainId": "1285",
+    "categoryId": "crypto-usd",
+    "path": "comp-usd"
+  },
+  {
+    "proxyAddress": "0x00cb80cf097d9aa9a3779ad8ee7cf98437eae050",
+    "contractAddress": "0xb2aD164c008Da54FCEaC79Ef18C0a8fE2d935865",
+    "multiply": "100000000",
+    "name": "CRO / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "cro-usd"
+  },
+  {
+    "proxyAddress": "0x1cf68c76803c9a415be301f50e82e44c64b7f1d4",
+    "contractAddress": "0xC1670343d479ddEA6e90A108741b8Acc23aBe847",
+    "multiply": "1000000000000000000",
+    "name": "CRV / ETH",
+    "chainId": "137",
+    "categoryId": "crypto-eth",
+    "path": "crv-eth"
+  },
+  {
+    "proxyAddress": "0x2e1c3b6fcae47b20dd343d9354f7b1140a1e6b27",
+    "contractAddress": "0x3f57d674804DfC9F5CA927531969012C5C9095bd",
+    "multiply": "100000000",
+    "name": "CRV / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "crv-usd"
+  },
+  {
+    "proxyAddress": "0xaebda2c976cfd1ee1977eac079b4382acb849325",
+    "contractAddress": "0x79DaA21a44D1415306Ec17C361e0090bdD4cFCbe",
+    "multiply": "100000000",
+    "name": "CRV / USD",
+    "chainId": "42161",
+    "categoryId": "crypto-usd",
+    "path": "crv-usd"
+  },
+  {
+    "proxyAddress": "0x054347c697e12782f906565e55996836e12da6ac",
+    "contractAddress": "0x5B094FD4CeE65B0344ca75a5fDA017E576D13e92",
+    "multiply": "100000000",
+    "name": "CRV / USD",
+    "chainId": "1666600000",
+    "categoryId": "crypto-usd",
+    "path": "crv-usd"
+  },
+  {
+    "proxyAddress": "0x03d44d68edf41c540a90c6eb2be27c4a75ee689f",
+    "contractAddress": "0x58265774eeCc52e3c5A8eef505F89526AE2bd391",
+    "multiply": "100000000",
+    "name": "CRV / USD",
+    "chainId": "1285",
+    "categoryId": "crypto-usd",
+    "path": "crv-usd"
+  },
+  {
+    "proxyAddress": "0x9e37a8ee3bfa8ed6783db031dc458d200b226074",
+    "contractAddress": "0x30F3037f0E13d6bdeD3c5B7809994F47e9656b4a",
+    "multiply": "100000000",
+    "name": "CSPR / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "cspr-usd"
+  },
+  {
+    "proxyAddress": "0xf4e1b57fb228879d057ac5ae33973e8c53e4a0e0",
+    "contractAddress": "0x9aB931c33E0a21689A823d60e625B57EF1faa9C8",
+    "multiply": "100000000",
+    "name": "CSPX / USD",
+    "chainId": "1",
+    "categoryId": "indexes",
+    "path": "cspx-usd"
+  },
+  {
+    "proxyAddress": "0xd962fc30a72a84ce50161031391756bf2876af5d",
+    "contractAddress": "0x8d73Ac44Bf11CadCDc050BB2BcCaE8c519555f1a",
+    "multiply": "100000000",
+    "name": "CVX - USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "cvx-usd"
+  },
+  {
+    "proxyAddress": "0x851175a919f36c8e30197c09a9a49da932c2cc00",
+    "contractAddress": "0x3d62E33E97de1F0ce913dB62d5972722C2A7E4f6",
+    "multiply": "100000000",
+    "name": "CVX / USD",
+    "chainId": "42161",
+    "categoryId": "crypto-usd",
+    "path": "cvx-usd"
+  },
+  {
+    "proxyAddress": "0x52f8026423b5e04fdd9e4b5725b68230b71d019b",
+    "contractAddress": "0x3FfF4d373C588f8975f3312E1Ba6F70A39Ce3f94",
+    "multiply": "100000000",
+    "name": "CVX / USD",
+    "chainId": "43114",
+    "categoryId": "crypto-usd",
+    "path": "cvx-usd"
+  },
+  {
+    "proxyAddress": "0x4399420c25c52259edbeb974fc164e25964560c8",
+    "contractAddress": "0xF3F3fbd8B55ddd79200e0744c5F900a65D0BEabD",
+    "multiply": "100000000",
+    "name": "CVX / USD",
+    "chainId": "1666600000",
+    "categoryId": "crypto-usd",
+    "path": "cvx-usd"
+  },
+  {
+    "proxyAddress": "0xf8326d22b2caff4880115e92161c324abc5e0395",
+    "contractAddress": "0x21D100A1792EA39b1B172371d4076F7e3A63D159",
+    "multiply": "100000000",
+    "name": "DAI / USD",
+    "chainId": "1666600000",
+    "categoryId": "stablecoins",
+    "path": "dai-usd"
+  },
+  {
+    "proxyAddress": "0x7ba0e3ebce25dd3b5a0f36dd7ab34019b863b08d",
+    "contractAddress": "0x1Be57612761C24e421EE9f88962E04B828381Ce0",
+    "multiply": "100000000",
+    "name": "DAI / USD",
+    "chainId": "1285",
+    "categoryId": "stablecoins",
+    "path": "dai-usd"
+  },
+  {
+    "proxyAddress": "0xd94427edee70e4991b4b8ddcc848f2b58ed01c0b",
+    "contractAddress": "0x718EF00943CFd6CdF10D22452fE8CFcd0aD27682",
+    "multiply": "100000000",
+    "name": "DASH / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "dash-usd"
+  },
+  {
+    "proxyAddress": "0x1b816f5e122efa230300126f97c018716c4e47f5",
+    "contractAddress": "0xf0EcE271b1c02128e30C5797C0D76b2c9c36ec17",
+    "multiply": "100000000",
+    "name": "DF / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "df-usd"
+  },
+  {
+    "proxyAddress": "0x87701b15c08687341c2a847ca44ecfbc8d7873e1",
+    "contractAddress": "0x0Ad45915fC60a08dEcD39D27ad69AC10966C82C0",
+    "multiply": "100000000",
+    "name": "DODO / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "dodo-usd"
+  },
+  {
+    "proxyAddress": "0xa33a06c119ec08f92735f9cca37e07af08c4f281",
+    "contractAddress": "0xc195bA27455182e3Bb6F86dAB5838901604Ba72c",
+    "multiply": "100000000",
+    "name": "DODO / USD",
+    "chainId": "42161",
+    "categoryId": "crypto-usd",
+    "path": "dodo-usd"
+  },
+  {
+    "proxyAddress": "0x9a7fb1b3950837a8d9b40517626e11d4127c098c",
+    "contractAddress": "0xbF1CD5Cb759f8E21c98A4367B665F43D607E8885",
+    "multiply": "100000000",
+    "name": "DOGE / USD",
+    "chainId": "42161",
+    "categoryId": "crypto-usd",
+    "path": "doge-usd"
+  },
+  {
+    "proxyAddress": "0xc6066533917f034cf610c08e1fe5e9c7eade0f54",
+    "contractAddress": "0x8AfC1cC622Be1Cd1644579c9c7eC3fbbA6bD02d2",
+    "multiply": "100000000",
+    "name": "DOGE / USD",
+    "chainId": "10",
+    "categoryId": "crypto-usd",
+    "path": "doge-usd"
+  },
+  {
+    "proxyAddress": "0xa6bc5baf2000424e90434ba7104ee399dee80dec",
+    "contractAddress": "0x2F45a77c5024eB546E9E7F445f266c0D3e71e616",
+    "multiply": "100000000",
+    "name": "DOT / USD",
+    "chainId": "42161",
+    "categoryId": "crypto-usd",
+    "path": "dot-usd"
+  },
+  {
+    "proxyAddress": "0x54b584eb643375c41c55ddd8da4b90124b18d05c",
+    "contractAddress": "0x60Eba0e16e92AC9187d5410294b7D253BA717FDa",
+    "multiply": "100000000",
+    "name": "DOT / USD",
+    "chainId": "1285",
+    "categoryId": "crypto-usd",
+    "path": "dot-usd"
+  },
+  {
+    "proxyAddress": "0x28e67baeeb5de7a788f3dde6cf6ee491369bb3fa",
+    "contractAddress": "0xF030366b47eB1a9b14AD570381d29647E40955Af",
+    "multiply": "100000000",
+    "name": "DOT / USD",
+    "chainId": "10",
+    "categoryId": "crypto-usd",
+    "path": "dot-usd"
+  },
+  {
+    "proxyAddress": "0xc373b9db0707fd451bc56ba5e9b029ba26629df0",
+    "contractAddress": "0x2489462e64Ea205386b7b8737609B3701047a77d",
+    "multiply": "100000000",
+    "name": "DPX / USD",
+    "chainId": "42161",
+    "categoryId": "crypto-usd",
+    "path": "dpx-usd"
+  },
+  {
+    "proxyAddress": "0x23905c55dc11d609d5d11dc604905779545de9a7",
+    "contractAddress": "0xCBbe4ff0d8add07CCe71afC0CcdF3492b8eaA76A",
+    "multiply": "100000000",
+    "name": "ENJ / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "enj-usd"
+  },
+  {
+    "proxyAddress": "0xdf3f72be10d194b58b1bb56f2c4183e661cb2114",
+    "contractAddress": "0x886ccA828224F2D196aD386F35A76573604702c2",
+    "multiply": "100000000",
+    "name": "ETC / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "etc-usd"
+  },
+  {
+    "proxyAddress": "0xbaf7c8149d586055ed02c286367a41e0ada96b7c",
+    "contractAddress": "0x3F1537c21C232E42908FcDa6F84E9acA01e981ec",
+    "multiply": "100000000",
+    "name": "ETH / USD",
+    "chainId": "1666600000",
+    "categoryId": "crypto-usd",
+    "path": "eth-usd"
+  },
+  {
+    "proxyAddress": "0xc3cf399566220dc5ed6c8cfbf8247214af103c72",
+    "contractAddress": "0x2c9Fa45976174Fa6137659a85DF06866082Ec7FF",
+    "multiply": "100000000",
+    "name": "ETH / USD",
+    "chainId": "1285",
+    "categoryId": "crypto-usd",
+    "path": "eth-usd"
+  },
+  {
+    "proxyAddress": "0x3bbe70e2f96c87aece7f67a2b0178052f62e37fe",
+    "contractAddress": "0x9656158b18Bc67ed62EcE17b385ac2A696513010",
+    "multiply": "100000000",
+    "name": "ETH / USD",
+    "chainId": "1088",
+    "categoryId": "crypto-usd",
+    "path": "eth-usd"
+  },
+  {
+    "proxyAddress": "0x0bf79f617988c472dca68ff41efe1338955b9a80",
+    "contractAddress": "0xD2528B74ca91Bb07B9bd9685ce533367C6fa657C",
+    "multiply": "100000000",
+    "name": "EUR / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "eur-usd"
+  },
+  {
+    "proxyAddress": "0x192f2dba961bb0277520c082d6bfa87d5961333e",
+    "contractAddress": "0x95Edda00bCE60f99Fb0bE38fE500eBd879AB651a",
+    "multiply": "100000000",
+    "name": "EUR / USD",
+    "chainId": "43114",
+    "categoryId": "fiat",
+    "path": "eur-usd"
+  },
+  {
+    "proxyAddress": "0xe6ccbe1cb33df799a59e37a1382c7009dbabe9ff",
+    "contractAddress": "0x44f9dB77F4fe702dc334920aAdff841E944941E9",
+    "multiply": "100000000",
+    "name": "EUR / USD",
+    "chainId": "1285",
+    "categoryId": "fiat",
+    "path": "eur-usd"
+  },
+  {
+    "proxyAddress": "0x8bc1cecd937cdd00e5feaf23b818aa8e30b8442a",
+    "contractAddress": "0x36c5b6EC35620bDf2F09752Cda4f2fB3B923BCEa",
+    "multiply": "100000000",
+    "name": "EUR / USD",
+    "chainId": "1666600000",
+    "categoryId": "fiat",
+    "path": "eur-usd"
+  },
+  {
+    "proxyAddress": "0x657e700c66c48c135c4a29c4292908dbda7aa280",
+    "contractAddress": "0xb2B7c2d554F52dAeC37974b2E335c98cdA8cEB3A",
+    "multiply": "100000000",
+    "name": "FET / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "fet-usd"
+  },
+  {
+    "proxyAddress": "0x0606be69451b1c9861ac6b3626b99093b713e801",
+    "contractAddress": "0x9965AD91B4877d29c246445011Ce370b3890C5C2",
+    "multiply": "1000000000000000000",
+    "name": "FIL / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "fil-eth"
+  },
+  {
+    "proxyAddress": "0x2f194315f122d374a27973e259783d5c864a5bf6",
+    "contractAddress": "0x934C2eAE6fF26103EE50020b1F452944097F90C4",
+    "multiply": "100000000",
+    "name": "FIL / USD",
+    "chainId": "43114",
+    "categoryId": "crypto-usd",
+    "path": "fil-usd"
+  },
+  {
+    "proxyAddress": "0xa07703e5c2ed1516107c7c72a494493dcb99c676",
+    "contractAddress": "0x39B46Cb14BCf5cd1Cf8129Db3eD0ceaa2f3bAa9a",
+    "multiply": "100000000",
+    "name": "FIL / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "fil-usd"
+  },
+  {
+    "proxyAddress": "0x66f61fee824c1df059bcccc5f21ca39e083eefdf",
+    "contractAddress": "0xB42F9F7c0F9997f62AE521CEF14B20a58bd9E088",
+    "multiply": "100000000",
+    "name": "FIL / USD",
+    "chainId": "10",
+    "categoryId": "crypto-usd",
+    "path": "fil-usd"
+  },
+  {
+    "proxyAddress": "0x34e0e85ceec6be6146c4f0115769a29a9539222e",
+    "contractAddress": "0x3E313e778dA811F79A66570b8703c66204112Dfd",
+    "multiply": "100000000",
+    "name": "FLOKI / USD",
+    "chainId": "10",
+    "categoryId": "crypto-usd",
+    "path": "floki-usd"
+  },
+  {
+    "proxyAddress": "0xd9bdd9f5ffa7d89c846a5e3231a093ae4b3469d2",
+    "contractAddress": "0x3C640c857f1fF57ff4E24CfF1924F14A9bB9F2Ad",
+    "multiply": "100000000",
+    "name": "FLOW / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "flow-usd"
+  },
+  {
+    "proxyAddress": "0x2ff1eb7d0cec35959f0248e9354c3248c6683d9b",
+    "contractAddress": "0x0542BbBfbc26A86EA92d2b7f6Da07DAf0CA091eD",
+    "multiply": "100000000",
+    "name": "FLOW / USD",
+    "chainId": "10",
+    "categoryId": "crypto-usd",
+    "path": "flow-usd"
+  },
+  {
+    "proxyAddress": "0x456834f736094fb0aad40a9bbc9d4a0f37818a54",
+    "contractAddress": "0xf649bC5C0e99BDEb06702e3db242B9F93DE44462",
+    "multiply": "100000000",
+    "name": "FOR / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "for-usd"
+  },
+  {
+    "proxyAddress": "0x7d77fd73e468baece26852776beaf073cdc55fa0",
+    "contractAddress": "0xe2d6D8e799Df0a377FD14Ee18b95fd7cAa389017",
+    "multiply": "100000000",
+    "name": "FORTH / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "forth-usd"
+  },
+  {
+    "proxyAddress": "0xc7d132becabe7dcc4204841f33bae45841e41d9c",
+    "contractAddress": "0xaB544FDAD5F68f0F8e53284f942D76177635A3D6",
+    "multiply": "100000000",
+    "name": "FRAX / USD",
+    "chainId": "10",
+    "categoryId": "stablecoins",
+    "path": "frax-usd"
+  },
+  {
+    "proxyAddress": "0x5c0a80cba14a7afc825716b3f411cea7d9eb0f03",
+    "contractAddress": "0x84Dba14Ce73026D6C83c44eF0807037F7e23A1E5",
+    "multiply": "100000000",
+    "name": "FRAX / USD",
+    "chainId": "1666600000",
+    "categoryId": "stablecoins",
+    "path": "frax-usd"
+  },
+  {
+    "proxyAddress": "0xd080d4760318710e795b0a59f181f6c1512ffb15",
+    "contractAddress": "0x5d6D3cD73C597e66353761e4040A73570818dC63",
+    "multiply": "100000000",
+    "name": "FRAX / USD",
+    "chainId": "1285",
+    "categoryId": "stablecoins",
+    "path": "frax-usd"
+  },
+  {
+    "proxyAddress": "0x58326c0f831b2dbf7234a4204f28bba79aa06d5f",
+    "contractAddress": "0x90f49083a5344979d8983cA95fBd107b3FF5cF3e",
+    "multiply": "100000000",
+    "name": "FTM / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "ftm-usd"
+  },
+  {
+    "proxyAddress": "0x2dd517b2f9ba49cedb0573131fd97a5ac19ff648",
+    "contractAddress": "0xAec3e48648C46B9eda4C8832E2f0A6B23289915d",
+    "multiply": "100000000",
+    "name": "FTM / USD",
+    "chainId": "43114",
+    "categoryId": "crypto-usd",
+    "path": "ftm-usd"
+  },
+  {
+    "proxyAddress": "0xc19d58652d6bfc6db6fb3691eda6aa7f3379e4e9",
+    "contractAddress": "0x13f11f2139C10A48eCD7A6A14d804f90b2cFC89A",
+    "multiply": "100000000",
+    "name": "FTM / USD",
+    "chainId": "10",
+    "categoryId": "crypto-usd",
+    "path": "ftm-usd"
+  },
+  {
+    "proxyAddress": "0x5e70fc5f38cb930f9be8beaeaf80cf927af3b17e",
+    "contractAddress": "0x126E68511202615195046820ad29b9bC98C0ce81",
+    "multiply": "100000000",
+    "name": "FTM / USD",
+    "chainId": "1285",
+    "categoryId": "crypto-usd",
+    "path": "ftm-usd"
+  },
+  {
+    "proxyAddress": "0xfeac1a3936514746e70170c0f539e70b23d36f19",
+    "contractAddress": "0x70001968d6ee8f909dE9e730E5b4e586565bbbF9",
+    "multiply": "100000000",
+    "name": "FTM / USD",
+    "chainId": "42161",
+    "categoryId": "crypto-usd",
+    "path": "ftm-usd"
+  },
+  {
+    "proxyAddress": "0x38e05754eb00171cbe72ba1ee792933d6e8d2891",
+    "contractAddress": "0x122400b06aAC5ba901492035aFC99d3a5C262330",
+    "multiply": "100000000",
+    "name": "FTT / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "ftt-usd"
+  },
+  {
+    "proxyAddress": "0x4f2eaebdd835ebe9108e718c0b6551e868381a88",
+    "contractAddress": "0x971Ff919f91fFd1Faa847e1a773e8a547e3eFc82",
+    "multiply": "100000000",
+    "name": "FTT / USD",
+    "chainId": "43114",
+    "categoryId": "crypto-usd",
+    "path": "ftt-usd"
+  },
+  {
+    "proxyAddress": "0x0e9d55932893fb1308882c7857285b2b0bcc4f4a",
+    "contractAddress": "0x36Eb75b819dF05FB868b16074dF1A9c4354082c0",
+    "multiply": "100000000",
+    "name": "FXS / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "fxs-usd"
+  },
+  {
+    "proxyAddress": "0xb9b16330671067b1b062b9ac2efd2db75f03436e",
+    "contractAddress": "0xc2212835DE6cb9Ef5e26b04E64f7798472Ff2812",
+    "multiply": "100000000",
+    "name": "FXS / USD",
+    "chainId": "10",
+    "categoryId": "crypto-usd",
+    "path": "fxs-usd"
+  },
+  {
+    "proxyAddress": "0xe5b624e1098c25c94279ba20a0cc68fa9215e63b",
+    "contractAddress": "0x5D28a0116908dFC5AbEB16D2ea9F9B909660c8cA",
+    "multiply": "100000000",
+    "name": "FXS / USD",
+    "chainId": "1285",
+    "categoryId": "crypto-usd",
+    "path": "fxs-usd"
+  },
+  {
+    "proxyAddress": "0x8faf16f710003e538189334541f5d4a391da46a0",
+    "contractAddress": "0xE0A34B8FC5e80C877fd568bd22b49E1BCa977B6F",
+    "multiply": "100000000",
+    "name": "GBP / USD",
+    "chainId": "56",
+    "categoryId": "fiat",
+    "path": "gbp-usd"
+  },
+  {
+    "proxyAddress": "0x9c4424fd84c6661f97d8d6b3fc3c1aac2bedd137",
+    "contractAddress": "0x78f28D363533695458696b42577D2e1728cEa3D1",
+    "multiply": "100000000",
+    "name": "GBP / USD",
+    "chainId": "42161",
+    "categoryId": "fiat",
+    "path": "gbp-usd"
+  },
+  {
+    "proxyAddress": "0x7dfab439b3aee18f6b687c40e5a9e62724e9099a",
+    "contractAddress": "0x7d7D4FE64d6Dd8Ce0aDbdD02C801B7Eff201b2ae",
+    "multiply": "100000000",
+    "name": "GBP / USD",
+    "chainId": "1666600000",
+    "categoryId": "fiat",
+    "path": "gbp-usd"
+  },
+  {
+    "proxyAddress": "0x540d48c01f946e729174517e013ad0bdae5f08c0",
+    "contractAddress": "0x7FeD35C1e4C303F272E4fcdF19865E85DfA44f72",
+    "multiply": "100000000",
+    "name": "GBP / USD",
+    "chainId": "10",
+    "categoryId": "fiat",
+    "path": "gbp-usd"
+  },
+  {
+    "proxyAddress": "0x8a84d922ef06c1f13a30ddd1304bef556ffa7552",
+    "contractAddress": "0xa15CD3fF5EDF2AE2710C7bEfcF15EEEb53967BC1",
+    "multiply": "100000000",
+    "name": "GMX / USD",
+    "chainId": "250",
+    "categoryId": "crypto-usd",
+    "path": "gmx-usd"
+  },
+  {
+    "proxyAddress": "0xdb98056fecfff59d032ab628337a4887110df3db",
+    "contractAddress": "0xF6328F007A2FDc547875e24A3BC7e0603fd01727",
+    "multiply": "100000000",
+    "name": "GMX / USD",
+    "chainId": "42161",
+    "categoryId": "crypto-usd",
+    "path": "gmx-usd"
+  },
+  {
+    "proxyAddress": "0x3f968a21647d7ca81fb8a5b69c0a452701d5dce8",
+    "contractAddress": "0x3Ec39652e73337350a712Fb418DBb4C2a8247673",
+    "multiply": "100000000",
+    "name": "GMX / USD",
+    "chainId": "43114",
+    "categoryId": "crypto-usd",
+    "path": "gmx-usd"
+  },
+  {
+    "proxyAddress": "0x62f42f70ba85de1086476bb6bade926d0e0b8a4c",
+    "contractAddress": "0x0eDD9aC354033Ef766eCD45cb235d81139Df3d90",
+    "multiply": "100000000",
+    "name": "GMX / USD",
+    "chainId": "10",
+    "categoryId": "crypto-usd",
+    "path": "gmx-usd"
+  },
+  {
+    "proxyAddress": "0x17d054ecac33d91f7340645341efb5de9009f1c1",
+    "contractAddress": "0x7531f77095Bed9d63cB3E9EA305111a7DCE969A2",
+    "multiply": "1000000000000000000",
+    "name": "GRT / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "grt-eth"
+  },
+  {
+    "proxyAddress": "0x38c5ae3ee324ee027d88c5117ee58d07c9b4699b",
+    "contractAddress": "0x0F486F358b3D04AeA6800eFa260e01286d8A50F1",
+    "multiply": "100000000",
+    "name": "HBAR / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "hbar-usd"
+  },
+  {
+    "proxyAddress": "0xe2f95bc12fe8a3c35684be7586c39fd7c0e5b403",
+    "contractAddress": "0xeA23780dc14d1aC9eb3AB203A9bb7C1A6660615E",
+    "multiply": "100000000",
+    "name": "HIGH / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "high-usd"
+  },
+  {
+    "proxyAddress": "0xdf4dd957a84f798acfadd448badd2d8b9bc99047",
+    "contractAddress": "0x0D5aB38D37A5B5427B971E10F99e8c06599260Af",
+    "multiply": "100000000",
+    "name": "HIGH / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "high-usd"
+  },
+  {
+    "proxyAddress": "0x82d43b72573f902f960126a19581bcbba5b014f5",
+    "contractAddress": "0x6548B8B550EC798d5Ba929f98f4C4cFBd85453B8",
+    "multiply": "100000000",
+    "name": "HKD / USD",
+    "chainId": "137",
+    "categoryId": "fiat",
+    "path": "hkd-usd"
+  },
+  {
+    "proxyAddress": "0x32d1463eb53b73c095625719afa544d5426354cb",
+    "contractAddress": "0x5EE6Ee50c1cB3E8Da20eE83D57818184387433e8",
+    "multiply": "100000000",
+    "name": "IB01 / USD",
+    "chainId": "1",
+    "categoryId": "indexes",
+    "path": "ib01-usd"
+  },
+  {
+    "proxyAddress": "0xd27e6d02b72eb6fce04ad5690c419196b4ef2885",
+    "contractAddress": "0x5f8c943a29FFfC7Df8cE4001Cf1bedbCFC610476",
+    "multiply": "100000000",
+    "name": "IBTA / USD",
+    "chainId": "1",
+    "categoryId": "indexes",
+    "path": "ibta-usd"
+  },
+  {
+    "proxyAddress": "0x84227a76a04289473057bef706646199d7c58c34",
+    "contractAddress": "0x0deC46bfDa8Ce29bFa6bE4343Aa44d9beFC71E90",
+    "multiply": "100000000",
+    "name": "ICP / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "icp-usd"
+  },
+  {
+    "proxyAddress": "0x4698f8bfb418bad926a4c8012f648870424fc52d",
+    "contractAddress": "0x5D196C44dAa0dFA634DE961F3465A6d62b335785",
+    "multiply": "100000000",
+    "name": "ILV / USD",
+    "chainId": "1666600000",
+    "categoryId": "crypto-usd",
+    "path": "ilv-usd"
+  },
+  {
+    "proxyAddress": "0xbaebefc1d023c0feccc047bff42e75f15ff213e6",
+    "contractAddress": "0x3f00247Dc3bc14A8dCfA682318Ce566b1f34343A",
+    "multiply": "100000000",
+    "name": "IMX / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "imx-usd"
+  },
+  {
+    "proxyAddress": "0x26fce884555fae5f0e4701cc976fe8d8bb111a38",
+    "contractAddress": "0x5D860ee3A9F47dfd86d40aec1EF7DDD876356F71",
+    "multiply": "100000000",
+    "name": "IMX / USD",
+    "chainId": "10",
+    "categoryId": "crypto-usd",
+    "path": "imx-usd"
+  },
+  {
+    "proxyAddress": "0x63a9133cd7c611d6049761038c16f238fdda71d7",
+    "contractAddress": "0x4d70d497CeF3674be370586230F9a2f4b30CFF11",
+    "multiply": "100000000",
+    "name": "INJ / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "inj-usd"
+  },
+  {
+    "proxyAddress": "0x5535e67d8f99c8ebe961e1fc1f6ddae96fec82c9",
+    "contractAddress": "0x28a6B219403c1Dac04172cBb8cC1aB8bF5925830",
+    "multiply": "100000000",
+    "name": "INR / USD",
+    "chainId": "10",
+    "categoryId": "fiat",
+    "path": "inr-usd"
+  },
+  {
+    "proxyAddress": "0xda0f8df6f5db15b346f4b8d1156722027e194e60",
+    "contractAddress": "0x54D81825C7ba6766d8770Ec8aE9f786E700F6Df2",
+    "multiply": "100000000",
+    "name": "INR / USD",
+    "chainId": "137",
+    "categoryId": "fiat",
+    "path": "inr-usd"
+  },
+  {
+    "proxyAddress": "0x04180965a782e487d0632013aba488a472243542",
+    "contractAddress": "0xa44BCD128E99188565c4849cdfFEea9C773f74ec",
+    "multiply": "100000000",
+    "name": "JOE / USD",
+    "chainId": "42161",
+    "categoryId": "crypto-usd",
+    "path": "joe-usd"
+  },
+  {
+    "proxyAddress": "0x22db8397a6e77e41471de256a7803829fdc8bc57",
+    "contractAddress": "0x6f3f35Cc510232E41179F9010Cf12b1B48538a91",
+    "multiply": "100000000",
+    "name": "JPY / USD",
+    "chainId": "56",
+    "categoryId": "fiat",
+    "path": "jpy-usd"
+  },
+  {
+    "proxyAddress": "0x3dd6e51cb9cae717d5a8778cf79a04029f9cfdf8",
+    "contractAddress": "0xadBf1c8a244d537C343d771e2Fa897F3654a1Ae4",
+    "multiply": "100000000",
+    "name": "JPY / USD",
+    "chainId": "42161",
+    "categoryId": "fiat",
+    "path": "jpy-usd"
+  },
+  {
+    "proxyAddress": "0xf8b283ad4d969ecfd70005714dd5910160565b94",
+    "contractAddress": "0x8F937bBaA8508268cC2c3d2A54c8d01d30eEd679",
+    "multiply": "100000000",
+    "name": "JPY / USD",
+    "chainId": "43114",
+    "categoryId": "fiat",
+    "path": "jpy-usd"
+  },
+  {
+    "proxyAddress": "0xcdbb167e6c2fbc5c84b8eb4acf0995ec3d7cefa1",
+    "contractAddress": "0x7860908D6ac5E36DD2808A301314963e08b59E07",
+    "multiply": "100000000",
+    "name": "JPY / USD",
+    "chainId": "1666600000",
+    "categoryId": "fiat",
+    "path": "jpy-usd"
+  },
+  {
+    "proxyAddress": "0x536944c3a71feb7c1e5c66ee37d1a148d8d8f619",
+    "contractAddress": "0xaE4c8567C942B974Af4A860380c99A8D03C6148E",
+    "multiply": "100000000",
+    "name": "JPY / USD",
+    "chainId": "10",
+    "categoryId": "fiat",
+    "path": "jpy-usd"
+  },
+  {
+    "proxyAddress": "0x7899dd75c329efe63e35b02bc7d60d3739fb23c5",
+    "contractAddress": "0x180fF2978Cd4f0cf7B7890f354eE5a986a31Be59",
+    "multiply": "100000000",
+    "name": "KAVA / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "kava-usd"
+  },
+  {
+    "proxyAddress": "0x12bf0c3f7d5aca9e711930d704da2774358d9210",
+    "contractAddress": "0x2029297624088ea9e3eE549E40d33d4966Ce1C63",
+    "multiply": "100000000",
+    "name": "KAVA / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "kava-usd"
+  },
+  {
+    "proxyAddress": "0xfd07b211044572898cdbcb1435f0a1369fd15726",
+    "contractAddress": "0x00865e449e123BA4C3A46D614330dA56b739f723",
+    "multiply": "100000000",
+    "name": "KLAY / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "klay-usd"
+  },
+  {
+    "proxyAddress": "0x10e5f3dfc81b3e5ef4e648c4454d04e79e1e41e2",
+    "contractAddress": "0xb8Cc3CF74aadC5bEEB9b7c669433f57347d94D1D",
+    "multiply": "100000000",
+    "name": "KNC / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "knc-usd"
+  },
+  {
+    "proxyAddress": "0xe7015ccb7e5f788b8c1010fc22343473eaac3741",
+    "contractAddress": "0x61B5793cd5f454D2B25bA1AcB5C1aA1728f67E1c",
+    "multiply": "1000000000000000000",
+    "name": "KP3R / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "kp3r-eth"
+  },
+  {
+    "proxyAddress": "0x85bb02e0ae286600d1c68bb6ce22cc998d411916",
+    "contractAddress": "0x244ea8646Cc2342497dFD5D8f841f79e66e598cF",
+    "multiply": "100000000",
+    "name": "KRW / USD",
+    "chainId": "42161",
+    "categoryId": "fiat",
+    "path": "krw-usd"
+  },
+  {
+    "proxyAddress": "0x06e4164e24e72b879d93360d1b9fa05838a62eb5",
+    "contractAddress": "0x630163B84674B2B404fB6036A510574F259c5Cb7",
+    "multiply": "100000000",
+    "name": "KSM / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "ksm-usd"
+  },
+  {
+    "proxyAddress": "0x6e0513145fce707cd743528db7c1cab537de9d1b",
+    "contractAddress": "0x394cFC87d791e02eEA552726228Ad29680dF6092",
+    "multiply": "100000000",
+    "name": "KSM / USD",
+    "chainId": "1285",
+    "categoryId": "crypto-usd",
+    "path": "ksm-usd"
+  },
+  {
+    "proxyAddress": "0x221618871470f78d8a3391d35b77dfb3c0fbc383",
+    "contractAddress": "0xB6b7B9b2362F87F204f1CCadDD8832D3a0557dce",
+    "multiply": "100000000",
+    "name": "LDO / USD",
+    "chainId": "10",
+    "categoryId": "crypto-usd",
+    "path": "ldo-usd"
+  },
+  {
+    "proxyAddress": "0x38393201952f2764e04b290af9df427217d56b41",
+    "contractAddress": "0xE6Ff236A76594a9A1Da727cA42B29c7B3ac0d45A",
+    "multiply": "100000000",
+    "name": "LINA / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "lina-usd"
+  },
+  {
+    "proxyAddress": "0x464a1515adc20de946f8d0deb99cead8ceae310d",
+    "contractAddress": "0xE67a10DA53Fcd59fae7e47F155c290cb5Defb4B0",
+    "multiply": "1000000000000000000",
+    "name": "LINK / ETH",
+    "chainId": "10",
+    "categoryId": "crypto-eth",
+    "path": "link-eth"
+  },
+  {
+    "proxyAddress": "0x69348435ee4b3904df1ae528fa0aaf34da1e9184",
+    "contractAddress": "0x37961E0938829Ce07897fB4682d23B14838C334a",
+    "multiply": "1000000000000000000",
+    "name": "LINK / ONE",
+    "chainId": "1666600000",
+    "categoryId": "crypto-other",
+    "path": "link-one"
+  },
+  {
+    "proxyAddress": "0x4a4f382a2ff9685de9f0418f1375ce16d0727637",
+    "contractAddress": "0x86f1FCb32ac073951d3156929A93428902F30765",
+    "multiply": "100000000",
+    "name": "LINK / USD",
+    "chainId": "1088",
+    "categoryId": "crypto-usd",
+    "path": "link-usd"
+  },
+  {
+    "proxyAddress": "0xd54f119d10901b4509610ea259a63169647800c4",
+    "contractAddress": "0x78AD1313653fD09bc7F83D09144eCb4e03082dF9",
+    "multiply": "100000000",
+    "name": "LINK / USD",
+    "chainId": "1666600000",
+    "categoryId": "crypto-usd",
+    "path": "link-usd"
+  },
+  {
+    "proxyAddress": "0xdd27789b504fed690f406a82f16b45a0901172c0",
+    "contractAddress": "0xb14dA87982A93264462726922FE1408DEA2B35f0",
+    "multiply": "100000000",
+    "name": "LINK / USD",
+    "chainId": "1285",
+    "categoryId": "crypto-usd",
+    "path": "link-usd"
+  },
+  {
+    "proxyAddress": "0x83766ba8d964feaed3819b145a69c947df9cb035",
+    "contractAddress": "0xF23D01646Fe967A6c403Defdff24299040Fd4935",
+    "multiply": "100000000",
+    "name": "LIT / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "lit-usd"
+  },
+  {
+    "proxyAddress": "0x13a8f2cc27ccc2761ca1b21d2f3e762445f201ce",
+    "contractAddress": "0xB82A0803DF982412dAeE9D82826395E3F0BeD1A2",
+    "multiply": "1000000000000000000",
+    "name": "LON / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "lon-eth"
+  },
+  {
+    "proxyAddress": "0xbaaf11ceda1d1ca9cf01748f8196653c9656a400",
+    "contractAddress": "0xC3f16f2a1C4469F931148e88622A45bF60804b68",
+    "multiply": "100000000",
+    "name": "LPT / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "lpt-usd"
+  },
+  {
+    "proxyAddress": "0x45954efbd01f5a12428a09e4c38b8434c3dd4ac3",
+    "contractAddress": "0xfC7608cf76F489191Cb319DD6167aEEE387Bb251",
+    "multiply": "100000000",
+    "name": "LTC / USD",
+    "chainId": "10",
+    "categoryId": "crypto-usd",
+    "path": "ltc-usd"
+  },
+  {
+    "proxyAddress": "0x9dfc79aaeb5bb0f96c6e9402671981cdfc424052",
+    "contractAddress": "0x19dC743a5E9a73eefAbA7047C7CEeBc650F37336",
+    "multiply": "100000000",
+    "name": "LUSD / USD",
+    "chainId": "10",
+    "categoryId": "crypto-usd",
+    "path": "lusd-usd"
+  },
+  {
+    "proxyAddress": "0x0411d28c94d85a36bc72cb0f875dfa8371d8ffff",
+    "contractAddress": "0x20CD97619A51d1a6f1910ce62d98Aceb9a13d5e6",
+    "multiply": "100000000",
+    "name": "LUSD / USD",
+    "chainId": "42161",
+    "categoryId": "crypto-usd",
+    "path": "lusd-usd"
+  },
+  {
+    "proxyAddress": "0x47e55ccec6582838e173f252d08afd8116c2202d",
+    "contractAddress": "0x5ab0B1e2604d4B708721bc3cD1ce962958b4297E",
+    "multiply": "100000000",
+    "name": "MAGIC / USD",
+    "chainId": "42161",
+    "categoryId": "crypto-usd",
+    "path": "magic-usd"
+  },
+  {
+    "proxyAddress": "0x56a4857acbcfe3a66965c251628b1c9f1c408c19",
+    "contractAddress": "0x7Be21AeF96E2FAeB8Dc0d07306814319cA034cad",
+    "multiply": "100000000",
+    "name": "MANA / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "mana-usd"
+  },
+  {
+    "proxyAddress": "0x424807fa7b16f747cbd30963fae25fb8db0b97bf",
+    "contractAddress": "0xA5033f33C753660EE75d654754FFe584fC661312",
+    "multiply": "100000000",
+    "name": "MANA / USD",
+    "chainId": "1285",
+    "categoryId": "crypto-usd",
+    "path": "mana-usd"
+  },
+  {
+    "proxyAddress": "0x4978c0abe6899178c1a74838ee0062280888e2cf",
+    "contractAddress": "0xF1eed6F4A9006B3Cf8f547B36d055b97EF50DE8b",
+    "multiply": "100000000",
+    "name": "MASK / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "mask-usd"
+  },
+  {
+    "proxyAddress": "0x52099d4523531f678dfc568a7b1e5038aadce1d6",
+    "contractAddress": "0xA4A2b2000d447CC1086d15C077730008b0251FFD",
+    "multiply": "100000000",
+    "name": "MATIC / USD",
+    "chainId": "42161",
+    "categoryId": "crypto-usd",
+    "path": "matic-usd"
+  },
+  {
+    "proxyAddress": "0x9165366bf450a6906d25549f0e0f8e6586fc93e2",
+    "contractAddress": "0xf23C2aa8c9e8E2e6E48257c495E624CA87Bb14BC",
+    "multiply": "100000000",
+    "name": "MDX (BSC) / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "mdx-usd"
+  },
+  {
+    "proxyAddress": "0xd4a5bb03b5d66d9bf81507379302ac2c2dfdfa6d",
+    "contractAddress": "0x526B00801b2a09Cb730b3d2132a85fD75D0D9A44",
+    "multiply": "100000000",
+    "name": "METIS / USD",
+    "chainId": "1088",
+    "categoryId": "crypto-usd",
+    "path": "metis-usd"
+  },
+  {
+    "proxyAddress": "0x5d1f504211c17365ca66353442a74d4435a8b778",
+    "contractAddress": "0x5aF11EEC59e1BaC3F4e2565621B43Cfbe748e698",
+    "multiply": "100000000",
+    "name": "MIMATIC / USD",
+    "chainId": "43114",
+    "categoryId": "crypto-usd",
+    "path": "mimatic-usd"
+  },
+  {
+    "proxyAddress": "0xa070427bf5ba5709f70e98b94cb2f435a242c46c",
+    "contractAddress": "0xE41B5D02E64b165e77f12b72Bf80B56d076000CF",
+    "multiply": "100000000",
+    "name": "MKR / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "mkr-usd"
+  },
+  {
+    "proxyAddress": "0xde9f0894670c4efcacf370426f10c3ad2cdf147e",
+    "contractAddress": "0x55EfafFC2764389a08FFDFcd36AEe2C30610d42c",
+    "multiply": "100000000",
+    "name": "MKR / USD",
+    "chainId": "42161",
+    "categoryId": "crypto-usd",
+    "path": "mkr-usd"
+  },
+  {
+    "proxyAddress": "0x3e54eb0475051401d093702a5db84efa1ab77b14",
+    "contractAddress": "0xB3752dC7c1D71A1B381925EC5e6bbf2950519Aa2",
+    "multiply": "100000000",
+    "name": "MKR / USD",
+    "chainId": "43114",
+    "categoryId": "crypto-usd",
+    "path": "mkr-usd"
+  },
+  {
+    "proxyAddress": "0xd8542f327fad60b80d8c19025147e6b9d857bb99",
+    "contractAddress": "0x09e93ABe052D91474aaa677B481e6ab116d7A4F0",
+    "multiply": "100000000",
+    "name": "MKR / USD",
+    "chainId": "1285",
+    "categoryId": "crypto-usd",
+    "path": "mkr-usd"
+  },
+  {
+    "proxyAddress": "0x9cd36e0e8d3c27d630d00406acfc3463154951af",
+    "contractAddress": "0x8d0003e5c1C8EB67e04023a21291cf01CFd2E4a1",
+    "multiply": "1000000000000000000",
+    "name": "MOONBIRDS",
+    "chainId": "1",
+    "categoryId": "nft-floor-prices",
+    "path": "coinbase-moonbirds-floor-price"
+  },
+  {
+    "proxyAddress": "0x3f8bfbdc1e79777511c00ad8591cef888c2113c1",
+    "contractAddress": "0x090eF17e7Fff9AbB3BFf40F9B75BD5e08d4Fb87c",
+    "multiply": "100000000",
+    "name": "MOVR / USD",
+    "chainId": "1285",
+    "categoryId": "crypto-usd",
+    "path": "movr-usd"
+  },
+  {
+    "proxyAddress": "0x16c0c1f971b1780f952572670a9d5ce4123582a1",
+    "contractAddress": "0x6a6eb03007131EAe9D02f66289a82d784c4EeA50",
+    "multiply": "100000000",
+    "name": "MXN / USD",
+    "chainId": "56",
+    "categoryId": "fiat",
+    "path": "mxn-usd"
+  },
+  {
+    "proxyAddress": "0x0fe4d87883005fcafaf56b81d09473d9a29dcdc3",
+    "contractAddress": "0x40B8039e1A5A831b493C15164228A1839dd5b62a",
+    "multiply": "100000000",
+    "name": "NEAR / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "near-usd"
+  },
+  {
+    "proxyAddress": "0xbf5c3fb2633e924598a46b9d07a174a9dbcf57c0",
+    "contractAddress": "0xbA4492A430fE9bEF7Abbd9C78b953A6E1aA48CFA",
+    "multiply": "100000000",
+    "name": "NEAR / USD",
+    "chainId": "42161",
+    "categoryId": "crypto-usd",
+    "path": "near-usd"
+  },
+  {
+    "proxyAddress": "0x9b0fc4bb9981e5333689d69bdbf66351b9861e62",
+    "contractAddress": "0x4b75FE6e4a53A510AbC39c7328B0b06E74a3F624",
+    "multiply": "1000000000000000000",
+    "name": "OCEAN / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "ocean-eth"
+  },
+  {
+    "proxyAddress": "0xdcda79097c44353dee65684328793695bd34a629",
+    "contractAddress": "0x21B701aadF13300E944451073CA6dDB1af1e29a0",
+    "multiply": "100000000",
+    "name": "OCEAN / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "ocean-usd"
+  },
+  {
+    "proxyAddress": "0x8ec0ec2e0f26d8253abf39db4b1793d76b49c6d5",
+    "contractAddress": "0x0961c007ffaAb3C7357f01e6BcE2386e340f1D0a",
+    "multiply": "100000000",
+    "name": "OGN / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "ogn-usd"
+  },
+  {
+    "proxyAddress": "0x761aaebf021f19f198d325d7979965d0c7c9e53b",
+    "contractAddress": "0x1Fa1c3c6371a723a0773421E20ea86Bb02A637Ae",
+    "multiply": "100000000",
+    "name": "OHMv2 / USD",
+    "chainId": "42161",
+    "categoryId": "crypto-usd",
+    "path": "ohmv2-usd"
+  },
+  {
+    "proxyAddress": "0x1fa4fc8e55939fc511d048e1cecafb4b2d30f9eb",
+    "contractAddress": "0xa94FbCBE967E25CFB132182dd57fbBbEdE765799",
+    "multiply": "100000000",
+    "name": "OHMv2 / USD",
+    "chainId": "43114",
+    "categoryId": "crypto-usd",
+    "path": "ohmv2-usd"
+  },
+  {
+    "proxyAddress": "0x9a72298ae3886221820b1c878d12d872087d3a23",
+    "contractAddress": "0x9Aae856973A0Cafa084b82F7BC4C6C2893A9139b",
+    "multiply": "1000000000000000000",
+    "name": "OHMv2/ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "ohmv2-eth"
+  },
+  {
+    "proxyAddress": "0x57c9ab3e56ee4a83752c181f241120a3dbba06a1",
+    "contractAddress": "0xA1b2e83815723e4e4BBF437E56f65b6AAFd5754b",
+    "multiply": "1000000000000000000",
+    "name": "OMG / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "omg-eth"
+  },
+  {
+    "proxyAddress": "0x7cfb4fac1a2fdb1267f8bc17fadc12804ac13cfe",
+    "contractAddress": "0x663ed3D2aB9F8d5282a94BA4636E346e59bDdEB9",
+    "multiply": "100000000",
+    "name": "ONE / USD",
+    "chainId": "10",
+    "categoryId": "crypto-usd",
+    "path": "one-usd"
+  },
+  {
+    "proxyAddress": "0xdcd81fbbd6c4572a69a534d8b8152c562da8abef",
+    "contractAddress": "0xcf6e088F29AE119EC4275a2a980b6F65d6Af3086",
+    "multiply": "100000000",
+    "name": "ONE / USD",
+    "chainId": "1666600000",
+    "categoryId": "crypto-usd",
+    "path": "one-usd"
+  },
+  {
+    "proxyAddress": "0xcf95796f3016801a1da5c518fc7a59c51dcef793",
+    "contractAddress": "0xCB2ac1D2e2582dE7b5EFbB174f04B1D8Ecd2d043",
+    "multiply": "100000000",
+    "name": "ONG / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "ong-usd"
+  },
+  {
+    "proxyAddress": "0x0d276fc14719f9292d5c1ea2198673d1f4269246",
+    "contractAddress": "0x4F6dFDFd4d68F68b2692E79f9e94796fC8015770",
+    "multiply": "100000000",
+    "name": "OP / USD",
+    "chainId": "10",
+    "categoryId": "crypto-usd",
+    "path": "op-usd"
+  },
+  {
+    "proxyAddress": "0x205aad468a11fd5d34fa7211bc6bad5b3deb9b98",
+    "contractAddress": "0x0526ED34229425a10888C6972906CF2a820D6d13",
+    "multiply": "100000000",
+    "name": "OP / USD",
+    "chainId": "42161",
+    "categoryId": "crypto-usd",
+    "path": "op-usd"
+  },
+  {
+    "proxyAddress": "0x6e3a4376b4c8d3ba49602f8542d9d3c4a87ba901",
+    "contractAddress": "0xE308e892e153B899404928b6C705b7c8Da231F0F",
+    "multiply": "1000000000000000000",
+    "name": "OTHERDEED FOR OTHERSIDE",
+    "chainId": "1",
+    "categoryId": "nft-floor-prices",
+    "path": "coinbase-otherdeed-for-otherside-floor-price"
+  },
+  {
+    "proxyAddress": "0x0f6914d8e7e1214cdb3a4c6fbf729b75c69df608",
+    "contractAddress": "0x1820F1EC37e930203449a640624FC68095F573F5",
+    "multiply": "100000000",
+    "name": "PAXG / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "paxg-usd"
+  },
+  {
+    "proxyAddress": "0x2ba975d4d7922cd264267af16f3bd177f206fe3c",
+    "contractAddress": "0x2e4c363449E2EC7E93cd9ed4F3843c2CA4497108",
+    "multiply": "100000000",
+    "name": "PAXG / USD",
+    "chainId": "42161",
+    "categoryId": "crypto-usd",
+    "path": "paxg-usd"
+  },
+  {
+    "proxyAddress": "0xda76130d2ddde18bcef6e2b66b5268b5658e3061",
+    "contractAddress": "0x2147745C6c7164E3124B4cC24cb903F1c0dfd47f",
+    "multiply": "100000000",
+    "name": "PEPE / USD",
+    "chainId": "42161",
+    "categoryId": "crypto-usd",
+    "path": "pepe-usd"
+  },
+  {
+    "proxyAddress": "0x64ecf089a6594be781908d5a26fc8fa6cb08a2c7",
+    "contractAddress": "0x903F58eE6d6c3c2Ca26427c8F917F6aE515827B1",
+    "multiply": "1000000000000000000",
+    "name": "PEPE / USD",
+    "chainId": "10",
+    "categoryId": "crypto-usd",
+    "path": "pepe-usd"
+  },
+  {
+    "proxyAddress": "0xa12cddd8e986af9288ab31e58c60e65f2987fb13",
+    "contractAddress": "0xE18a4E99F019F92CD72E0C7C05599d76a89296Cd",
+    "multiply": "100000000",
+    "name": "PERP / USD",
+    "chainId": "10",
+    "categoryId": "crypto-usd",
+    "path": "perp-usd"
+  },
+  {
+    "proxyAddress": "0x2b1248028fe48864c4f1c305e524e2e6702eafdf",
+    "contractAddress": "0xCB00334A422FC8538794f3CE0149540a95f9e228",
+    "multiply": "100000000",
+    "name": "PHALA / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "pha-usd"
+  },
+  {
+    "proxyAddress": "0xb34bce11040702f71c11529d00179b2959bce6c0",
+    "contractAddress": "0x08f8D217e6F07aE423a2Ad2ffb226FfCB577708d",
+    "multiply": "100000000",
+    "name": "PLN / USD",
+    "chainId": "137",
+    "categoryId": "fiat",
+    "path": "pln-usd"
+  },
+  {
+    "proxyAddress": "0x9f2ba149c2a0ee76043d83558c4e79e9f3e5731b",
+    "contractAddress": "0x1A93f0C2168DfeEF0801D85E74FB21F4534Ddfc8",
+    "multiply": "1000000000000000000",
+    "name": "PUDGY PENGUINS",
+    "chainId": "1",
+    "categoryId": "nft-floor-prices",
+    "path": "coinbase-pudgy-penguins-floor-price"
+  },
+  {
+    "proxyAddress": "0x9a51192e065ecc6bdeafe5e194ce54702de4f1f5",
+    "contractAddress": "0x5a0efD6D1a058A46D3Ac4511861adB8F3540BD49",
+    "multiply": "1000000000000000000",
+    "name": "Personal Consumption Expenditures (PCE) US Monthly Index",
+    "chainId": "1",
+    "categoryId": "indexes",
+    "path": "consumer-price-index"
+  },
+  {
+    "proxyAddress": "0x2a784368b1d492f458bf919389f42c18315765f5",
+    "contractAddress": "0x25C32A551C188Cb88a7067c254905191e83C712C",
+    "multiply": "1000000000000000000",
+    "name": "RARI / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "rari-eth"
+  },
+  {
+    "proxyAddress": "0x20123c6ebd45c6496102beea86e1a6616ca547c6",
+    "contractAddress": "0xe17703A1819d23cF5977814B92021834feBd4eB3",
+    "multiply": "100000000",
+    "name": "RDNT / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "rdnt-usd"
+  },
+  {
+    "proxyAddress": "0x46f13472a4d4fec9e07e8a00ee52f4fa77810736",
+    "contractAddress": "0x066D0CD30f981a96e2fE4F958c5E7F4999BE0AdF",
+    "multiply": "100000000",
+    "name": "REEF / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "reef-usd"
+  },
+  {
+    "proxyAddress": "0xf0b7159bbfc341cc41e7cb182216f62c6d40533d",
+    "contractAddress": "0x44D3ab6c4b98A3F9f241E1753b2475ad7e502051",
+    "multiply": "100000000",
+    "name": "RPL / USD",
+    "chainId": "42161",
+    "categoryId": "crypto-usd",
+    "path": "rpl-usd"
+  },
+  {
+    "proxyAddress": "0x759bbc1be8f90ee6457c44abc7d443842a976d02",
+    "contractAddress": "0xA27CfD69345a6e121284a3C0ae07BB64b707cDD2",
+    "multiply": "100000000",
+    "name": "RSR / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "rsr-usd"
+  },
+  {
+    "proxyAddress": "0x875d60c44cfbc38baa4eb2ddb76a767deb91b97e",
+    "contractAddress": "0xa8156eFf735Dce35Eb01B119F6a7f4B55944184a",
+    "multiply": "1000000000000000000",
+    "name": "RUNE / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "rune-eth"
+  },
+  {
+    "proxyAddress": "0x372cc5e685115a56f14fa7e4716f1294e04c278a",
+    "contractAddress": "0x1aafcf49E103a71b31506Cb05FB072ED1B5b0414",
+    "multiply": "100000000",
+    "name": "RUNE / USD",
+    "chainId": "10",
+    "categoryId": "crypto-usd",
+    "path": "rune-usd"
+  },
+  {
+    "proxyAddress": "0x5403385df6eb607fc1fa6983ef5801a11ec7fd9a",
+    "contractAddress": "0xEdCaA147Ee514Fe328Aacd40f7cb317ff2fEB307",
+    "multiply": "100000000",
+    "name": "SAND / USD",
+    "chainId": "1285",
+    "categoryId": "crypto-usd",
+    "path": "sand-usd"
+  },
+  {
+    "proxyAddress": "0x6b890b13d48f46a8d4b85deabbd7155ee19d89b9",
+    "contractAddress": "0x2d8C66f185Db3Ab68a78999E84e5afB49C8b24DB",
+    "multiply": "100000000",
+    "name": "SAND / USD",
+    "chainId": "1666600000",
+    "categoryId": "crypto-usd",
+    "path": "sand-usd"
+  },
+  {
+    "proxyAddress": "0xde89a55d04ded40a410877ab87d4f567ee66a1f0",
+    "contractAddress": "0xd0DA1FE3A35359564CB7561F6a6AA69A1eCEc8d5",
+    "multiply": "100000000",
+    "name": "SEK / USD",
+    "chainId": "42161",
+    "categoryId": "fiat",
+    "path": "sek-usd"
+  },
+  {
+    "proxyAddress": "0xe25277ff4bbf9081c75ab0eb13b4a13a721f3e13",
+    "contractAddress": "0xc96129C796F03bb21AC947EfC5329CD1F560305B",
+    "multiply": "100000000",
+    "name": "SGD / USD",
+    "chainId": "1",
+    "categoryId": "fiat",
+    "path": "sgd-usd"
+  },
+  {
+    "proxyAddress": "0x8ce3cac0e6635ce04783709ca3cc4f5fc5304299",
+    "contractAddress": "0x45ede0Ea5cBbE380C663C7C3015Cc7c986669FEc",
+    "multiply": "100000000",
+    "name": "SGD / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "sgd-usd"
+  },
+  {
+    "proxyAddress": "0xf0d38324d1f86a176ac727a4b0c43c9f9d9c5eb1",
+    "contractAddress": "0x7DD7029668c78af259a27A7696d468a152F06E53",
+    "multiply": "100000000",
+    "name": "SGD / USD",
+    "chainId": "42161",
+    "categoryId": "fiat",
+    "path": "sgd-usd"
+  },
+  {
+    "proxyAddress": "0x3065b2369820f76c829b9bbcaf4b90f9f47d6314",
+    "contractAddress": "0x621319Ec1f6AFcb4a9dd91DAB135a1C7E22F46a5",
+    "multiply": "100000000",
+    "name": "SGD / USD",
+    "chainId": "56",
+    "categoryId": "fiat",
+    "path": "sgd-usd"
+  },
+  {
+    "proxyAddress": "0xa615be6cb0f3f36a641858db6f30b9242d0abed8",
+    "contractAddress": "0x19Ec74fd763db58B77E6EC6b556B9c594ca67ABB",
+    "multiply": "100000000",
+    "name": "SHIB / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "shib-usd"
+  },
+  {
+    "proxyAddress": "0xd1e56e7657c0e0d20c0e11c2b6ae0d90932d5665",
+    "contractAddress": "0xB6B77f1696bc4F95860228286d27f7f4df5D26e4",
+    "multiply": "100000000",
+    "name": "SHIB / USD",
+    "chainId": "10",
+    "categoryId": "crypto-usd",
+    "path": "shib-usd"
+  },
+  {
+    "proxyAddress": "0x01752eaab988ecb0ceba2c8fc97c4f1d38bf246d",
+    "contractAddress": "0xF01826625694D04A30285355A5F3aEf567E6F676",
+    "multiply": "100000000",
+    "name": "SNX / USD",
+    "chainId": "43114",
+    "categoryId": "crypto-usd",
+    "path": "snx-usd"
+  },
+  {
+    "proxyAddress": "0x26e3f9273abc8a01228be97a106e60fa38b98df2",
+    "contractAddress": "0xEE1AC4dDC089EBb281e9ba2292627Af9f915bb7E",
+    "multiply": "100000000",
+    "name": "SNX / USD",
+    "chainId": "1285",
+    "categoryId": "crypto-usd",
+    "path": "snx-usd"
+  },
+  {
+    "proxyAddress": "0x054296f0d036b95531b4e14afb578b80cfb41252",
+    "contractAddress": "0x382f3C547e3EBd1D08cd0CAf6e5F0a7b0B350A11",
+    "multiply": "100000000",
+    "name": "SNX / USD",
+    "chainId": "42161",
+    "categoryId": "crypto-usd",
+    "path": "snx-usd"
+  },
+  {
+    "proxyAddress": "0x24cea4b8ce57cda5058b924b9b9987992450590c",
+    "contractAddress": "0x8C4308F7cbD7fB829645853cD188500D7dA8610a",
+    "multiply": "100000000",
+    "name": "SOL / USD",
+    "chainId": "42161",
+    "categoryId": "crypto-usd",
+    "path": "sol-usd"
+  },
+  {
+    "proxyAddress": "0x47e01580c537cd47da339ea3a4afb5998ccf037c",
+    "contractAddress": "0x76c8Ab236643e68539766CE00eac8Fb582199183",
+    "multiply": "100000000",
+    "name": "SPELL / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "spell-usd"
+  },
+  {
+    "proxyAddress": "0x383b3624478124697bef675f07ca37570b73992f",
+    "contractAddress": "0xf6bACC7750c23A34b996A355A6E78b17Fc4BaEdC",
+    "multiply": "100000000",
+    "name": "SPELL / USD",
+    "chainId": "42161",
+    "categoryId": "crypto-usd",
+    "path": "spell-usd"
+  },
+  {
+    "proxyAddress": "0x4f3ddf9378a4865cf4f28be51e10aecb83b7daee",
+    "contractAddress": "0x0a58227E7D7A8175E4F5f8a0D32968d153B9ce59",
+    "multiply": "100000000",
+    "name": "SPELL / USD",
+    "chainId": "43114",
+    "categoryId": "crypto-usd",
+    "path": "spell-usd"
+  },
+  {
+    "proxyAddress": "0x0f1d5bd7be9b30fc09e110cd6504bd450e53cb0e",
+    "contractAddress": "0xB1a56484BC2C6ba874C386CAa8381310fAf8985d",
+    "multiply": "100000000",
+    "name": "STORJ / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "storj-usd"
+  },
+  {
+    "proxyAddress": "0xeaf1a9fe242aa9928faedc6ce7e09ad4875f7133",
+    "contractAddress": "0xe05a8c52B2e813c9605CFB8F073178ebe5A74705",
+    "multiply": "100000000",
+    "name": "SUI / USD",
+    "chainId": "10",
+    "categoryId": "crypto-usd",
+    "path": "sui-usd"
+  },
+  {
+    "proxyAddress": "0x7f99817d87bad03ea21e05112ca799d715730efe",
+    "contractAddress": "0x17D582034c038BaEb17A9E2A969d06f550d3586b",
+    "multiply": "100000000",
+    "name": "SUSD / USD",
+    "chainId": "10",
+    "categoryId": "crypto-usd",
+    "path": "susd-usd"
+  },
+  {
+    "proxyAddress": "0xb2a8ba74cbca38508ba1632761b56c897060147c",
+    "contractAddress": "0xe4A492420eBdA03B04973Ed1E46d5fe9F3b077EF",
+    "multiply": "100000000",
+    "name": "SUSHI / USD",
+    "chainId": "42161",
+    "categoryId": "crypto-usd",
+    "path": "sushi-usd"
+  },
+  {
+    "proxyAddress": "0xa679c72a97b654cfff58ab704de3ba15cde89b07",
+    "contractAddress": "0x761Eff952671395708f22c5a7d5673685277A5c3",
+    "multiply": "100000000",
+    "name": "SUSHI / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "sushi-usd"
+  },
+  {
+    "proxyAddress": "0x449a373a090d8a1e5f74c63ef831ceff39e94563",
+    "contractAddress": "0xdE672241200B9309f86AB79fd082423f32fD8f0D",
+    "multiply": "100000000",
+    "name": "SUSHI / USD",
+    "chainId": "43114",
+    "categoryId": "crypto-usd",
+    "path": "sushi-usd"
+  },
+  {
+    "proxyAddress": "0x28a9e2747a10ee94d2d7359deb60023d19ffdd96",
+    "contractAddress": "0x2b914bC7c665F72a5627A4660CC5042086A2E4b3",
+    "multiply": "100000000",
+    "name": "SUSHI / USD",
+    "chainId": "1285",
+    "categoryId": "crypto-usd",
+    "path": "sushi-usd"
+  },
+  {
+    "proxyAddress": "0x38611b09f8f2d520c14ea973765c225bf57b9eac",
+    "contractAddress": "0x953D8c16Fd4f22951c2f497669c6869b86b4e60E",
+    "multiply": "100000000",
+    "name": "THETA - USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "theta-usd"
+  },
+  {
+    "proxyAddress": "0xa0784167e040906b5580e3c4a53932b288f615ce",
+    "contractAddress": "0x8D098b961D3eB72dDD6BD79349434259B539cEA1",
+    "multiply": "100000000",
+    "name": "THETA / USD",
+    "chainId": "1285",
+    "categoryId": "crypto-usd",
+    "path": "theta-usd"
+  },
+  {
+    "proxyAddress": "0x307ccf7cbd17b69a487b9c3dbe483931cf3e1833",
+    "contractAddress": "0xa0EEfe4dA82d88991c26a2bA7868c5a1C485A72E",
+    "multiply": "100000000",
+    "name": "TRX / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "trx-usd"
+  },
+  {
+    "proxyAddress": "0xb09fc5fd3f11cf9eb5e1c5dba43114e3c9f477b5",
+    "contractAddress": "0xadcD1B19a0190E18d961993c5671d3F5D47c13Ea",
+    "multiply": "100000000",
+    "name": "TRY / USD",
+    "chainId": "1",
+    "categoryId": "fiat",
+    "path": "try-usd"
+  },
+  {
+    "proxyAddress": "0xa61bf273688ea095b5e4c11f1af5e763f7aeee91",
+    "contractAddress": "0xEF320d919F4DF79c6f4206eB89f78A0b8f21F496",
+    "multiply": "100000000",
+    "name": "TRY / USD",
+    "chainId": "43114",
+    "categoryId": "fiat",
+    "path": "try-usd"
+  },
+  {
+    "proxyAddress": "0xe8f8afe4b56c6c421f691bfac225ce61b2c7cd05",
+    "contractAddress": "0x8548A931B2E5605a8936089B75F0bF66136e2393",
+    "multiply": "100000000",
+    "name": "TRY / USD",
+    "chainId": "42161",
+    "categoryId": "fiat",
+    "path": "try-usd"
+  },
+  {
+    "proxyAddress": "0x7c5d415b64312d38c56b54358449d0a4058339d2",
+    "contractAddress": "0x2343C7E237ECB888B5400277863178388Dcc84f5",
+    "multiply": "100000000",
+    "name": "TUSD / USD",
+    "chainId": "137",
+    "categoryId": "stablecoins",
+    "path": "tusd-usd"
+  },
+  {
+    "proxyAddress": "0xec746ecf986e2927abd291a2a1716c940100f8ba",
+    "contractAddress": "0x98953e9C76573e06ec265Bdde1dbB89fa02d56d3",
+    "multiply": "100000000",
+    "name": "TUSD / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "tusd-usd"
+  },
+  {
+    "proxyAddress": "0x9cf3ef104a973b351b2c032aa6793c3a6f76b448",
+    "contractAddress": "0x2EBa2C3CDF50f5BC20fc23F533B227dB6b10A725",
+    "multiply": "100000000",
+    "name": "TUSD / USD",
+    "chainId": "43114",
+    "categoryId": "stablecoins",
+    "path": "tusd-usd"
+  },
+  {
+    "proxyAddress": "0x6fabee62266da6686ee2744c6f15bb8352d2f28d",
+    "contractAddress": "0xEC2E9000B487F28Fd03455f9277bE3c96a3180b2",
+    "multiply": "100000000",
+    "name": "TUSD / USD",
+    "chainId": "42161",
+    "categoryId": "stablecoins",
+    "path": "tusd-usd"
+  },
+  {
+    "proxyAddress": "0x162d8c5bf15eb6bee003a1ffc4049c92114bc931",
+    "contractAddress": "0x811EC390710Bf071A585e32A465D06890A420937",
+    "multiply": "1000000000000000000",
+    "name": "UNI / ETH",
+    "chainId": "137",
+    "categoryId": "crypto-eth",
+    "path": "uni-eth"
+  },
+  {
+    "proxyAddress": "0x9c917083fdb403ab5adbec26ee294f6ecada2720",
+    "contractAddress": "0xeFc5061B7a8AeF31F789F1bA5b3b8256674F2B71",
+    "multiply": "100000000",
+    "name": "UNI / USD",
+    "chainId": "42161",
+    "categoryId": "crypto-usd",
+    "path": "uni-usd"
+  },
+  {
+    "proxyAddress": "0x9a1372f9b1b71b3a5a72e092ae67e172dbd7daaa",
+    "contractAddress": "0xA0326D3AD91D7724380c096AA62Ae1d5A8d260A8",
+    "multiply": "100000000",
+    "name": "UNI / USD",
+    "chainId": "43114",
+    "categoryId": "crypto-usd",
+    "path": "uni-usd"
+  },
+  {
+    "proxyAddress": "0x05ec3fb5b7cb3be9d7150fba1fb0749407e5aa8a",
+    "contractAddress": "0x3A1c9e3bdbFfa357B22bEABA923BFce854e6A311",
+    "multiply": "100000000",
+    "name": "UNI / USD",
+    "chainId": "1285",
+    "categoryId": "crypto-usd",
+    "path": "uni-usd"
+  },
+  {
+    "proxyAddress": "0x663855969c85f3be415807250414ca9129533a5f",
+    "contractAddress": "0x5969848719F7571bDFe0e899014C270Ed39B8384",
+    "multiply": "100000000",
+    "name": "USDC / USD",
+    "chainId": "1088",
+    "categoryId": "crypto-usd",
+    "path": "usdc-usd"
+  },
+  {
+    "proxyAddress": "0x12870664a77dd55bbdcde32f91eb3244f511ef2e",
+    "contractAddress": "0xE7D50A0B8b9ce9f9B9a6FEE2BE9b6F64f1014cC4",
+    "multiply": "100000000",
+    "name": "USDC / USD",
+    "chainId": "1285",
+    "categoryId": "stablecoins",
+    "path": "usdc-usd"
+  },
+  {
+    "proxyAddress": "0xa45a41be2d8419b60a6ce2bc393a0b086b8b3bda",
+    "contractAddress": "0x77ce3761fEB462a5e7C75A4E049A8cA26E27A00A",
+    "multiply": "100000000",
+    "name": "USDC / USD",
+    "chainId": "1666600000",
+    "categoryId": "stablecoins",
+    "path": "usdc-usd"
+  },
+  {
+    "proxyAddress": "0x0ed39a19d2a68b722408d84e4d970827f61e6c0a",
+    "contractAddress": "0x589a85FC02EB6bB86D1c84c1a75abbB012C661De",
+    "multiply": "100000000",
+    "name": "USDD / USD",
+    "chainId": "1",
+    "categoryId": "stablecoins",
+    "path": "usdd-usd"
+  },
+  {
+    "proxyAddress": "0x51c78c299c42b058bf11d47fbb74ac437c6a0c8c",
+    "contractAddress": "0xa749834a844f2824e5E703F3243e290a963cE06d",
+    "multiply": "100000000",
+    "name": "USDD / USD",
+    "chainId": "56",
+    "categoryId": "stablecoins",
+    "path": "usdd-usd"
+  },
+  {
+    "proxyAddress": "0x09023c0da49aaf8fc3fa3adf34c6a7016d38d5e3",
+    "contractAddress": "0xF3d70857B489Ecc6768D0982B773E1Cba9E1f00b",
+    "multiply": "100000000",
+    "name": "USDP / USD",
+    "chainId": "1",
+    "categoryId": "stablecoins",
+    "path": "usdp-usd"
+  },
+  {
+    "proxyAddress": "0x5caaebe5c69a8287bffb9d00b5231bf7254145bf",
+    "contractAddress": "0x786788Db39cd447DeaF578D73E99A6600E2e770e",
+    "multiply": "100000000",
+    "name": "USDT / USD",
+    "chainId": "1666600000",
+    "categoryId": "stablecoins",
+    "path": "usdt-usd"
+  },
+  {
+    "proxyAddress": "0x51864b8948aa5e35aace2badaf901d63418a3b9d",
+    "contractAddress": "0x49B7d3d231b993C9Aa29E122647e035aaf8B773B",
+    "multiply": "100000000",
+    "name": "USDT / USD",
+    "chainId": "1088",
+    "categoryId": "crypto-usd",
+    "path": "usdt-usd"
+  },
+  {
+    "proxyAddress": "0xf80dad54af79257d41c30014160349896ca5370a",
+    "contractAddress": "0xcA0F6c2DE4e20F3B07B79c083167dF92D82432b2",
+    "multiply": "100000000",
+    "name": "USDT / USD",
+    "chainId": "1285",
+    "categoryId": "stablecoins",
+    "path": "usdt-usd"
+  },
+  {
+    "proxyAddress": "0xd925c5bf88bd0ca09312625d429240f811b437c6",
+    "contractAddress": "0x07e33E83fB24A5AA436CE5982C177e9e96A8F736",
+    "multiply": "100000000",
+    "name": "USDT / USD",
+    "chainId": "1284",
+    "categoryId": "stablecoins",
+    "path": "usdt-usd"
+  },
+  {
+    "proxyAddress": "0x9f1fd2cef7b226d555a747da0411f93c5fe74e13",
+    "contractAddress": "0x6297c4cd4002F8c1ECe816dF53D5cdeeead10C25",
+    "multiply": "100000000",
+    "name": "VET / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "vet-usd"
+  },
+  {
+    "proxyAddress": "0x776003ecdf644f87a95b05da549b5e646d5f2ae4",
+    "contractAddress": "0x503465204d3e093146B1E8762e2b221240E0eDA7",
+    "multiply": "100000000",
+    "name": "WAVES / USD",
+    "chainId": "10",
+    "categoryId": "crypto-usd",
+    "path": "waves-usd"
+  },
+  {
+    "proxyAddress": "0x86442e3a98558357d46e6182f4b262f76c4fa26f",
+    "contractAddress": "0xb50D5dB75a844365995C29B534a31536a4C56513",
+    "multiply": "100000000",
+    "name": "WBTC / USD",
+    "chainId": "43114",
+    "categoryId": "crypto-usd",
+    "path": "wbtc-usd"
+  },
+  {
+    "proxyAddress": "0xd0c7101eacbb49f3decccc166d238410d6d46d57",
+    "contractAddress": "0xb20bd22d3D2E5a628523d37b3DED569598EB649b",
+    "multiply": "100000000",
+    "name": "WBTC / USD",
+    "chainId": "42161",
+    "categoryId": "crypto-usd",
+    "path": "wbtc-usd"
+  },
+  {
+    "proxyAddress": "0x639545836d8b177054cefafe6942efe798ce6575",
+    "contractAddress": "0x0c11bf937BA066b015Cf23Be12eEf072Bc49F5c1",
+    "multiply": "100000000",
+    "name": "WBTC / USD",
+    "chainId": "1666600000",
+    "categoryId": "crypto-usd",
+    "path": "wbtc-usd"
+  },
+  {
+    "proxyAddress": "0x8211b991d713ddae32326fd69e1e2510f4a653b0",
+    "contractAddress": "0x2054703B20Dc35F3A81B515b4e8a7A2bCBF6a3DE",
+    "multiply": "100000000",
+    "name": "WBTC / USD",
+    "chainId": "1284",
+    "categoryId": "crypto-usd",
+    "path": "wbtc-usd"
+  },
+  {
+    "proxyAddress": "0x9da678ce7f28aaec8a578a1e414219049509a552",
+    "contractAddress": "0xe67D6eDDFF2d7A09c3070e5f564F35E559E32C17",
+    "multiply": "100000000",
+    "name": "WBTC / USD",
+    "chainId": "250",
+    "categoryId": "crypto-usd",
+    "path": "wbtc-usd"
+  },
+  {
+    "proxyAddress": "0xeebbe35b5f397d5bb26fd10d375b01d0f4a791a3",
+    "contractAddress": "0x27A0d23a7910C793DbCF394C659C7e7B739C200b",
+    "multiply": "100000000",
+    "name": "WBTC / USD",
+    "chainId": "1285",
+    "categoryId": "crypto-usd",
+    "path": "wbtc-usd"
+  },
+  {
+    "proxyAddress": "0x718a5788b89454aae3a028ae9c111a29be6c2a6f",
+    "contractAddress": "0x65F2c716937FB44b2C28417A7AfC2DACcF1C2D61",
+    "multiply": "100000000",
+    "name": "WBTC / USD",
+    "chainId": "10",
+    "categoryId": "crypto-usd",
+    "path": "wbtc-usd"
+  },
+  {
+    "proxyAddress": "0x9e7377e194e41d63795907c92c3eb351a2eb0233",
+    "contractAddress": "0x2BCBF9e068E889A613A8E4366c88412977869C0A",
+    "multiply": "100000000",
+    "name": "WIN / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "win-usd"
+  },
+  {
+    "proxyAddress": "0xe5dc0a609ab8bcf15d3f35cfaa1ff40f521173ea",
+    "contractAddress": "0xbd624B453d0a882B87Cbf85FeBdcf493cFFBd8D9",
+    "multiply": "1000000000000000000",
+    "name": "WMXN / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "wnxm-eth"
+  },
+  {
+    "proxyAddress": "0xfaa665f5a0e13beea63b6dff601dd634959690df",
+    "contractAddress": "0x6339dfD6433C305661B060659922a70fC4eEbAC6",
+    "multiply": "1000000000000000000",
+    "name": "WOO / ETH",
+    "chainId": "43114",
+    "categoryId": "crypto-eth",
+    "path": "woo-eth"
+  },
+  {
+    "proxyAddress": "0x02bfe714e78e2ad1bb1c2bee93ec8dc5423b66d4",
+    "contractAddress": "0xFBd2fED777DaaB126041b193006DE529118Eaf95",
+    "multiply": "100000000",
+    "name": "WOO / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "woo-usd"
+  },
+  {
+    "proxyAddress": "0x6a99ec84819fb7007dd5d032068742604e755c56",
+    "contractAddress": "0xB16B1Ee56c70CF1FDD1E32D092045d08E5be4693",
+    "multiply": "100000000",
+    "name": "WOO / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "woo-usd"
+  },
+  {
+    "proxyAddress": "0x817326922c909b16944817c207562b25c4df16ad",
+    "contractAddress": "0x168f55dFe619E37fe2393c3bA3c831647F8617c0",
+    "multiply": "100000000",
+    "name": "XAG / USD",
+    "chainId": "56",
+    "categoryId": "commodities",
+    "path": "xag-usd"
+  },
+  {
+    "proxyAddress": "0xc56765f04b248394cf1619d20db8082edbfa75b1",
+    "contractAddress": "0x0A4d55347817738166e2eF8302e12F99CfbDdEDD",
+    "multiply": "100000000",
+    "name": "XAG / USD",
+    "chainId": "42161",
+    "categoryId": "crypto-usd",
+    "path": "xag-usd"
+  },
+  {
+    "proxyAddress": "0x290dd71254874f0d4356443607cb8234958dee49",
+    "contractAddress": "0xcC341634464b6FD1221e4d517cD7801155ABaC55",
+    "multiply": "100000000",
+    "name": "XAG / USD",
+    "chainId": "10",
+    "categoryId": "commodities",
+    "path": "xag-usd"
+  },
+  {
+    "proxyAddress": "0x62e9a7e34dcaccc0c3e720aedf62afe9065b03eb",
+    "contractAddress": "0xf32d2696fd0C177b5b50e89306C30F07e7Fd642A",
+    "multiply": "100000000",
+    "name": "XAG / USD",
+    "chainId": "1285",
+    "categoryId": "commodities",
+    "path": "xag-usd"
+  },
+  {
+    "proxyAddress": "0x0c466540b2ee1a31b441671eac0ca886e051e410",
+    "contractAddress": "0x704179beB09282EaEf98CA8aaa443C1E273eBBc2",
+    "multiply": "100000000",
+    "name": "XAU / USD",
+    "chainId": "137",
+    "categoryId": "commodities",
+    "path": "xau-usd"
+  },
+  {
+    "proxyAddress": "0x1f954dc24a49708c26e0c1777f16750b5c6d5a2c",
+    "contractAddress": "0xd35B0e1Fd468Bd264570C64f28Ea48F778bc0DfC",
+    "multiply": "100000000",
+    "name": "XAU / USD",
+    "chainId": "42161",
+    "categoryId": "commodities",
+    "path": "xau-usd"
+  },
+  {
+    "proxyAddress": "0x1f41ef93dece881ad0b98082b2d44d3f6f0c515b",
+    "contractAddress": "0x8B050c37B0c8De8f91C1BF648c6c0A4E4Ed7C6eC",
+    "multiply": "100000000",
+    "name": "XAU / USD",
+    "chainId": "43114",
+    "categoryId": "commodities",
+    "path": "xau-usd"
+  },
+  {
+    "proxyAddress": "0x8f7bfb42bf7421c2b34aad619be4654bfa7b3b8b",
+    "contractAddress": "0x78F049f6da1aC1dcA50D6D8f184Acf47eB269852",
+    "multiply": "100000000",
+    "name": "XAU / USD",
+    "chainId": "10",
+    "categoryId": "commodities",
+    "path": "xau-usd"
+  },
+  {
+    "proxyAddress": "0x3c6d9c2efc1d576c70b4c516476cd6c58cf22f9c",
+    "contractAddress": "0xa97cB3C75ED6c8dc2DAC1e645DeE9d903E0D8f76",
+    "multiply": "100000000",
+    "name": "XAU / USD",
+    "chainId": "1285",
+    "categoryId": "commodities",
+    "path": "xau-usd"
+  },
+  {
+    "proxyAddress": "0x4cf57dc9028187b9daaf773c8eca941036989238",
+    "contractAddress": "0x1872758F3635aa3CFA58CA30Bc2Ec84e5A2C493F",
+    "multiply": "100000000",
+    "name": "XAVA / USD",
+    "chainId": "43114",
+    "categoryId": "crypto-usd",
+    "path": "xava-usd"
+  },
+  {
+    "proxyAddress": "0x27cc356a5891a3fe6f84d0457de4d108c6078888",
+    "contractAddress": "0x266C0eefc329bb610B1e79267D836bca88648AaE",
+    "multiply": "100000000",
+    "name": "XLM / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "xlm-usd"
+  },
+  {
+    "proxyAddress": "0x2a8d91686a048e98e6ccf1a89e82f40d14312672",
+    "contractAddress": "0xDa6fCf88c718eCEB18c2c08A543562b1146F4996",
+    "multiply": "100000000",
+    "name": "XMR / USD",
+    "chainId": "10",
+    "categoryId": "crypto-usd",
+    "path": "xmr-usd"
+  },
+  {
+    "proxyAddress": "0xb4ad57b52ab9141de9926a3e0c8dc6264c2ef205",
+    "contractAddress": "0x1Fe010E64b5Df97BCB034870334Ff8FbB02ad019",
+    "multiply": "100000000",
+    "name": "XRP / USD",
+    "chainId": "42161",
+    "categoryId": "crypto-usd",
+    "path": "xrp-usd"
+  },
+  {
+    "proxyAddress": "0x3fd363679fb59596d45881bbfbe4bb864f3545a2",
+    "contractAddress": "0xBC42a3C5D384D1370B225be57445fF685e700284",
+    "multiply": "100000000",
+    "name": "XRP / USD",
+    "chainId": "1285",
+    "categoryId": "crypto-usd",
+    "path": "xrp-usd"
+  },
+  {
+    "proxyAddress": "0x8788f0dbda7678244ac7ff09d963d7696d56a8a0",
+    "contractAddress": "0xb14cbe04a49bF352B939576f9f9665E1D8DC02d2",
+    "multiply": "100000000",
+    "name": "XRP / USD",
+    "chainId": "10",
+    "categoryId": "crypto-usd",
+    "path": "xrp-usd"
+  },
+  {
+    "proxyAddress": "0xcc1f5d9e6956447630d703c8e93b2345c2de3d13",
+    "contractAddress": "0xAB5041D720ab0CDB3342F5bC7Ac6Cc14B6c70727",
+    "multiply": "100000000",
+    "name": "XSUSHI / USD",
+    "chainId": "1",
+    "categoryId": "crypto-usd",
+    "path": "calc-xsushi-usd"
+  },
+  {
+    "proxyAddress": "0xf369a13e7f2449e58dde8302f008ee9131f8d859",
+    "contractAddress": "0xE0A0Bc15e8Cbe87e9b6307693A368085E164878a",
+    "multiply": "1000000000000000000",
+    "name": "XVS / BNB",
+    "chainId": "56",
+    "categoryId": "crypto-bnb",
+    "path": "xvs-bnb"
+  },
+  {
+    "proxyAddress": "0x9896a1ea7a00f5f32ab131ebbee07487b0af31d0",
+    "contractAddress": "0xf7c72EffE3975C25252539685574a5F5bDe19423",
+    "multiply": "1000000000000000000",
+    "name": "YFI / ETH",
+    "chainId": "137",
+    "categoryId": "crypto-eth",
+    "path": "yfi-eth"
+  },
+  {
+    "proxyAddress": "0x28043b1ebd41860b93ec1f1ec19560760b6db556",
+    "contractAddress": "0x27355dF92298c785440a4D16574DF736Eb0627d0",
+    "multiply": "100000000",
+    "name": "YFI / USD",
+    "chainId": "43114",
+    "categoryId": "crypto-usd",
+    "path": "yfi-usd"
+  },
+  {
+    "proxyAddress": "0xe3324ea60fa272bbb4511ddbd4776fefe4674fa0",
+    "contractAddress": "0xd62DAeF2C4D4f75aC2220e081Aed49035C808F6B",
+    "multiply": "100000000",
+    "name": "YFI / USD",
+    "chainId": "1285",
+    "categoryId": "crypto-usd",
+    "path": "yfi-usd"
+  },
+  {
+    "proxyAddress": "0xaab2f6b45b28e962b3acd1ee4fc88aeddf557756",
+    "contractAddress": "0x20dF77bB4cE1478e89a7461CAcE8dc016f9198e4",
+    "multiply": "1000000000000000000",
+    "name": "YFII / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "yfii-eth"
+  },
+  {
+    "proxyAddress": "0xc94580faaf145b2fd0ab5215031833c98d3b77e4",
+    "contractAddress": "0xAB05DFc2e4aF7fb1b512306e3E0a3617992BB6E2",
+    "multiply": "100000000",
+    "name": "YFII / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "yfii-usd"
+  },
+  {
+    "proxyAddress": "0x1520874fc216f5f07e03607303df2fda6c3fc203",
+    "contractAddress": "0x397c2082dA7A0962A4FBF14e62E72dbCefB7a7Dc",
+    "multiply": "100000000",
+    "name": "ZIL / USD",
+    "chainId": "10",
+    "categoryId": "crypto-usd",
+    "path": "zil-usd"
+  },
+  {
+    "proxyAddress": "0x3e3aa4fc329529c8ab921c810850626021dba7e6",
+    "contractAddress": "0x0D14D66DcB20b9EC4e9679AC8E4775a314D2E298",
+    "multiply": "100000000",
+    "name": "ZIL /USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "zil-usd"
+  },
+  {
+    "proxyAddress": "0x6ea4d89474d9410939d429b786208c74853a5b47",
+    "contractAddress": "0x32B19916d42d5F1070941fEA35f9686C253f0545",
+    "multiply": "100000000",
+    "name": "ZRX / USD",
+    "chainId": "137",
+    "categoryId": "crypto-usd",
+    "path": "zrx-usd"
+  },
+  {
+    "proxyAddress": "0xc07cdf938aa113741fb639bf39699926123fb58b",
+    "contractAddress": "0x347F6cdbD9514284b301456956c846b7B21F375B",
+    "multiply": "100000000",
+    "name": "ZRX / USD",
+    "chainId": "43114",
+    "categoryId": "crypto-usd",
+    "path": "zrx-usd"
+  },
+  {
+    "proxyAddress": "0xa668682974e3f121185a3cd94f00322bec674275",
+    "contractAddress": "0xbfc294070e8A7594cEAa6C564883E1F9222BC09b",
+    "multiply": "1000000000000000000",
+    "name": "cbETH / ETH",
+    "chainId": "42161",
+    "categoryId": "crypto-eth",
+    "path": "cbeth-eth"
+  },
+  {
+    "proxyAddress": "0x138b809b8472ff09cd3e075e6ecbb2e42d41d870",
+    "contractAddress": "0x647dA0ebfD5314aF3Bd53eA40541c6B67169e6D0",
+    "multiply": "1000000000000000000",
+    "name": "cbETH / ETH",
+    "chainId": "10",
+    "categoryId": "crypto-eth",
+    "path": "cbeth-eth"
+  },
+  {
+    "proxyAddress": "0x536218f9e9eb48863970252233c8f271f554c2d0",
+    "contractAddress": "0x9cB248E68fb81d0CFE7D6B3265Fe6Bf123A71FE0",
+    "multiply": "1000000000000000000",
+    "name": "rETH / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "reth-eth"
+  },
+  {
+    "proxyAddress": "0xf3272cafe65b190e76caaf483db13424a3e23dd2",
+    "contractAddress": "0x0AAAFE4278AA9D4514552f2743cBFa5a5Bdce04b",
+    "multiply": "1000000000000000000",
+    "name": "rETH / ETH Exchange Rate",
+    "chainId": "42161",
+    "categoryId": "crypto-eth",
+    "path": "reth-eth-exchange-rate"
+  },
+  {
+    "proxyAddress": "0x3b37c6f1e3207de5a4664e837072bd9a25269b39",
+    "contractAddress": "0x338b40CaAef0267191a1869aC5ef9E7945949aeA",
+    "multiply": "1000000000000000000",
+    "name": "sAVAX / USD",
+    "chainId": "56",
+    "categoryId": "crypto-usd",
+    "path": "calculated-savax-usd"
+  },
+  {
+    "proxyAddress": "0x86392dc19c0b719886221c78ab11eb8cf5c52812",
+    "contractAddress": "0x716BB759A5f6faCdfF91F0AfB613133d510e1573",
+    "multiply": "1000000000000000000",
+    "name": "stETH / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "steth-eth"
+  },
+  {
+    "proxyAddress": "0xded2c52b75b24732e9107377b7ba93ec1ffa4baf",
+    "contractAddress": "0xBFf434a1B44677D4ce302da64d84bB4d305c0D49",
+    "multiply": "1000000000000000000",
+    "name": "stETH / ETH",
+    "chainId": "42161",
+    "categoryId": "crypto-eth",
+    "path": "steth-eth"
+  },
+  {
+    "proxyAddress": "0x41878779a388585509657ce5fb95a80050502186",
+    "contractAddress": "0x12922291D1FcD0d121B5C88f061047fE18732743",
+    "multiply": "100000000",
+    "name": "stETH / USD",
+    "chainId": "10",
+    "categoryId": "crypto-usd",
+    "path": "steth-usd"
+  },
+  {
+    "proxyAddress": "0xb523ae262d20a936bc152e6023996e46fdc2a95d",
+    "contractAddress": "0x0e9b5c79e005a30bf3fbB4d8ccCB6B0082ac5a17",
+    "multiply": "1000000000000000000",
+    "name": "wstETH / ETH",
+    "chainId": "42161",
+    "categoryId": "crypto-eth",
+    "path": "wsteth-eth"
+  },
+  {
+    "proxyAddress": "0x524299ab0987a7c4b3c8022a35669ddcdc715a10",
+    "contractAddress": "0x034f1d70092e81b7738459f02F409a5c5c4b8189",
+    "multiply": "1000000000000000000",
+    "name": "wstETH / ETH",
+    "chainId": "10",
+    "categoryId": "crypto-eth",
+    "path": "wsteth-eth"
+  },
+  {
+    "proxyAddress": "0x698b585cbc4407e2d54aa898b2600b53c68958f7",
+    "contractAddress": "0x0d110cC7876d73c3C4190324bCF4C59416bBD259",
+    "multiply": "100000000",
+    "name": "wstETH / USD",
+    "chainId": "10",
+    "categoryId": "crypto-usd",
+    "path": "wsteth-usd"
+  },
+  {
+    "proxyAddress": "0xe59eba0d492ca53c6f46015eea00517f2707dc77",
+    "contractAddress": "0x6E7A3ceB4797D0Fd7b9854B251929ad68849951a",
+    "multiply": "1000000000000000000",
+    "name": "wstETH / stETH Exchange Rate",
+    "chainId": "10",
+    "categoryId": "crypto-eth",
+    "path": "wsteth-steth exchangerate"
+  },
+  {
+    "proxyAddress": "0xb1552c5e96b312d0bf8b554186f846c40614a540",
+    "contractAddress": "0xb39bfAD6295724E01E079Ee3aa78a378Eff6dEB0",
+    "multiply": "1000000000000000000",
+    "name": "wstETH / stETH Exchange Rate",
+    "chainId": "42161",
+    "categoryId": "crypto-eth",
+    "path": "wsteth-steth exchangerate"
+  },
+  {
+    "proxyAddress": "0xf05d9b6c08757eacb1fbec18e36a1b7566a13deb",
+    "contractAddress": "0xdEaa4288c85e7e0be40BCE49E76D4e321d20fC36",
+    "multiply": "1000000000000000000",
+    "name": "xSushi / ETH",
+    "chainId": "1",
+    "categoryId": "crypto-eth",
+    "path": "calc-xsushi-eth"
+  }
+]

@@ -1,0 +1,46 @@
+[
+  {
+    "contractAddress": "0x08a8eea76D2395807Ce7D1FC942382515469cCA1",
+    "chainId": "1"
+  },
+  {
+    "contractAddress": "0x282cc3d6041f567d129214ffc9dd3fb57076e3b8",
+    "chainId": "11155111"
+  },
+  {
+    "contractAddress": "0xcb86703643d120f1fe24b89cfc8049035a4891fe",
+    "chainId": "56"
+  },
+  {
+    "contractAddress": "0x079c4e86d8f70b84a3c756e8e0fdccc004f72b9f",
+    "chainId": "97"
+  },
+  {
+    "contractAddress": "0xe82a41e59a471712a801fbbd061eb0d536e30850",
+    "chainId": "137"
+  },
+  {
+    "contractAddress": "0x01d086acbb2d5f657a7ca17bed9cfe5a06044f1c",
+    "chainId": "80001"
+  },
+  {
+    "contractAddress": "0x96cba89d87199f021da22313c8b1f6b71a541f52",
+    "chainId": "42161"
+  },
+  {
+    "contractAddress": "0xdcc3f3a7a53ff45c88f1382bd2ee9fa437d59cef",
+    "chainId": "421613"
+  },
+  {
+    "contractAddress": "0xec388dfe5bbca005e2dbda52fbc5400632d6a910",
+    "chainId": "10"
+  },
+  {
+    "contractAddress": "0x468f0e89a78183313d35c3a919ca9ab3f8b6429f",
+    "chainId": "250"
+  },
+  {
+    "contractAddress": "0xcb86703643d120f1fe24b89cfc8049035a4891fe",
+    "chainId": "4002"
+  }
+]

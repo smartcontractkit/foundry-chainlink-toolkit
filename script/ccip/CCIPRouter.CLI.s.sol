@@ -11,7 +11,7 @@ contract CCIPRouterCLIScript is BaseScript {
     address ccipRouterAddress,
     uint64 destinationChainSelector,
     Client.EVM2AnyMessage memory message
-  ) external view returns (uint256 fee) {
+  ) external returns (uint256 fee) {
     CCIPRouterScript ccipRouterScript = new CCIPRouterScript(ccipRouterAddress);
     return ccipRouterScript.getFee(destinationChainSelector, message);
   }
@@ -19,7 +19,7 @@ contract CCIPRouterCLIScript is BaseScript {
   function getSupportedTokens(
     address ccipRouterAddress,
     uint64 chainSelector
-  ) external view returns (address[] memory) {
+  ) external returns (address[] memory) {
     CCIPRouterScript ccipRouterScript = new CCIPRouterScript(ccipRouterAddress);
     return ccipRouterScript.getSupportedTokens(chainSelector);
   }
@@ -27,7 +27,7 @@ contract CCIPRouterCLIScript is BaseScript {
   function isChainSupported(
     address ccipRouterAddress,
     uint64 chainSelector
-  ) public view returns (bool) {
+  ) external returns (bool) {
     CCIPRouterScript ccipRouterScript = new CCIPRouterScript(ccipRouterAddress);
     return ccipRouterScript.isChainSupported(chainSelector);
   }
@@ -35,7 +35,7 @@ contract CCIPRouterCLIScript is BaseScript {
   function getOnRamp(
     address ccipRouterAddress,
     uint64 destChainSelector
-  ) external view returns (address) {
+  ) external returns (address) {
     CCIPRouterScript ccipRouterScript = new CCIPRouterScript(ccipRouterAddress);
     return ccipRouterScript.getOnRamp(destChainSelector);
   }
@@ -44,12 +44,12 @@ contract CCIPRouterCLIScript is BaseScript {
     address ccipRouterAddress,
     uint64 sourceChainSelector,
     address offRamp
-  ) public view returns (bool) {
+  ) external returns (bool) {
     CCIPRouterScript ccipRouterScript = new CCIPRouterScript(ccipRouterAddress);
     return ccipRouterScript.isOffRamp(sourceChainSelector, offRamp);
   }
 
-  function getWrappedNative(address ccipRouterAddress) external view returns (address) {
+  function getWrappedNative(address ccipRouterAddress) external returns (address) {
     CCIPRouterScript ccipRouterScript = new CCIPRouterScript(ccipRouterAddress);
     return ccipRouterScript.getWrappedNative();
   }

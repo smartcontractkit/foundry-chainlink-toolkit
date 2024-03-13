@@ -5,6 +5,7 @@ import "forge-std/Script.sol";
 
 import "./CCIPRouter.s.sol";
 import "../helpers/BaseScript.s.sol";
+import "src/libraries/CCIPClient.sol";
 
 contract CCIPRouterCLIScript is BaseScript {
   function getFee(

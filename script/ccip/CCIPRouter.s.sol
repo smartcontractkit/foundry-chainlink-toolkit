@@ -6,6 +6,7 @@ import "forge-std/Script.sol";
 import "../helpers/BaseScript.s.sol";
 import "../helpers/TypeAndVersion.s.sol";
 import "src/interfaces/ccip/CCIPRouterInterface.sol";
+import "src/libraries/CCIPClient.sol";
 
 contract CCIPRouterScript is BaseScript, TypeAndVersionScript {
   address public ccipRouterAddress;

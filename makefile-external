@@ -54,3 +54,12 @@ fct-vrf-cancel-subscription: fct-check-rpc-url
 	$(call check_set_parameter,RECEIVING_ADDRESS,receivingAddress) \
 	forge script ${FCT_PLUGIN_PATH}/script/vrf/VRF.CLI.s.sol --sig "cancelSubscription(address,uint64,address)" $$functionsRouterAddress $$subId $$receivingAddress --rpc-url ${RPC_URL} --broadcast --private-key ${PRIVATE_KEY} --out ${FCT_PLUGIN_PATH}/out
 
+# CCIP
+.PHONY: fcc-ccip-estimate-receive
+fcc-ccip-estimate-receive:
+	$(call check_set_parameter,DESTINATION_RPC_URL,destinationRpcUrl) \
+	$(call check_set_parameter,CCIP_ROUTER_ADDRESS,ccipReceiverAddress) \
+	$(call check_set_parameter,SOURCE_CHAIN_SELECTOR,sourceChainSelector) \
+	$(call check_set_parameter,CCIP_MESSAGE_SENDER,ccipMessageSender) \
+	$(call check_set_parameter,CCIP_MESSAGE_DATA,ccipMessageData) \
+	forge script ${FCT_PLUGIN_PATH}/script/ccip/CCIPReceiver.CLI.s.sol --sig "ccipReceive(address,uint64,address,bytes)" $$ccipReceiverAddress $$sourceChainSelector $$ccipMessageSender $$ccipMessageData --rpc-url $$destinationRpcUrl --out ${FCT_PLUGIN_PATH}/out

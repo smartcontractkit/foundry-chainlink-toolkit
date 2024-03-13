@@ -16,7 +16,7 @@ contract AutomationCLIScript is BaseScript {
     address upkeepAddress,
     uint32 gasLimit,
     bytes calldata checkData
-  ) nestedScriptContext public returns (bytes32 requestHash) {
+  ) nestedScriptContext external returns (bytes32 requestHash) {
     AutomationScript automationScript = new AutomationScript(keeperRegistryAddress);
     return automationScript.registerUpkeep(
       amountInJuels,
